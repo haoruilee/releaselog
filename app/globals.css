@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-page: #0c0a09;
+  --bg-panel: #161210;
+  --bg-empty-cell: #1f1915;
+  --bg-active-cell: #c2410c;
+  --text-primary: #fef3e2;
+  --text-secondary: #fdba74;
+  --accent: #ea580c;
+  --accent-number: #fb923c;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+}
+
+@layer utilities {
+  .bg-page {
+    background-color: var(--bg-page);
+  }
+  .bg-panel {
+    background-color: var(--bg-panel);
+  }
+  .bg-empty-cell {
+    background-color: var(--bg-empty-cell);
+  }
+  .bg-active-cell {
+    background-color: var(--bg-active-cell);
+  }
+  .text-primary {
+    color: var(--text-primary);
+  }
+  .text-secondary {
+    color: var(--text-secondary);
+  }
+  .text-accent {
+    color: var(--accent);
+  }
+  .text-accent-number {
+    color: var(--accent-number);
+  }
+  .border-accent {
+    border-color: var(--accent);
+  }
+}
