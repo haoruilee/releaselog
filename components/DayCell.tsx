@@ -46,40 +46,55 @@ export function DayCell({
   const overflow = Math.max(0, items.length - visible.length);
 
   return (
-    <button
-      type="button"
-      onClick={() => onSelect(dateStr)}
-      className={`${base} ${bg} ${ring} hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white`}
-    >
+    <div className={`${base} ${bg} ${ring}`}>
+      <button
+        type="button"
+        onClick={() => onSelect(dateStr)}
+        aria-label={`Show releases for ${dateStr}`}
+        className="absolute inset-0 z-0 rounded-lg hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+      />
       <span
-        className={`text-[11px] font-medium tabular-nums sm:text-xs ${
+        className={`pointer-events-none relative z-10 text-[11px] font-medium tabular-nums sm:text-xs ${
           hasItems ? "text-primary/90" : "text-secondary/60"
         }`}
       >
         {dayNum}
       </span>
-      <div className="mt-1 flex flex-1 flex-col gap-0.5 overflow-hidden text-left">
+      <div className="pointer-events-none relative z-10 mt-1 flex flex-1 flex-col gap-0.5 overflow-hidden text-left">
         {showCountOnly && hasItems && (
           <span className="text-xs font-semibold text-primary">
             {items.length} ship{items.length === 1 ? "" : "s"}
           </span>
         )}
         {!showCountOnly &&
-          visible.map((item) => (
-            <span
-              key={item.id}
-              className="line-clamp-1 text-[10px] leading-tight text-primary sm:text-[11px]"
-              title={item.title}
-            >
-              {item.shortTitle ?? item.title}
-            </span>
-          ))}
+          visible.map((item) =>
+            item.sourceUrl ? (
+              <a
+                key={item.id}
+                href={item.sourceUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="pointer-events-auto line-clamp-1 text-[10px] leading-tight text-primary underline-offset-2 hover:underline focus:outline-none focus-visible:underline sm:text-[11px]"
+                title={item.title}
+              >
+                {item.shortTitle ?? item.title}
+              </a>
+            ) : (
+              <span
+                key={item.id}
+                className="line-clamp-1 text-[10px] leading-tight text-primary sm:text-[11px]"
+                title={item.title}
+              >
+                {item.shortTitle ?? item.title}
+              </span>
+            ),
+          )}
         {!showCountOnly && overflow > 0 && (
           <span className="text-[10px] font-medium text-primary/80">
             +{overflow} more
           </span>
         )}
       </div>
-    </button>
+    </div>
   );
 }

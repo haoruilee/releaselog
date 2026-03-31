@@ -1,0 +1,106 @@
+{
+  "id": "anthropic-team",
+  "name": "Anthropic Team",
+  "type": "team",
+  "description": "High-signal Anthropic launches verified against official Anthropic, Claude, and Claude Help sources.",
+  "headline": "Verified Anthropic launches across {days} days.",
+  "subtitle": "January 12 — March 12, 2026. Company-level launches from official Anthropic sources.",
+  "footnote": "Cross-checked on March 31, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
+  "brandLine": "Anthropic official sources",
+  "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+  "members": [
+    { "name": "Team", "handle": "@anthropic", "avatar": "/avatars/placeholder.svg" }
+  ],
+  "theme": {
+    "primary": "#ea580c",
+    "bgPage": "#0c0a09",
+    "bgPanel": "#161210",
+    "bgEmptyCell": "#1f1915",
+    "bgActiveCell": "#c2410c",
+    "textPrimary": "#fef3e2",
+    "textSecondary": "#fdba74",
+    "accentNumber": "#fb923c"
+  },
+  "releases": [
+    {
+      "id": "at-1",
+      "date": "2026-01-12",
+      "title": "Cowork research preview",
+      "shortTitle": "Cowork",
+      "description": "Claude Desktop gained Cowork for multi-step knowledge work on local files and connected tools.",
+      "tags": ["desktop", "agent"],
+      "sourceUrl": "https://claude.com/blog/cowork-research-preview",
+      "importance": 3
+    },
+    {
+      "id": "at-2",
+      "date": "2026-01-26",
+      "title": "Interactive connectors and MCP Apps",
+      "shortTitle": "MCP Apps",
+      "description": "Anthropic introduced interactive connectors and app surfaces that run directly inside Claude conversations.",
+      "tags": ["connectors", "apps"],
+      "sourceUrl": "https://claude.com/blog/interactive-tools-in-claude",
+      "importance": 3
+    },
+    {
+      "id": "at-3",
+      "date": "2026-02-05",
+      "title": "Claude Opus 4.6",
+      "shortTitle": "Opus 4.6",
+      "description": "Anthropic launched Opus 4.6 as its most capable model for complex coding and long-running agent tasks.",
+      "tags": ["model"],
+      "sourceUrl": "https://www.anthropic.com/news/claude-opus-4-6",
+      "importance": 3
+    },
+    {
+      "id": "at-4",
+      "date": "2026-02-17",
+      "title": "Claude Sonnet 4.6",
+      "shortTitle": "Sonnet 4.6",
+      "description": "Anthropic launched Sonnet 4.6 as the new balanced flagship across speed, coding, and reasoning.",
+      "tags": ["model"],
+      "sourceUrl": "https://www.anthropic.com/news/claude-sonnet-4-6",
+      "importance": 3
+    },
+    {
+      "id": "at-5",
+      "date": "2026-02-24",
+      "title": "Cowork and plugins for teams across the enterprise",
+      "shortTitle": "Enterprise",
+      "description": "Claude expanded Cowork with plugins, admin controls, and broader enterprise workflows.",
+      "tags": ["cowork", "enterprise"],
+      "sourceUrl": "https://claude.com/blog/cowork-plugins-across-enterprise",
+      "importance": 2
+    },
+    {
+      "id": "at-6",
+      "date": "2026-03-02",
+      "title": "Memory for free users",
+      "shortTitle": "Memory",
+      "description": "Chat search and memory rolled out to free Claude users instead of staying limited to paid tiers.",
+      "tags": ["memory"],
+      "sourceUrl": "https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context",
+      "importance": 2
+    },
+    {
+      "id": "at-7",
+      "date": "2026-03-11",
+      "title": "Advancing Claude for Excel and PowerPoint",
+      "shortTitle": "Office",
+      "description": "Claude's Microsoft add-ins began sharing context across Excel and PowerPoint and added skills support.",
+      "tags": ["office", "workflow"],
+      "sourceUrl": "https://claude.com/blog/claude-excel-powerpoint-updates",
+      "importance": 2
+    },
+    {
+      "id": "at-8",
+      "date": "2026-03-12",
+      "title": "Claude builds interactive visuals right in your conversation",
+      "shortTitle": "Visuals",
+      "description": "Claude started creating inline charts, diagrams, and visual explanations directly in chat.",
+      "tags": ["visuals", "chat"],
+      "sourceUrl": "https://claude.com/blog/claude-builds-visuals",
+      "importance": 2
+    }
+  ]
+}

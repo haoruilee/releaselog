@@ -1,13 +1,15 @@
 import type { EntityConfig } from "./types";
 import apiTeam from "./entities/api-team.json";
+import anthropicTeam from "./entities/anthropic-team.json";
 import claudeProduct from "./entities/claude-product.json";
-import claudeTeam from "./entities/claude-team.json";
+import openaiTeam from "./entities/openai-team.json";
 
 export type { EntityConfig, ReleaseItem, ThemeConfig } from "./types";
 export { defaultTheme } from "./defaultTheme";
 
 export const entities: EntityConfig[] = [
-  claudeTeam as EntityConfig,
+  anthropicTeam as EntityConfig,
+  openaiTeam as EntityConfig,
   apiTeam as EntityConfig,
   claudeProduct as EntityConfig,
 ];

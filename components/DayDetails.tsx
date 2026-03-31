@@ -2,6 +2,7 @@
 
 import { format } from "date-fns";
 import type { ReleaseItem } from "@/data/types";
+import { getSourceLabel } from "@/lib/source-label";
 
 type Props = {
   dateStr: string | null;
@@ -30,41 +31,58 @@ export function DayDetails({ dateStr, items, posterMode }: Props) {
         {format(d, "EEEE, MMMM d, yyyy")}
       </h3>
       <ul className="mt-4 space-y-4">
-        {items.map((item) => (
-          <li
-            key={item.id}
-            className="border-b border-white/5 pb-4 last:border-0 last:pb-0"
-          >
-            <p className="font-medium text-primary">{item.title}</p>
-            {item.description && (
-              <p className="mt-1 text-sm leading-relaxed text-secondary">
-                {item.description}
-              </p>
-            )}
-            {item.tags && item.tags.length > 0 && (
-              <div className="mt-2 flex flex-wrap gap-2">
-                {item.tags.map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-full bg-empty-cell px-2 py-0.5 text-xs text-secondary"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            )}
-            {item.sourceUrl && (
-              <a
-                href={item.sourceUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-2 inline-block text-sm text-accent underline-offset-4 hover:underline"
-              >
-                Source
-              </a>
-            )}
-          </li>
-        ))}
+        {items.map((item) => {
+          const sourceLabel = item.sourceUrl
+            ? getSourceLabel(item.sourceUrl)
+            : null;
+
+          return (
+            <li
+              key={item.id}
+              className="border-b border-white/5 pb-4 last:border-0 last:pb-0"
+            >
+              {item.sourceUrl ? (
+                <a
+                  href={item.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-medium text-primary underline-offset-4 hover:underline"
+                >
+                  {item.title}
+                </a>
+              ) : (
+                <p className="font-medium text-primary">{item.title}</p>
+              )}
+              {item.description && (
+                <p className="mt-1 text-sm leading-relaxed text-secondary">
+                  {item.description}
+                </p>
+              )}
+              {item.tags && item.tags.length > 0 && (
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {item.tags.map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-full bg-empty-cell px-2 py-0.5 text-xs text-secondary"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {item.sourceUrl && sourceLabel && (
+                <a
+                  href={item.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-2 inline-block text-sm text-accent underline-offset-4 hover:underline"
+                >
+                  {sourceLabel}
+                </a>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </section>
   );

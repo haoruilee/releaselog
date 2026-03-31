@@ -2,9 +2,12 @@
   "id": "claude-product",
   "name": "Claude (Product)",
   "type": "product",
-  "description": "End-user product surfaces: web, apps, and features.",
-  "headline": "Everything {name} shipped in {days} days.",
-  "subtitle": "Consumer-facing launches and improvements.",
+  "description": "Verified app, desktop, mobile, and add-in launches from Claude.",
+  "headline": "Verified Claude product launches across {days} days.",
+  "subtitle": "January 12 — March 17, 2026. Cross-checked against official Claude release notes and product pages.",
+  "footnote": "Cross-checked on March 31, 2026 against official Claude Help Center release notes, Claude product posts, and Anthropic announcements.",
+  "brandLine": "Claude official sources",
+  "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
   "theme": {
     "primary": "#059669",
     "bgPage": "#0a0f0c",
@@ -18,31 +21,83 @@
   "releases": [
     {
       "id": "cp-1",
-      "date": "2026-02-04",
-      "title": "New conversation sidebar",
-      "shortTitle": "Sidebar",
-      "importance": 2
+      "date": "2026-01-12",
+      "title": "Cowork research preview on Claude Desktop",
+      "shortTitle": "Cowork",
+      "description": "Anthropic introduced Cowork as an agentic desktop workspace for knowledge work beyond coding.",
+      "tags": ["desktop", "agent"],
+      "sourceUrl": "https://claude.com/blog/cowork-research-preview",
+      "importance": 3
     },
     {
       "id": "cp-2",
-      "date": "2026-02-22",
-      "title": "Voice mode experiment",
-      "shortTitle": "Voice",
+      "date": "2026-01-26",
+      "title": "Interactive connectors and MCP Apps",
+      "shortTitle": "MCP Apps",
+      "description": "Claude gained interactive connectors that can render and operate live app interfaces in chat.",
+      "tags": ["connectors", "apps"],
+      "sourceUrl": "https://claude.com/blog/interactive-tools-in-claude",
       "importance": 3
     },
     {
       "id": "cp-3",
-      "date": "2026-03-08",
-      "title": "Shared projects",
-      "shortTitle": "Projects",
-      "importance": 2
+      "date": "2026-02-05",
+      "title": "Claude for PowerPoint",
+      "shortTitle": "PowerPoint",
+      "description": "Claude shipped as a PowerPoint add-in for drafting, editing, and restructuring slide decks.",
+      "tags": ["office", "slides"],
+      "sourceUrl": "https://support.claude.com/en/articles/13521390-use-claude-for-powerpoint",
+      "importance": 3
     },
     {
       "id": "cp-4",
-      "date": "2026-03-20",
-      "title": "Onboarding refresh",
-      "shortTitle": "Onboarding",
-      "importance": 1
+      "date": "2026-02-24",
+      "title": "Cowork plugins and admin controls",
+      "shortTitle": "Plugins",
+      "description": "Team and Enterprise users got Cowork plugins plus organization-level controls.",
+      "tags": ["cowork", "enterprise"],
+      "sourceUrl": "https://support.claude.com/en/articles/13837440-use-plugins-in-cowork",
+      "importance": 2
+    },
+    {
+      "id": "cp-5",
+      "date": "2026-03-02",
+      "title": "Chat search and memory for free users",
+      "shortTitle": "Memory",
+      "description": "Memory from chat history expanded beyond paid plans to all Claude users.",
+      "tags": ["memory"],
+      "sourceUrl": "https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context",
+      "importance": 2
+    },
+    {
+      "id": "cp-6",
+      "date": "2026-03-11",
+      "title": "Claude for Excel and PowerPoint work across apps",
+      "shortTitle": "Excel+PPT",
+      "description": "Claude began sharing full context across open Excel and PowerPoint workflows.",
+      "tags": ["office", "workflow"],
+      "sourceUrl": "https://claude.com/blog/claude-excel-powerpoint-updates",
+      "importance": 2
+    },
+    {
+      "id": "cp-7",
+      "date": "2026-03-12",
+      "title": "Custom visuals in chat",
+      "shortTitle": "Visuals",
+      "description": "Claude started generating interactive charts, diagrams, and visual explanations inline in chat.",
+      "tags": ["visuals", "chat"],
+      "sourceUrl": "https://support.claude.com/en/articles/13979539-custom-visuals-in-chat",
+      "importance": 2
+    },
+    {
+      "id": "cp-8",
+      "date": "2026-03-17",
+      "title": "Persistent Cowork thread from mobile",
+      "shortTitle": "Cowork mobile",
+      "description": "Pro and Max users got a persistent Cowork thread that can be managed from Claude mobile apps.",
+      "tags": ["cowork", "mobile"],
+      "sourceUrl": "https://support.claude.com/en/articles/13947068-assign-tasks-to-claude-from-anywhere-in-cowork",
+      "importance": 2
     }
   ]
 }

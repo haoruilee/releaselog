@@ -1,0 +1,106 @@
+{
+  "id": "openai-team",
+  "name": "OpenAI Team",
+  "type": "team",
+  "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
+  "headline": "Verified OpenAI launches across {days} days.",
+  "subtitle": "January 7 — March 23, 2026. Company-level launches from official OpenAI sources.",
+  "footnote": "Cross-checked on March 31, 2026 against OpenAI announcement pages and OpenAI Help Center release notes.",
+  "brandLine": "OpenAI official sources",
+  "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+  "members": [
+    { "name": "Team", "handle": "@openai", "avatar": "/avatars/placeholder.svg" }
+  ],
+  "theme": {
+    "primary": "#10a37f",
+    "bgPage": "#090b0a",
+    "bgPanel": "#111614",
+    "bgEmptyCell": "#181f1c",
+    "bgActiveCell": "#0d7c61",
+    "textPrimary": "#f5f7f6",
+    "textSecondary": "#98c8b7",
+    "accentNumber": "#34d399"
+  },
+  "releases": [
+    {
+      "id": "ot-1",
+      "date": "2026-01-07",
+      "title": "ChatGPT Health",
+      "shortTitle": "Health",
+      "description": "OpenAI introduced a dedicated Health space in ChatGPT with separate memory, files, and connected health data.",
+      "tags": ["chatgpt", "health"],
+      "sourceUrl": "https://openai.com/index/introducing-chatgpt-health/",
+      "importance": 3
+    },
+    {
+      "id": "ot-2",
+      "date": "2026-02-02",
+      "title": "Codex app for macOS",
+      "shortTitle": "Codex app",
+      "description": "OpenAI launched the Codex desktop app as a command center for supervising multiple long-running agents.",
+      "tags": ["codex", "desktop"],
+      "sourceUrl": "https://openai.com/index/introducing-the-codex-app/",
+      "importance": 3
+    },
+    {
+      "id": "ot-3",
+      "date": "2026-02-05",
+      "title": "GPT-5.3-Codex",
+      "shortTitle": "5.3-Codex",
+      "description": "OpenAI released GPT-5.3-Codex as its most capable agentic coding model, combining coding, reasoning, and computer-use strength.",
+      "tags": ["model", "codex"],
+      "sourceUrl": "https://openai.com/index/introducing-gpt-5-3-codex/",
+      "importance": 3
+    },
+    {
+      "id": "ot-4",
+      "date": "2026-02-12",
+      "title": "GPT-5.3-Codex-Spark",
+      "shortTitle": "Codex-Spark",
+      "description": "OpenAI released Codex-Spark as an ultra-fast research preview for real-time coding inside Codex.",
+      "tags": ["model", "codex"],
+      "sourceUrl": "https://openai.com/index/introducing-gpt-5-3-codex-spark/",
+      "importance": 2
+    },
+    {
+      "id": "ot-5",
+      "date": "2026-02-25",
+      "title": "Projects can add sources from apps and chats",
+      "shortTitle": "Projects",
+      "description": "ChatGPT Projects gained app links, saved chat outputs, and ad-hoc text as reusable project sources.",
+      "tags": ["chatgpt", "projects"],
+      "sourceUrl": "https://help.openai.com/en/articles/10169521-projects-in-chatgpt",
+      "importance": 2
+    },
+    {
+      "id": "ot-6",
+      "date": "2026-03-05",
+      "title": "GPT-5.4",
+      "shortTitle": "GPT-5.4",
+      "description": "OpenAI rolled out GPT-5.4 across ChatGPT, Codex, and the API as its new mainline reasoning model.",
+      "tags": ["model"],
+      "sourceUrl": "https://openai.com/index/introducing-gpt-5-4/",
+      "importance": 3
+    },
+    {
+      "id": "ot-7",
+      "date": "2026-03-17",
+      "title": "GPT-5.4 mini and nano",
+      "shortTitle": "5.4 mini",
+      "description": "OpenAI launched faster, cheaper GPT-5.4 mini and nano variants optimized for coding, subagents, and high-volume workloads.",
+      "tags": ["model", "subagents"],
+      "sourceUrl": "https://openai.com/index/introducing-gpt-5-4-mini-and-nano/",
+      "importance": 3
+    },
+    {
+      "id": "ot-8",
+      "date": "2026-03-23",
+      "title": "File Library in ChatGPT",
+      "shortTitle": "Library",
+      "description": "ChatGPT began saving uploaded and generated files into a reusable library that can be referenced across chats.",
+      "tags": ["chatgpt", "files"],
+      "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "importance": 2
+    }
+  ]
+}

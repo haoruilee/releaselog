@@ -2,11 +2,12 @@
   "id": "api-team",
   "name": "API Team",
   "type": "team",
-  "description": "Platform and developer-facing API releases.",
-  "headline": "Everything {name} shipped in {days} days.",
-  "subtitle": "Public API and SDK changes in the selected window.",
-  "footnote": "Dates reflect public changelog entries.",
-  "brandLine": "ReleaseLog",
+  "description": "Platform and developer-facing releases verified against Claude Platform release notes.",
+  "headline": "Verified Claude Platform releases across {days} days.",
+  "subtitle": "January 29 — March 30, 2026. Claude Platform release notes only.",
+  "footnote": "Dates and links cross-checked on March 31, 2026 against official Claude Platform release notes and API documentation.",
+  "brandLine": "Claude Platform release notes",
+  "brandUrl": "https://platform.claude.com/docs/en/release-notes/overview",
   "theme": {
     "primary": "#2563eb",
     "bgPage": "#0a0f1a",
@@ -20,38 +21,102 @@
   "releases": [
     {
       "id": "api-1",
-      "date": "2026-02-01",
-      "title": "Rate limit headers v2",
-      "shortTitle": "Rate headers",
-      "importance": 2
-    },
-    {
-      "id": "api-2",
-      "date": "2026-02-08",
-      "title": "Batch endpoint GA",
-      "shortTitle": "Batch GA",
+      "date": "2026-01-29",
+      "title": "Structured outputs GA",
+      "shortTitle": "Structured",
+      "description": "Structured JSON outputs and strict tool-use schema validation became generally available on the Claude API.",
+      "tags": ["output", "schema"],
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
       "importance": 3
     },
     {
+      "id": "api-2",
+      "date": "2026-02-05",
+      "title": "Compaction API beta",
+      "shortTitle": "Compaction",
+      "description": "Anthropic launched server-side compaction for managing long-running conversations.",
+      "tags": ["context", "beta"],
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/compaction",
+      "importance": 2
+    },
+    {
       "id": "api-3",
-      "date": "2026-02-20",
-      "title": "Webhook retries",
-      "shortTitle": "Webhooks",
+      "date": "2026-02-05",
+      "title": "Data residency controls",
+      "shortTitle": "Residency",
+      "description": "Developers gained control over where supported model inference runs.",
+      "tags": ["admin", "governance"],
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/data-residency",
       "importance": 2
     },
     {
       "id": "api-4",
-      "date": "2026-03-05",
-      "title": "New embedding model",
-      "shortTitle": "Embeddings",
+      "date": "2026-02-17",
+      "title": "Web search tool GA",
+      "shortTitle": "Web search",
+      "description": "The web search tool graduated from beta and no longer required a beta header.",
+      "tags": ["tooling", "search"],
+      "sourceUrl": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool",
       "importance": 3
     },
     {
       "id": "api-5",
-      "date": "2026-03-15",
-      "title": "Python SDK 2.x",
-      "shortTitle": "SDK 2.x",
-      "sourceUrl": "https://example.com",
+      "date": "2026-02-17",
+      "title": "Programmatic tool calling GA",
+      "shortTitle": "Tool calling",
+      "description": "Claude gained first-class support for code that can invoke tools programmatically inside tool-enabled flows.",
+      "tags": ["tooling", "agents"],
+      "sourceUrl": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/programmatic-tool-calling",
+      "importance": 2
+    },
+    {
+      "id": "api-6",
+      "date": "2026-02-19",
+      "title": "Automatic prompt caching for the Messages API",
+      "shortTitle": "Caching",
+      "description": "Messages API caching gained automatic cache point movement as conversations grow.",
+      "tags": ["performance"],
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+      "importance": 2
+    },
+    {
+      "id": "api-7",
+      "date": "2026-03-13",
+      "title": "1M token context window GA for Claude 4.6",
+      "shortTitle": "1M context",
+      "description": "Claude Opus 4.6 and Sonnet 4.6 gained a generally available 1M token context window.",
+      "tags": ["context", "long"],
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/context-windows",
+      "importance": 3
+    },
+    {
+      "id": "api-8",
+      "date": "2026-03-16",
+      "title": "Thinking display control",
+      "shortTitle": "Thinking UI",
+      "description": "Extended thinking added the `display` field for summarized or omitted thinking output.",
+      "tags": ["reasoning"],
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/extended-thinking",
+      "importance": 2
+    },
+    {
+      "id": "api-9",
+      "date": "2026-03-18",
+      "title": "Models API capability fields",
+      "shortTitle": "Models API",
+      "description": "Models API responses started exposing capability metadata and token limits directly.",
+      "tags": ["models", "api"],
+      "sourceUrl": "https://platform.claude.com/docs/en/api/models/retrieve",
+      "importance": 2
+    },
+    {
+      "id": "api-10",
+      "date": "2026-03-30",
+      "title": "Message Batches max_tokens raised to 300k",
+      "shortTitle": "Batches 300k",
+      "description": "The Message Batches API raised its `max_tokens` cap for Claude Opus 4.6 and Sonnet 4.6.",
+      "tags": ["batching"],
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/batch-processing",
       "importance": 2
     }
   ]
