@@ -24,7 +24,22 @@
       "date": "2026-01-29",
       "title": "Structured outputs GA",
       "shortTitle": "Structured",
+      "slug": "structured-outputs-ga",
+      "whatChanged": "API responses can follow a JSON schema you provide, with validation enforced server-side.",
       "description": "Structured JSON outputs and strict tool-use schema validation became generally available on the Claude API.",
+      "audience": "developer",
+      "status": "stable",
+      "howTo": {
+        "prerequisites": ["Messages API access", "JSON Schema for your output shape"],
+        "steps": [
+          "Define the `output_format` (or equivalent) with your JSON Schema in the request.",
+          "Send the user/tool messages as usual; parse the model output as validated JSON.",
+          "Handle schema errors from the API like other request validation failures."
+        ]
+      },
+      "docUrls": [
+        "https://platform.claude.com/docs/en/release-notes/overview"
+      ],
       "tags": ["output", "schema"],
       "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
       "importance": 3

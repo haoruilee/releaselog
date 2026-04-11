@@ -24,10 +24,23 @@
       "date": "2026-01-12",
       "title": "Cowork research preview on Claude Desktop",
       "shortTitle": "Cowork",
+      "slug": "cowork-desktop-preview",
+      "whatChanged": "Desktop app adds a dedicated Cowork space for multi-step work on your files and tools.",
       "description": "Anthropic introduced Cowork as an agentic desktop workspace for knowledge work beyond coding.",
+      "audience": "end_user",
+      "status": "preview",
+      "howTo": {
+        "prerequisites": ["Claude Desktop installed", "Research preview available in your region/plan"],
+        "steps": [
+          "Open Claude Desktop and switch to the Cowork experience.",
+          "Connect or select the folders and tools Cowork should use.",
+          "Describe the outcome you want; iterate on drafts and file changes in the thread."
+        ]
+      },
       "tags": ["desktop", "agent"],
       "sourceUrl": "https://claude.com/blog/cowork-research-preview",
-      "importance": 3
+      "importance": 3,
+      "relatedIds": ["at-1"]
     },
     {
       "id": "cp-2",
