@@ -3,7 +3,8 @@ import { getEntityById } from "@/data";
 import { API_SCHEMA_VERSION } from "@/lib/api-constants";
 import { filterReleases, parseReleaseQuery } from "@/lib/releases-query";
 
-export const dynamic = "force-static";
+/** Query string affects the payload; cannot be statically prerendered. */
+export const dynamic = "force-dynamic";
 
 type Params = { params: Promise<{ id: string }> };
 

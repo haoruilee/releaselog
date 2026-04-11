@@ -4,7 +4,8 @@ import type { ReleaseItem } from "@/data/types";
 import { API_SCHEMA_VERSION } from "@/lib/api-constants";
 import { filterReleases, parseReleaseFilters } from "@/lib/releases-query";
 
-export const dynamic = "force-static";
+/** `days`, `entity`, filters, and pagination depend on the request URL. */
+export const dynamic = "force-dynamic";
 
 function addDaysIso(isoDate: string, delta: number): string {
   const d = new Date(isoDate + "T12:00:00Z");
