@@ -1,18 +1,17 @@
+import { loadEntitiesFromRegistry } from "./load-entities";
 import type { EntityConfig } from "./types";
-import apiTeam from "./entities/api-team.json";
-import anthropicTeam from "./entities/anthropic-team.json";
-import claudeProduct from "./entities/claude-product.json";
-import openaiTeam from "./entities/openai-team.json";
 
-export type { EntityConfig, ReleaseItem, ThemeConfig } from "./types";
+export type {
+  EntityConfig,
+  ReleaseItem,
+  ReleaseHowTo,
+  ReleaseAudience,
+  ReleaseStatus,
+  ThemeConfig,
+} from "./types";
 export { defaultTheme } from "./defaultTheme";
 
-export const entities: EntityConfig[] = [
-  anthropicTeam as EntityConfig,
-  openaiTeam as EntityConfig,
-  apiTeam as EntityConfig,
-  claudeProduct as EntityConfig,
-];
+export const entities: EntityConfig[] = loadEntitiesFromRegistry();
 
 export function getEntityById(id: string): EntityConfig | undefined {
   return entities.find((e) => e.id === id);

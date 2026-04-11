@@ -1,0 +1,8 @@
+{
+  "entities": [
+    "anthropic-team.json",
+    "api-team.json",
+    "claude-product.json",
+    "openai-team.json"
+  ]
+}
