@@ -49,7 +49,7 @@
       "date": "2026-02-05",
       "title": "Compaction API beta",
       "shortTitle": "Compaction",
-      "description": "Anthropic launched server-side compaction for managing long-running conversations.",
+      "description": "Anthropic launched server-side compaction for managing long-running conversations, activated with the `compact-2026-01-12` beta header.",
       "tags": ["context", "beta"],
       "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/compaction",
       "importance": 2
@@ -59,9 +59,19 @@
       "date": "2026-02-05",
       "title": "Data residency controls",
       "shortTitle": "Residency",
-      "description": "Developers gained control over where supported model inference runs.",
+      "description": "Developers gained control over where supported model inference runs via the `inference_geo` parameter (`\"us\"` or `\"global\"`).",
       "tags": ["admin", "governance"],
       "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/data-residency",
+      "importance": 2
+    },
+    {
+      "id": "api-13",
+      "date": "2026-02-05",
+      "title": "Adaptive thinking",
+      "shortTitle": "Adaptive",
+      "description": "New `thinking: {type: \"adaptive\"}` mode lets Claude dynamically decide when and how much to think based on task complexity. Recommended mode for Opus 4.6 and Sonnet 4.6.",
+      "tags": ["reasoning"],
+      "sourceUrl": "https://platform.claude.com/docs/en/about-claude/models/whats-new-claude-4-6",
       "importance": 2
     },
     {
@@ -69,7 +79,7 @@
       "date": "2026-02-17",
       "title": "Web search tool GA",
       "shortTitle": "Web search",
-      "description": "The web search tool graduated from beta and no longer required a beta header.",
+      "description": "The web search tool graduated from beta and no longer required a beta header. Web search and web fetch gained dynamic filtering to reduce token cost.",
       "tags": ["tooling", "search"],
       "sourceUrl": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool",
       "importance": 3
@@ -89,7 +99,7 @@
       "date": "2026-02-19",
       "title": "Automatic prompt caching for the Messages API",
       "shortTitle": "Caching",
-      "description": "Messages API caching gained automatic cache point movement as conversations grow.",
+      "description": "Messages API caching gained automatic cache point movement as conversations grow — no manual cache-break management needed.",
       "tags": ["performance"],
       "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
       "importance": 2
@@ -115,11 +125,21 @@
       "importance": 2
     },
     {
+      "id": "api-14",
+      "date": "2026-03-16",
+      "title": "Fine-grained tool streaming GA",
+      "shortTitle": "Tool streaming",
+      "description": "Streams tool-use parameter values without buffering or JSON validation, reducing latency for large parameters. No beta header required on any model.",
+      "tags": ["tooling", "streaming"],
+      "sourceUrl": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/fine-grained-tool-streaming",
+      "importance": 2
+    },
+    {
       "id": "api-9",
       "date": "2026-03-18",
       "title": "Models API capability fields",
       "shortTitle": "Models API",
-      "description": "Models API responses started exposing capability metadata and token limits directly.",
+      "description": "Models API responses started exposing capability metadata and token limits directly, removing the need to hardcode per-model limits.",
       "tags": ["models", "api"],
       "sourceUrl": "https://platform.claude.com/docs/en/api/models/retrieve",
       "importance": 2
@@ -132,6 +152,18 @@
       "description": "The Message Batches API raised its `max_tokens` cap for Claude Opus 4.6 and Sonnet 4.6.",
       "tags": ["batching"],
       "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/batch-processing",
+      "importance": 2
+    },
+    {
+      "id": "api-15",
+      "date": "2026-04-01",
+      "title": "Advisor tool public beta",
+      "shortTitle": "Advisor tool",
+      "description": "Pair a fast executor model with a high-intelligence advisor model for strategic mid-generation guidance on long-horizon agentic workloads. Requires `advisor-tool-2026-03-01` beta header.",
+      "audience": "developer",
+      "status": "beta",
+      "tags": ["agents", "reasoning"],
+      "sourceUrl": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/advisor-tool",
       "importance": 2
     },
     {

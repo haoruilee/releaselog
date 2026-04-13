@@ -26,7 +26,7 @@
       "shortTitle": "Cowork",
       "slug": "cowork-desktop-preview",
       "whatChanged": "Desktop app adds a dedicated Cowork space for multi-step work on your files and tools.",
-      "description": "Anthropic introduced Cowork as an agentic desktop workspace for knowledge work beyond coding.",
+      "description": "Anthropic introduced Cowork as an agentic desktop workspace for knowledge work beyond coding, initially available to Max plan users on macOS.",
       "audience": "end_user",
       "status": "preview",
       "howTo": {
@@ -65,9 +65,9 @@
     {
       "id": "cp-4",
       "date": "2026-02-24",
-      "title": "Cowork plugins and admin controls",
+      "title": "Cowork enterprise plugins launch",
       "shortTitle": "Plugins",
-      "description": "Team and Enterprise users got Cowork plugins plus organization-level controls.",
+      "description": "13 enterprise connectors added (Google Workspace, DocuSign, FactSet, Apollo, Harvey, and more), plus admin controls, group spend limits, and prebuilt plugin templates for finance, HR, engineering, and design.",
       "tags": ["cowork", "enterprise"],
       "sourceUrl": "https://support.claude.com/en/articles/13837440-use-plugins-in-cowork",
       "importance": 2
@@ -105,19 +105,31 @@
     {
       "id": "cp-8",
       "date": "2026-03-17",
-      "title": "Persistent Cowork thread from mobile",
-      "shortTitle": "Cowork mobile",
-      "description": "Pro and Max users got a persistent Cowork thread that can be managed from Claude mobile apps.",
+      "title": "Persistent Cowork thread from mobile (Dispatch)",
+      "shortTitle": "Dispatch",
+      "description": "Pro and Max users got a persistent Cowork thread manageable from Claude mobile: pair iPhone to Mac via QR code, send tasks from mobile, and return to finished work on the desktop.",
       "tags": ["cowork", "mobile"],
       "sourceUrl": "https://support.claude.com/en/articles/13947068-assign-tasks-to-claude-from-anywhere-in-cowork",
       "importance": 2
+    },
+    {
+      "id": "cp-10",
+      "date": "2026-03-23",
+      "title": "Computer use in Cowork and Claude Code",
+      "shortTitle": "Computer use",
+      "description": "Claude can open files, click, navigate screens, and run dev tools with no setup on macOS — available to Pro and Max subscribers in research preview. Windows support planned.",
+      "audience": "end_user",
+      "status": "preview",
+      "tags": ["computer-use", "desktop", "agent"],
+      "sourceUrl": "https://9to5mac.com/2026/03/23/anthropic-is-giving-claude-the-ability-to-use-your-mac-for-you/",
+      "importance": 3
     },
     {
       "id": "cp-9",
       "date": "2026-04-09",
       "title": "Cowork GA: computer use, analytics, and enterprise controls",
       "shortTitle": "Cowork GA",
-      "description": "Cowork reached general availability on macOS and Windows for all paid plans. Pro and Max users gained computer use; Enterprise added OpenTelemetry analytics and role-based access controls.",
+      "description": "Cowork reached general availability on macOS and Windows for all paid plans. Pro and Max users gained computer use; Enterprise added OpenTelemetry analytics, role-based access controls (SCIM-synced), group spend limits, and Zoom connector.",
       "audience": "end_user",
       "status": "stable",
       "tags": ["cowork", "enterprise", "desktop"],

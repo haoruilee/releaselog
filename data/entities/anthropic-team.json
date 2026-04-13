@@ -23,6 +23,16 @@
   },
   "releases": [
     {
+      "id": "at-12",
+      "date": "2026-01-12",
+      "title": "Anthropic Labs expansion",
+      "shortTitle": "Labs",
+      "description": "Anthropic expanded its internal Labs incubator, named Instagram co-founder Mike Krieger as co-lead alongside Ben Mann, and announced plans to double the team. Labs is the unit behind Claude Code, MCP, and Cowork.",
+      "tags": ["org", "strategy"],
+      "sourceUrl": "https://www.anthropic.com/news/introducing-anthropic-labs",
+      "importance": 2
+    },
+    {
       "id": "at-1",
       "date": "2026-01-12",
       "title": "Cowork research preview",
@@ -30,6 +40,26 @@
       "description": "Claude Desktop gained Cowork for multi-step knowledge work on local files and connected tools.",
       "tags": ["desktop", "agent"],
       "sourceUrl": "https://claude.com/blog/cowork-research-preview",
+      "importance": 3
+    },
+    {
+      "id": "at-13",
+      "date": "2026-01-19",
+      "title": "Economic Index: Economic Primitives report",
+      "shortTitle": "Econ Index",
+      "description": "Research report introducing five foundational metrics for AI's economic impact, finding augmentation now exceeds automation in Claude.ai conversations (52% vs 45%).",
+      "tags": ["research"],
+      "sourceUrl": "https://www.anthropic.com/research/anthropic-economic-index-january-2026-report",
+      "importance": 2
+    },
+    {
+      "id": "at-14",
+      "date": "2026-01-22",
+      "title": "Claude's new model spec (constitution)",
+      "shortTitle": "New Spec",
+      "description": "Anthropic published a 23,000-word updated model spec under CC0, replacing the 2023 ~2,700-word version. First major AI company to formally acknowledge potential model consciousness and moral status.",
+      "tags": ["safety", "policy"],
+      "sourceUrl": "https://www.anthropic.com/news/claude-new-constitution",
       "importance": 3
     },
     {
@@ -47,7 +77,7 @@
       "date": "2026-02-05",
       "title": "Claude Opus 4.6",
       "shortTitle": "Opus 4.6",
-      "description": "Anthropic launched Opus 4.6 as its most capable model for complex coding and long-running agent tasks.",
+      "description": "Flagship model with 1M token context, 128k output tokens, adaptive thinking, and agent-team task splitting. Topped agentic coding, computer use, and tool-use benchmarks.",
       "tags": ["model"],
       "sourceUrl": "https://www.anthropic.com/news/claude-opus-4-6",
       "importance": 3
@@ -63,6 +93,16 @@
       "importance": 3
     },
     {
+      "id": "at-15",
+      "date": "2026-02-17",
+      "title": "Anthropic Transparency Hub",
+      "shortTitle": "Transparency",
+      "description": "Centralized hub for model cards, safety commitments tracker, third-party evaluations, RSP v3.0 status, and release notes in one navigable interface.",
+      "tags": ["safety", "policy"],
+      "sourceUrl": "https://www.anthropic.com/news/introducing-anthropic-transparency-hub",
+      "importance": 2
+    },
+    {
       "id": "at-5",
       "date": "2026-02-24",
       "title": "Cowork and plugins for teams across the enterprise",
@@ -70,6 +110,16 @@
       "description": "Claude expanded Cowork with plugins, admin controls, and broader enterprise workflows.",
       "tags": ["cowork", "enterprise"],
       "sourceUrl": "https://claude.com/blog/cowork-plugins-across-enterprise",
+      "importance": 2
+    },
+    {
+      "id": "at-16",
+      "date": "2026-02-25",
+      "title": "Vercept acquisition",
+      "shortTitle": "Vercept",
+      "description": "Anthropic acquired Vercept to advance computer use capabilities. Vercept discontinued its external product to focus entirely on pushing Claude's computer-use benchmarks.",
+      "tags": ["acquisition", "computer-use"],
+      "sourceUrl": "https://siliconangle.com/2026/02/25/anthropic-acquires-ai-startup-vercept-enhance-claudes-computer-use-features/",
       "importance": 2
     },
     {
@@ -93,6 +143,16 @@
       "importance": 2
     },
     {
+      "id": "at-17",
+      "date": "2026-03-11",
+      "title": "The Anthropic Institute",
+      "shortTitle": "Institute",
+      "description": "New public-benefit research body to address societal challenges from powerful AI, led by co-founder Jack Clark as Head of Public Benefit.",
+      "tags": ["policy", "safety"],
+      "sourceUrl": "https://www.anthropic.com/news/the-anthropic-institute",
+      "importance": 2
+    },
+    {
       "id": "at-8",
       "date": "2026-03-12",
       "title": "Claude builds interactive visuals right in your conversation",
@@ -100,6 +160,26 @@
       "description": "Claude started creating inline charts, diagrams, and visual explanations directly in chat.",
       "tags": ["visuals", "chat"],
       "sourceUrl": "https://claude.com/blog/claude-builds-visuals",
+      "importance": 2
+    },
+    {
+      "id": "at-18",
+      "date": "2026-03-12",
+      "title": "Claude Partner Network — $100M investment",
+      "shortTitle": "Partners",
+      "description": "Formalized enterprise partner channel (Accenture, Deloitte, Cognizant, Infosys) with $100M in 2026 funding, 5× partner-facing team growth, and the first Claude Certified Architect credential.",
+      "tags": ["partnerships", "enterprise"],
+      "sourceUrl": "https://www.anthropic.com/news/claude-partner-network",
+      "importance": 3
+    },
+    {
+      "id": "at-19",
+      "date": "2026-04-06",
+      "title": "Google + Broadcom compute partnership expansion",
+      "shortTitle": "Compute",
+      "description": "Anthropic announced a multi-gigawatt next-generation compute expansion with Google and Broadcom.",
+      "tags": ["partnerships", "infrastructure"],
+      "sourceUrl": "https://www.anthropic.com/news/google-broadcom-partnership-compute",
       "importance": 2
     },
     {
