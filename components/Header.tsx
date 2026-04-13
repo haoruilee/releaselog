@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { EntityConfig } from "@/data/types";
 
 type Props = {
@@ -16,17 +17,27 @@ export function Header({ entity, daySpan, posterMode }: Props) {
 
   return (
     <header className="space-y-4">
-      <div className="flex items-center gap-2">
-        <span
-          className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-lg"
-          style={{ backgroundColor: "var(--accent)", color: "var(--bg-page)" }}
-          aria-hidden
-        >
-          ✦
-        </span>
-        <span className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">
-          ReleaseLog
-        </span>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <span
+            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-lg"
+            style={{ backgroundColor: "var(--accent)", color: "var(--bg-page)" }}
+            aria-hidden
+          >
+            ✦
+          </span>
+          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">
+            ReleaseLog
+          </span>
+        </div>
+        {!posterMode && (
+          <Link
+            href="/subscribe"
+            className="text-xs font-medium text-accent underline-offset-4 hover:underline"
+          >
+            Subscribe
+          </Link>
+        )}
       </div>
 
       <h1 className="max-w-4xl font-serif text-4xl leading-tight text-primary sm:text-5xl md:text-6xl">
