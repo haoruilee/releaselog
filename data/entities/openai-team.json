@@ -4,8 +4,8 @@
   "type": "team",
   "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
   "headline": "Verified OpenAI launches across {days} days.",
-  "subtitle": "January 7 — March 23, 2026. Company-level launches from official OpenAI sources.",
-  "footnote": "Cross-checked on March 31, 2026 against OpenAI announcement pages and OpenAI Help Center release notes.",
+  "subtitle": "January 7 — April 9, 2026. Company-level launches from official OpenAI sources.",
+  "footnote": "Cross-checked on April 13, 2026 against OpenAI announcement pages and OpenAI Help Center release notes.",
   "brandLine": "OpenAI official sources",
   "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
   "members": [
@@ -99,6 +99,26 @@
       "shortTitle": "Library",
       "description": "ChatGPT began saving uploaded and generated files into a reusable library that can be referenced across chats.",
       "tags": ["chatgpt", "files"],
+      "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "importance": 2
+    },
+    {
+      "id": "ot-9",
+      "date": "2026-04-02",
+      "title": "ChatGPT on Apple CarPlay",
+      "shortTitle": "CarPlay",
+      "description": "OpenAI launched ChatGPT in Apple CarPlay, enabling fully hands-free voice conversations for drivers on iOS 26.4 or later with a supported car.",
+      "tags": ["chatgpt", "mobile", "voice"],
+      "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "importance": 2
+    },
+    {
+      "id": "ot-10",
+      "date": "2026-04-09",
+      "title": "New $100/month ChatGPT Pro tier",
+      "shortTitle": "$100 Pro",
+      "description": "OpenAI inserted a new $100/month tier between Plus and the $200 Pro plan, offering 5× Codex usage vs Plus and the full model suite, with a launch promo of 10× through May 31.",
+      "tags": ["chatgpt", "pricing"],
       "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
       "importance": 2
     }

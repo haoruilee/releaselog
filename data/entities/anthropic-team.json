@@ -4,8 +4,8 @@
   "type": "team",
   "description": "High-signal Anthropic launches verified against official Anthropic, Claude, and Claude Help sources.",
   "headline": "Verified Anthropic launches across {days} days.",
-  "subtitle": "January 12 — March 12, 2026. Company-level launches from official Anthropic sources.",
-  "footnote": "Cross-checked on March 31, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
+  "subtitle": "January 12 — April 9, 2026. Company-level launches from official Anthropic sources.",
+  "footnote": "Cross-checked on April 13, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
   "brandLine": "Anthropic official sources",
   "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
   "members": [
@@ -101,6 +101,36 @@
       "tags": ["visuals", "chat"],
       "sourceUrl": "https://claude.com/blog/claude-builds-visuals",
       "importance": 2
+    },
+    {
+      "id": "at-9",
+      "date": "2026-04-07",
+      "title": "Claude Mythos Preview — Project Glasswing",
+      "shortTitle": "Mythos",
+      "description": "Anthropic unveiled Claude Mythos Preview, a cybersecurity-focused model released to 11 organizations under Project Glasswing to find and fix vulnerabilities in critical software.",
+      "tags": ["model", "security"],
+      "sourceUrl": "https://www.anthropic.com/glasswing",
+      "importance": 3
+    },
+    {
+      "id": "at-10",
+      "date": "2026-04-08",
+      "title": "Claude Managed Agents public beta",
+      "shortTitle": "Managed Agents",
+      "description": "Anthropic launched Claude Managed Agents in public beta — a fully managed agent harness with secure sandboxing, built-in tools, scoped permissions, and end-to-end tracing.",
+      "tags": ["agents", "platform"],
+      "sourceUrl": "https://platform.claude.com/docs/en/managed-agents/overview",
+      "importance": 3
+    },
+    {
+      "id": "at-11",
+      "date": "2026-04-09",
+      "title": "Cowork goes GA with computer use and enterprise controls",
+      "shortTitle": "Cowork GA",
+      "description": "Claude Cowork reached general availability on macOS and Windows for all paid plans, adding computer use for Pro and Max users, OpenTelemetry analytics, and role-based access controls for Enterprise.",
+      "tags": ["cowork", "enterprise", "desktop"],
+      "sourceUrl": "https://www.techradar.com/pro/claude-cowork-is-now-available-for-enterprise-use-adds-analytics-access-controls-and-more",
+      "importance": 3
     }
   ]
 }

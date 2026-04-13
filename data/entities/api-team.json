@@ -4,8 +4,8 @@
   "type": "team",
   "description": "Platform and developer-facing releases verified against Claude Platform release notes.",
   "headline": "Verified Claude Platform releases across {days} days.",
-  "subtitle": "January 29 — March 30, 2026. Claude Platform release notes only.",
-  "footnote": "Dates and links cross-checked on March 31, 2026 against official Claude Platform release notes and API documentation.",
+  "subtitle": "January 29 — April 8, 2026. Claude Platform release notes only.",
+  "footnote": "Dates and links cross-checked on April 13, 2026 against official Claude Platform release notes and API documentation.",
   "brandLine": "Claude Platform release notes",
   "brandUrl": "https://platform.claude.com/docs/en/release-notes/overview",
   "theme": {
@@ -132,6 +132,30 @@
       "description": "The Message Batches API raised its `max_tokens` cap for Claude Opus 4.6 and Sonnet 4.6.",
       "tags": ["batching"],
       "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/batch-processing",
+      "importance": 2
+    },
+    {
+      "id": "api-11",
+      "date": "2026-04-08",
+      "title": "Claude Managed Agents public beta",
+      "shortTitle": "Managed Agents",
+      "description": "Managed Agents launched in public beta providing secure sandboxed execution, long-running sessions, scoped permissions, and end-to-end tracing at $0.08/runtime hour. All endpoints require the managed-agents-2026-04-01 beta header.",
+      "audience": "developer",
+      "status": "beta",
+      "tags": ["agents", "platform"],
+      "sourceUrl": "https://platform.claude.com/docs/en/managed-agents/overview",
+      "importance": 3
+    },
+    {
+      "id": "api-12",
+      "date": "2026-04-08",
+      "title": "ant CLI for the Claude API",
+      "shortTitle": "ant CLI",
+      "description": "Anthropic shipped the ant CLI — a command-line client for the Claude API with native Claude Code integration and YAML-based versioning of API resources.",
+      "audience": "developer",
+      "status": "stable",
+      "tags": ["tooling", "cli"],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
       "importance": 2
     }
   ]

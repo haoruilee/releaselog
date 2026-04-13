@@ -4,8 +4,8 @@
   "type": "product",
   "description": "Verified app, desktop, mobile, and add-in launches from Claude.",
   "headline": "Verified Claude product launches across {days} days.",
-  "subtitle": "January 12 — March 17, 2026. Cross-checked against official Claude release notes and product pages.",
-  "footnote": "Cross-checked on March 31, 2026 against official Claude Help Center release notes, Claude product posts, and Anthropic announcements.",
+  "subtitle": "January 12 — April 9, 2026. Cross-checked against official Claude release notes and product pages.",
+  "footnote": "Cross-checked on April 13, 2026 against official Claude Help Center release notes, Claude product posts, and Anthropic announcements.",
   "brandLine": "Claude official sources",
   "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
   "theme": {
@@ -111,6 +111,18 @@
       "tags": ["cowork", "mobile"],
       "sourceUrl": "https://support.claude.com/en/articles/13947068-assign-tasks-to-claude-from-anywhere-in-cowork",
       "importance": 2
+    },
+    {
+      "id": "cp-9",
+      "date": "2026-04-09",
+      "title": "Cowork GA: computer use, analytics, and enterprise controls",
+      "shortTitle": "Cowork GA",
+      "description": "Cowork reached general availability on macOS and Windows for all paid plans. Pro and Max users gained computer use; Enterprise added OpenTelemetry analytics and role-based access controls.",
+      "audience": "end_user",
+      "status": "stable",
+      "tags": ["cowork", "enterprise", "desktop"],
+      "sourceUrl": "https://www.techradar.com/pro/claude-cowork-is-now-available-for-enterprise-use-adds-analytics-access-controls-and-more",
+      "importance": 3
     }
   ]
 }
