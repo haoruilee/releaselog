@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { CalendarBoard } from "@/components/CalendarBoard";
 import { DayDetails } from "@/components/DayDetails";
 import { EntitySwitcher } from "@/components/EntitySwitcher";
@@ -157,10 +158,24 @@ export default function HomePage() {
               )}
             </p>
             {!posterMode && (
-              <p className="text-xs">
-                Share: screenshot this page or use Export PNG (header, stats, and
-                calendar only).
-              </p>
+              <div className="space-y-2 text-xs leading-relaxed">
+                <p>
+                  <Link
+                    href="/subscribe"
+                    className="text-accent underline-offset-4 hover:underline"
+                  >
+                    Subscribe
+                  </Link>
+                  <span className="text-secondary/80">
+                    {" "}
+                    — Atom feeds for each team (or all together); your reader stays in sync. Optional
+                    weekly email when enabled.
+                  </span>
+                </p>
+                <p className="text-secondary/70">
+                  Share: screenshot this page or use Export PNG (header, stats, and calendar only).
+                </p>
+              </div>
             )}
           </footer>
         </div>

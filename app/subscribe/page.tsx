@@ -59,10 +59,11 @@ export default function SubscribePage() {
         </p>
         <h1 className="mt-2 font-serif text-3xl text-primary sm:text-4xl">Subscribe</h1>
         <p className="mt-3 text-sm leading-relaxed text-secondary">
-          Follow updates via <strong className="text-primary/90">RSS/Atom</strong> (any reader —
-          automatic refresh). Optionally add your email for a{" "}
-          <strong className="text-primary/90">weekly digest</strong> when the site operator enables
-          it.
+          This site tracks verified releases with short context and links. You don’t have to check
+          back manually: add an <strong className="text-primary/90">Atom feed</strong> to Feedly,
+          Inoreader, NetNewsWire, or any reader — it will poll and show new entries with summaries.
+          Optionally leave your email for a <strong className="text-primary/90">weekly digest</strong>{" "}
+          when the operator has connected email (see below).
         </p>
 
         <section className="mt-10 space-y-4">
