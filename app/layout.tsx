@@ -2,6 +2,14 @@ import type { Metadata } from "next";
 import { Instrument_Serif, DM_Sans } from "next/font/google";
 import "./globals.css";
 
+function metadataBaseUrl(): URL {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (explicit) return new URL(explicit);
+  const vercel = process.env.VERCEL_URL?.trim();
+  if (vercel) return new URL(`https://${vercel.replace(/^https?:\/\//, "")}`);
+  return new URL("http://localhost:3000");
+}
+
 const serif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
@@ -16,8 +24,14 @@ const sans = DM_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: metadataBaseUrl(),
   title: "ReleaseLog",
   description: "Shipping calendar for teams and products",
+  alternates: {
+    types: {
+      "application/atom+xml": "/feeds/atom.xml",
+    },
+  },
 };
 
 export default function RootLayout({

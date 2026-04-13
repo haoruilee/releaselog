@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CalendarBoard } from "@/components/CalendarBoard";
 import { DayDetails } from "@/components/DayDetails";
 import { EntitySwitcher } from "@/components/EntitySwitcher";
@@ -57,6 +57,25 @@ export default function HomePage() {
     if (!selectedDate) return [];
     return releasesInRange.filter((r) => r.date === selectedDate);
   }, [releasesInRange, selectedDate]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const raw = window.location.hash.replace(/^#/, "");
+    if (!raw.startsWith("feed-")) return;
+    const rest = raw.slice("feed-".length);
+    const byIdLen = [...entities].sort((a, b) => b.id.length - a.id.length);
+    for (const e of byIdLen) {
+      const prefix = `${e.id}-`;
+      if (!rest.startsWith(prefix)) continue;
+      const releaseId = rest.slice(prefix.length);
+      const hit = e.releases.find((r) => r.id === releaseId);
+      if (hit) {
+        setSelectedEntityId(e.id);
+        setSelectedDate(hit.date);
+        break;
+      }
+    }
+  }, []);
 
   if (!entity) {
     return null;
@@ -118,6 +137,7 @@ export default function HomePage() {
             dateStr={selectedDate}
             items={itemsForSelectedDay}
             posterMode={posterMode}
+            entityId={entity.id}
           />
 
           <footer className="space-y-4 border-t border-white/5 pt-8 text-sm text-secondary/70">

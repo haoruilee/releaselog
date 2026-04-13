@@ -8,9 +8,11 @@ type Props = {
   dateStr: string | null;
   items: ReleaseItem[];
   posterMode: boolean;
+  /** Used for /subscribe feed deep links: `/?entity=…#feed-{entityId}-{releaseId}` */
+  entityId?: string;
 };
 
-export function DayDetails({ dateStr, items, posterMode }: Props) {
+export function DayDetails({ dateStr, items, posterMode, entityId }: Props) {
   if (posterMode) return null;
 
   if (!dateStr || items.length === 0) {
@@ -41,10 +43,14 @@ export function DayDetails({ dateStr, items, posterMode }: Props) {
               : [item.audience]
             : [];
 
+          const anchorId =
+            entityId !== undefined ? `feed-${entityId}-${item.id}` : undefined;
+
           return (
             <li
               key={item.id}
-              className="border-b border-white/5 pb-4 last:border-0 last:pb-0"
+              id={anchorId}
+              className="scroll-mt-24 border-b border-white/5 pb-4 last:border-0 last:pb-0"
             >
               <div className="flex flex-wrap items-baseline gap-2">
                 {item.sourceUrl ? (
