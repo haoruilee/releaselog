@@ -4,7 +4,7 @@ import { entities } from "@/data";
 import { buildWeeklyDigestForEntities } from "@/lib/email-digest";
 import { listSubscribeLeads } from "@/lib/subscribe-redis";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 function verifyCron(request: Request): boolean {
   const secret = process.env.CRON_SECRET;
@@ -16,6 +16,16 @@ function verifyCron(request: Request): boolean {
 }
 
 export async function GET(request: Request) {
+  if (process.env.STATIC_EXPORT === "1") {
+    return NextResponse.json(
+      {
+        error: "not_available",
+        hint: "Cron digest runs on a server (e.g. Vercel), not on static GitHub Pages.",
+      },
+      { status: 503 },
+    );
+  }
+
   if (!verifyCron(request)) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }

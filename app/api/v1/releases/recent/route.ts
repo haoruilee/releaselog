@@ -4,8 +4,7 @@ import type { ReleaseItem } from "@/data/types";
 import { API_SCHEMA_VERSION } from "@/lib/api-constants";
 import { filterReleases, parseReleaseFilters } from "@/lib/releases-query";
 
-/** `days`, `entity`, filters, and pagination depend on the request URL. */
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 function addDaysIso(isoDate: string, delta: number): string {
   const d = new Date(isoDate + "T12:00:00Z");
@@ -14,17 +13,20 @@ function addDaysIso(isoDate: string, delta: number): string {
 }
 
 export function GET(request: Request) {
-  const url = new URL(request.url);
+  const staticExport = process.env.STATIC_EXPORT === "1";
+  const searchParams = staticExport
+    ? new URLSearchParams()
+    : new URL(request.url).searchParams;
   const days = Math.min(
     365,
-    Math.max(1, Number.parseInt(url.searchParams.get("days") ?? "30", 10) || 30),
+    Math.max(1, Number.parseInt(searchParams.get("days") ?? "30", 10) || 30),
   );
   const today = new Date();
   const to = today.toISOString().slice(0, 10);
   const from = addDaysIso(to, -(days - 1));
 
-  const entityFilter = url.searchParams.get("entity") ?? undefined;
-  const filters = parseReleaseFilters(url.searchParams);
+  const entityFilter = searchParams.get("entity") ?? undefined;
+  const filters = parseReleaseFilters(searchParams);
 
   const list: Array<ReleaseItem & { entityId: string; entityName: string }> = [];
 

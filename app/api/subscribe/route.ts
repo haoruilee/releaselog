@@ -2,11 +2,21 @@ import { NextResponse } from "next/server";
 import { entities } from "@/data";
 import { appendSubscribeLead } from "@/lib/subscribe-redis";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(request: Request) {
+  if (process.env.STATIC_EXPORT === "1") {
+    return NextResponse.json(
+      {
+        error: "not_available",
+        hint: "Email signup requires a server deployment (not static GitHub Pages).",
+      },
+      { status: 503 },
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();
