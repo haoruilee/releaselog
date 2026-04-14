@@ -9,10 +9,13 @@ import { Header } from "@/components/Header";
 import { PosterToolbar } from "@/components/PosterToolbar";
 import { RangeSwitcher } from "@/components/RangeSwitcher";
 import { SummaryStats } from "@/components/SummaryStats";
-import { entities } from "@/data";
+import { entityMetas } from "@/data";
+import type { ReleaseItem } from "@/data/types";
 import { buildCalendarMonths, filterReleasesInRange } from "@/lib/calendar";
 import { computeSummaryStats, getRangeBounds } from "@/lib/stats";
 import { resolveTheme, themeToCssVars } from "@/lib/theme";
+
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 function todayNoon(): Date {
   const d = new Date();
@@ -21,32 +24,73 @@ function todayNoon(): Date {
 }
 
 export default function HomePage() {
-  const [selectedEntityId, setSelectedEntityId] = useState(entities[0]?.id ?? "");
+  const [selectedEntityId, setSelectedEntityId] = useState(
+    entityMetas[0]?.id ?? "",
+  );
   const [selectedRange, setSelectedRange] = useState<1 | 3 | 6>(3);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [posterMode, setPosterMode] = useState(false);
+
+  // Releases loaded on-demand — not bundled into initial JS
+  const [releases, setReleases] = useState<ReleaseItem[]>([]);
+  const pendingReleaseIdRef = useRef<string | null>(null);
+
   const exportTargetRef = useRef<HTMLDivElement>(null);
 
-  const entity = useMemo(
-    () => entities.find((e) => e.id === selectedEntityId) ?? entities[0],
+  const entityMeta = useMemo(
+    () => entityMetas.find((e) => e.id === selectedEntityId) ?? entityMetas[0],
     [selectedEntityId],
   );
 
-  const theme = useMemo(() => resolveTheme(entity?.theme), [entity]);
+  const theme = useMemo(() => resolveTheme(entityMeta?.theme), [entityMeta]);
 
   const { start: rangeStart, end: rangeEnd } = useMemo(
     () => getRangeBounds(todayNoon(), selectedRange),
     [selectedRange],
   );
 
+  // Fetch releases whenever the selected entity changes
+  useEffect(() => {
+    setReleases([]);
+    fetch(`${BASE_PATH}/data/${selectedEntityId}-releases.json`)
+      .then((r) => r.json())
+      .then((data: ReleaseItem[]) => {
+        setReleases(data);
+        // Resolve pending hash deep-link after first load
+        if (pendingReleaseIdRef.current) {
+          const hit = data.find((r) => r.id === pendingReleaseIdRef.current);
+          if (hit) setSelectedDate(hit.date);
+          pendingReleaseIdRef.current = null;
+        }
+      })
+      .catch(() => setReleases([]));
+  }, [selectedEntityId]);
+
+  // Hash-based deep linking: #feed-{entityId}-{releaseId}
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const raw = window.location.hash.replace(/^#/, "");
+    if (!raw.startsWith("feed-")) return;
+    const rest = raw.slice("feed-".length);
+    const byIdLen = [...entityMetas].sort((a, b) => b.id.length - a.id.length);
+    for (const e of byIdLen) {
+      const prefix = `${e.id}-`;
+      if (!rest.startsWith(prefix)) continue;
+      const releaseId = rest.slice(prefix.length);
+      pendingReleaseIdRef.current = releaseId;
+      setSelectedEntityId(e.id);
+      break;
+    }
+  }, []);
+
   const releasesInRange = useMemo(
-    () => filterReleasesInRange(entity?.releases ?? [], rangeStart, rangeEnd),
-    [entity, rangeStart, rangeEnd],
+    () => filterReleasesInRange(releases, rangeStart, rangeEnd),
+    [releases, rangeStart, rangeEnd],
   );
 
   const stats = useMemo(
-    () => computeSummaryStats(entity?.releases ?? [], rangeStart, rangeEnd),
-    [entity, rangeStart, rangeEnd],
+    () => computeSummaryStats(releases, rangeStart, rangeEnd),
+    [releases, rangeStart, rangeEnd],
   );
 
   const calendarMonths = useMemo(
@@ -59,28 +103,7 @@ export default function HomePage() {
     return releasesInRange.filter((r) => r.date === selectedDate);
   }, [releasesInRange, selectedDate]);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const raw = window.location.hash.replace(/^#/, "");
-    if (!raw.startsWith("feed-")) return;
-    const rest = raw.slice("feed-".length);
-    const byIdLen = [...entities].sort((a, b) => b.id.length - a.id.length);
-    for (const e of byIdLen) {
-      const prefix = `${e.id}-`;
-      if (!rest.startsWith(prefix)) continue;
-      const releaseId = rest.slice(prefix.length);
-      const hit = e.releases.find((r) => r.id === releaseId);
-      if (hit) {
-        setSelectedEntityId(e.id);
-        setSelectedDate(hit.date);
-        break;
-      }
-    }
-  }, []);
-
-  if (!entity) {
-    return null;
-  }
+  if (!entityMeta) return null;
 
   return (
     <div className="min-h-screen bg-page" style={themeToCssVars(theme)}>
@@ -90,7 +113,7 @@ export default function HomePage() {
           className="space-y-10 rounded-2xl bg-page p-4 sm:p-6 md:p-8"
         >
           <Header
-            entity={entity}
+            entity={entityMeta}
             daySpan={stats.daySpan}
             posterMode={posterMode}
           />
@@ -109,8 +132,8 @@ export default function HomePage() {
           <div className="mt-8 flex flex-col gap-6 border-b border-white/5 pb-8 md:flex-row md:items-end md:justify-between">
             <div className="flex flex-col gap-4">
               <EntitySwitcher
-                entities={entities}
-                selectedId={entity.id}
+                entities={entityMetas}
+                selectedId={entityMeta.id}
                 onChange={(id) => {
                   setSelectedEntityId(id);
                   setSelectedDate(null);
@@ -128,31 +151,24 @@ export default function HomePage() {
             </div>
             <div className="rounded-full bg-empty-cell/50 px-3 py-1 text-xs text-secondary ring-1 ring-white/5">
               Theme:{" "}
-              <span className="font-medium text-accent">{entity.name}</span>
+              <span className="font-medium text-accent">{entityMeta.name}</span>
             </div>
           </div>
         )}
 
-        <div className="mt-10 space-y-10 pb-24">
-          <DayDetails
-            dateStr={selectedDate}
-            items={itemsForSelectedDay}
-            posterMode={posterMode}
-            entityId={entity.id}
-          />
-
+        <div className="mt-10 pb-24">
           <footer className="space-y-4 border-t border-white/5 pt-8 text-sm text-secondary/70">
-            {entity.footnote && <p>{entity.footnote}</p>}
+            {entityMeta.footnote && <p>{entityMeta.footnote}</p>}
             <p>
-              {entity.brandLine ?? "ReleaseLog"}
-              {entity.brandUrl && (
+              {entityMeta.brandLine ?? "ReleaseLog"}
+              {entityMeta.brandUrl && (
                 <>
                   {" · "}
                   <a
-                    href={entity.brandUrl}
+                    href={entityMeta.brandUrl}
                     className="text-accent underline-offset-4 hover:underline"
                   >
-                    {entity.brandUrl.replace(/^https?:\/\//, "")}
+                    {entityMeta.brandUrl.replace(/^https?:\/\//, "")}
                   </a>
                 </>
               )}
@@ -196,6 +212,16 @@ export default function HomePage() {
           posterMode={posterMode}
           onPosterModeChange={setPosterMode}
           exportTargetRef={exportTargetRef}
+        />
+      )}
+
+      {/* Day details modal — rendered as overlay above everything */}
+      {!posterMode && selectedDate && itemsForSelectedDay.length > 0 && (
+        <DayDetails
+          dateStr={selectedDate}
+          items={itemsForSelectedDay}
+          onClose={() => setSelectedDate(null)}
+          entityId={entityMeta.id}
         />
       )}
     </div>

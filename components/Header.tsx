@@ -1,8 +1,8 @@
 import Link from "next/link";
-import type { EntityConfig } from "@/data/types";
+import type { EntityMeta } from "@/data/types";
 
 type Props = {
-  entity: EntityConfig;
+  entity: EntityMeta;
   daySpan: number;
   posterMode: boolean;
 };
@@ -65,7 +65,7 @@ export function Header({ entity, daySpan, posterMode }: Props) {
               {m.avatar ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={m.avatar}
+                  src={(process.env.NEXT_PUBLIC_BASE_PATH ?? "") + m.avatar}
                   alt=""
                   width={36}
                   height={36}

@@ -1,0 +1,100 @@
+[
+  {
+    "id": "anthropic-team",
+    "name": "Anthropic Team",
+    "type": "team",
+    "description": "High-signal Anthropic launches verified against official Anthropic, Claude, and Claude Help sources.",
+    "headline": "Verified Anthropic launches across {days} days.",
+    "subtitle": "January 12 — April 9, 2026. Company-level launches from official Anthropic sources.",
+    "footnote": "Cross-checked on April 13, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
+    "brandLine": "Anthropic official sources",
+    "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+    "members": [
+      {
+        "name": "Team",
+        "handle": "@anthropic",
+        "avatar": "/avatars/placeholder.svg"
+      }
+    ],
+    "theme": {
+      "primary": "#ea580c",
+      "bgPage": "#0c0a09",
+      "bgPanel": "#161210",
+      "bgEmptyCell": "#1f1915",
+      "bgActiveCell": "#c2410c",
+      "textPrimary": "#fef3e2",
+      "textSecondary": "#fdba74",
+      "accentNumber": "#fb923c"
+    }
+  },
+  {
+    "id": "api-team",
+    "name": "API Team",
+    "type": "team",
+    "description": "Platform and developer-facing releases verified against Claude Platform release notes.",
+    "headline": "Verified Claude Platform releases across {days} days.",
+    "subtitle": "January 29 — April 8, 2026. Claude Platform release notes only.",
+    "footnote": "Dates and links cross-checked on April 13, 2026 against official Claude Platform release notes and API documentation.",
+    "brandLine": "Claude Platform release notes",
+    "brandUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+    "theme": {
+      "primary": "#2563eb",
+      "bgPage": "#0a0f1a",
+      "bgPanel": "#0f172a",
+      "bgEmptyCell": "#1e293b",
+      "bgActiveCell": "#1d4ed8",
+      "textPrimary": "#f8fafc",
+      "textSecondary": "#93c5fd",
+      "accentNumber": "#60a5fa"
+    }
+  },
+  {
+    "id": "claude-product",
+    "name": "Claude (Product)",
+    "type": "product",
+    "description": "Verified app, desktop, mobile, and add-in launches from Claude.",
+    "headline": "Verified Claude product launches across {days} days.",
+    "subtitle": "January 12 — April 9, 2026. Cross-checked against official Claude release notes and product pages.",
+    "footnote": "Cross-checked on April 13, 2026 against official Claude Help Center release notes, Claude product posts, and Anthropic announcements.",
+    "brandLine": "Claude official sources",
+    "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+    "theme": {
+      "primary": "#059669",
+      "bgPage": "#0a0f0c",
+      "bgPanel": "#0f1712",
+      "bgEmptyCell": "#14231a",
+      "bgActiveCell": "#047857",
+      "textPrimary": "#ecfdf5",
+      "textSecondary": "#6ee7b7",
+      "accentNumber": "#34d399"
+    }
+  },
+  {
+    "id": "openai-team",
+    "name": "OpenAI Team",
+    "type": "team",
+    "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
+    "headline": "Verified OpenAI launches across {days} days.",
+    "subtitle": "January 7 — April 9, 2026. Company-level launches from official OpenAI sources.",
+    "footnote": "Cross-checked on April 13, 2026 against OpenAI announcement pages and OpenAI Help Center release notes.",
+    "brandLine": "OpenAI official sources",
+    "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+    "members": [
+      {
+        "name": "Team",
+        "handle": "@openai",
+        "avatar": "/avatars/placeholder.svg"
+      }
+    ],
+    "theme": {
+      "primary": "#10a37f",
+      "bgPage": "#090b0a",
+      "bgPanel": "#111614",
+      "bgEmptyCell": "#181f1c",
+      "bgActiveCell": "#0d7c61",
+      "textPrimary": "#f5f7f6",
+      "textSecondary": "#98c8b7",
+      "accentNumber": "#34d399"
+    }
+  }
+]

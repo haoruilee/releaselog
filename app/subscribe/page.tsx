@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { entities } from "@/data";
+import { entityMetas as entities } from "@/data";
 
 export default function SubscribePage() {
   const [selected, setSelected] = useState<Set<string>>(() => new Set(entities.map((e) => e.id)));

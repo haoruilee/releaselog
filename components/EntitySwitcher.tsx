@@ -1,9 +1,9 @@
 "use client";
 
-import type { EntityConfig } from "@/data/types";
+import type { EntityMeta } from "@/data/types";
 
 type Props = {
-  entities: EntityConfig[];
+  entities: EntityMeta[];
   selectedId: string;
   onChange: (id: string) => void;
   posterMode: boolean;

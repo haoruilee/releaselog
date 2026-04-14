@@ -81,3 +81,6 @@ export type EntityConfig = {
   theme?: ThemeConfig;
   releases: ReleaseItem[];
 };
+
+/** EntityConfig without releases — safe to bundle into client JS (tiny). */
+export type EntityMeta = Omit<EntityConfig, "releases">;
