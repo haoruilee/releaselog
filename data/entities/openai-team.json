@@ -27,17 +27,37 @@
       "date": "2026-01-07",
       "title": "ChatGPT Health",
       "shortTitle": "Health",
-      "description": "OpenAI introduced a dedicated Health space in ChatGPT with separate memory, files, and connected health data.",
+      "description": "OpenAI introduced a dedicated Health space in ChatGPT with purpose-built encryption, isolated memory, and conversation siloing — health data not used to train models or shared with other chats.",
       "tags": ["chatgpt", "health"],
       "sourceUrl": "https://openai.com/index/introducing-chatgpt-health/",
       "importance": 3
+    },
+    {
+      "id": "ot-11",
+      "date": "2026-01-16",
+      "title": "ChatGPT Go tier and ads",
+      "shortTitle": "Go + Ads",
+      "description": "OpenAI launched the $8/month ChatGPT Go plan globally and announced ad testing for Free and Go users in the US — conversation-relevant ads appearing below answers, clearly labeled. Paid tiers remain ad-free.",
+      "tags": ["chatgpt", "pricing", "ads"],
+      "sourceUrl": "https://www.cnbc.com/2026/01/16/open-ai-chatgpt-ads-us.html",
+      "importance": 2
+    },
+    {
+      "id": "ot-12",
+      "date": "2026-01-30",
+      "title": "More visual ChatGPT responses",
+      "shortTitle": "Visual UI",
+      "description": "Responses for everyday questions gained at-a-glance visuals (stats, unit conversions, calculations) and tap-to-expand highlights for key people, places, and products with sourced side panels. Available on iOS, Android, and web.",
+      "tags": ["chatgpt", "ui"],
+      "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "importance": 2
     },
     {
       "id": "ot-2",
       "date": "2026-02-02",
       "title": "Codex app for macOS",
       "shortTitle": "Codex app",
-      "description": "OpenAI launched the Codex desktop app as a command center for supervising multiple long-running agents.",
+      "description": "OpenAI launched the Codex desktop app as a command center for supervising multiple long-running agents in parallel. Available to Plus, Pro, Business, Enterprise, and Edu plans on Apple Silicon (macOS 14+).",
       "tags": ["codex", "desktop"],
       "sourceUrl": "https://openai.com/index/introducing-the-codex-app/",
       "importance": 3
@@ -47,17 +67,27 @@
       "date": "2026-02-05",
       "title": "GPT-5.3-Codex",
       "shortTitle": "5.3-Codex",
-      "description": "OpenAI released GPT-5.3-Codex as its most capable agentic coding model, combining coding, reasoning, and computer-use strength.",
+      "description": "OpenAI released GPT-5.3-Codex as its most capable agentic coding model, combining coding, reasoning, and computer-use strength. First OpenAI model rated \"High\" cybersecurity capability under its Preparedness Framework.",
       "tags": ["model", "codex"],
       "sourceUrl": "https://openai.com/index/introducing-gpt-5-3-codex/",
       "importance": 3
+    },
+    {
+      "id": "ot-13",
+      "date": "2026-02-09",
+      "title": "Ads go live in ChatGPT Free and Go",
+      "shortTitle": "Ads live",
+      "description": "Advertising officially rolled out in ChatGPT for Free and Go tier users in the US, following the January announcement period.",
+      "tags": ["chatgpt", "ads"],
+      "sourceUrl": "https://openai.com/index/our-approach-to-advertising-and-expanding-access/",
+      "importance": 2
     },
     {
       "id": "ot-4",
       "date": "2026-02-12",
       "title": "GPT-5.3-Codex-Spark",
       "shortTitle": "Codex-Spark",
-      "description": "OpenAI released Codex-Spark as an ultra-fast research preview for real-time coding inside Codex.",
+      "description": "Ultra-fast real-time coding model running on Cerebras Wafer Scale Engine 3 at 1000+ tokens/second. ChatGPT Pro research preview — first OpenAI model on dedicated Cerebras low-latency hardware.",
       "tags": ["model", "codex"],
       "sourceUrl": "https://openai.com/index/introducing-gpt-5-3-codex-spark/",
       "importance": 2
@@ -67,7 +97,7 @@
       "date": "2026-02-25",
       "title": "Projects can add sources from apps and chats",
       "shortTitle": "Projects",
-      "description": "ChatGPT Projects gained app links, saved chat outputs, and ad-hoc text as reusable project sources.",
+      "description": "ChatGPT Projects gained app links, saved chat outputs, and ad-hoc text as reusable, always-in-context project sources.",
       "tags": ["chatgpt", "projects"],
       "sourceUrl": "https://help.openai.com/en/articles/10169521-projects-in-chatgpt",
       "importance": 2
@@ -77,7 +107,7 @@
       "date": "2026-03-05",
       "title": "GPT-5.4",
       "shortTitle": "GPT-5.4",
-      "description": "OpenAI rolled out GPT-5.4 across ChatGPT, Codex, and the API as its new mainline reasoning model.",
+      "description": "New mainline flagship across ChatGPT, Codex, and API: 1M token context, Codex-level coding, 75% on OSWorld computer use (exceeding human baseline at 72.4%), and 33% fewer per-claim errors vs GPT-5.2.",
       "tags": ["model"],
       "sourceUrl": "https://openai.com/index/introducing-gpt-5-4/",
       "importance": 3
@@ -87,7 +117,7 @@
       "date": "2026-03-17",
       "title": "GPT-5.4 mini and nano",
       "shortTitle": "5.4 mini",
-      "description": "OpenAI launched faster, cheaper GPT-5.4 mini and nano variants optimized for coding, subagents, and high-volume workloads.",
+      "description": "Faster, cheaper variants: mini (400k context, $0.75/$4.50 per MTok) and nano (API only, $0.20/$1.25 per MTok). Free-tier ChatGPT upgraded to GPT-5.4 mini; mini available in Codex for subagent parallelism.",
       "tags": ["model", "subagents"],
       "sourceUrl": "https://openai.com/index/introducing-gpt-5-4-mini-and-nano/",
       "importance": 3
@@ -97,7 +127,7 @@
       "date": "2026-03-23",
       "title": "File Library in ChatGPT",
       "shortTitle": "Library",
-      "description": "ChatGPT began saving uploaded and generated files into a reusable library that can be referenced across chats.",
+      "description": "ChatGPT began saving uploaded and model-generated files into a persistent File Library, reusable across chats without re-uploading.",
       "tags": ["chatgpt", "files"],
       "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
       "importance": 2
