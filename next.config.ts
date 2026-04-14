@@ -13,6 +13,14 @@ const nextConfig: NextConfig = {
   ...(basePath ? { basePath, assetPrefix: basePath } : {}),
   ...(!staticExport
     ? {
+        async headers() {
+          return [
+            {
+              source: "/(.*)",
+              headers: [{ key: "X-Robots-Tag", value: "index, follow" }],
+            },
+          ];
+        },
         async rewrites() {
           return [
             { source: "/api/v1/entities", destination: "/api/v1/entity-list" },
