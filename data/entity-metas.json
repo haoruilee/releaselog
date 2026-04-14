@@ -29,10 +29,10 @@
   },
   {
     "id": "api-team",
-    "name": "API Team",
+    "name": "Claude API",
     "type": "team",
-    "description": "Platform and developer-facing releases verified against Claude Platform release notes.",
-    "headline": "Verified Claude Platform releases across {days} days.",
+    "description": "Developer-facing Claude Platform releases verified against official Claude Platform release notes.",
+    "headline": "Verified Claude API releases across {days} days.",
     "subtitle": "January 29 — April 8, 2026. Claude Platform release notes only.",
     "footnote": "Dates and links cross-checked on April 13, 2026 against official Claude Platform release notes and API documentation.",
     "brandLine": "Claude Platform release notes",

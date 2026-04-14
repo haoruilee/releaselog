@@ -193,16 +193,6 @@
       "importance": 3
     },
     {
-      "id": "at-10",
-      "date": "2026-04-08",
-      "title": "Claude Managed Agents public beta",
-      "shortTitle": "Managed Agents",
-      "description": "Anthropic launched Claude Managed Agents in public beta — a fully managed agent harness with secure sandboxing, built-in tools, scoped permissions, and end-to-end tracing.",
-      "tags": ["agents", "platform"],
-      "sourceUrl": "https://platform.claude.com/docs/en/managed-agents/overview",
-      "importance": 3
-    },
-    {
       "id": "at-11",
       "date": "2026-04-09",
       "title": "Cowork goes GA with computer use and enterprise controls",
