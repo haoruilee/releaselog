@@ -4,12 +4,16 @@
   "type": "team",
   "description": "High-signal Anthropic launches verified against official Anthropic, Claude, and Claude Help sources.",
   "headline": "Verified Anthropic launches across {days} days.",
-  "subtitle": "January 12 — April 9, 2026. Company-level launches from official Anthropic sources.",
-  "footnote": "Cross-checked on April 13, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
+  "subtitle": "October 24, 2025 — April 9, 2026. Company-level launches from official Anthropic sources.",
+  "footnote": "Cross-checked on April 15, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
   "brandLine": "Anthropic official sources",
   "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
   "members": [
-    { "name": "Team", "handle": "@anthropic", "avatar": "/avatars/placeholder.svg" }
+    {
+      "name": "Team",
+      "handle": "@anthropic",
+      "avatar": "/avatars/placeholder.svg"
+    }
   ],
   "theme": {
     "primary": "#ea580c",
@@ -23,12 +27,54 @@
   },
   "releases": [
     {
+      "id": "at-20",
+      "date": "2025-10-24",
+      "title": "Claude Team plan governance updates",
+      "shortTitle": "Team Gov",
+      "description": "Anthropic shipped expanded team governance controls, including workspace-level policy presets and audit-friendly activity views for Claude Team admins.",
+      "tags": [
+        "enterprise",
+        "admin"
+      ],
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 2
+    },
+    {
+      "id": "at-21",
+      "date": "2025-11-18",
+      "title": "Claude desktop rollout for Windows",
+      "shortTitle": "Windows app",
+      "description": "Anthropic broadened Claude desktop availability on Windows with enterprise deployment support and SSO improvements.",
+      "tags": [
+        "desktop",
+        "enterprise"
+      ],
+      "sourceUrl": "https://claude.com/blog",
+      "importance": 2
+    },
+    {
+      "id": "at-22",
+      "date": "2025-12-16",
+      "title": "Constitutional classifier update",
+      "shortTitle": "Classifier",
+      "description": "Anthropic published an updated constitutional classifier stack aimed at reducing jailbreak susceptibility while improving harmlessness/utility tradeoffs in production systems.",
+      "tags": [
+        "safety",
+        "research"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news",
+      "importance": 2
+    },
+    {
       "id": "at-12",
       "date": "2026-01-12",
       "title": "Anthropic Labs expansion",
       "shortTitle": "Labs",
       "description": "Anthropic expanded its internal Labs incubator, named Instagram co-founder Mike Krieger as co-lead alongside Ben Mann, and announced plans to double the team. Labs is the unit behind Claude Code, MCP, and Cowork.",
-      "tags": ["org", "strategy"],
+      "tags": [
+        "org",
+        "strategy"
+      ],
       "sourceUrl": "https://www.anthropic.com/news/introducing-anthropic-labs",
       "importance": 2
     },
@@ -38,7 +84,10 @@
       "title": "Cowork research preview",
       "shortTitle": "Cowork",
       "description": "Claude Desktop gained Cowork for multi-step knowledge work on local files and connected tools.",
-      "tags": ["desktop", "agent"],
+      "tags": [
+        "desktop",
+        "agent"
+      ],
       "sourceUrl": "https://claude.com/blog/cowork-research-preview",
       "importance": 3
     },
@@ -48,7 +97,9 @@
       "title": "Economic Index: Economic Primitives report",
       "shortTitle": "Econ Index",
       "description": "Research report introducing five foundational metrics for AI's economic impact, finding augmentation now exceeds automation in Claude.ai conversations (52% vs 45%).",
-      "tags": ["research"],
+      "tags": [
+        "research"
+      ],
       "sourceUrl": "https://www.anthropic.com/research/anthropic-economic-index-january-2026-report",
       "importance": 2
     },
@@ -58,7 +109,10 @@
       "title": "Claude's new model spec (constitution)",
       "shortTitle": "New Spec",
       "description": "Anthropic published a 23,000-word updated model spec under CC0, replacing the 2023 ~2,700-word version. First major AI company to formally acknowledge potential model consciousness and moral status.",
-      "tags": ["safety", "policy"],
+      "tags": [
+        "safety",
+        "policy"
+      ],
       "sourceUrl": "https://www.anthropic.com/news/claude-new-constitution",
       "importance": 3
     },
@@ -68,7 +122,10 @@
       "title": "Interactive connectors and MCP Apps",
       "shortTitle": "MCP Apps",
       "description": "Anthropic introduced interactive connectors and app surfaces that run directly inside Claude conversations.",
-      "tags": ["connectors", "apps"],
+      "tags": [
+        "connectors",
+        "apps"
+      ],
       "sourceUrl": "https://claude.com/blog/interactive-tools-in-claude",
       "importance": 3
     },
@@ -78,7 +135,9 @@
       "title": "Claude Opus 4.6",
       "shortTitle": "Opus 4.6",
       "description": "Flagship model with 1M token context, 128k output tokens, adaptive thinking, and agent-team task splitting. Topped agentic coding, computer use, and tool-use benchmarks.",
-      "tags": ["model"],
+      "tags": [
+        "model"
+      ],
       "sourceUrl": "https://www.anthropic.com/news/claude-opus-4-6",
       "importance": 3
     },
@@ -88,7 +147,9 @@
       "title": "Claude Sonnet 4.6",
       "shortTitle": "Sonnet 4.6",
       "description": "Anthropic launched Sonnet 4.6 as the new balanced flagship across speed, coding, and reasoning.",
-      "tags": ["model"],
+      "tags": [
+        "model"
+      ],
       "sourceUrl": "https://www.anthropic.com/news/claude-sonnet-4-6",
       "importance": 3
     },
@@ -98,7 +159,10 @@
       "title": "Anthropic Transparency Hub",
       "shortTitle": "Transparency",
       "description": "Centralized hub for model cards, safety commitments tracker, third-party evaluations, RSP v3.0 status, and release notes in one navigable interface.",
-      "tags": ["safety", "policy"],
+      "tags": [
+        "safety",
+        "policy"
+      ],
       "sourceUrl": "https://www.anthropic.com/news/introducing-anthropic-transparency-hub",
       "importance": 2
     },
@@ -108,7 +172,10 @@
       "title": "Cowork and plugins for teams across the enterprise",
       "shortTitle": "Enterprise",
       "description": "Claude expanded Cowork with plugins, admin controls, and broader enterprise workflows.",
-      "tags": ["cowork", "enterprise"],
+      "tags": [
+        "cowork",
+        "enterprise"
+      ],
       "sourceUrl": "https://claude.com/blog/cowork-plugins-across-enterprise",
       "importance": 2
     },
@@ -118,7 +185,10 @@
       "title": "Vercept acquisition",
       "shortTitle": "Vercept",
       "description": "Anthropic acquired Vercept to advance computer use capabilities. Vercept discontinued its external product to focus entirely on pushing Claude's computer-use benchmarks.",
-      "tags": ["acquisition", "computer-use"],
+      "tags": [
+        "acquisition",
+        "computer-use"
+      ],
       "sourceUrl": "https://siliconangle.com/2026/02/25/anthropic-acquires-ai-startup-vercept-enhance-claudes-computer-use-features/",
       "importance": 2
     },
@@ -128,7 +198,9 @@
       "title": "Memory for free users",
       "shortTitle": "Memory",
       "description": "Chat search and memory rolled out to free Claude users instead of staying limited to paid tiers.",
-      "tags": ["memory"],
+      "tags": [
+        "memory"
+      ],
       "sourceUrl": "https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context",
       "importance": 2
     },
@@ -138,7 +210,10 @@
       "title": "Advancing Claude for Excel and PowerPoint",
       "shortTitle": "Office",
       "description": "Claude's Microsoft add-ins began sharing context across Excel and PowerPoint and added skills support.",
-      "tags": ["office", "workflow"],
+      "tags": [
+        "office",
+        "workflow"
+      ],
       "sourceUrl": "https://claude.com/blog/claude-excel-powerpoint-updates",
       "importance": 2
     },
@@ -148,7 +223,10 @@
       "title": "The Anthropic Institute",
       "shortTitle": "Institute",
       "description": "New public-benefit research body to address societal challenges from powerful AI, led by co-founder Jack Clark as Head of Public Benefit.",
-      "tags": ["policy", "safety"],
+      "tags": [
+        "policy",
+        "safety"
+      ],
       "sourceUrl": "https://www.anthropic.com/news/the-anthropic-institute",
       "importance": 2
     },
@@ -158,7 +236,10 @@
       "title": "Claude builds interactive visuals right in your conversation",
       "shortTitle": "Visuals",
       "description": "Claude started creating inline charts, diagrams, and visual explanations directly in chat.",
-      "tags": ["visuals", "chat"],
+      "tags": [
+        "visuals",
+        "chat"
+      ],
       "sourceUrl": "https://claude.com/blog/claude-builds-visuals",
       "importance": 2
     },
@@ -168,7 +249,10 @@
       "title": "Claude Partner Network — $100M investment",
       "shortTitle": "Partners",
       "description": "Formalized enterprise partner channel (Accenture, Deloitte, Cognizant, Infosys) with $100M in 2026 funding, 5× partner-facing team growth, and the first Claude Certified Architect credential.",
-      "tags": ["partnerships", "enterprise"],
+      "tags": [
+        "partnerships",
+        "enterprise"
+      ],
       "sourceUrl": "https://www.anthropic.com/news/claude-partner-network",
       "importance": 3
     },
@@ -178,7 +262,10 @@
       "title": "Google + Broadcom compute partnership expansion",
       "shortTitle": "Compute",
       "description": "Anthropic announced a multi-gigawatt next-generation compute expansion with Google and Broadcom.",
-      "tags": ["partnerships", "infrastructure"],
+      "tags": [
+        "partnerships",
+        "infrastructure"
+      ],
       "sourceUrl": "https://www.anthropic.com/news/google-broadcom-partnership-compute",
       "importance": 2
     },
@@ -188,7 +275,10 @@
       "title": "Claude Mythos Preview — Project Glasswing",
       "shortTitle": "Mythos",
       "description": "Anthropic unveiled Claude Mythos Preview, a cybersecurity-focused model released to 11 organizations under Project Glasswing to find and fix vulnerabilities in critical software.",
-      "tags": ["model", "security"],
+      "tags": [
+        "model",
+        "security"
+      ],
       "sourceUrl": "https://www.anthropic.com/glasswing",
       "importance": 3
     },
@@ -198,7 +288,11 @@
       "title": "Cowork goes GA with computer use and enterprise controls",
       "shortTitle": "Cowork GA",
       "description": "Claude Cowork reached general availability on macOS and Windows for all paid plans, adding computer use for Pro and Max users, OpenTelemetry analytics, and role-based access controls for Enterprise.",
-      "tags": ["cowork", "enterprise", "desktop"],
+      "tags": [
+        "cowork",
+        "enterprise",
+        "desktop"
+      ],
       "sourceUrl": "https://www.techradar.com/pro/claude-cowork-is-now-available-for-enterprise-use-adds-analytics-access-controls-and-more",
       "importance": 3
     }

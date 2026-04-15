@@ -5,8 +5,8 @@
     "type": "team",
     "description": "High-signal Anthropic launches verified against official Anthropic, Claude, and Claude Help sources.",
     "headline": "Verified Anthropic launches across {days} days.",
-    "subtitle": "January 12 — April 9, 2026. Company-level launches from official Anthropic sources.",
-    "footnote": "Cross-checked on April 13, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
+    "subtitle": "October 24, 2025 — April 9, 2026. Company-level launches from official Anthropic sources.",
+    "footnote": "Cross-checked on April 15, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
     "brandLine": "Anthropic official sources",
     "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
     "members": [
@@ -33,8 +33,8 @@
     "type": "team",
     "description": "Developer-facing Claude Platform releases verified against official Claude Platform release notes.",
     "headline": "Verified Claude API releases across {days} days.",
-    "subtitle": "January 29 — April 8, 2026. Claude Platform release notes only.",
-    "footnote": "Dates and links cross-checked on April 13, 2026 against official Claude Platform release notes and API documentation.",
+    "subtitle": "October 17, 2025 — April 8, 2026. Claude Platform release notes only.",
+    "footnote": "Dates and links cross-checked on April 15, 2026 against official Claude Platform release notes and API documentation.",
     "brandLine": "Claude Platform release notes",
     "brandUrl": "https://platform.claude.com/docs/en/release-notes/overview",
     "theme": {
@@ -75,8 +75,8 @@
     "type": "team",
     "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
     "headline": "Verified OpenAI launches across {days} days.",
-    "subtitle": "January 7 — April 9, 2026. Company-level launches from official OpenAI sources.",
-    "footnote": "Cross-checked on April 13, 2026 against OpenAI announcement pages and OpenAI Help Center release notes.",
+    "subtitle": "October 21, 2025 — April 9, 2026. Company-level launches from official OpenAI sources.",
+    "footnote": "Cross-checked on April 15, 2026 against OpenAI announcement pages and OpenAI Help Center release notes.",
     "brandLine": "OpenAI official sources",
     "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
     "members": [

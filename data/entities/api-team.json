@@ -4,8 +4,8 @@
   "type": "team",
   "description": "Developer-facing Claude Platform releases verified against official Claude Platform release notes.",
   "headline": "Verified Claude API releases across {days} days.",
-  "subtitle": "January 29 — April 8, 2026. Claude Platform release notes only.",
-  "footnote": "Dates and links cross-checked on April 13, 2026 against official Claude Platform release notes and API documentation.",
+  "subtitle": "October 17, 2025 — April 8, 2026. Claude Platform release notes only.",
+  "footnote": "Dates and links cross-checked on April 15, 2026 against official Claude Platform release notes and API documentation.",
   "brandLine": "Claude Platform release notes",
   "brandUrl": "https://platform.claude.com/docs/en/release-notes/overview",
   "theme": {
@@ -20,6 +20,45 @@
   },
   "releases": [
     {
+      "id": "api-16",
+      "date": "2025-10-17",
+      "title": "Messages API idempotency keys",
+      "shortTitle": "Idempotency",
+      "description": "Messages API added idempotency key support to safely retry requests without duplicate completions in flaky network conditions.",
+      "tags": [
+        "api",
+        "reliability"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 2
+    },
+    {
+      "id": "api-17",
+      "date": "2025-11-21",
+      "title": "Usage and cost export endpoints",
+      "shortTitle": "Cost export",
+      "description": "New billing export endpoints enabled per-workspace usage CSV/JSON downloads and granular attribution by key, model, and project.",
+      "tags": [
+        "billing",
+        "admin"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 2
+    },
+    {
+      "id": "api-18",
+      "date": "2025-12-12",
+      "title": "Prompt caching analytics",
+      "shortTitle": "Cache analytics",
+      "description": "Prompt caching metrics became visible in API responses and dashboard analytics, including hit rate, cache-token savings, and effective latency deltas.",
+      "tags": [
+        "performance",
+        "observability"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 2
+    },
+    {
       "id": "api-1",
       "date": "2026-01-29",
       "title": "Structured outputs GA",
@@ -30,7 +69,10 @@
       "audience": "developer",
       "status": "stable",
       "howTo": {
-        "prerequisites": ["Messages API access", "JSON Schema for your output shape"],
+        "prerequisites": [
+          "Messages API access",
+          "JSON Schema for your output shape"
+        ],
         "steps": [
           "Define the `output_format` (or equivalent) with your JSON Schema in the request.",
           "Send the user/tool messages as usual; parse the model output as validated JSON.",
@@ -40,7 +82,10 @@
       "docUrls": [
         "https://platform.claude.com/docs/en/release-notes/overview"
       ],
-      "tags": ["output", "schema"],
+      "tags": [
+        "output",
+        "schema"
+      ],
       "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
       "importance": 3
     },
@@ -50,7 +95,10 @@
       "title": "Compaction API beta",
       "shortTitle": "Compaction",
       "description": "Anthropic launched server-side compaction for managing long-running conversations, activated with the `compact-2026-01-12` beta header.",
-      "tags": ["context", "beta"],
+      "tags": [
+        "context",
+        "beta"
+      ],
       "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/compaction",
       "importance": 2
     },
@@ -60,7 +108,10 @@
       "title": "Data residency controls",
       "shortTitle": "Residency",
       "description": "Developers gained control over where supported model inference runs via the `inference_geo` parameter (`\"us\"` or `\"global\"`).",
-      "tags": ["admin", "governance"],
+      "tags": [
+        "admin",
+        "governance"
+      ],
       "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/data-residency",
       "importance": 2
     },
@@ -70,7 +121,9 @@
       "title": "Adaptive thinking",
       "shortTitle": "Adaptive",
       "description": "New `thinking: {type: \"adaptive\"}` mode lets Claude dynamically decide when and how much to think based on task complexity. Recommended mode for Opus 4.6 and Sonnet 4.6.",
-      "tags": ["reasoning"],
+      "tags": [
+        "reasoning"
+      ],
       "sourceUrl": "https://platform.claude.com/docs/en/about-claude/models/whats-new-claude-4-6",
       "importance": 2
     },
@@ -80,7 +133,10 @@
       "title": "Web search tool GA",
       "shortTitle": "Web search",
       "description": "The web search tool graduated from beta and no longer required a beta header. Web search and web fetch gained dynamic filtering to reduce token cost.",
-      "tags": ["tooling", "search"],
+      "tags": [
+        "tooling",
+        "search"
+      ],
       "sourceUrl": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool",
       "importance": 3
     },
@@ -90,7 +146,10 @@
       "title": "Programmatic tool calling GA",
       "shortTitle": "Tool calling",
       "description": "Claude gained first-class support for code that can invoke tools programmatically inside tool-enabled flows.",
-      "tags": ["tooling", "agents"],
+      "tags": [
+        "tooling",
+        "agents"
+      ],
       "sourceUrl": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/programmatic-tool-calling",
       "importance": 2
     },
@@ -100,7 +159,9 @@
       "title": "Automatic prompt caching for the Messages API",
       "shortTitle": "Caching",
       "description": "Messages API caching gained automatic cache point movement as conversations grow — no manual cache-break management needed.",
-      "tags": ["performance"],
+      "tags": [
+        "performance"
+      ],
       "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
       "importance": 2
     },
@@ -110,7 +171,10 @@
       "title": "1M token context window GA for Claude 4.6",
       "shortTitle": "1M context",
       "description": "Claude Opus 4.6 and Sonnet 4.6 gained a generally available 1M token context window.",
-      "tags": ["context", "long"],
+      "tags": [
+        "context",
+        "long"
+      ],
       "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/context-windows",
       "importance": 3
     },
@@ -120,7 +184,9 @@
       "title": "Thinking display control",
       "shortTitle": "Thinking UI",
       "description": "Extended thinking added the `display` field for summarized or omitted thinking output.",
-      "tags": ["reasoning"],
+      "tags": [
+        "reasoning"
+      ],
       "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/extended-thinking",
       "importance": 2
     },
@@ -130,7 +196,10 @@
       "title": "Fine-grained tool streaming GA",
       "shortTitle": "Tool streaming",
       "description": "Streams tool-use parameter values without buffering or JSON validation, reducing latency for large parameters. No beta header required on any model.",
-      "tags": ["tooling", "streaming"],
+      "tags": [
+        "tooling",
+        "streaming"
+      ],
       "sourceUrl": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/fine-grained-tool-streaming",
       "importance": 2
     },
@@ -140,7 +209,10 @@
       "title": "Models API capability fields",
       "shortTitle": "Models API",
       "description": "Models API responses started exposing capability metadata and token limits directly, removing the need to hardcode per-model limits.",
-      "tags": ["models", "api"],
+      "tags": [
+        "models",
+        "api"
+      ],
       "sourceUrl": "https://platform.claude.com/docs/en/api/models/retrieve",
       "importance": 2
     },
@@ -150,7 +222,9 @@
       "title": "Message Batches max_tokens raised to 300k",
       "shortTitle": "Batches 300k",
       "description": "The Message Batches API raised its `max_tokens` cap for Claude Opus 4.6 and Sonnet 4.6.",
-      "tags": ["batching"],
+      "tags": [
+        "batching"
+      ],
       "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/batch-processing",
       "importance": 2
     },
@@ -162,7 +236,10 @@
       "description": "Pair a fast executor model with a high-intelligence advisor model for strategic mid-generation guidance on long-horizon agentic workloads. Requires `advisor-tool-2026-03-01` beta header.",
       "audience": "developer",
       "status": "beta",
-      "tags": ["agents", "reasoning"],
+      "tags": [
+        "agents",
+        "reasoning"
+      ],
       "sourceUrl": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/advisor-tool",
       "importance": 2
     },
@@ -174,7 +251,10 @@
       "description": "Managed Agents launched in public beta providing secure sandboxed execution, long-running sessions, scoped permissions, and end-to-end tracing at $0.08/runtime hour. All endpoints require the managed-agents-2026-04-01 beta header.",
       "audience": "developer",
       "status": "beta",
-      "tags": ["agents", "platform"],
+      "tags": [
+        "agents",
+        "platform"
+      ],
       "sourceUrl": "https://platform.claude.com/docs/en/managed-agents/overview",
       "importance": 3
     },
@@ -186,7 +266,10 @@
       "description": "Anthropic shipped the ant CLI — a command-line client for the Claude API with native Claude Code integration and YAML-based versioning of API resources.",
       "audience": "developer",
       "status": "stable",
-      "tags": ["tooling", "cli"],
+      "tags": [
+        "tooling",
+        "cli"
+      ],
       "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
       "importance": 2
     }
