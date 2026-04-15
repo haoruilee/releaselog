@@ -4,12 +4,16 @@
   "type": "team",
   "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
   "headline": "Verified OpenAI launches across {days} days.",
-  "subtitle": "January 7 — April 9, 2026. Company-level launches from official OpenAI sources.",
-  "footnote": "Cross-checked on April 13, 2026 against OpenAI announcement pages and OpenAI Help Center release notes.",
+  "subtitle": "October 21, 2025 — April 9, 2026. Company-level launches from official OpenAI sources.",
+  "footnote": "Cross-checked on April 15, 2026 against OpenAI announcement pages and OpenAI Help Center release notes.",
   "brandLine": "OpenAI official sources",
   "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
   "members": [
-    { "name": "Team", "handle": "@openai", "avatar": "/avatars/placeholder.svg" }
+    {
+      "name": "Team",
+      "handle": "@openai",
+      "avatar": "/avatars/placeholder.svg"
+    }
   ],
   "theme": {
     "primary": "#10a37f",
@@ -23,12 +27,54 @@
   },
   "releases": [
     {
+      "id": "ot-14",
+      "date": "2025-10-21",
+      "title": "ChatGPT Canvas enters stable release",
+      "shortTitle": "Canvas GA",
+      "description": "OpenAI moved ChatGPT Canvas from preview to general availability for web and desktop, adding persistent side-by-side editing and inline model suggestions.",
+      "tags": [
+        "chatgpt",
+        "productivity"
+      ],
+      "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "importance": 2
+    },
+    {
+      "id": "ot-15",
+      "date": "2025-11-14",
+      "title": "OpenAI Academy global expansion",
+      "shortTitle": "Academy",
+      "description": "OpenAI expanded Academy cohorts to additional countries and launched structured enterprise and educator tracks with certification pathways.",
+      "tags": [
+        "education",
+        "ecosystem"
+      ],
+      "sourceUrl": "https://openai.com/news/",
+      "importance": 1
+    },
+    {
+      "id": "ot-16",
+      "date": "2025-12-10",
+      "title": "ChatGPT Projects organization upgrades",
+      "shortTitle": "Projects v2",
+      "description": "Projects added nested folders, smarter source deduplication, and cross-project file references to support larger research and engineering workflows.",
+      "tags": [
+        "chatgpt",
+        "projects"
+      ],
+      "sourceUrl": "https://help.openai.com/en/articles/10169521-projects-in-chatgpt",
+      "importance": 2
+    },
+    {
       "id": "ot-1",
       "date": "2026-01-07",
       "title": "ChatGPT Health",
       "shortTitle": "Health",
       "description": "OpenAI introduced a dedicated Health space in ChatGPT with purpose-built encryption, isolated memory, and conversation siloing — health data not used to train models or shared with other chats.",
-      "tags": ["chatgpt", "health"],
+      "tags": [
+        "chatgpt",
+        "health"
+      ],
       "sourceUrl": "https://openai.com/index/introducing-chatgpt-health/",
       "importance": 3
     },
@@ -38,7 +84,11 @@
       "title": "ChatGPT Go tier and ads",
       "shortTitle": "Go + Ads",
       "description": "OpenAI launched the $8/month ChatGPT Go plan globally and announced ad testing for Free and Go users in the US — conversation-relevant ads appearing below answers, clearly labeled. Paid tiers remain ad-free.",
-      "tags": ["chatgpt", "pricing", "ads"],
+      "tags": [
+        "chatgpt",
+        "pricing",
+        "ads"
+      ],
       "sourceUrl": "https://www.cnbc.com/2026/01/16/open-ai-chatgpt-ads-us.html",
       "importance": 2
     },
@@ -48,7 +98,10 @@
       "title": "More visual ChatGPT responses",
       "shortTitle": "Visual UI",
       "description": "Responses for everyday questions gained at-a-glance visuals (stats, unit conversions, calculations) and tap-to-expand highlights for key people, places, and products with sourced side panels. Available on iOS, Android, and web.",
-      "tags": ["chatgpt", "ui"],
+      "tags": [
+        "chatgpt",
+        "ui"
+      ],
       "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
       "importance": 2
     },
@@ -58,7 +111,10 @@
       "title": "Codex app for macOS",
       "shortTitle": "Codex app",
       "description": "OpenAI launched the Codex desktop app as a command center for supervising multiple long-running agents in parallel. Available to Plus, Pro, Business, Enterprise, and Edu plans on Apple Silicon (macOS 14+).",
-      "tags": ["codex", "desktop"],
+      "tags": [
+        "codex",
+        "desktop"
+      ],
       "sourceUrl": "https://openai.com/index/introducing-the-codex-app/",
       "importance": 3
     },
@@ -68,7 +124,10 @@
       "title": "GPT-5.3-Codex",
       "shortTitle": "5.3-Codex",
       "description": "OpenAI released GPT-5.3-Codex as its most capable agentic coding model, combining coding, reasoning, and computer-use strength. First OpenAI model rated \"High\" cybersecurity capability under its Preparedness Framework.",
-      "tags": ["model", "codex"],
+      "tags": [
+        "model",
+        "codex"
+      ],
       "sourceUrl": "https://openai.com/index/introducing-gpt-5-3-codex/",
       "importance": 3
     },
@@ -78,7 +137,10 @@
       "title": "Ads go live in ChatGPT Free and Go",
       "shortTitle": "Ads live",
       "description": "Advertising officially rolled out in ChatGPT for Free and Go tier users in the US, following the January announcement period.",
-      "tags": ["chatgpt", "ads"],
+      "tags": [
+        "chatgpt",
+        "ads"
+      ],
       "sourceUrl": "https://openai.com/index/our-approach-to-advertising-and-expanding-access/",
       "importance": 2
     },
@@ -88,7 +150,10 @@
       "title": "GPT-5.3-Codex-Spark",
       "shortTitle": "Codex-Spark",
       "description": "Ultra-fast real-time coding model running on Cerebras Wafer Scale Engine 3 at 1000+ tokens/second. ChatGPT Pro research preview — first OpenAI model on dedicated Cerebras low-latency hardware.",
-      "tags": ["model", "codex"],
+      "tags": [
+        "model",
+        "codex"
+      ],
       "sourceUrl": "https://openai.com/index/introducing-gpt-5-3-codex-spark/",
       "importance": 2
     },
@@ -98,7 +163,10 @@
       "title": "Projects can add sources from apps and chats",
       "shortTitle": "Projects",
       "description": "ChatGPT Projects gained app links, saved chat outputs, and ad-hoc text as reusable, always-in-context project sources.",
-      "tags": ["chatgpt", "projects"],
+      "tags": [
+        "chatgpt",
+        "projects"
+      ],
       "sourceUrl": "https://help.openai.com/en/articles/10169521-projects-in-chatgpt",
       "importance": 2
     },
@@ -108,7 +176,9 @@
       "title": "GPT-5.4",
       "shortTitle": "GPT-5.4",
       "description": "New mainline flagship across ChatGPT, Codex, and API: 1M token context, Codex-level coding, 75% on OSWorld computer use (exceeding human baseline at 72.4%), and 33% fewer per-claim errors vs GPT-5.2.",
-      "tags": ["model"],
+      "tags": [
+        "model"
+      ],
       "sourceUrl": "https://openai.com/index/introducing-gpt-5-4/",
       "importance": 3
     },
@@ -118,7 +188,10 @@
       "title": "GPT-5.4 mini and nano",
       "shortTitle": "5.4 mini",
       "description": "Faster, cheaper variants: mini (400k context, $0.75/$4.50 per MTok) and nano (API only, $0.20/$1.25 per MTok). Free-tier ChatGPT upgraded to GPT-5.4 mini; mini available in Codex for subagent parallelism.",
-      "tags": ["model", "subagents"],
+      "tags": [
+        "model",
+        "subagents"
+      ],
       "sourceUrl": "https://openai.com/index/introducing-gpt-5-4-mini-and-nano/",
       "importance": 3
     },
@@ -128,7 +201,10 @@
       "title": "File Library in ChatGPT",
       "shortTitle": "Library",
       "description": "ChatGPT began saving uploaded and model-generated files into a persistent File Library, reusable across chats without re-uploading.",
-      "tags": ["chatgpt", "files"],
+      "tags": [
+        "chatgpt",
+        "files"
+      ],
       "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
       "importance": 2
     },
@@ -138,7 +214,11 @@
       "title": "ChatGPT on Apple CarPlay",
       "shortTitle": "CarPlay",
       "description": "OpenAI launched ChatGPT in Apple CarPlay, enabling fully hands-free voice conversations for drivers on iOS 26.4 or later with a supported car.",
-      "tags": ["chatgpt", "mobile", "voice"],
+      "tags": [
+        "chatgpt",
+        "mobile",
+        "voice"
+      ],
       "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
       "importance": 2
     },
@@ -148,7 +228,10 @@
       "title": "New $100/month ChatGPT Pro tier",
       "shortTitle": "$100 Pro",
       "description": "OpenAI inserted a new $100/month tier between Plus and the $200 Pro plan, offering 5× Codex usage vs Plus and the full model suite, with a launch promo of 10× through May 31.",
-      "tags": ["chatgpt", "pricing"],
+      "tags": [
+        "chatgpt",
+        "pricing"
+      ],
       "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
       "importance": 2
     }
