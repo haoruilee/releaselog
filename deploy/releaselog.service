@@ -1,0 +1,17 @@
+[Unit]
+Description=ReleaseLog Next.js service
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+WorkingDirectory=/root/releaselog
+Environment=NODE_ENV=production
+Environment=PORT=3000
+ExecStart=/bin/bash -lc 'set -a; source /root/releaselog/.env.local; exec /usr/bin/npm run start'
+Restart=always
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=multi-user.target

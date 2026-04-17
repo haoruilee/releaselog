@@ -1,10 +1,9 @@
+import { unstable_noStore as noStore } from "next/cache";
 import { NextResponse } from "next/server";
-import { entities } from "@/data";
 import type { ReleaseItem } from "@/data/types";
 import { API_SCHEMA_VERSION } from "@/lib/api-constants";
 import { filterReleases, parseReleaseFilters } from "@/lib/releases-query";
-
-export const dynamic = "force-static";
+import { getMergedEntities } from "@/lib/releases-store";
 
 function addDaysIso(isoDate: string, delta: number): string {
   const d = new Date(isoDate + "T12:00:00Z");
@@ -12,7 +11,10 @@ function addDaysIso(isoDate: string, delta: number): string {
   return d.toISOString().slice(0, 10);
 }
 
-export function GET(request: Request) {
+export async function GET(request: Request) {
+  if (process.env.STATIC_EXPORT !== "1" && process.env.NEXT_PUBLIC_USE_SERVER_DATA !== "0") {
+    noStore();
+  }
   const staticExport = process.env.STATIC_EXPORT === "1";
   const searchParams = staticExport
     ? new URLSearchParams()
@@ -29,6 +31,8 @@ export function GET(request: Request) {
   const filters = parseReleaseFilters(searchParams);
 
   const list: Array<ReleaseItem & { entityId: string; entityName: string }> = [];
+
+  const entities = await getMergedEntities();
 
   for (const e of entities) {
     if (entityFilter && e.id !== entityFilter) continue;

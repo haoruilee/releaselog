@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
-import { entities } from "@/data";
+import { listActiveSubscribers } from "@/lib/account-store";
 import { buildWeeklyDigestForEntities } from "@/lib/email-digest";
-import { listSubscribeLeads } from "@/lib/subscribe-redis";
+import { getSubscriberFromEmail } from "@/lib/mail-from";
+import { sendMail } from "@/lib/mailer";
+import { getMergedEntities } from "@/lib/releases-store";
+import { isSubscriptionActive } from "@/lib/runtime-config";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 function verifyCron(request: Request): boolean {
   const secret = process.env.CRON_SECRET;
@@ -30,51 +32,45 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.DIGEST_FROM_EMAIL?.trim();
-  if (!apiKey || !from) {
+  const from = getSubscriberFromEmail();
+  if (!from) {
     return NextResponse.json({
       skipped: true,
-      reason: "resend_or_from_not_configured",
+      reason: "mail_or_from_not_configured",
     });
   }
 
-  const leads = await listSubscribeLeads();
-  if (leads.length === 0) {
-    return NextResponse.json({ ok: true, sent: 0, reason: "no_leads" });
+  const subscribers = await listActiveSubscribers();
+  const recipients = subscribers.filter(({ subscription, preferences }) =>
+    isSubscriptionActive(subscription.status) && preferences.emailEnabled
+  );
+  if (recipients.length === 0) {
+    return NextResponse.json({ ok: true, sent: 0, reason: "no_active_subscribers" });
   }
 
-  const byEmail = new Map<string, Set<string>>();
-  for (const lead of leads) {
-    let set = byEmail.get(lead.email);
-    if (!set) {
-      set = new Set();
-      byEmail.set(lead.email, set);
-    }
-    for (const id of lead.entityIds) {
-      set.add(id);
-    }
-  }
-
-  const resend = new Resend(apiKey);
+  const entities = await getMergedEntities();
   let sent = 0;
   const errors: string[] = [];
 
-  for (const [email, idSet] of byEmail) {
-    const { subject, text, html } = buildWeeklyDigestForEntities(entities, [...idSet], 7);
-    const { error } = await resend.emails.send({
-      from,
-      to: email,
-      subject,
-      text,
-      html,
-    });
-    if (error) {
-      errors.push(`${email}: ${error.message}`);
-    } else {
+  for (const recipient of recipients) {
+    const { subject, text, html } = buildWeeklyDigestForEntities(
+      entities,
+      recipient.preferences.selectedEntityIds,
+      7,
+    );
+    try {
+      await sendMail({
+        from,
+        to: recipient.user.email,
+        subject,
+        text,
+        html,
+      });
       sent += 1;
+    } catch (error) {
+      errors.push(`${recipient.user.email}: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 
-  return NextResponse.json({ ok: true, sent, recipients: byEmail.size, errors });
+  return NextResponse.json({ ok: true, sent, recipients: recipients.length, errors });
 }

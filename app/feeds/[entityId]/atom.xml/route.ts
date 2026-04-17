@@ -1,8 +1,8 @@
-import { getEntityById, entities } from "@/data";
+import { unstable_noStore as noStore } from "next/cache";
+import { entities } from "@/data";
 import type { ReleaseItem } from "@/data/types";
 import { buildAtomFeed, type FeedEntry } from "@/lib/atom-feed";
-
-export const dynamic = "force-static";
+import { getMergedEntityById } from "@/lib/releases-store";
 
 export function generateStaticParams() {
   return entities.map((e) => ({ entityId: e.id }));
@@ -11,8 +11,11 @@ export function generateStaticParams() {
 type Params = { params: Promise<{ entityId: string }> };
 
 export async function GET(_request: Request, context: Params) {
+  if (process.env.STATIC_EXPORT !== "1" && process.env.NEXT_PUBLIC_USE_SERVER_DATA !== "0") {
+    noStore();
+  }
   const { entityId } = await context.params;
-  const entity = getEntityById(entityId);
+  const entity = await getMergedEntityById(entityId);
   if (!entity) {
     return new Response("Not found", { status: 404 });
   }

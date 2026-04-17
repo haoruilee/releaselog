@@ -1,9 +1,12 @@
-import { entities } from "@/data";
+import { unstable_noStore as noStore } from "next/cache";
 import { API_SCHEMA_VERSION } from "@/lib/api-constants";
+import { getMergedEntities } from "@/lib/releases-store";
 
-export const dynamic = "force-static";
-
-export function GET() {
+export async function GET() {
+  if (process.env.STATIC_EXPORT !== "1" && process.env.NEXT_PUBLIC_USE_SERVER_DATA !== "0") {
+    noStore();
+  }
+  const entities = await getMergedEntities();
   const lines: string[] = [];
   for (const e of entities) {
     for (const r of e.releases) {

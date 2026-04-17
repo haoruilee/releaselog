@@ -17,6 +17,7 @@ import { computeSummaryStats, getRangeBounds } from "@/lib/stats";
 import { resolveTheme, themeToCssVars } from "@/lib/theme";
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const USE_SERVER_DATA = process.env.NEXT_PUBLIC_USE_SERVER_DATA !== "0";
 
 function todayNoon(): Date {
   const d = new Date();
@@ -56,12 +57,16 @@ export default function HomeClient({ initialEntityId }: Props) {
 
   useEffect(() => {
     setReleases([]);
-    fetch(`${BASE_PATH}/data/${selectedEntityId}-releases.json`)
+    const endpoint = USE_SERVER_DATA
+      ? `${BASE_PATH}/api/v1/entity-releases/${selectedEntityId}`
+      : `${BASE_PATH}/data/${selectedEntityId}-releases.json`;
+    fetch(endpoint)
       .then((r) => r.json())
-      .then((data: ReleaseItem[]) => {
-        setReleases(data);
+      .then((data: ReleaseItem[] | { releases?: ReleaseItem[] }) => {
+        const releasesList = Array.isArray(data) ? data : data.releases ?? [];
+        setReleases(releasesList);
         if (pendingReleaseIdRef.current) {
-          const hit = data.find((r) => r.id === pendingReleaseIdRef.current);
+          const hit = releasesList.find((r) => r.id === pendingReleaseIdRef.current);
           if (hit) setSelectedDate(hit.date);
           pendingReleaseIdRef.current = null;
         }

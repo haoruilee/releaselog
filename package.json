@@ -13,13 +13,18 @@
     "gen-static-data": "node scripts/gen-static-data.mjs"
   },
   "dependencies": {
+    "@types/nodemailer": "^8.0.0",
     "@upstash/redis": "^1.37.0",
     "date-fns": "^4.1.0",
+    "fast-xml-parser": "^5.6.0",
     "html-to-image": "^1.11.13",
     "next": "^15.5.14",
+    "nodemailer": "^8.0.5",
+    "postgres": "^3.4.9",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "resend": "^6.10.0"
+    "resend": "^6.10.0",
+    "stripe": "^22.0.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
