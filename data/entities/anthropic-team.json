@@ -4,7 +4,7 @@
   "type": "team",
   "description": "High-signal Anthropic launches verified against official Anthropic, Claude, and Claude Help sources.",
   "headline": "Verified Anthropic launches across {days} days.",
-  "subtitle": "October 24, 2025 \u2014 April 9, 2026. Company-level launches from official Anthropic sources.",
+  "subtitle": "October 24, 2025 \u2014 April 17, 2026. Company-level launches from official Anthropic sources.",
   "footnote": "Cross-checked on April 17, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
   "brandLine": "Anthropic official sources",
   "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
@@ -294,6 +294,33 @@
         "desktop"
       ],
       "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 3
+    },
+    {
+      "id": "at-23",
+      "date": "2026-04-16",
+      "title": "Anthropic launches Claude Opus 4.7",
+      "shortTitle": "Opus 4.7 launch",
+      "description": "Anthropic released Opus 4.7 across consumer products, API (claude-opus-4-7), Amazon Bedrock, Google Vertex AI, and Microsoft Foundry at unchanged $5/$25 per MTok pricing, with new cybersecurity safeguards and a Cyber Verification Program for security researchers.",
+      "tags": [
+        "model",
+        "launch"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news/claude-opus-4-7",
+      "importance": 3
+    },
+    {
+      "id": "at-24",
+      "date": "2026-04-17",
+      "title": "Anthropic Labs introduces Claude Design",
+      "shortTitle": "Claude Design",
+      "description": "Anthropic Labs announced Claude Design, a conversational tool that turns chat requests into designs, interactive prototypes, slides, and one-pagers on a shared canvas; available in research preview to Pro, Max, Team, and Enterprise plans (off by default for Enterprise).",
+      "tags": [
+        "labs",
+        "design",
+        "launch"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news/claude-design-anthropic-labs",
       "importance": 3
     }
   ]

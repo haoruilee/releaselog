@@ -4,7 +4,7 @@
   "type": "team",
   "description": "Developer-facing Claude Platform releases verified against official Claude Platform release notes.",
   "headline": "Verified Claude API releases across {days} days.",
-  "subtitle": "October 17, 2025 \u2014 April 8, 2026. Claude Platform release notes only.",
+  "subtitle": "October 17, 2025 \u2014 April 16, 2026. Claude Platform release notes only.",
   "footnote": "Dates and links cross-checked on April 17, 2026 against official Claude Platform release notes and API documentation.",
   "brandLine": "Claude Platform release notes",
   "brandUrl": "https://platform.claude.com/docs/en/release-notes/overview",
@@ -272,6 +272,36 @@
       ],
       "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
       "importance": 2
+    },
+    {
+      "id": "api-20",
+      "date": "2026-04-14",
+      "title": "Sonnet 4 and Opus 4 deprecation announced",
+      "shortTitle": "Sonnet 4 / Opus 4 deprecation",
+      "description": "Anthropic announced the deprecation of claude-sonnet-4-20250514 and claude-opus-4-20250514, with retirement on the Claude API scheduled for June 15, 2026. Recommended migrations are Claude Sonnet 4.6 and Claude Opus 4.7 respectively.",
+      "audience": "developer",
+      "status": "deprecated",
+      "tags": [
+        "deprecation",
+        "models"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 3
+    },
+    {
+      "id": "api-19",
+      "date": "2026-04-16",
+      "title": "Claude Opus 4.7 available on the Claude API",
+      "shortTitle": "Opus 4.7 on API",
+      "description": "Opus 4.7 is available as claude-opus-4-7 at the same $5/$25 per MTok pricing as Opus 4.6, with API breaking changes versus Opus 4.6 (see the migration guide before upgrading) and an updated tokenizer that may map inputs to roughly 1.0\u20131.35\u00d7 more tokens.",
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "model",
+        "launch"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 3
     }
   ]
 }

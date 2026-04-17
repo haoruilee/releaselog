@@ -4,7 +4,7 @@
   "type": "product",
   "description": "Verified app, desktop, mobile, and add-in launches from Claude.",
   "headline": "Verified Claude product launches across {days} days.",
-  "subtitle": "January 12 \u2014 April 9, 2026. Cross-checked against official Claude release notes and product pages.",
+  "subtitle": "January 12 \u2014 April 17, 2026. Cross-checked against official Claude release notes and product pages.",
   "footnote": "Cross-checked on April 17, 2026 against official Claude Help Center release notes, Claude product posts, and Anthropic announcements.",
   "brandLine": "Claude official sources",
   "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
@@ -170,6 +170,36 @@
         "desktop"
       ],
       "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 3
+    },
+    {
+      "id": "cp-12",
+      "date": "2026-04-16",
+      "title": "Claude Opus 4.7 available in all consumer products",
+      "shortTitle": "Opus 4.7",
+      "description": "Opus 4.7 launched across Claude consumer products with gains in coding, higher-resolution image understanding, and stronger instruction following; Claude Code raised default effort to xhigh and added a /ultrareview slash command for Pro/Max.",
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "model",
+        "claude-code"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news/claude-opus-4-7",
+      "importance": 3
+    },
+    {
+      "id": "cp-11",
+      "date": "2026-04-17",
+      "title": "Claude Design research preview from Anthropic Labs",
+      "shortTitle": "Claude Design",
+      "description": "Anthropic Labs launched Claude Design in research preview for Pro, Max, Team, and Enterprise users, pairing a chat panel with a canvas to generate and iterate on designs, prototypes, slides, and one-pagers with automatic design-system pickup and exports to PDF, PPTX, HTML, Canva, and Claude Code.",
+      "audience": "end_user",
+      "status": "preview",
+      "tags": [
+        "design",
+        "labs"
+      ],
+      "sourceUrl": "https://support.claude.com/en/articles/14604416-get-started-with-claude-design",
       "importance": 3
     }
   ]
