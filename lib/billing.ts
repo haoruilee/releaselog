@@ -129,7 +129,15 @@ export async function syncSubscriptionFromStripe(subscription: Stripe.Subscripti
   if (!userId) {
     return;
   }
-  const currentPeriodEnd = (subscription as unknown as { current_period_end?: number }).current_period_end;
+  // Stripe moved current_period_end onto each subscription item in 2025-xx API versions.
+  // Prefer the item-level value; fall back to the legacy top-level field for older payloads.
+  const itemPeriodEnd = subscription.items?.data
+    ?.map((item) => (item as unknown as { current_period_end?: number }).current_period_end)
+    .filter((value): value is number => typeof value === "number")
+    .sort((a, b) => b - a)[0];
+  const currentPeriodEnd =
+    itemPeriodEnd ??
+    (subscription as unknown as { current_period_end?: number }).current_period_end;
   await updateUserStripeCustomerId(userId, customerId);
   await upsertSubscription({
     userId,
