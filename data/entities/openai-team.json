@@ -4,8 +4,8 @@
   "type": "team",
   "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
   "headline": "Verified OpenAI launches across {days} days.",
-  "subtitle": "October 21, 2025 — April 9, 2026. Company-level launches from official OpenAI sources.",
-  "footnote": "Cross-checked on April 15, 2026 against OpenAI announcement pages and OpenAI Help Center release notes.",
+  "subtitle": "October 21, 2025 \u2014 April 16, 2026. Company-level launches from official OpenAI sources.",
+  "footnote": "Cross-checked on April 17, 2026 against OpenAI announcement pages and OpenAI Help Center release notes.",
   "brandLine": "OpenAI official sources",
   "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
   "members": [
@@ -70,7 +70,7 @@
       "date": "2026-01-07",
       "title": "ChatGPT Health",
       "shortTitle": "Health",
-      "description": "OpenAI introduced a dedicated Health space in ChatGPT with purpose-built encryption, isolated memory, and conversation siloing — health data not used to train models or shared with other chats.",
+      "description": "OpenAI introduced a dedicated Health space in ChatGPT with purpose-built encryption, isolated memory, and conversation siloing \u2014 health data not used to train models or shared with other chats.",
       "tags": [
         "chatgpt",
         "health"
@@ -83,13 +83,13 @@
       "date": "2026-01-16",
       "title": "ChatGPT Go tier and ads",
       "shortTitle": "Go + Ads",
-      "description": "OpenAI launched the $8/month ChatGPT Go plan globally and announced ad testing for Free and Go users in the US — conversation-relevant ads appearing below answers, clearly labeled. Paid tiers remain ad-free.",
+      "description": "OpenAI announced ad testing in ChatGPT for Free and Go users in the US while keeping paid tiers ad-free, as part of its official expansion and access strategy.",
       "tags": [
         "chatgpt",
         "pricing",
         "ads"
       ],
-      "sourceUrl": "https://www.cnbc.com/2026/01/16/open-ai-chatgpt-ads-us.html",
+      "sourceUrl": "https://openai.com/index/our-approach-to-advertising-and-expanding-access/",
       "importance": 2
     },
     {
@@ -149,7 +149,7 @@
       "date": "2026-02-12",
       "title": "GPT-5.3-Codex-Spark",
       "shortTitle": "Codex-Spark",
-      "description": "Ultra-fast real-time coding model running on Cerebras Wafer Scale Engine 3 at 1000+ tokens/second. ChatGPT Pro research preview — first OpenAI model on dedicated Cerebras low-latency hardware.",
+      "description": "Ultra-fast real-time coding model running on Cerebras Wafer Scale Engine 3 at 1000+ tokens/second. ChatGPT Pro research preview \u2014 first OpenAI model on dedicated Cerebras low-latency hardware.",
       "tags": [
         "model",
         "codex"
@@ -224,16 +224,17 @@
     },
     {
       "id": "ot-10",
-      "date": "2026-04-09",
-      "title": "New $100/month ChatGPT Pro tier",
-      "shortTitle": "$100 Pro",
-      "description": "OpenAI inserted a new $100/month tier between Plus and the $200 Pro plan, offering 5× Codex usage vs Plus and the full model suite, with a launch promo of 10× through May 31.",
+      "date": "2026-04-16",
+      "title": "Codex for (almost) everything",
+      "shortTitle": "Codex update",
+      "description": "OpenAI released a major Codex update spanning computer use, image generation with gpt-image-1.5, 90+ new plugins, richer PR review workflows, SSH devbox access (alpha), and automation/memory improvements in the desktop app.",
       "tags": [
-        "chatgpt",
-        "pricing"
+        "codex",
+        "desktop",
+        "agent"
       ],
-      "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
-      "importance": 2
+      "sourceUrl": "https://openai.com/index/codex-for-almost-everything/",
+      "importance": 3
     }
   ]
 }

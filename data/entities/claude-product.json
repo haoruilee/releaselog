@@ -4,8 +4,8 @@
   "type": "product",
   "description": "Verified app, desktop, mobile, and add-in launches from Claude.",
   "headline": "Verified Claude product launches across {days} days.",
-  "subtitle": "January 12 — April 9, 2026. Cross-checked against official Claude release notes and product pages.",
-  "footnote": "Cross-checked on April 13, 2026 against official Claude Help Center release notes, Claude product posts, and Anthropic announcements.",
+  "subtitle": "January 12 \u2014 April 9, 2026. Cross-checked against official Claude release notes and product pages.",
+  "footnote": "Cross-checked on April 17, 2026 against official Claude Help Center release notes, Claude product posts, and Anthropic announcements.",
   "brandLine": "Claude official sources",
   "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
   "theme": {
@@ -30,17 +30,25 @@
       "audience": "end_user",
       "status": "preview",
       "howTo": {
-        "prerequisites": ["Claude Desktop installed", "Research preview available in your region/plan"],
+        "prerequisites": [
+          "Claude Desktop installed",
+          "Research preview available in your region/plan"
+        ],
         "steps": [
           "Open Claude Desktop and switch to the Cowork experience.",
           "Connect or select the folders and tools Cowork should use.",
           "Describe the outcome you want; iterate on drafts and file changes in the thread."
         ]
       },
-      "tags": ["desktop", "agent"],
+      "tags": [
+        "desktop",
+        "agent"
+      ],
       "sourceUrl": "https://claude.com/blog/cowork-research-preview",
       "importance": 3,
-      "relatedIds": ["at-1"]
+      "relatedIds": [
+        "at-1"
+      ]
     },
     {
       "id": "cp-2",
@@ -48,7 +56,10 @@
       "title": "Interactive connectors and MCP Apps",
       "shortTitle": "MCP Apps",
       "description": "Claude gained interactive connectors that can render and operate live app interfaces in chat.",
-      "tags": ["connectors", "apps"],
+      "tags": [
+        "connectors",
+        "apps"
+      ],
       "sourceUrl": "https://claude.com/blog/interactive-tools-in-claude",
       "importance": 3
     },
@@ -58,7 +69,10 @@
       "title": "Claude for PowerPoint",
       "shortTitle": "PowerPoint",
       "description": "Claude shipped as a PowerPoint add-in for drafting, editing, and restructuring slide decks.",
-      "tags": ["office", "slides"],
+      "tags": [
+        "office",
+        "slides"
+      ],
       "sourceUrl": "https://support.claude.com/en/articles/13521390-use-claude-for-powerpoint",
       "importance": 3
     },
@@ -68,7 +82,10 @@
       "title": "Cowork enterprise plugins launch",
       "shortTitle": "Plugins",
       "description": "13 enterprise connectors added (Google Workspace, DocuSign, FactSet, Apollo, Harvey, and more), plus admin controls, group spend limits, and prebuilt plugin templates for finance, HR, engineering, and design.",
-      "tags": ["cowork", "enterprise"],
+      "tags": [
+        "cowork",
+        "enterprise"
+      ],
       "sourceUrl": "https://support.claude.com/en/articles/13837440-use-plugins-in-cowork",
       "importance": 2
     },
@@ -78,7 +95,9 @@
       "title": "Chat search and memory for free users",
       "shortTitle": "Memory",
       "description": "Memory from chat history expanded beyond paid plans to all Claude users.",
-      "tags": ["memory"],
+      "tags": [
+        "memory"
+      ],
       "sourceUrl": "https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context",
       "importance": 2
     },
@@ -88,7 +107,10 @@
       "title": "Claude for Excel and PowerPoint work across apps",
       "shortTitle": "Excel+PPT",
       "description": "Claude began sharing full context across open Excel and PowerPoint workflows.",
-      "tags": ["office", "workflow"],
+      "tags": [
+        "office",
+        "workflow"
+      ],
       "sourceUrl": "https://claude.com/blog/claude-excel-powerpoint-updates",
       "importance": 2
     },
@@ -98,7 +120,10 @@
       "title": "Custom visuals in chat",
       "shortTitle": "Visuals",
       "description": "Claude started generating interactive charts, diagrams, and visual explanations inline in chat.",
-      "tags": ["visuals", "chat"],
+      "tags": [
+        "visuals",
+        "chat"
+      ],
       "sourceUrl": "https://support.claude.com/en/articles/13979539-custom-visuals-in-chat",
       "importance": 2
     },
@@ -108,7 +133,10 @@
       "title": "Persistent Cowork thread from mobile (Dispatch)",
       "shortTitle": "Dispatch",
       "description": "Pro and Max users got a persistent Cowork thread manageable from Claude mobile: pair iPhone to Mac via QR code, send tasks from mobile, and return to finished work on the desktop.",
-      "tags": ["cowork", "mobile"],
+      "tags": [
+        "cowork",
+        "mobile"
+      ],
       "sourceUrl": "https://support.claude.com/en/articles/13947068-assign-tasks-to-claude-from-anywhere-in-cowork",
       "importance": 2
     },
@@ -117,11 +145,15 @@
       "date": "2026-03-23",
       "title": "Computer use in Cowork and Claude Code",
       "shortTitle": "Computer use",
-      "description": "Claude can open files, click, navigate screens, and run dev tools with no setup on macOS — available to Pro and Max subscribers in research preview. Windows support planned.",
+      "description": "Claude introduced computer use in research preview for Cowork and Claude Code, allowing on-device clicks, navigation, and tool execution from desktop workflows.",
       "audience": "end_user",
       "status": "preview",
-      "tags": ["computer-use", "desktop", "agent"],
-      "sourceUrl": "https://9to5mac.com/2026/03/23/anthropic-is-giving-claude-the-ability-to-use-your-mac-for-you/",
+      "tags": [
+        "computer-use",
+        "desktop",
+        "agent"
+      ],
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
       "importance": 3
     },
     {
@@ -129,11 +161,15 @@
       "date": "2026-04-09",
       "title": "Cowork GA: computer use, analytics, and enterprise controls",
       "shortTitle": "Cowork GA",
-      "description": "Cowork reached general availability on macOS and Windows for all paid plans. Pro and Max users gained computer use; Enterprise added OpenTelemetry analytics, role-based access controls (SCIM-synced), group spend limits, and Zoom connector.",
+      "description": "Claude release notes announced Cowork GA on macOS and Windows for paid plans, with enterprise analytics and access-control enhancements.",
       "audience": "end_user",
       "status": "stable",
-      "tags": ["cowork", "enterprise", "desktop"],
-      "sourceUrl": "https://www.techradar.com/pro/claude-cowork-is-now-available-for-enterprise-use-adds-analytics-access-controls-and-more",
+      "tags": [
+        "cowork",
+        "enterprise",
+        "desktop"
+      ],
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
       "importance": 3
     }
   ]
