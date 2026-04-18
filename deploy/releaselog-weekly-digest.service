@@ -1,0 +1,9 @@
+[Unit]
+Description=ReleaseLog weekly digest (oneshot)
+After=releaselog.service
+Requires=releaselog.service
+
+[Service]
+Type=oneshot
+ExecStart=/root/releaselog/deploy/call-cron.sh /api/cron/weekly-digest
+User=root

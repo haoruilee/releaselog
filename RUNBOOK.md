@@ -178,6 +178,144 @@ node -e '
 
 ---
 
+## Notification pipeline
+
+Release notifications and weekly digests are decoupled from the admin approve
+action: approving a candidate only **enqueues** per-recipient rows into
+`sent_notifications`; a systemd timer (`releaselog-send.timer`) drives the
+actual sending. This keeps the admin UI snappy, gives automatic retry with
+exponential backoff, and makes duplicate sends structurally impossible.
+
+### Flow
+
+```
+admin /admin/candidates  →  POST /api/admin/candidates/:id/approve
+                             └─ createPublishedRelease (DB)
+                             └─ enqueueReleaseNotifications → inserts
+                                sent_notifications rows with status='pending'
+                             └─ HTTP 303 redirect (fast)
+
+releaselog-send.timer (every minute)
+  → /api/cron/send-notifications
+     └─ runSendWorker: claims batch of pending|failed rows (short tx,
+        flips status='sending', pushes next_retry_at +5min as safety net),
+        sends mail with concurrency=4, on success sets status='sent',
+        on failure sets status='failed', attempts++, next_retry_at exp backoff
+        (1,2,4,8,16 min), caps at attempts=5.
+
+releaselog-weekly-digest.timer (Mon 09:00 UTC)
+  → /api/cron/weekly-digest
+     └─ reserves (user_id, period_start, 'email') in sent_digests before
+        sending; duplicate triggers in the same week are idempotent.
+```
+
+### systemd inventory
+
+| Unit | Cadence | Endpoint |
+|---|---|---|
+| `releaselog-ingest.timer` | every 30 min (`*:0/30`) | `/api/cron/ingest` |
+| `releaselog-send.timer` | every minute (`*:*:00`) | `/api/cron/send-notifications` |
+| `releaselog-weekly-digest.timer` | Mon 09:00 UTC | `/api/cron/weekly-digest` |
+
+Source units live in `deploy/`; `deploy/call-cron.sh` sources `.env.local`
+and curls localhost with `Authorization: Bearer $CRON_SECRET`.
+
+### One-time install
+
+```bash
+cd /root/releaselog
+sudo cp deploy/releaselog-ingest.service         /etc/systemd/system/
+sudo cp deploy/releaselog-ingest.timer           /etc/systemd/system/
+sudo cp deploy/releaselog-send.service           /etc/systemd/system/
+sudo cp deploy/releaselog-send.timer             /etc/systemd/system/
+sudo cp deploy/releaselog-weekly-digest.service  /etc/systemd/system/
+sudo cp deploy/releaselog-weekly-digest.timer    /etc/systemd/system/
+sudo chmod 0750 /root/releaselog/deploy/call-cron.sh
+sudo systemctl daemon-reload
+sudo systemctl enable --now \
+  releaselog-ingest.timer \
+  releaselog-send.timer \
+  releaselog-weekly-digest.timer
+systemctl list-timers --all | grep releaselog   # expect three rows
+```
+
+### Manual triggers (debugging)
+
+```bash
+sudo systemctl start releaselog-ingest.service
+sudo systemctl start releaselog-send.service
+sudo systemctl start releaselog-weekly-digest.service
+
+# Or direct curl (identical effect):
+curl -fsS -H "Authorization: Bearer $CRON_SECRET" http://127.0.0.1:3000/api/cron/ingest
+curl -fsS -H "Authorization: Bearer $CRON_SECRET" http://127.0.0.1:3000/api/cron/send-notifications
+curl -fsS -H "Authorization: Bearer $CRON_SECRET" http://127.0.0.1:3000/api/cron/weekly-digest
+
+# Tail the latest run of any:
+sudo journalctl -u releaselog-send.service -n 50 --no-pager
+```
+
+### Observability queries
+
+```bash
+DB_URL=$(grep '^DATABASE_URL=' /root/releaselog/.env.local | cut -d= -f2-)
+
+# Queue depth by status
+psql "$DB_URL" -c "select status, count(*) from sent_notifications
+                   group by status order by 1;"
+
+# Retry-scheduled rows (waiting out the backoff)
+psql "$DB_URL" -c "select id, user_id, attempts, next_retry_at, error
+                   from sent_notifications
+                   where status='failed' and attempts < 5
+                   order by next_retry_at asc limit 20;"
+
+# Permanently failed (attempts hit cap of 5) — needs human review
+psql "$DB_URL" -c "select user_id, release_id, attempts, error, updated_at
+                   from sent_notifications
+                   where status='failed' and attempts >= 5
+                   order by updated_at desc;"
+
+# Sent in the last 24h
+psql "$DB_URL" -c "select count(*) from sent_notifications
+                   where status='sent' and updated_at > now() - interval '1 day';"
+
+# Digests dispatched this week
+psql "$DB_URL" -c "select count(*) from sent_digests
+                   where period_start = (current_date - ((extract(dow from current_date)::int + 6) % 7))::date;"
+```
+
+### Unsubscribe
+
+Outbound release emails include RFC 8058 `List-Unsubscribe` +
+`List-Unsubscribe-Post: List-Unsubscribe=One-Click` headers and a visible
+unsubscribe link in the body. The token is an HMAC over `userId:target`
+signed with `PRIVATE_FEED_SIGNING_SECRET` (no DB row needed).
+
+- `target=<entityId>` → removes that entity from the user's
+  `selected_entity_ids`.
+- `target=all` → sets `email_enabled=false`.
+
+`/api/unsubscribe` handles both GET (human click) and POST (Gmail/Yahoo
+one-click). Note Gmail only surfaces the one-click UI when DKIM and SPF
+align — that's a DNS concern, not a code concern.
+
+### Common failure modes (notification pipeline)
+
+| Symptom | Likely cause | Check / fix |
+|---|---|---|
+| Approve returns 409 `already_approved` | The same candidate has already been approved into a different release (rename on second approve) | Look up the first approve: `select id, title from published_releases where source_candidate_id='<cand>';`. Edit the existing release or reject the candidate. |
+| Rows stuck in `pending` | Send worker timer not running or `/api/cron/send-notifications` returning non-200 | `systemctl status releaselog-send.timer`; `journalctl -u releaselog-send.service -n 50`; curl the endpoint manually to see the JSON response |
+| `attempts >= 5` pileup | Bad provider credentials, DNS failure on from-domain, etc. Errors in `error` column | Fix the underlying issue, then retry the cap-hit rows: `update sent_notifications set status='pending', attempts=0, next_retry_at=now(), error=null where status='failed' and attempts >= 5;` |
+| Weekly digest missed | Timer inactive, or `periodStart` already reserved from a prior run | `systemctl list-timers releaselog-weekly-digest.timer`; if the reservation is stale: `delete from sent_digests where period_start=<YYYY-MM-DD>;` then retrigger |
+| User got zero emails for a release they care about | Filter: `isSubscriptionActive(status) && emailEnabled && selectedEntityIds.includes(entityId)` all required | `select s.status, p.email_enabled, p.selected_entity_ids from users u join subscriptions s on s.user_id=u.id join notification_preferences p on p.user_id=u.id where u.email='...';` |
+
+**Note:** `notification_preferences.last_emailed_release_at` is a vestigial
+column (no current reader). Safe to ignore in queries; drop in a future
+schema cleanup.
+
+---
+
 ## Data ingestion (release entries)
 
 Entity JSON files live in `data/entities/*.json`; the registry is
@@ -226,6 +364,16 @@ curl -sS -o /dev/null -w "webhook %{http_code}\n" \
 # Cloudflared tunnel is up
 systemctl is-active cloudflared-releaselog.service
 
+# Notification timers
+systemctl list-timers --all | grep releaselog
+
+# Send-worker endpoint loaded (200 on valid auth, 401 without)
+curl -sS -H "Authorization: Bearer $CRON_SECRET" \
+  http://127.0.0.1:3000/api/cron/send-notifications | jq .
+
+# Unsubscribe endpoint loaded (400 on bogus token = route is live)
+curl -is "http://127.0.0.1:3000/api/unsubscribe?token=invalid" | head -1
+
 # Database reachable
 DB_URL=$(grep '^DATABASE_URL=' /root/releaselog/.env.local | cut -d= -f2-)
 psql "$DB_URL" -c "select 1"
@@ -234,4 +382,8 @@ psql "$DB_URL" -c "select 1"
 psql "$DB_URL" -c "select u.email, s.status, s.current_period_end, s.updated_at
                    from subscriptions s join users u on u.id = s.user_id
                    order by s.updated_at desc limit 5"
+
+# Notification queue status
+psql "$DB_URL" -c "select status, count(*) from sent_notifications
+                   group by status order by 1"
 ```

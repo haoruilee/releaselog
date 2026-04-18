@@ -7,6 +7,7 @@ type MailArgs = {
   subject: string;
   text: string;
   html?: string;
+  headers?: Record<string, string>;
 };
 
 type MailResult = {
@@ -95,6 +96,7 @@ async function sendViaSmtp(args: MailArgs): Promise<MailResult> {
     subject: args.subject,
     text: args.text,
     html: args.html,
+    headers: args.headers,
   });
   return {
     provider: "smtp",
@@ -115,6 +117,7 @@ async function sendViaResend(args: MailArgs): Promise<MailResult> {
     subject: args.subject,
     text: args.text,
     html: args.html,
+    headers: args.headers,
   });
 
   if (result.error) {

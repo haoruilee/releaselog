@@ -1,0 +1,10 @@
+[Unit]
+Description=Run ReleaseLog notification send worker every minute
+
+[Timer]
+OnCalendar=*:*:00
+AccuracySec=15s
+Unit=releaselog-send.service
+
+[Install]
+WantedBy=timers.target

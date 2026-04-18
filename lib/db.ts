@@ -154,6 +154,29 @@ async function initSchema(sql: Sql): Promise<boolean> {
     create index if not exists idx_published_releases_entity_date on published_releases(entity_id, date desc);
     create index if not exists idx_private_feed_tokens_user on private_feed_tokens(user_id, revoked_at);
     create index if not exists idx_sessions_user on sessions(user_id, expires_at);
+
+    alter table sent_notifications add column if not exists attempts int not null default 0;
+    alter table sent_notifications add column if not exists next_retry_at timestamptz;
+    alter table sent_notifications add column if not exists updated_at timestamptz not null default now();
+    update sent_notifications set next_retry_at = created_at where next_retry_at is null;
+
+    create index if not exists idx_sent_notifications_retry
+      on sent_notifications (next_retry_at)
+      where status in ('pending','failed');
+
+    create unique index if not exists uq_published_releases_source_candidate
+      on published_releases (source_candidate_id)
+      where source_candidate_id is not null;
+
+    create table if not exists sent_digests (
+      user_id text not null references users(id) on delete cascade,
+      period_start date not null,
+      channel text not null,
+      sent_at timestamptz not null default now(),
+      provider_message_id text,
+      primary key (user_id, period_start, channel)
+    );
+    create index if not exists idx_sent_digests_period on sent_digests (period_start);
   `);
   return true;
 }

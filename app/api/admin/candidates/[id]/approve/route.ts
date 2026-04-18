@@ -29,26 +29,34 @@ export async function POST(request: Request, context: Params) {
     return NextResponse.json({ error: "missing_required_fields" }, { status: 400 });
   }
 
-  await approveCandidate({
-    candidateId: id,
-    createdByUserId: current.user.id,
-    entityId,
-    date,
-    title,
-    shortTitle: String(form.get("shortTitle") ?? "").trim() || undefined,
-    slug: String(form.get("slug") ?? "").trim() || undefined,
-    description: String(form.get("description") ?? "").trim() || undefined,
-    whatChanged: String(form.get("whatChanged") ?? "").trim() || undefined,
-    sourceUrl: String(form.get("sourceUrl") ?? "").trim() || undefined,
-    importance: Number(form.get("importance") ?? 1) as 1 | 2 | 3,
-    tags: parseDelimitedList(String(form.get("tags") ?? "")),
-    docUrls: parseDelimitedList(String(form.get("docUrls") ?? "")),
-    audience: parseDelimitedList(String(form.get("audience") ?? "")),
-    status: String(form.get("status") ?? "").trim() || undefined,
-    relatedIds: parseDelimitedList(String(form.get("relatedIds") ?? "")),
-    howToSteps: parseDelimitedList(String(form.get("howToSteps") ?? "")),
-    howToPrerequisites: parseDelimitedList(String(form.get("howToPrerequisites") ?? "")),
-  });
+  try {
+    await approveCandidate({
+      candidateId: id,
+      createdByUserId: current.user.id,
+      entityId,
+      date,
+      title,
+      shortTitle: String(form.get("shortTitle") ?? "").trim() || undefined,
+      slug: String(form.get("slug") ?? "").trim() || undefined,
+      description: String(form.get("description") ?? "").trim() || undefined,
+      whatChanged: String(form.get("whatChanged") ?? "").trim() || undefined,
+      sourceUrl: String(form.get("sourceUrl") ?? "").trim() || undefined,
+      importance: Number(form.get("importance") ?? 1) as 1 | 2 | 3,
+      tags: parseDelimitedList(String(form.get("tags") ?? "")),
+      docUrls: parseDelimitedList(String(form.get("docUrls") ?? "")),
+      audience: parseDelimitedList(String(form.get("audience") ?? "")),
+      status: String(form.get("status") ?? "").trim() || undefined,
+      relatedIds: parseDelimitedList(String(form.get("relatedIds") ?? "")),
+      howToSteps: parseDelimitedList(String(form.get("howToSteps") ?? "")),
+      howToPrerequisites: parseDelimitedList(String(form.get("howToPrerequisites") ?? "")),
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    if (message === "candidate_already_approved") {
+      return NextResponse.json({ error: "already_approved" }, { status: 409 });
+    }
+    throw error;
+  }
 
   return NextResponse.redirect(new URL("/admin/candidates?approved=1", getSiteUrl()));
 }

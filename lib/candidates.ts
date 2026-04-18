@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import { XMLParser } from "fast-xml-parser";
 import { entities, type ReleaseItem } from "@/data";
 import { ensureDb } from "@/lib/db";
-import { sendReleaseNotifications } from "@/lib/notifications";
+import { enqueueReleaseNotifications } from "@/lib/notification-queue";
 import { createPublishedRelease, type PublishedReleaseRecord } from "@/lib/releases-store";
 import { sha256 } from "@/lib/security";
 
@@ -333,31 +333,42 @@ export async function approveCandidate(args: {
   relatedIds?: string[];
   howToSteps?: string[];
   howToPrerequisites?: string[];
-}): Promise<{ release: PublishedReleaseRecord; notifications: { attempted: number; sent: number; failed: number } }> {
+}): Promise<{ release: PublishedReleaseRecord; notifications: { enqueued: number } }> {
   const sql = await ensureDb();
   if (!sql) {
     throw new Error("db_unconfigured");
   }
-  const release = await createPublishedRelease({
-    entityId: args.entityId,
-    date: args.date,
-    title: args.title,
-    shortTitle: args.shortTitle,
-    slug: args.slug,
-    description: args.description,
-    whatChanged: args.whatChanged,
-    sourceUrl: args.sourceUrl,
-    importance: args.importance,
-    tags: args.tags,
-    docUrls: args.docUrls,
-    audience: args.audience,
-    status: args.status,
-    relatedIds: args.relatedIds,
-    howToSteps: args.howToSteps,
-    howToPrerequisites: args.howToPrerequisites,
-    sourceCandidateId: args.candidateId,
-    createdByUserId: args.createdByUserId,
-  });
+  let release: PublishedReleaseRecord;
+  try {
+    release = await createPublishedRelease({
+      entityId: args.entityId,
+      date: args.date,
+      title: args.title,
+      shortTitle: args.shortTitle,
+      slug: args.slug,
+      description: args.description,
+      whatChanged: args.whatChanged,
+      sourceUrl: args.sourceUrl,
+      importance: args.importance,
+      tags: args.tags,
+      docUrls: args.docUrls,
+      audience: args.audience,
+      status: args.status,
+      relatedIds: args.relatedIds,
+      howToSteps: args.howToSteps,
+      howToPrerequisites: args.howToPrerequisites,
+      sourceCandidateId: args.candidateId,
+      createdByUserId: args.createdByUserId,
+    });
+  } catch (error) {
+    // Unique violation on uq_published_releases_source_candidate:
+    // same candidate already approved into a different release (rename).
+    const code = (error as { code?: string } | null)?.code;
+    if (code === "23505") {
+      throw new Error("candidate_already_approved");
+    }
+    throw error;
+  }
 
   await sql`
     update release_candidates
@@ -367,7 +378,7 @@ export async function approveCandidate(args: {
     where id = ${args.candidateId}
   `;
 
-  const notifications = await sendReleaseNotifications(release);
+  const notifications = await enqueueReleaseNotifications(release.id);
   return { release, notifications };
 }
 

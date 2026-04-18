@@ -37,6 +37,43 @@ export function parsePrivateFeedToken(rawToken: string): string | null {
   return tokenId;
 }
 
+export function buildUnsubscribeToken(userId: string, target: string): string {
+  const payload = `${userId}:${target}`;
+  const payloadEncoded = Buffer.from(payload, "utf8").toString("base64url");
+  const signature = createHmac("sha256", privateFeedSecret()).update(payloadEncoded).digest("base64url");
+  return `${payloadEncoded}.${signature}`;
+}
+
+export function parseUnsubscribeToken(rawToken: string): { userId: string; target: string } | null {
+  if (!rawToken) return null;
+  const dot = rawToken.lastIndexOf(".");
+  if (dot <= 0 || dot === rawToken.length - 1) return null;
+  const payloadEncoded = rawToken.slice(0, dot);
+  const signature = rawToken.slice(dot + 1);
+  const expected = createHmac("sha256", privateFeedSecret()).update(payloadEncoded).digest("base64url");
+  try {
+    const a = Buffer.from(signature);
+    const b = Buffer.from(expected);
+    if (a.length !== b.length || !timingSafeEqual(a, b)) {
+      return null;
+    }
+  } catch {
+    return null;
+  }
+  let payload: string;
+  try {
+    payload = Buffer.from(payloadEncoded, "base64url").toString("utf8");
+  } catch {
+    return null;
+  }
+  const colon = payload.indexOf(":");
+  if (colon <= 0 || colon === payload.length - 1) return null;
+  const userId = payload.slice(0, colon);
+  const target = payload.slice(colon + 1);
+  if (!userId || !target) return null;
+  return { userId, target };
+}
+
 export function slugify(input: string): string {
   return input
     .trim()

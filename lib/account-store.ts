@@ -448,16 +448,6 @@ export async function updateNotificationPreferences(args: {
   return mapPreferences(rows[0]!);
 }
 
-export async function touchLastEmailedReleaseAt(userId: string): Promise<void> {
-  const sql = await ensureDb();
-  if (!sql) return;
-  await sql`
-    update notification_preferences
-    set last_emailed_release_at = now(), updated_at = now()
-    where user_id = ${userId}
-  `;
-}
-
 export async function rotatePrivateFeedToken(userId: string): Promise<string> {
   const sql = await ensureDb();
   if (!sql) {
