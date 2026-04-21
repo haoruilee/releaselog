@@ -31,12 +31,20 @@ export function Header({ entity, daySpan, posterMode }: Props) {
           </span>
         </div>
         {!posterMode && (
-          <Link
-            href="/subscribe"
-            className="text-xs font-medium text-accent underline-offset-4 hover:underline"
-          >
-            Subscribe
-          </Link>
+          <nav className="flex items-center gap-4">
+            <Link
+              href="/pricing"
+              className="text-xs font-medium text-secondary underline-offset-4 hover:text-primary hover:underline"
+            >
+              Pricing
+            </Link>
+            <Link
+              href="/subscribe"
+              className="text-xs font-medium text-accent underline-offset-4 hover:underline"
+            >
+              Subscribe
+            </Link>
+          </nav>
         )}
       </div>
 

@@ -1,4 +1,5 @@
 import { entityMetas } from "@/data";
+import Link from "next/link";
 import { getCurrentUser } from "@/lib/auth";
 import { getActivePrivateFeedToken } from "@/lib/account-store";
 import { getSiteUrl } from "@/lib/site-url";
@@ -18,7 +19,15 @@ export default async function SubscribePage() {
   return (
     <div className="min-h-screen bg-page text-primary">
       <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">ReleaseLog</p>
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">ReleaseLog</p>
+          <Link
+            href="/pricing"
+            className="text-xs font-medium text-secondary underline-offset-4 hover:text-primary hover:underline"
+          >
+            View pricing →
+          </Link>
+        </div>
         <h1 className="mt-2 font-serif text-3xl text-primary sm:text-4xl">Subscribe</h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-secondary">
           Public release logs stay open. Pro unlocks realtime email alerts and a private RSS feed

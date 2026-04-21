@@ -25,6 +25,58 @@ function getPriceId(plan: BillingPlan): string | null {
   return process.env.STRIPE_PRICE_PRO_MONTHLY?.trim() || null;
 }
 
+export type PublicPrice = {
+  id: string;
+  plan: BillingPlan;
+  unitAmount: number;
+  currency: string;
+  interval: "month" | "year";
+};
+
+export type PublicPricing = {
+  monthly: PublicPrice | null;
+  yearly: PublicPrice | null;
+};
+
+// In-process cache so /pricing doesn't hit Stripe on every render.
+let pricingCache: { at: number; value: PublicPricing } | null = null;
+const PRICING_TTL_MS = 10 * 60 * 1000;
+
+export async function getPublicPricing(): Promise<PublicPricing> {
+  const now = Date.now();
+  if (pricingCache && now - pricingCache.at < PRICING_TTL_MS) {
+    return pricingCache.value;
+  }
+  const stripe = getStripe();
+  const emptyResult: PublicPricing = { monthly: null, yearly: null };
+  if (!stripe) return emptyResult;
+
+  async function fetchOne(plan: BillingPlan): Promise<PublicPrice | null> {
+    const priceId = getPriceId(plan);
+    if (!priceId) return null;
+    try {
+      const price = await stripe!.prices.retrieve(priceId);
+      if (!price.unit_amount || !price.recurring?.interval) return null;
+      const interval = price.recurring.interval;
+      if (interval !== "month" && interval !== "year") return null;
+      return {
+        id: price.id,
+        plan,
+        unitAmount: price.unit_amount,
+        currency: price.currency,
+        interval,
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  const [monthly, yearly] = await Promise.all([fetchOne("monthly"), fetchOne("yearly")]);
+  const value: PublicPricing = { monthly, yearly };
+  pricingCache = { at: now, value };
+  return value;
+}
+
 async function ensureStripeCustomer(user: UserRecord, stripe: Stripe): Promise<string> {
   if (user.stripeCustomerId) {
     return user.stripeCustomerId;

@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: `${base}/`, lastModified: now, changeFrequency: "daily", priority: 1 },
     ...entityRoutes,
+    { url: `${base}/pricing`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/subscribe`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
   ];
 }
