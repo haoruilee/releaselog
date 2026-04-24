@@ -5,7 +5,7 @@
   "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
   "headline": "Verified OpenAI launches across {days} days.",
   "subtitle": "October 21, 2025 \u2014 April 16, 2026. Company-level launches from official OpenAI sources.",
-  "footnote": "Cross-checked on April 17, 2026 against OpenAI announcement pages and OpenAI Help Center release notes.",
+  "footnote": "Cross-checked on April 24, 2026 against OpenAI announcement pages and OpenAI Help Center release notes. No new verified items in the April 18\u201324 window; OpenAI newsroom returned 403 to automated checks and will be re-checked next cycle.",
   "brandLine": "OpenAI official sources",
   "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
   "members": [

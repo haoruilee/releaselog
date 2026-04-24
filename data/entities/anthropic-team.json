@@ -4,8 +4,8 @@
   "type": "team",
   "description": "High-signal Anthropic launches verified against official Anthropic, Claude, and Claude Help sources.",
   "headline": "Verified Anthropic launches across {days} days.",
-  "subtitle": "October 24, 2025 \u2014 April 17, 2026. Company-level launches from official Anthropic sources.",
-  "footnote": "Cross-checked on April 17, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
+  "subtitle": "October 24, 2025 \u2014 April 24, 2026. Company-level launches from official Anthropic sources.",
+  "footnote": "Cross-checked on April 24, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
   "brandLine": "Anthropic official sources",
   "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
   "members": [
@@ -322,6 +322,19 @@
       ],
       "sourceUrl": "https://www.anthropic.com/news/claude-design-anthropic-labs",
       "importance": 3
+    },
+    {
+      "id": "at-25",
+      "date": "2026-04-24",
+      "title": "Anthropic and NEC partner on Japan's largest AI engineering workforce",
+      "shortTitle": "Anthropic \u00d7 NEC",
+      "description": "Anthropic announced its first Japan-based global partnership with NEC. Claude (including Opus 4.7) and Claude Code roll out to ~30,000 NEC employees globally; NEC will embed Claude into its Security Operations Center services and its BluStellar product family, and launch a Center of Excellence with Anthropic-supported training to build one of Japan's largest AI-native engineering teams.",
+      "tags": [
+        "partnership",
+        "enterprise"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news/anthropic-nec",
+      "importance": 2
     }
   ]
 }

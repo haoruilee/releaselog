@@ -4,8 +4,8 @@
   "type": "team",
   "description": "Developer-facing Claude Platform releases verified against official Claude Platform release notes.",
   "headline": "Verified Claude API releases across {days} days.",
-  "subtitle": "October 17, 2025 \u2014 April 16, 2026. Claude Platform release notes only.",
-  "footnote": "Dates and links cross-checked on April 17, 2026 against official Claude Platform release notes and API documentation.",
+  "subtitle": "October 17, 2025 \u2014 April 23, 2026. Claude Platform release notes only.",
+  "footnote": "Dates and links cross-checked on April 24, 2026 against official Claude Platform release notes and API documentation.",
   "brandLine": "Claude Platform release notes",
   "brandUrl": "https://platform.claude.com/docs/en/release-notes/overview",
   "theme": {
@@ -302,6 +302,37 @@
       ],
       "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
       "importance": 3
+    },
+    {
+      "id": "api-21",
+      "date": "2026-04-20",
+      "title": "Claude Haiku 3 retired on the Claude API",
+      "shortTitle": "Haiku 3 retired",
+      "description": "claude-3-haiku-20240307 is now retired on the Claude API and returns errors. Migrate to Claude Haiku 4.5 for a near-frontier, lower-cost replacement; the deprecation was pre-announced on February 19, 2026.",
+      "audience": "developer",
+      "status": "deprecated",
+      "tags": [
+        "deprecation",
+        "models"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 3
+    },
+    {
+      "id": "api-22",
+      "date": "2026-04-23",
+      "title": "Memory for Claude Managed Agents enters public beta",
+      "shortTitle": "Managed Agents memory",
+      "description": "Claude Managed Agents now support persistent memory across sessions in public beta under the standard managed-agents-2026-04-01 beta header, with a documented integration guide at /docs/en/managed-agents/memory.",
+      "audience": "developer",
+      "status": "beta",
+      "tags": [
+        "agents",
+        "memory",
+        "beta"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 2
     }
   ]
 }
