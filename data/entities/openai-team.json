@@ -4,8 +4,8 @@
   "type": "team",
   "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
   "headline": "Verified OpenAI launches across {days} days.",
-  "subtitle": "October 21, 2025 \u2014 April 16, 2026. Company-level launches from official OpenAI sources.",
-  "footnote": "Cross-checked on April 24, 2026 against OpenAI announcement pages and OpenAI Help Center release notes. No new verified items in the April 18\u201324 window; OpenAI newsroom returned 403 to automated checks and will be re-checked next cycle.",
+  "subtitle": "October 21, 2025 \u2014 April 23, 2026. Company-level launches from official OpenAI sources.",
+  "footnote": "Cross-checked on April 24, 2026 against OpenAI announcement pages, OpenAI Help Center release notes, and TechCrunch reporting. April 18\u201324 additions: ChatGPT Images 2.0, OpenAI\u00d7Infosys Codex Labs partnership, and GPT-5.5 launch.",
   "brandLine": "OpenAI official sources",
   "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
   "members": [
@@ -234,6 +234,48 @@
         "agent"
       ],
       "sourceUrl": "https://openai.com/index/codex-for-almost-everything/",
+      "importance": 3
+    },
+    {
+      "id": "ot-17",
+      "date": "2026-04-21",
+      "title": "ChatGPT Images 2.0 with legible text rendering",
+      "shortTitle": "Images 2.0",
+      "description": "OpenAI rolled out Images 2.0 to all ChatGPT and Codex users, with dramatically improved legible text (including Japanese, Korean, Hindi, and Bengali), web-aware \"thinking\" for multi-image prompts and comic strips, and output up to 2K resolution; a gpt-image-2 API also launched, priced by quality and resolution.",
+      "tags": [
+        "chatgpt",
+        "image",
+        "launch"
+      ],
+      "sourceUrl": "https://techcrunch.com/2026/04/21/chatgpts-new-images-2-0-model-is-surprisingly-good-at-generating-text/",
+      "importance": 3
+    },
+    {
+      "id": "ot-18",
+      "date": "2026-04-22",
+      "title": "OpenAI \u00d7 Infosys: Codex and Topaz integration",
+      "shortTitle": "Infosys partnership",
+      "description": "OpenAI announced a partnership with Infosys to embed Codex and other OpenAI tools into the Topaz AI platform, targeting software engineering, legacy system upgrades, and DevOps across Infosys's 60+ countries of enterprise customers. The deal is part of OpenAI's newly announced Codex Labs initiative alongside Accenture, Capgemini, CGI, Cognizant, PwC, and TCS.",
+      "tags": [
+        "partnership",
+        "enterprise",
+        "codex"
+      ],
+      "sourceUrl": "https://techcrunch.com/2026/04/22/openai-teams-up-with-infosys-to-bring-ai-tools-to-more-businesses/",
+      "importance": 2
+    },
+    {
+      "id": "ot-19",
+      "date": "2026-04-23",
+      "title": "OpenAI releases GPT-5.5",
+      "shortTitle": "GPT-5.5",
+      "description": "OpenAI launched GPT-5.5, described as its \"smartest and most intuitive\" model, framed as progress toward a unified ChatGPT + Codex + AI-browser \"super app.\" Greg Brockman said it's a faster, sharper thinker that uses fewer tokens than GPT-5.4; OpenAI claims benchmark wins over Gemini 3.1 Pro and Claude Opus 4.5. Rollout: Plus, Pro, Business, and Enterprise; GPT-5.5 Pro limited to Pro, Business, Enterprise.",
+      "tags": [
+        "chatgpt",
+        "model",
+        "launch"
+      ],
+      "sourceUrl": "https://techcrunch.com/2026/04/23/openai-chatgpt-gpt-5-5-ai-model-superapp/",
       "importance": 3
     }
   ]
