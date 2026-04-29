@@ -1,12 +1,39 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { getStripe, syncCheckoutSession, syncSubscriptionFromStripe } from "@/lib/billing";
+import {
+  getStripe,
+  getStripeForMode,
+  syncCheckoutSession,
+  syncSubscriptionFromStripe,
+} from "@/lib/billing";
+
+function getWebhookSecrets(): string[] {
+  return [
+    process.env.STRIPE_WEBHOOK_SECRET,
+    process.env.STRIPE_LIVE_WEBHOOK_SECRET,
+    process.env.STRIPE_TEST_WEBHOOK_SECRET,
+  ]
+    .map((value) => value?.trim())
+    .filter((value): value is string => Boolean(value))
+    .filter((value, index, values) => values.indexOf(value) === index);
+}
+
+function constructStripeEvent(stripe: Stripe, body: string, signature: string): Stripe.Event {
+  const errors: string[] = [];
+  for (const secret of getWebhookSecrets()) {
+    try {
+      return stripe.webhooks.constructEvent(body, signature, secret);
+    } catch (error) {
+      errors.push(error instanceof Error ? error.message : String(error));
+    }
+  }
+  throw new Error(errors[0] ?? "stripe_webhook_secret_unconfigured");
+}
 
 export async function POST(request: Request) {
-  const stripe = getStripe();
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
-  if (!stripe || !webhookSecret) {
+  const stripe = getStripe() ?? getStripeForMode(false) ?? getStripeForMode(true);
+  if (!stripe || getWebhookSecrets().length === 0) {
     return NextResponse.json({ error: "stripe_unconfigured" }, { status: 503 });
   }
 
@@ -18,10 +45,15 @@ export async function POST(request: Request) {
   const body = await request.text();
   let event: Stripe.Event;
   try {
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+    event = constructStripeEvent(stripe, body, signature);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json({ error: message }, { status: 400 });
+  }
+
+  const eventStripe = getStripeForMode(event.livemode);
+  if (!eventStripe) {
+    return NextResponse.json({ error: "stripe_mode_unconfigured" }, { status: 503 });
   }
 
   switch (event.type) {
@@ -31,7 +63,7 @@ export async function POST(request: Request) {
     case "customer.subscription.created":
     case "customer.subscription.updated":
     case "customer.subscription.deleted":
-      await syncSubscriptionFromStripe(event.data.object as Stripe.Subscription);
+      await syncSubscriptionFromStripe(event.data.object as Stripe.Subscription, eventStripe);
       break;
     default:
       break;

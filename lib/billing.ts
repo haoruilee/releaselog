@@ -18,6 +18,21 @@ export function getStripe(): Stripe | null {
   return new Stripe(secretKey);
 }
 
+export function getStripeForMode(livemode: boolean): Stripe | null {
+  const modeSpecificKey = livemode
+    ? process.env.STRIPE_LIVE_SECRET_KEY?.trim()
+    : process.env.STRIPE_TEST_SECRET_KEY?.trim();
+  const defaultKey = process.env.STRIPE_SECRET_KEY?.trim();
+  const defaultKeyMatchesMode =
+    !defaultKey ||
+    (livemode && defaultKey.startsWith("sk_live_")) ||
+    (!livemode && defaultKey.startsWith("sk_test_")) ||
+    (!defaultKey.startsWith("sk_live_") && !defaultKey.startsWith("sk_test_"));
+  const secretKey = modeSpecificKey || (defaultKeyMatchesMode ? defaultKey : undefined);
+  if (!secretKey) return null;
+  return new Stripe(secretKey);
+}
+
 function getPriceId(plan: BillingPlan): string | null {
   if (plan === "yearly") {
     return process.env.STRIPE_PRICE_PRO_YEARLY?.trim() || null;
@@ -151,12 +166,15 @@ export async function createCustomerPortalUrl(userId: string): Promise<string> {
   return session.url;
 }
 
-async function resolveUserIdFromCustomer(customerId: string): Promise<string | null> {
+async function resolveUserIdFromCustomer(
+  customerId: string,
+  stripeClient = getStripe(),
+): Promise<string | null> {
   const direct = await getUserByStripeCustomerId(customerId);
   if (direct) {
     return direct.id;
   }
-  const stripe = getStripe();
+  const stripe = stripeClient;
   if (!stripe) return null;
   const customer = await stripe.customers.retrieve(customerId);
   if (customer.deleted) return null;
@@ -174,10 +192,13 @@ async function resolveUserIdFromCustomer(customerId: string): Promise<string | n
   return null;
 }
 
-export async function syncSubscriptionFromStripe(subscription: Stripe.Subscription): Promise<void> {
+export async function syncSubscriptionFromStripe(
+  subscription: Stripe.Subscription,
+  stripeClient = getStripe(),
+): Promise<void> {
   const customerId =
     typeof subscription.customer === "string" ? subscription.customer : subscription.customer.id;
-  const userId = await resolveUserIdFromCustomer(customerId);
+  const userId = await resolveUserIdFromCustomer(customerId, stripeClient);
   if (!userId) {
     return;
   }

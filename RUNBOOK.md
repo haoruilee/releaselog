@@ -79,8 +79,18 @@ STRIPE_PRICE_PRO_MONTHLY=price_...        # live monthly
 STRIPE_PRICE_PRO_YEARLY=price_...         # live yearly
 ```
 
-Keep the test values somewhere (a comment in a scratch file) — you'll want
-them when debugging new code in test mode again.
+If the test-mode Dashboard endpoint also points at production, keep both modes
+configured so Stripe test retries can still be accepted:
+
+```bash
+STRIPE_LIVE_SECRET_KEY=sk_live_...
+STRIPE_LIVE_WEBHOOK_SECRET=whsec_...      # live endpoint's secret
+STRIPE_TEST_SECRET_KEY=sk_test_...
+STRIPE_TEST_WEBHOOK_SECRET=whsec_...      # test endpoint's secret
+```
+
+`STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` remain supported as the default
+mode used by Checkout and the Customer Portal.
 
 ### 4. Restart and verify
 
@@ -340,6 +350,7 @@ has admin access.
 | Symptom | Likely cause | Check |
 |---|---|---|
 | Stripe webhook deliveries fail with 503 | Env not loaded; `STRIPE_SECRET_KEY` or `STRIPE_WEBHOOK_SECRET` missing | Restart the service. Probe the endpoint — 400 = good, 503 = env missing. |
+| Stripe test-mode webhook retries fail after going live | Production only has the live webhook signing secret, but the test-mode endpoint signs with its own secret | Set `STRIPE_TEST_SECRET_KEY` and `STRIPE_TEST_WEBHOOK_SECRET`, then rebuild/restart and resend a test event. |
 | "No such price: …; a similar object exists in live mode, but a test mode key was used" | `STRIPE_PRICE_PRO_*` is from the other mode than the active secret key | Re-copy the Price IDs from the Dashboard with the correct mode toggle. |
 | `current_period_end` is NULL in `subscriptions` | Reading the wrong field on newer Stripe API versions | Confirm `lib/billing.ts` reads `subscription.items.data[*].current_period_end` (fixed in commit `6bc2028`). Rebuild if you changed code. |
 | Magic-link always shows `invalid_token` | Gmail prefetched and consumed the token | Use the Copy-Link-Address workaround or the direct-session bypass above. |
