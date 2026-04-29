@@ -4,8 +4,8 @@
   "type": "team",
   "description": "Developer-facing Claude Platform releases verified against official Claude Platform release notes.",
   "headline": "Verified Claude API releases across {days} days.",
-  "subtitle": "October 17, 2025 \u2014 April 23, 2026. Claude Platform release notes only.",
-  "footnote": "Dates and links cross-checked on April 24, 2026 against official Claude Platform release notes and API documentation.",
+  "subtitle": "October 17, 2025 — April 26, 2026. Claude Platform release notes only.",
+  "footnote": "Dates and links cross-checked on April 29, 2026 against official Claude Platform release notes and API documentation.",
   "brandLine": "Claude Platform release notes",
   "brandUrl": "https://platform.claude.com/docs/en/release-notes/overview",
   "theme": {
@@ -158,7 +158,7 @@
       "date": "2026-02-19",
       "title": "Automatic prompt caching for the Messages API",
       "shortTitle": "Caching",
-      "description": "Messages API caching gained automatic cache point movement as conversations grow \u2014 no manual cache-break management needed.",
+      "description": "Messages API caching gained automatic cache point movement as conversations grow — no manual cache-break management needed.",
       "tags": [
         "performance"
       ],
@@ -263,7 +263,7 @@
       "date": "2026-04-08",
       "title": "ant CLI for the Claude API",
       "shortTitle": "ant CLI",
-      "description": "Anthropic shipped the ant CLI \u2014 a command-line client for the Claude API with native Claude Code integration and YAML-based versioning of API resources.",
+      "description": "Anthropic shipped the ant CLI — a command-line client for the Claude API with native Claude Code integration and YAML-based versioning of API resources.",
       "audience": "developer",
       "status": "stable",
       "tags": [
@@ -293,7 +293,7 @@
       "date": "2026-04-16",
       "title": "Claude Opus 4.7 available on the Claude API",
       "shortTitle": "Opus 4.7 on API",
-      "description": "Opus 4.7 is available as claude-opus-4-7 at the same $5/$25 per MTok pricing as Opus 4.6, with API breaking changes versus Opus 4.6 (see the migration guide before upgrading) and an updated tokenizer that may map inputs to roughly 1.0\u20131.35\u00d7 more tokens.",
+      "description": "Opus 4.7 is available as claude-opus-4-7 at the same $5/$25 per MTok pricing as Opus 4.6, with API breaking changes versus Opus 4.6 (see the migration guide before upgrading) and an updated tokenizer that may map inputs to roughly 1.0–1.35× more tokens.",
       "audience": "developer",
       "status": "stable",
       "tags": [
@@ -333,6 +333,20 @@
       ],
       "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
       "importance": 2
+    },
+    {
+      "id": "api-2026-04-webhooks-ga",
+      "date": "2026-04-26",
+      "title": "Claude API webhooks GA",
+      "description": "Claude Platform promoted event webhooks to general availability with signed delivery, replay protection, and retry tooling.",
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "api",
+        "webhooks"
+      ]
     }
   ]
 }

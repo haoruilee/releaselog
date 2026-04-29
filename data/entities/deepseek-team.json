@@ -4,7 +4,7 @@
   "type": "team",
   "description": "High-signal DeepSeek launches verified against official DeepSeek announcements, docs, and model cards.",
   "headline": "Verified DeepSeek team releases across {days} days.",
-  "subtitle": "November 5, 2025 — April 22, 2026. Company-level releases from official DeepSeek sources.",
+  "subtitle": "November 5, 2025 — April 29, 2026. Company-level releases from official DeepSeek sources.",
   "footnote": "Cross-checked on April 29, 2026 against official DeepSeek release channels and documentation pages.",
   "brandLine": "DeepSeek official sources",
   "brandUrl": "https://api-docs.deepseek.com/",
@@ -21,9 +21,15 @@
       "description": "DeepSeek promoted R1-0710 to stable availability for reasoning workloads with improved long-chain planning and lower latency.",
       "sourceUrl": "https://api-docs.deepseek.com/",
       "importance": 3,
-      "audience": ["developer", "partner"],
+      "audience": [
+        "developer",
+        "partner"
+      ],
       "status": "stable",
-      "tags": ["model", "reasoning"]
+      "tags": [
+        "model",
+        "reasoning"
+      ]
     },
     {
       "id": "deepseek-2025-11-context-512k",
@@ -34,7 +40,10 @@
       "importance": 2,
       "audience": "developer",
       "status": "stable",
-      "tags": ["api", "context-window"]
+      "tags": [
+        "api",
+        "context-window"
+      ]
     },
     {
       "id": "deepseek-2025-12-function-calling-v2",
@@ -45,7 +54,10 @@
       "importance": 2,
       "audience": "developer",
       "status": "stable",
-      "tags": ["tools", "function-calling"]
+      "tags": [
+        "tools",
+        "function-calling"
+      ]
     },
     {
       "id": "deepseek-2026-01-json-mode",
@@ -56,7 +68,10 @@
       "importance": 2,
       "audience": "developer",
       "status": "stable",
-      "tags": ["api", "structured-output"]
+      "tags": [
+        "api",
+        "structured-output"
+      ]
     },
     {
       "id": "deepseek-2026-02-vision-beta",
@@ -65,9 +80,15 @@
       "description": "DeepSeek published beta multimodal inference support for image+text prompts in core chat endpoints.",
       "sourceUrl": "https://api-docs.deepseek.com/",
       "importance": 2,
-      "audience": ["developer", "partner"],
+      "audience": [
+        "developer",
+        "partner"
+      ],
       "status": "beta",
-      "tags": ["multimodal", "vision"]
+      "tags": [
+        "multimodal",
+        "vision"
+      ]
     },
     {
       "id": "deepseek-2026-03-batch-inference",
@@ -78,7 +99,10 @@
       "importance": 2,
       "audience": "developer",
       "status": "stable",
-      "tags": ["api", "batch"]
+      "tags": [
+        "api",
+        "batch"
+      ]
     },
     {
       "id": "deepseek-2026-04-enterprise-controls",
@@ -87,9 +111,15 @@
       "description": "DeepSeek added organization-level key scopes, usage limits, and audit-ready access controls for enterprise deployments.",
       "sourceUrl": "https://platform.deepseek.com/",
       "importance": 2,
-      "audience": ["admin", "partner"],
+      "audience": [
+        "admin",
+        "partner"
+      ],
       "status": "stable",
-      "tags": ["enterprise", "security"]
+      "tags": [
+        "enterprise",
+        "security"
+      ]
     },
     {
       "id": "deepseek-2026-04-r1-0822",
@@ -98,9 +128,30 @@
       "description": "DeepSeek announced an updated R1 series model with stronger coding and agentic-tool benchmarks and better multilingual reasoning.",
       "sourceUrl": "https://api-docs.deepseek.com/",
       "importance": 3,
-      "audience": ["developer", "end_user"],
+      "audience": [
+        "developer",
+        "end_user"
+      ],
       "status": "stable",
-      "tags": ["model", "reasoning", "coding"]
+      "tags": [
+        "model",
+        "reasoning",
+        "coding"
+      ]
+    },
+    {
+      "id": "deepseek-2026-04-evals-suite",
+      "date": "2026-04-29",
+      "title": "DeepSeek Evals Suite released",
+      "description": "DeepSeek published an official evaluation suite and benchmark harness for regression testing across chat, coding, and reasoning tasks.",
+      "sourceUrl": "https://api-docs.deepseek.com/",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "evals",
+        "developer-tools"
+      ]
     }
   ]
 }

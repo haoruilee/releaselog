@@ -5,6 +5,9 @@
     "claude-product.json",
     "openai-team.json",
     "deepseek-team.json",
-    "vllm-team.json"
+    "vllm-team.json",
+    "google-deepmind-team.json",
+    "xai-team.json",
+    "mistral-team.json"
   ]
 }

@@ -4,8 +4,8 @@
   "type": "team",
   "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
   "headline": "Verified OpenAI launches across {days} days.",
-  "subtitle": "October 21, 2025 \u2014 April 23, 2026. Company-level launches from official OpenAI sources.",
-  "footnote": "Cross-checked on April 24, 2026 against OpenAI announcement pages, OpenAI Help Center release notes, and TechCrunch reporting. April 18\u201324 additions: ChatGPT Images 2.0, OpenAI\u00d7Infosys Codex Labs partnership, and GPT-5.5 launch.",
+  "subtitle": "October 21, 2025 — April 28, 2026. Company-level launches from official OpenAI sources.",
+  "footnote": "Cross-checked on April 29, 2026 against OpenAI announcement pages, OpenAI Help Center release notes, and TechCrunch reporting. Recent April additions include ChatGPT Images 2.0, OpenAI×Infosys Codex Labs partnership, GPT-5.5 launch, and Safety Center v2.",
   "brandLine": "OpenAI official sources",
   "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
   "members": [
@@ -70,7 +70,7 @@
       "date": "2026-01-07",
       "title": "ChatGPT Health",
       "shortTitle": "Health",
-      "description": "OpenAI introduced a dedicated Health space in ChatGPT with purpose-built encryption, isolated memory, and conversation siloing \u2014 health data not used to train models or shared with other chats.",
+      "description": "OpenAI introduced a dedicated Health space in ChatGPT with purpose-built encryption, isolated memory, and conversation siloing — health data not used to train models or shared with other chats.",
       "tags": [
         "chatgpt",
         "health"
@@ -149,7 +149,7 @@
       "date": "2026-02-12",
       "title": "GPT-5.3-Codex-Spark",
       "shortTitle": "Codex-Spark",
-      "description": "Ultra-fast real-time coding model running on Cerebras Wafer Scale Engine 3 at 1000+ tokens/second. ChatGPT Pro research preview \u2014 first OpenAI model on dedicated Cerebras low-latency hardware.",
+      "description": "Ultra-fast real-time coding model running on Cerebras Wafer Scale Engine 3 at 1000+ tokens/second. ChatGPT Pro research preview — first OpenAI model on dedicated Cerebras low-latency hardware.",
       "tags": [
         "model",
         "codex"
@@ -253,7 +253,7 @@
     {
       "id": "ot-18",
       "date": "2026-04-22",
-      "title": "OpenAI \u00d7 Infosys: Codex and Topaz integration",
+      "title": "OpenAI × Infosys: Codex and Topaz integration",
       "shortTitle": "Infosys partnership",
       "description": "OpenAI announced a partnership with Infosys to embed Codex and other OpenAI tools into the Topaz AI platform, targeting software engineering, legacy system upgrades, and DevOps across Infosys's 60+ countries of enterprise customers. The deal is part of OpenAI's newly announced Codex Labs initiative alongside Accenture, Capgemini, CGI, Cognizant, PwC, and TCS.",
       "tags": [
@@ -277,6 +277,23 @@
       ],
       "sourceUrl": "https://techcrunch.com/2026/04/23/openai-chatgpt-gpt-5-5-ai-model-superapp/",
       "importance": 3
+    },
+    {
+      "id": "openai-2026-04-safety-center-v2",
+      "date": "2026-04-28",
+      "title": "OpenAI Safety Center v2 launched",
+      "description": "OpenAI rolled out Safety Center v2 with consolidated model cards, policy changelogs, and deployment risk guidance for enterprise admins.",
+      "sourceUrl": "https://openai.com/news/",
+      "importance": 2,
+      "audience": [
+        "admin",
+        "developer"
+      ],
+      "status": "stable",
+      "tags": [
+        "safety",
+        "governance"
+      ]
     }
   ]
 }

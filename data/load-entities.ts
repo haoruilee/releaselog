@@ -6,6 +6,9 @@ import claudeProduct from "./entities/claude-product.json";
 import openaiTeam from "./entities/openai-team.json";
 import deepseekTeam from "./entities/deepseek-team.json";
 import vllmTeam from "./entities/vllm-team.json";
+import mistralTeam from "./entities/mistral-team.json";
+import xaiTeam from "./entities/xai-team.json";
+import googleDeepmindTeam from "./entities/google-deepmind-team.json";
 
 const entityByFile: Record<string, EntityConfig> = {
   "anthropic-team.json": anthropicTeam as EntityConfig,
@@ -14,6 +17,9 @@ const entityByFile: Record<string, EntityConfig> = {
   "openai-team.json": openaiTeam as EntityConfig,
   "deepseek-team.json": deepseekTeam as EntityConfig,
   "vllm-team.json": vllmTeam as EntityConfig,
+  "google-deepmind-team.json": googleDeepmindTeam as EntityConfig,
+  "xai-team.json": xaiTeam as EntityConfig,
+  "mistral-team.json": mistralTeam as EntityConfig,
 };
 
 export function loadEntitiesFromRegistry(): EntityConfig[] {

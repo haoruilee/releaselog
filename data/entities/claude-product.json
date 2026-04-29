@@ -4,8 +4,8 @@
   "type": "product",
   "description": "Verified app, desktop, mobile, and add-in launches from Claude.",
   "headline": "Verified Claude product launches across {days} days.",
-  "subtitle": "January 12 \u2014 April 17, 2026. Cross-checked against official Claude release notes and product pages.",
-  "footnote": "Cross-checked on April 24, 2026 against official Claude Help Center release notes, Claude product posts, and Anthropic announcements. No new consumer product surface changes in the April 18\u201324 window.",
+  "subtitle": "January 12 — April 25, 2026. Cross-checked against official Claude release notes and product pages.",
+  "footnote": "Cross-checked on April 29, 2026 against official Claude Help Center release notes, Claude product posts, and Anthropic announcements.",
   "brandLine": "Claude official sources",
   "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
   "theme": {
@@ -201,6 +201,20 @@
       ],
       "sourceUrl": "https://support.claude.com/en/articles/14604416-get-started-with-claude-design",
       "importance": 3
+    },
+    {
+      "id": "claude-product-2026-04-mobile-offline-drafts",
+      "date": "2026-04-25",
+      "title": "Mobile offline drafts for Claude apps",
+      "description": "Claude iOS and Android apps now support offline draft capture and sync-on-reconnect for long-form prompts and notes.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 1,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "mobile",
+        "productivity"
+      ]
     }
   ]
 }
