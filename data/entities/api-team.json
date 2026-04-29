@@ -4,8 +4,8 @@
   "type": "team",
   "description": "Developer-facing Claude Platform releases verified against official Claude Platform release notes.",
   "headline": "Verified Claude API releases across {days} days.",
-  "subtitle": "October 17, 2025 — April 23, 2026. Claude Platform release notes only.",
-  "footnote": "Dates and links cross-checked on April 24, 2026 against official Claude Platform release notes and API documentation.",
+  "subtitle": "October 17, 2025 — April 26, 2026. Claude Platform release notes only.",
+  "footnote": "Dates and links cross-checked on April 29, 2026 against official Claude Platform release notes and API documentation.",
   "brandLine": "Claude Platform release notes",
   "brandUrl": "https://platform.claude.com/docs/en/release-notes/overview",
   "theme": {

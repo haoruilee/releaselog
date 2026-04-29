@@ -4,7 +4,7 @@
   "type": "team",
   "description": "High-signal vLLM releases verified against official vLLM project release notes, docs, and GitHub releases.",
   "headline": "Verified vLLM releases across {days} days.",
-  "subtitle": "November 8, 2025 — April 25, 2026. Official vLLM project releases over the last six months.",
+  "subtitle": "November 8, 2025 — April 29, 2026. Official vLLM project releases over the last six months.",
   "footnote": "Cross-checked on April 29, 2026 against the vLLM docs site and official GitHub releases.",
   "brandLine": "vLLM official sources",
   "brandUrl": "https://github.com/vllm-project/vllm/releases",

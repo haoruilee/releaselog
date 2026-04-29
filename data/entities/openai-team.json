@@ -4,8 +4,8 @@
   "type": "team",
   "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
   "headline": "Verified OpenAI launches across {days} days.",
-  "subtitle": "October 21, 2025 — April 23, 2026. Company-level launches from official OpenAI sources.",
-  "footnote": "Cross-checked on April 24, 2026 against OpenAI announcement pages, OpenAI Help Center release notes, and TechCrunch reporting. April 18–24 additions: ChatGPT Images 2.0, OpenAI×Infosys Codex Labs partnership, and GPT-5.5 launch.",
+  "subtitle": "October 21, 2025 — April 28, 2026. Company-level launches from official OpenAI sources.",
+  "footnote": "Cross-checked on April 29, 2026 against OpenAI announcement pages, OpenAI Help Center release notes, and TechCrunch reporting. Recent April additions include ChatGPT Images 2.0, OpenAI×Infosys Codex Labs partnership, GPT-5.5 launch, and Safety Center v2.",
   "brandLine": "OpenAI official sources",
   "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
   "members": [
