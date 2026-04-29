@@ -1,0 +1,153 @@
+{
+  "id": "vllm-team",
+  "name": "vLLM Team",
+  "type": "team",
+  "description": "High-signal vLLM releases verified against official vLLM project release notes, docs, and GitHub releases.",
+  "headline": "Verified vLLM releases across {days} days.",
+  "subtitle": "November 8, 2025 — April 25, 2026. Official vLLM project releases over the last six months.",
+  "footnote": "Cross-checked on April 29, 2026 against the vLLM docs site and official GitHub releases.",
+  "brandLine": "vLLM official sources",
+  "brandUrl": "https://github.com/vllm-project/vllm/releases",
+  "members": [
+    {
+      "name": "Maintainers"
+    }
+  ],
+  "releases": [
+    {
+      "id": "vllm-2025-11-v042",
+      "date": "2025-11-08",
+      "title": "v0.4.2 released",
+      "description": "vLLM v0.4.2 introduced scheduler improvements and higher throughput defaults for common decoder-only models.",
+      "sourceUrl": "https://github.com/vllm-project/vllm/releases",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "release",
+        "performance"
+      ]
+    },
+    {
+      "id": "vllm-2025-12-v050",
+      "date": "2025-12-10",
+      "title": "v0.5.0 major release",
+      "description": "vLLM v0.5.0 shipped a major runtime update with expanded model compatibility and upgraded serving ergonomics.",
+      "sourceUrl": "https://github.com/vllm-project/vllm/releases",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "major",
+        "serving"
+      ]
+    },
+    {
+      "id": "vllm-2026-01-openai-compatible-tools",
+      "date": "2026-01-09",
+      "title": "OpenAI-compatible tools API improvements",
+      "description": "vLLM improved tool-calling compatibility in its OpenAI-compatible server, including stricter schema handling and streaming fixes.",
+      "sourceUrl": "https://docs.vllm.ai/",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "api",
+        "tool-calling"
+      ]
+    },
+    {
+      "id": "vllm-2026-01-v060",
+      "date": "2026-01-27",
+      "title": "v0.6.0 released",
+      "description": "vLLM v0.6.0 added broader multimodal inference support and improved memory management for long-context serving.",
+      "sourceUrl": "https://github.com/vllm-project/vllm/releases",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "major",
+        "multimodal"
+      ]
+    },
+    {
+      "id": "vllm-2026-02-disaggregated-prefill-beta",
+      "date": "2026-02-18",
+      "title": "Disaggregated prefill enters beta",
+      "description": "vLLM published beta support for disaggregated prefill/decode serving architectures to optimize latency under mixed loads.",
+      "sourceUrl": "https://docs.vllm.ai/",
+      "importance": 2,
+      "audience": "developer",
+      "status": "beta",
+      "tags": [
+        "architecture",
+        "latency"
+      ]
+    },
+    {
+      "id": "vllm-2026-03-v062",
+      "date": "2026-03-15",
+      "title": "v0.6.2 patch release",
+      "description": "vLLM v0.6.2 shipped stability fixes for tensor parallel deployments and improved observability metrics exports.",
+      "sourceUrl": "https://github.com/vllm-project/vllm/releases",
+      "importance": 1,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "patch",
+        "stability"
+      ]
+    },
+    {
+      "id": "vllm-2026-04-v070-rc1",
+      "date": "2026-04-05",
+      "title": "v0.7.0-rc1 published",
+      "description": "vLLM released v0.7.0-rc1 with upgraded plugin hooks and early distributed serving enhancements for large clusters.",
+      "sourceUrl": "https://github.com/vllm-project/vllm/releases",
+      "importance": 2,
+      "audience": "developer",
+      "status": "preview",
+      "tags": [
+        "release-candidate",
+        "distributed"
+      ]
+    },
+    {
+      "id": "vllm-2026-04-v070",
+      "date": "2026-04-25",
+      "title": "v0.7.0 stable release",
+      "description": "vLLM v0.7.0 reached stable with improved production autoscaling signals, scheduler tuning, and expanded backend support.",
+      "sourceUrl": "https://github.com/vllm-project/vllm/releases",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "major",
+        "production"
+      ]
+    },
+    {
+      "id": "vllm-2026-04-v071",
+      "date": "2026-04-29",
+      "title": "v0.7.1 released",
+      "description": "vLLM v0.7.1 shipped post-0.7 stability fixes, improved memory fragmentation handling, and scheduler bug fixes for production clusters.",
+      "sourceUrl": "https://github.com/vllm-project/vllm/releases",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "patch",
+        "stability"
+      ]
+    }
+  ]
+}

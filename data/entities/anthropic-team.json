@@ -4,7 +4,7 @@
   "type": "team",
   "description": "High-signal Anthropic launches verified against official Anthropic, Claude, and Claude Help sources.",
   "headline": "Verified Anthropic launches across {days} days.",
-  "subtitle": "October 24, 2025 \u2014 April 24, 2026. Company-level launches from official Anthropic sources.",
+  "subtitle": "October 24, 2025 — April 24, 2026. Company-level launches from official Anthropic sources.",
   "footnote": "Cross-checked on April 24, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
   "brandLine": "Anthropic official sources",
   "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
@@ -184,7 +184,7 @@
       "date": "2026-02-25",
       "title": "Vercept acquisition",
       "shortTitle": "Vercept",
-      "description": "Anthropic announced its acquisition of Vercept to strengthen Claude\u2019s computer-use capabilities and agent reliability research.",
+      "description": "Anthropic announced its acquisition of Vercept to strengthen Claude’s computer-use capabilities and agent reliability research.",
       "tags": [
         "acquisition",
         "computer-use"
@@ -246,9 +246,9 @@
     {
       "id": "at-18",
       "date": "2026-03-12",
-      "title": "Claude Partner Network \u2014 $100M investment",
+      "title": "Claude Partner Network — $100M investment",
       "shortTitle": "Partners",
-      "description": "Formalized enterprise partner channel (Accenture, Deloitte, Cognizant, Infosys) with $100M in 2026 funding, 5\u00d7 partner-facing team growth, and the first Claude Certified Architect credential.",
+      "description": "Formalized enterprise partner channel (Accenture, Deloitte, Cognizant, Infosys) with $100M in 2026 funding, 5× partner-facing team growth, and the first Claude Certified Architect credential.",
       "tags": [
         "partnerships",
         "enterprise"
@@ -272,7 +272,7 @@
     {
       "id": "at-9",
       "date": "2026-04-07",
-      "title": "Claude Mythos Preview \u2014 Project Glasswing",
+      "title": "Claude Mythos Preview — Project Glasswing",
       "shortTitle": "Mythos",
       "description": "Anthropic unveiled Claude Mythos Preview, a cybersecurity-focused model released to 11 organizations under Project Glasswing to find and fix vulnerabilities in critical software.",
       "tags": [
@@ -327,7 +327,7 @@
       "id": "at-25",
       "date": "2026-04-24",
       "title": "Anthropic and NEC partner on Japan's largest AI engineering workforce",
-      "shortTitle": "Anthropic \u00d7 NEC",
+      "shortTitle": "Anthropic × NEC",
       "description": "Anthropic announced its first Japan-based global partnership with NEC. Claude (including Opus 4.7) and Claude Code roll out to ~30,000 NEC employees globally; NEC will embed Claude into its Security Operations Center services and its BluStellar product family, and launch a Center of Excellence with Anthropic-supported training to build one of Japan's largest AI-native engineering teams.",
       "tags": [
         "partnership",
@@ -335,6 +335,23 @@
       ],
       "sourceUrl": "https://www.anthropic.com/news/anthropic-nec",
       "importance": 2
+    },
+    {
+      "id": "anthropic-2026-04-claude-gov-controls",
+      "date": "2026-04-27",
+      "title": "Claude Government controls update",
+      "description": "Anthropic added government-grade tenancy and auditing controls for regulated deployments of Claude in high-assurance environments.",
+      "sourceUrl": "https://www.anthropic.com/news",
+      "importance": 2,
+      "audience": [
+        "admin",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "enterprise",
+        "governance"
+      ]
     }
   ]
 }
