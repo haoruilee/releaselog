@@ -30,19 +30,19 @@ const DESCRIPTION =
 
 export const metadata: Metadata = {
   metadataBase: metadataBaseUrl(),
-  title: { default: "ReleaseLog", template: "%s · ReleaseLog" },
+  title: { default: "ReleaseLog — AI Release Calendar & Changelog Tracker", template: "%s · ReleaseLog" },
   description: DESCRIPTION,
   keywords: ["release log", "AI releases", "Anthropic", "Claude", "OpenAI", "changelog", "shipping calendar"],
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   openGraph: {
     type: "website",
     siteName: "ReleaseLog",
-    title: "ReleaseLog",
+    title: "ReleaseLog — AI Release Calendar & Changelog Tracker",
     description: DESCRIPTION,
   },
   twitter: {
     card: "summary",
-    title: "ReleaseLog",
+    title: "ReleaseLog — AI Release Calendar & Changelog Tracker",
     description: DESCRIPTION,
   },
   alternates: {
