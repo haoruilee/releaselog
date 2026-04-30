@@ -67,14 +67,18 @@ export function Header({ entity, daySpan, posterMode }: Props) {
       )}
 
       {entity.members && entity.members.length > 0 && !posterMode && (
-        <div className="flex flex-wrap gap-4 pt-2">
+        <section className="pt-2">
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
+            Team members
+          </h3>
+          <div className="flex flex-wrap gap-4">
           {entity.members.map((m) => (
             <div key={m.name + (m.handle ?? "")} className="flex items-center gap-2">
               {m.avatar ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={(process.env.NEXT_PUBLIC_BASE_PATH ?? "") + m.avatar}
-                  alt=""
+                  alt={`${m.name} avatar`}
                   width={36}
                   height={36}
                   className="h-9 w-9 rounded-full object-cover ring-1 ring-white/10"
@@ -92,7 +96,8 @@ export function Header({ entity, daySpan, posterMode }: Props) {
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        </section>
       )}
     </header>
   );
