@@ -4,8 +4,8 @@
   "type": "team",
   "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
   "headline": "Verified OpenAI launches across {days} days.",
-  "subtitle": "October 21, 2025 — April 28, 2026. Company-level launches from official OpenAI sources.",
-  "footnote": "Cross-checked on April 29, 2026 against OpenAI announcement pages, OpenAI Help Center release notes, and TechCrunch reporting. Recent April additions include ChatGPT Images 2.0, OpenAI×Infosys Codex Labs partnership, GPT-5.5 launch, and Safety Center v2.",
+  "subtitle": "October 21, 2025 — April 29, 2026. Company-level launches from official OpenAI sources.",
+  "footnote": "Cross-checked on May 4, 2026 against OpenAI announcement pages and OpenAI Help Center release notes. Recent April additions include ChatGPT Images 2.0, GPT-5.5, easier model selection in ChatGPT, Safety Center v2, and Stargate compute infrastructure.",
   "brandLine": "OpenAI official sources",
   "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
   "members": [
@@ -269,14 +269,36 @@
       "date": "2026-04-23",
       "title": "OpenAI releases GPT-5.5",
       "shortTitle": "GPT-5.5",
-      "description": "OpenAI launched GPT-5.5, described as its \"smartest and most intuitive\" model, framed as progress toward a unified ChatGPT + Codex + AI-browser \"super app.\" Greg Brockman said it's a faster, sharper thinker that uses fewer tokens than GPT-5.4; OpenAI claims benchmark wins over Gemini 3.1 Pro and Claude Opus 4.5. Rollout: Plus, Pro, Business, and Enterprise; GPT-5.5 Pro limited to Pro, Business, Enterprise.",
+      "description": "OpenAI announced GPT-5.5 as a frontier model for complex work, tool use, coding, research, data analysis, document creation, and computer-operation workflows; API availability followed in the April 24 update.",
       "tags": [
         "chatgpt",
         "model",
-        "launch"
+        "launch",
+        "api"
       ],
-      "sourceUrl": "https://techcrunch.com/2026/04/23/openai-chatgpt-gpt-5-5-ai-model-superapp/",
-      "importance": 3
+      "sourceUrl": "https://openai.com/index/introducing-gpt-5-5/",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "end_user"
+      ],
+      "status": "stable"
+    },
+    {
+      "id": "openai-2026-04-model-picker-update",
+      "date": "2026-04-28",
+      "title": "Easier model selection in ChatGPT",
+      "shortTitle": "Model picker",
+      "description": "OpenAI moved model selection into the ChatGPT message composer and shifted reasoning-effort controls into the model picker for Thinking and Pro models on web for Plus, Pro, and Business users.",
+      "tags": [
+        "chatgpt",
+        "ui",
+        "models"
+      ],
+      "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "stable"
     },
     {
       "id": "openai-2026-04-safety-center-v2",
@@ -294,6 +316,24 @@
         "safety",
         "governance"
       ]
+    },
+    {
+      "id": "openai-2026-04-stargate-compute",
+      "date": "2026-04-29",
+      "title": "Stargate compute infrastructure update",
+      "shortTitle": "Stargate",
+      "description": "OpenAI published an update on Stargate, its long-term compute infrastructure effort to support broader and more reliable AGI-scale deployment.",
+      "tags": [
+        "infrastructure",
+        "compute"
+      ],
+      "sourceUrl": "https://openai.com/index/building-the-compute-infrastructure-for-the-intelligence-age/",
+      "importance": 2,
+      "audience": [
+        "partner",
+        "developer"
+      ],
+      "status": "stable"
     }
   ]
 }

@@ -4,10 +4,10 @@
   "type": "team",
   "description": "High-signal DeepSeek launches verified against official DeepSeek announcements, docs, and model cards.",
   "headline": "Verified DeepSeek team releases across {days} days.",
-  "subtitle": "November 5, 2025 — April 29, 2026. Company-level releases from official DeepSeek sources.",
-  "footnote": "Cross-checked on April 29, 2026 against official DeepSeek release channels and documentation pages.",
+  "subtitle": "November 2025 — April 2026. Official DeepSeek model and API updates.",
+  "footnote": "Cross-checked on May 4, 2026 against official DeepSeek API docs and changelog.",
   "brandLine": "DeepSeek official sources",
-  "brandUrl": "https://api-docs.deepseek.com/",
+  "brandUrl": "https://api-docs.deepseek.com/updates",
   "members": [
     {
       "name": "Team"
@@ -137,6 +137,21 @@
         "model",
         "reasoning",
         "coding"
+      ]
+    },
+    {
+      "id": "deepseek-2026-04-v4",
+      "date": "2026-04-24",
+      "title": "DeepSeek-V4 API support",
+      "description": "DeepSeek API added V4-Pro and V4-Flash through both OpenAI Chat Completions and Anthropic-compatible interfaces; legacy deepseek-chat and deepseek-reasoner model names are scheduled for discontinuation on July 24, 2026.",
+      "sourceUrl": "https://api-docs.deepseek.com/updates",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "model",
+        "api",
+        "deprecation"
       ]
     },
     {

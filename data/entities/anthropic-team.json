@@ -5,7 +5,7 @@
   "description": "High-signal Anthropic launches verified against official Anthropic, Claude, and Claude Help sources.",
   "headline": "Verified Anthropic launches across {days} days.",
   "subtitle": "October 24, 2025 — April 27, 2026. Company-level launches from official Anthropic sources.",
-  "footnote": "Cross-checked on April 29, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
+  "footnote": "Cross-checked on May 4, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
   "brandLine": "Anthropic official sources",
   "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
   "members": [
@@ -66,19 +66,6 @@
       "importance": 2
     },
     {
-      "id": "at-12",
-      "date": "2026-01-12",
-      "title": "Anthropic Labs expansion",
-      "shortTitle": "Labs",
-      "description": "Anthropic expanded its internal Labs incubator, named Instagram co-founder Mike Krieger as co-lead alongside Ben Mann, and announced plans to double the team. Labs is the unit behind Claude Code, MCP, and Cowork.",
-      "tags": [
-        "org",
-        "strategy"
-      ],
-      "sourceUrl": "https://www.anthropic.com/news/introducing-anthropic-labs",
-      "importance": 2
-    },
-    {
       "id": "at-1",
       "date": "2026-01-12",
       "title": "Cowork research preview",
@@ -90,6 +77,19 @@
       ],
       "sourceUrl": "https://claude.com/blog/cowork-research-preview",
       "importance": 3
+    },
+    {
+      "id": "at-12",
+      "date": "2026-01-12",
+      "title": "Anthropic Labs expansion",
+      "shortTitle": "Labs",
+      "description": "Anthropic expanded its internal Labs incubator, named Instagram co-founder Mike Krieger as co-lead alongside Ben Mann, and announced plans to double the team. Labs is the unit behind Claude Code, MCP, and Cowork.",
+      "tags": [
+        "org",
+        "strategy"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news/introducing-anthropic-labs",
+      "importance": 2
     },
     {
       "id": "at-13",
@@ -142,18 +142,6 @@
       "importance": 3
     },
     {
-      "id": "at-4",
-      "date": "2026-02-17",
-      "title": "Claude Sonnet 4.6",
-      "shortTitle": "Sonnet 4.6",
-      "description": "Anthropic launched Sonnet 4.6 as the new balanced flagship across speed, coding, and reasoning.",
-      "tags": [
-        "model"
-      ],
-      "sourceUrl": "https://www.anthropic.com/news/claude-sonnet-4-6",
-      "importance": 3
-    },
-    {
       "id": "at-15",
       "date": "2026-02-17",
       "title": "Anthropic Transparency Hub",
@@ -165,6 +153,18 @@
       ],
       "sourceUrl": "https://www.anthropic.com/news/introducing-anthropic-transparency-hub",
       "importance": 2
+    },
+    {
+      "id": "at-4",
+      "date": "2026-02-17",
+      "title": "Claude Sonnet 4.6",
+      "shortTitle": "Sonnet 4.6",
+      "description": "Anthropic launched Sonnet 4.6 as the new balanced flagship across speed, coding, and reasoning.",
+      "tags": [
+        "model"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news/claude-sonnet-4-6",
+      "importance": 3
     },
     {
       "id": "at-5",
@@ -205,19 +205,6 @@
       "importance": 2
     },
     {
-      "id": "at-7",
-      "date": "2026-03-11",
-      "title": "Advancing Claude for Excel and PowerPoint",
-      "shortTitle": "Office",
-      "description": "Claude's Microsoft add-ins began sharing context across Excel and PowerPoint and added skills support.",
-      "tags": [
-        "office",
-        "workflow"
-      ],
-      "sourceUrl": "https://claude.com/blog/claude-excel-powerpoint-updates",
-      "importance": 2
-    },
-    {
       "id": "at-17",
       "date": "2026-03-11",
       "title": "The Anthropic Institute",
@@ -231,16 +218,16 @@
       "importance": 2
     },
     {
-      "id": "at-8",
-      "date": "2026-03-12",
-      "title": "Claude builds interactive visuals right in your conversation",
-      "shortTitle": "Visuals",
-      "description": "Claude started creating inline charts, diagrams, and visual explanations directly in chat.",
+      "id": "at-7",
+      "date": "2026-03-11",
+      "title": "Advancing Claude for Excel and PowerPoint",
+      "shortTitle": "Office",
+      "description": "Claude's Microsoft add-ins began sharing context across Excel and PowerPoint and added skills support.",
       "tags": [
-        "visuals",
-        "chat"
+        "office",
+        "workflow"
       ],
-      "sourceUrl": "https://claude.com/blog/claude-builds-visuals",
+      "sourceUrl": "https://claude.com/blog/claude-excel-powerpoint-updates",
       "importance": 2
     },
     {
@@ -255,6 +242,19 @@
       ],
       "sourceUrl": "https://www.anthropic.com/news/claude-partner-network",
       "importance": 3
+    },
+    {
+      "id": "at-8",
+      "date": "2026-03-12",
+      "title": "Claude builds interactive visuals right in your conversation",
+      "shortTitle": "Visuals",
+      "description": "Claude started creating inline charts, diagrams, and visual explanations directly in chat.",
+      "tags": [
+        "visuals",
+        "chat"
+      ],
+      "sourceUrl": "https://claude.com/blog/claude-builds-visuals",
+      "importance": 2
     },
     {
       "id": "at-19",

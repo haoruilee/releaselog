@@ -4,8 +4,8 @@
   "type": "product",
   "description": "Verified app, desktop, mobile, and add-in launches from Claude.",
   "headline": "Verified Claude product launches across {days} days.",
-  "subtitle": "January 12 — April 25, 2026. Cross-checked against official Claude release notes and product pages.",
-  "footnote": "Cross-checked on April 29, 2026 against official Claude Help Center release notes, Claude product posts, and Anthropic announcements.",
+  "subtitle": "October 2025 — April 2026. Claude app and product releases from official Claude Help sources.",
+  "footnote": "Cross-checked on May 4, 2026 against official Claude Help Center release notes.",
   "brandLine": "Claude official sources",
   "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
   "theme": {

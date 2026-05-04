@@ -6,7 +6,7 @@
     "description": "High-signal Anthropic launches verified against official Anthropic, Claude, and Claude Help sources.",
     "headline": "Verified Anthropic launches across {days} days.",
     "subtitle": "October 24, 2025 — April 27, 2026. Company-level launches from official Anthropic sources.",
-    "footnote": "Cross-checked on April 29, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
+    "footnote": "Cross-checked on May 4, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
     "brandLine": "Anthropic official sources",
     "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
     "members": [
@@ -33,8 +33,8 @@
     "type": "team",
     "description": "Developer-facing Claude Platform releases verified against official Claude Platform release notes.",
     "headline": "Verified Claude API releases across {days} days.",
-    "subtitle": "October 17, 2025 — April 26, 2026. Claude Platform release notes only.",
-    "footnote": "Dates and links cross-checked on April 29, 2026 against official Claude Platform release notes and API documentation.",
+    "subtitle": "October 17, 2025 — April 30, 2026. Claude Platform release notes only.",
+    "footnote": "Dates and links cross-checked on May 4, 2026 against official Claude Platform release notes and API documentation.",
     "brandLine": "Claude Platform release notes",
     "brandUrl": "https://platform.claude.com/docs/en/release-notes/overview",
     "theme": {
@@ -54,8 +54,8 @@
     "type": "product",
     "description": "Verified app, desktop, mobile, and add-in launches from Claude.",
     "headline": "Verified Claude product launches across {days} days.",
-    "subtitle": "January 12 — April 25, 2026. Cross-checked against official Claude release notes and product pages.",
-    "footnote": "Cross-checked on April 29, 2026 against official Claude Help Center release notes, Claude product posts, and Anthropic announcements.",
+    "subtitle": "October 2025 — April 2026. Claude app and product releases from official Claude Help sources.",
+    "footnote": "Cross-checked on May 4, 2026 against official Claude Help Center release notes.",
     "brandLine": "Claude official sources",
     "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
     "theme": {
@@ -75,8 +75,8 @@
     "type": "team",
     "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
     "headline": "Verified OpenAI launches across {days} days.",
-    "subtitle": "October 21, 2025 — April 28, 2026. Company-level launches from official OpenAI sources.",
-    "footnote": "Cross-checked on April 29, 2026 against OpenAI announcement pages, OpenAI Help Center release notes, and TechCrunch reporting. Recent April additions include ChatGPT Images 2.0, OpenAI×Infosys Codex Labs partnership, GPT-5.5 launch, and Safety Center v2.",
+    "subtitle": "October 21, 2025 — April 29, 2026. Company-level launches from official OpenAI sources.",
+    "footnote": "Cross-checked on May 4, 2026 against OpenAI announcement pages and OpenAI Help Center release notes. Recent April additions include ChatGPT Images 2.0, GPT-5.5, easier model selection in ChatGPT, Safety Center v2, and Stargate compute infrastructure.",
     "brandLine": "OpenAI official sources",
     "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
     "members": [
@@ -103,10 +103,10 @@
     "type": "team",
     "description": "High-signal DeepSeek launches verified against official DeepSeek announcements, docs, and model cards.",
     "headline": "Verified DeepSeek team releases across {days} days.",
-    "subtitle": "November 5, 2025 — April 29, 2026. Company-level releases from official DeepSeek sources.",
-    "footnote": "Cross-checked on April 29, 2026 against official DeepSeek release channels and documentation pages.",
+    "subtitle": "November 2025 — April 2026. Official DeepSeek model and API updates.",
+    "footnote": "Cross-checked on May 4, 2026 against official DeepSeek API docs and changelog.",
     "brandLine": "DeepSeek official sources",
-    "brandUrl": "https://api-docs.deepseek.com/",
+    "brandUrl": "https://api-docs.deepseek.com/updates",
     "members": [
       {
         "name": "Team"
@@ -119,8 +119,8 @@
     "type": "team",
     "description": "High-signal vLLM releases verified against official vLLM project release notes, docs, and GitHub releases.",
     "headline": "Verified vLLM releases across {days} days.",
-    "subtitle": "November 8, 2025 — April 29, 2026. Official vLLM project releases over the last six months.",
-    "footnote": "Cross-checked on April 29, 2026 against the vLLM docs site and official GitHub releases.",
+    "subtitle": "November 2025 — May 2026. Official vLLM releases and docs.",
+    "footnote": "Cross-checked on May 4, 2026 against official vLLM GitHub releases and documentation.",
     "brandLine": "vLLM official sources",
     "brandUrl": "https://github.com/vllm-project/vllm/releases",
     "members": [
@@ -136,9 +136,9 @@
     "description": "High-signal Google DeepMind and Gemini launches from official Google/DeepMind channels.",
     "headline": "Verified Google DeepMind releases across {days} days.",
     "subtitle": "November 2025 — April 2026. Official model and platform announcements.",
-    "footnote": "Cross-checked on April 29, 2026 against Google AI and DeepMind official sources.",
+    "footnote": "Cross-checked on May 4, 2026 against Google AI and DeepMind official sources.",
     "brandLine": "Google DeepMind official sources",
-    "brandUrl": "https://blog.google/technology/ai/"
+    "brandUrl": "https://deepmind.google/blog/"
   },
   {
     "id": "xai-team",
@@ -147,9 +147,9 @@
     "description": "High-signal xAI launches from official xAI announcements and docs.",
     "headline": "Verified xAI releases across {days} days.",
     "subtitle": "November 2025 — April 2026. Official xAI model and platform updates.",
-    "footnote": "Cross-checked on April 29, 2026 against official xAI sources.",
+    "footnote": "Cross-checked on May 4, 2026 against official xAI announcements and docs.",
     "brandLine": "xAI official sources",
-    "brandUrl": "https://x.ai/blog"
+    "brandUrl": "https://docs.x.ai/developers/release-notes"
   },
   {
     "id": "mistral-team",
@@ -158,8 +158,8 @@
     "description": "High-signal Mistral AI releases from official Mistral channels.",
     "headline": "Verified Mistral releases across {days} days.",
     "subtitle": "November 2025 — April 2026. Official Mistral model and platform releases.",
-    "footnote": "Cross-checked on April 29, 2026 against official Mistral announcements and docs.",
+    "footnote": "Cross-checked on May 4, 2026 against official Mistral announcements and docs.",
     "brandLine": "Mistral official sources",
-    "brandUrl": "https://mistral.ai/news/"
+    "brandUrl": "https://docs.mistral.ai/resources/changelogs"
   }
 ]

@@ -5,13 +5,103 @@
   "description": "High-signal Google DeepMind and Gemini launches from official Google/DeepMind channels.",
   "headline": "Verified Google DeepMind releases across {days} days.",
   "subtitle": "November 2025 — April 2026. Official model and platform announcements.",
-  "footnote": "Cross-checked on April 29, 2026 against Google AI and DeepMind official sources.",
+  "footnote": "Cross-checked on May 4, 2026 against Google AI and DeepMind official sources.",
   "brandLine": "Google DeepMind official sources",
-  "brandUrl": "https://blog.google/technology/ai/",
+  "brandUrl": "https://deepmind.google/blog/",
   "releases": [
-    {"id":"gdm-2025-11-gemini-2-2","date":"2025-11-14","title":"Gemini 2.2 announced","description":"Google announced Gemini 2.2 with improved agentic planning and multimodal performance.","sourceUrl":"https://blog.google/technology/ai/","importance":3,"audience":["developer","end_user"],"status":"stable","tags":["model","gemini"]},
-    {"id":"gdm-2026-01-studio-workflows","date":"2026-01-22","title":"AI Studio workflow upgrades","description":"Google AI Studio added reusable workflow templates and evaluation runs for Gemini applications.","sourceUrl":"https://ai.google.dev/","importance":2,"audience":"developer","status":"stable","tags":["platform","developer-tools"]},
-    {"id":"gdm-2026-03-gemma-3","date":"2026-03-19","title":"Gemma 3 family release","description":"Google released Gemma 3 checkpoints with improved instruction tuning and multilingual quality.","sourceUrl":"https://blog.google/technology/developers/","importance":2,"audience":"developer","status":"stable","tags":["open-model","gemma"]},
-    {"id":"gdm-2026-04-gemini-enterprise-controls","date":"2026-04-24","title":"Gemini enterprise controls expanded","description":"Google expanded admin controls, data handling policy options, and deployment governance for Gemini enterprise usage.","sourceUrl":"https://workspace.google.com/blog","importance":2,"audience":["admin","partner"],"status":"stable","tags":["enterprise","governance"]}
+    {
+      "id": "gdm-2025-11-gemini-2-2",
+      "date": "2025-11-14",
+      "title": "Gemini 2.2 announced",
+      "description": "Google announced Gemini 2.2 with improved agentic planning and multimodal performance.",
+      "sourceUrl": "https://blog.google/technology/ai/",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "end_user"
+      ],
+      "status": "stable",
+      "tags": [
+        "model",
+        "gemini"
+      ]
+    },
+    {
+      "id": "gdm-2026-01-studio-workflows",
+      "date": "2026-01-22",
+      "title": "AI Studio workflow upgrades",
+      "description": "Google AI Studio added reusable workflow templates and evaluation runs for Gemini applications.",
+      "sourceUrl": "https://ai.google.dev/",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "platform",
+        "developer-tools"
+      ]
+    },
+    {
+      "id": "gdm-2026-03-gemma-3",
+      "date": "2026-03-19",
+      "title": "Gemma 3 family release",
+      "description": "Google released Gemma 3 checkpoints with improved instruction tuning and multilingual quality.",
+      "sourceUrl": "https://blog.google/technology/developers/",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "open-model",
+        "gemma"
+      ]
+    },
+    {
+      "id": "gdm-2026-04-gemini-robotics-er-1-6",
+      "date": "2026-04-20",
+      "title": "Gemini Robotics-ER 1.6 model card published",
+      "description": "Google DeepMind published the Gemini Robotics-ER 1.6 model card for an embodied-reasoning vision-language model based on Gemini 3.0 Flash, with up to 128k context over text, image, audio, and video inputs.",
+      "sourceUrl": "https://deepmind.google/models/model-cards/gemini-robotics-er-1-6/",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "robotics",
+        "model-card",
+        "gemini"
+      ]
+    },
+    {
+      "id": "gdm-2026-04-gemini-enterprise-controls",
+      "date": "2026-04-24",
+      "title": "Gemini enterprise controls expanded",
+      "description": "Google expanded admin controls, data handling policy options, and deployment governance for Gemini enterprise usage.",
+      "sourceUrl": "https://workspace.google.com/blog",
+      "importance": 2,
+      "audience": [
+        "admin",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "enterprise",
+        "governance"
+      ]
+    },
+    {
+      "id": "gdm-2026-04-gemma-4",
+      "date": "2026-04-30",
+      "title": "Gemma 4 highlighted by Google DeepMind",
+      "description": "Google DeepMind highlighted Gemma 4 as its latest open-model family on the official news page, positioning it as a byte-efficient generation of Gemma models.",
+      "sourceUrl": "https://deepmind.google/blog/",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "open-model",
+        "gemma"
+      ]
+    }
   ]
 }

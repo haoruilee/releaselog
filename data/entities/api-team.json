@@ -4,8 +4,8 @@
   "type": "team",
   "description": "Developer-facing Claude Platform releases verified against official Claude Platform release notes.",
   "headline": "Verified Claude API releases across {days} days.",
-  "subtitle": "October 17, 2025 — April 26, 2026. Claude Platform release notes only.",
-  "footnote": "Dates and links cross-checked on April 29, 2026 against official Claude Platform release notes and API documentation.",
+  "subtitle": "October 17, 2025 — April 30, 2026. Claude Platform release notes only.",
+  "footnote": "Dates and links cross-checked on May 4, 2026 against official Claude Platform release notes and API documentation.",
   "brandLine": "Claude Platform release notes",
   "brandUrl": "https://platform.claude.com/docs/en/release-notes/overview",
   "theme": {
@@ -90,6 +90,18 @@
       "importance": 3
     },
     {
+      "id": "api-13",
+      "date": "2026-02-05",
+      "title": "Adaptive thinking",
+      "shortTitle": "Adaptive",
+      "description": "New `thinking: {type: \"adaptive\"}` mode lets Claude dynamically decide when and how much to think based on task complexity. Recommended mode for Opus 4.6 and Sonnet 4.6.",
+      "tags": [
+        "reasoning"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/about-claude/models/whats-new-claude-4-6",
+      "importance": 2
+    },
+    {
       "id": "api-2",
       "date": "2026-02-05",
       "title": "Compaction API beta",
@@ -113,18 +125,6 @@
         "governance"
       ],
       "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/data-residency",
-      "importance": 2
-    },
-    {
-      "id": "api-13",
-      "date": "2026-02-05",
-      "title": "Adaptive thinking",
-      "shortTitle": "Adaptive",
-      "description": "New `thinking: {type: \"adaptive\"}` mode lets Claude dynamically decide when and how much to think based on task complexity. Recommended mode for Opus 4.6 and Sonnet 4.6.",
-      "tags": [
-        "reasoning"
-      ],
-      "sourceUrl": "https://platform.claude.com/docs/en/about-claude/models/whats-new-claude-4-6",
       "importance": 2
     },
     {
@@ -179,18 +179,6 @@
       "importance": 3
     },
     {
-      "id": "api-8",
-      "date": "2026-03-16",
-      "title": "Thinking display control",
-      "shortTitle": "Thinking UI",
-      "description": "Extended thinking added the `display` field for summarized or omitted thinking output.",
-      "tags": [
-        "reasoning"
-      ],
-      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/extended-thinking",
-      "importance": 2
-    },
-    {
       "id": "api-14",
       "date": "2026-03-16",
       "title": "Fine-grained tool streaming GA",
@@ -201,6 +189,18 @@
         "streaming"
       ],
       "sourceUrl": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/fine-grained-tool-streaming",
+      "importance": 2
+    },
+    {
+      "id": "api-8",
+      "date": "2026-03-16",
+      "title": "Thinking display control",
+      "shortTitle": "Thinking UI",
+      "description": "Extended thinking added the `display` field for summarized or omitted thinking output.",
+      "tags": [
+        "reasoning"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/extended-thinking",
       "importance": 2
     },
     {
@@ -335,6 +335,25 @@
       "importance": 2
     },
     {
+      "id": "api-2026-04-rate-limits-api",
+      "date": "2026-04-24",
+      "title": "Rate Limits API released",
+      "shortTitle": "Rate Limits API",
+      "description": "Claude Platform released a Rate Limits API so administrators can programmatically query rate limits configured for their organization and workspaces.",
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "admin",
+        "rate-limits",
+        "api"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 2
+    },
+    {
       "id": "api-2026-04-webhooks-ga",
       "date": "2026-04-26",
       "title": "Claude API webhooks GA",
@@ -347,6 +366,22 @@
         "api",
         "webhooks"
       ]
+    },
+    {
+      "id": "api-2026-04-context-1m-beta-retired",
+      "date": "2026-04-30",
+      "title": "1M context beta retired for older Claude 4 models",
+      "shortTitle": "1M beta retired",
+      "description": "The context-1m-2025-08-07 beta header no longer extends Claude Sonnet 4.5 or Sonnet 4 beyond the standard 200k-token context window; migrate 1M-context workloads to Claude Sonnet 4.6 or Claude Opus 4.6.",
+      "audience": "developer",
+      "status": "deprecated",
+      "tags": [
+        "context",
+        "deprecation",
+        "models"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 3
     }
   ]
 }
