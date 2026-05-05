@@ -13,6 +13,7 @@ const entitiesDir = join(root, "data", "entities");
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const AUDIENCES = new Set(["end_user", "developer", "admin", "partner"]);
 const STATUSES = new Set(["stable", "preview", "beta", "deprecated"]);
+const KINDS = new Set(["release", "event"]);
 
 function fail(msg) {
   console.error(`validate-data: ${msg}`);
@@ -49,6 +50,9 @@ function validateRelease(r, entityId, index) {
 
   if (r.shortTitle !== undefined) {
     assert(typeof r.shortTitle === "string", `${p}.shortTitle: must be a string`);
+  }
+  if (r.kind !== undefined) {
+    assert(KINDS.has(r.kind), `${p}.kind: must be one of ${[...KINDS].join(", ")}`);
   }
   if (r.slug !== undefined) {
     assert(typeof r.slug === "string" && r.slug.length > 0, `${p}.slug: non-empty string`);

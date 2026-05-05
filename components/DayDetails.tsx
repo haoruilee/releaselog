@@ -97,6 +97,11 @@ export function DayDetails({ dateStr, items, onClose, entityId }: Props) {
                         {item.status}
                       </span>
                     )}
+                    {item.kind === "event" && (
+                      <span className="rounded-full bg-empty-cell/80 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-accent ring-1 ring-white/10">
+                        event
+                      </span>
+                    )}
                   </div>
                   {item.whatChanged && (
                     <p className="mt-2 text-sm font-medium leading-snug text-primary/90">

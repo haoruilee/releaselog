@@ -2,6 +2,8 @@ export type ReleaseAudience = "end_user" | "developer" | "admin" | "partner";
 
 export type ReleaseStatus = "stable" | "preview" | "beta" | "deprecated";
 
+export type ReleaseKind = "release" | "event";
+
 export const RELEASE_AUDIENCES: readonly ReleaseAudience[] = [
   "end_user",
   "developer",
@@ -33,6 +35,7 @@ export type ReleaseItem = {
   id: string;
   date: string;
   title: string;
+  kind?: ReleaseKind;
   shortTitle?: string;
   slug?: string;
   description?: string;

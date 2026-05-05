@@ -7,6 +7,7 @@ type Props = {
   months: CalendarMonth[];
   rangeMonths: 1 | 3 | 6;
   selectedDate: string | null;
+  todayKey: string;
   onSelectDate: (date: string) => void;
 };
 
@@ -23,6 +24,7 @@ export function CalendarBoard({
   months,
   rangeMonths,
   selectedDate,
+  todayKey,
   onSelectDate,
 }: Props) {
   const { maxVisible, showCountOnly } = densityForRange(rangeMonths);
@@ -36,6 +38,7 @@ export function CalendarBoard({
           maxVisible={maxVisible}
           showCountOnly={showCountOnly}
           selectedDate={selectedDate}
+          todayKey={todayKey}
           onSelectDate={onSelectDate}
         />
       ))}

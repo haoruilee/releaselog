@@ -83,6 +83,7 @@ export function filterReleases(items: ReleaseItem[], q: ReleaseQuery): ReleaseIt
 }
 
 export function entitySummary(e: EntityConfig) {
+  const eventCount = e.releases.filter((item) => item.kind === "event").length;
   return {
     id: e.id,
     name: e.name,
@@ -95,6 +96,8 @@ export function entitySummary(e: EntityConfig) {
     brandUrl: e.brandUrl,
     members: e.members,
     theme: e.theme,
-    releaseCount: e.releases.length,
+    releaseCount: e.releases.length - eventCount,
+    eventCount,
+    logCount: e.releases.length,
   };
 }

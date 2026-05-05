@@ -10,6 +10,7 @@ type Props = {
   maxVisible: number;
   showCountOnly: boolean;
   selectedDate: string | null;
+  todayKey: string;
   onSelectDate: (date: string) => void;
 };
 
@@ -18,6 +19,7 @@ export function MonthSection({
   maxVisible,
   showCountOnly,
   selectedDate,
+  todayKey,
   onSelectDate,
 }: Props) {
   return (
@@ -44,6 +46,7 @@ export function MonthSection({
               maxVisible={maxVisible}
               showCountOnly={showCountOnly}
               selected={selectedDate === day.date}
+              todayKey={todayKey}
               onSelect={onSelectDate}
             />
           )),

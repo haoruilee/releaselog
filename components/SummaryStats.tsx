@@ -7,15 +7,15 @@ type Props = {
 
 export function SummaryStats({ stats, compact }: Props) {
   const items = [
-    { label: "Total releases", value: stats.totalReleases },
-    { label: "Active shipping days", value: stats.activeDays },
+    { label: "Total logs", value: stats.totalItems },
+    { label: "Releases", value: stats.totalReleases },
+    { label: "Events", value: stats.totalEvents },
+    { label: "Active days", value: stats.activeDays },
     { label: "Avg / week", value: stats.avgPerWeek },
   ];
 
   return (
-    <div
-      className={`grid gap-4 ${compact ? "grid-cols-2 sm:grid-cols-3" : "grid-cols-2 sm:grid-cols-4"}`}
-    >
+    <div className={`grid gap-4 ${compact ? "grid-cols-2 sm:grid-cols-3" : "grid-cols-2 sm:grid-cols-5"}`}>
       {items.map((item) => (
         <div
           key={item.label}

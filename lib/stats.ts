@@ -2,14 +2,15 @@ import {
   differenceInCalendarDays,
   differenceInCalendarWeeks,
   endOfMonth,
-  min as minDate,
   startOfMonth,
   subMonths,
 } from "date-fns";
 import type { ReleaseItem } from "@/data/types";
 
 export type SummaryStats = {
+  totalItems: number;
   totalReleases: number;
+  totalEvents: number;
   activeDays: number;
   avgPerWeek: number;
   busiestMonthLabel: string | null;
@@ -38,14 +39,16 @@ export function computeSummaryStats(
   }
 
   const activeDays = byDay.size;
-  const totalReleases = filtered.length;
+  const totalItems = filtered.length;
+  const totalEvents = filtered.filter((r) => r.kind === "event").length;
+  const totalReleases = totalItems - totalEvents;
 
   const daySpan = Math.max(
     1,
     differenceInCalendarDays(rangeEnd, rangeStart) + 1,
   );
   const weeks = Math.max(1, differenceInCalendarWeeks(rangeEnd, rangeStart));
-  const avgPerWeek = Math.round((totalReleases / weeks) * 10) / 10;
+  const avgPerWeek = Math.round((totalItems / weeks) * 10) / 10;
 
   const monthCounts = new Map<string, number>();
   for (const r of filtered) {
@@ -68,7 +71,9 @@ export function computeSummaryStats(
   }
 
   return {
+    totalItems,
     totalReleases,
+    totalEvents,
     activeDays,
     avgPerWeek,
     busiestMonthLabel: maxCount > 0 ? busiestMonthLabel : null,
@@ -82,6 +87,6 @@ export function getRangeBounds(
 ): { start: Date; end: Date } {
   const currentMonthStart = startOfMonth(today);
   const start = startOfMonth(subMonths(currentMonthStart, monthsBack - 1));
-  const end = minDate([endOfMonth(today), today]);
+  const end = endOfMonth(today);
   return { start, end };
 }

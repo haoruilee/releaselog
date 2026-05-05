@@ -75,8 +75,8 @@
     "type": "team",
     "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
     "headline": "Verified OpenAI launches across {days} days.",
-    "subtitle": "October 21, 2025 — April 29, 2026. Company-level launches from official OpenAI sources.",
-    "footnote": "Cross-checked on May 4, 2026 against OpenAI announcement pages and OpenAI Help Center release notes. Recent April additions include ChatGPT Images 2.0, GPT-5.5, easier model selection in ChatGPT, Safety Center v2, and Stargate compute infrastructure.",
+    "subtitle": "October 21, 2025 — June 2026. Company launches plus major OpenAI/Codex ecosystem events.",
+    "footnote": "Cross-checked on May 5, 2026 against OpenAI announcement pages, OpenAI Help Center release notes, and event pages. Event entries are marked separately from shipped releases.",
     "brandLine": "OpenAI official sources",
     "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
     "members": [
@@ -135,8 +135,8 @@
     "type": "team",
     "description": "High-signal Google DeepMind and Gemini launches from official Google/DeepMind channels.",
     "headline": "Verified Google DeepMind releases across {days} days.",
-    "subtitle": "November 2025 — April 2026. Official model and platform announcements.",
-    "footnote": "Cross-checked on May 4, 2026 against Google AI and DeepMind official sources.",
+    "subtitle": "November 2025 — May 2026. Official model/platform announcements plus major Google AI events.",
+    "footnote": "Cross-checked on May 5, 2026 against Google AI, Google DeepMind, and official Google I/O sources. Event entries are marked separately from shipped releases.",
     "brandLine": "Google DeepMind official sources",
     "brandUrl": "https://deepmind.google/blog/"
   },

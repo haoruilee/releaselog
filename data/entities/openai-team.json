@@ -4,8 +4,8 @@
   "type": "team",
   "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
   "headline": "Verified OpenAI launches across {days} days.",
-  "subtitle": "October 21, 2025 — April 29, 2026. Company-level launches from official OpenAI sources.",
-  "footnote": "Cross-checked on May 4, 2026 against OpenAI announcement pages and OpenAI Help Center release notes. Recent April additions include ChatGPT Images 2.0, GPT-5.5, easier model selection in ChatGPT, Safety Center v2, and Stargate compute infrastructure.",
+  "subtitle": "October 21, 2025 — June 2026. Company launches plus major OpenAI/Codex ecosystem events.",
+  "footnote": "Cross-checked on May 5, 2026 against OpenAI announcement pages, OpenAI Help Center release notes, and event pages. Event entries are marked separately from shipped releases.",
   "brandLine": "OpenAI official sources",
   "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
   "members": [
@@ -334,6 +334,51 @@
         "developer"
       ],
       "status": "stable"
+    },
+    {
+      "id": "openai-2026-05-gpt-55-party",
+      "date": "2026-05-05",
+      "title": "GPT-5.5 on 5/5 Codex community event",
+      "shortTitle": "GPT-5.5 party",
+      "kind": "event",
+      "description": "A GPT-5.5 themed community event and OpenAI/Codex-adjacent gathering landed on 5/5 at 5:55pm PT, following GPT-5.5 availability in ChatGPT and Codex.",
+      "sourceUrl": "https://luma.com/55-988",
+      "docUrls": [
+        "https://openai.com/index/introducing-gpt-5-5/"
+      ],
+      "importance": 2,
+      "audience": [
+        "developer",
+        "end_user"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "codex",
+        "community",
+        "gpt-5-5"
+      ]
+    },
+    {
+      "id": "openai-2026-06-microsoft-build",
+      "date": "2026-06-02",
+      "title": "Microsoft Build 2026 developer conference",
+      "shortTitle": "Build 2026",
+      "kind": "event",
+      "description": "Microsoft Build 2026 runs June 2-3 in San Francisco and online, with AI developer tooling and agent workflows expected to be central topics for OpenAI, Azure, GitHub, and Codex-adjacent builders.",
+      "sourceUrl": "https://build.microsoft.com/en-US/home",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "developer-conference",
+        "microsoft-build",
+        "ai-tools"
+      ]
     }
   ]
 }

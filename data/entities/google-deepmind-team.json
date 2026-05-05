@@ -4,8 +4,8 @@
   "type": "team",
   "description": "High-signal Google DeepMind and Gemini launches from official Google/DeepMind channels.",
   "headline": "Verified Google DeepMind releases across {days} days.",
-  "subtitle": "November 2025 — April 2026. Official model and platform announcements.",
-  "footnote": "Cross-checked on May 4, 2026 against Google AI and DeepMind official sources.",
+  "subtitle": "November 2025 — May 2026. Official model/platform announcements plus major Google AI events.",
+  "footnote": "Cross-checked on May 5, 2026 against Google AI, Google DeepMind, and official Google I/O sources. Event entries are marked separately from shipped releases.",
   "brandLine": "Google DeepMind official sources",
   "brandUrl": "https://deepmind.google/blog/",
   "releases": [
@@ -101,6 +101,49 @@
       "tags": [
         "open-model",
         "gemma"
+      ]
+    },
+    {
+      "id": "gdm-2026-05-google-io-day-1",
+      "date": "2026-05-19",
+      "title": "Google I/O 2026 day 1",
+      "shortTitle": "Google I/O",
+      "kind": "event",
+      "description": "Google I/O 2026 opens online May 19 with the Google keynote at 10:00am PT and the Developer keynote at 1:30pm PT, with Gemini and Android expected as headline developer topics.",
+      "sourceUrl": "https://io.google/2026/",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "end_user",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "google-io",
+        "gemini",
+        "developer-conference"
+      ]
+    },
+    {
+      "id": "gdm-2026-05-google-io-day-2",
+      "date": "2026-05-20",
+      "title": "Google I/O 2026 day 2",
+      "shortTitle": "I/O day 2",
+      "kind": "event",
+      "description": "Second day of Google I/O 2026 livestreamed sessions and developer content, continuing the May 19-20 program for Gemini, Android, web, and cloud developers.",
+      "sourceUrl": "https://io.google/2026/",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "google-io",
+        "gemini",
+        "sessions"
       ]
     }
   ]

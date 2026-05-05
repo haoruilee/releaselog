@@ -25,6 +25,10 @@ function todayNoon(): Date {
   return d;
 }
 
+function dateKey(d: Date): string {
+  return d.toISOString().slice(0, 10);
+}
+
 interface Props {
   initialEntityId?: string;
 }
@@ -54,6 +58,7 @@ export default function HomeClient({ initialEntityId }: Props) {
     () => getRangeBounds(todayNoon(), selectedRange),
     [selectedRange],
   );
+  const todayKey = useMemo(() => dateKey(todayNoon()), []);
 
   useEffect(() => {
     setReleases([]);
@@ -133,6 +138,7 @@ export default function HomeClient({ initialEntityId }: Props) {
             months={calendarMonths}
             rangeMonths={selectedRange}
             selectedDate={selectedDate}
+            todayKey={todayKey}
             onSelectDate={setSelectedDate}
           />
         </div>
