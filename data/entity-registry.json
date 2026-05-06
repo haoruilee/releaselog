@@ -1,5 +1,6 @@
 {
   "entities": [
+    "ai-events.json",
     "anthropic-team.json",
     "api-team.json",
     "claude-product.json",

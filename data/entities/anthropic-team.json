@@ -4,8 +4,8 @@
   "type": "team",
   "description": "High-signal Anthropic launches verified against official Anthropic, Claude, and Claude Help sources.",
   "headline": "Verified Anthropic launches across {days} days.",
-  "subtitle": "October 24, 2025 — April 27, 2026. Company-level launches from official Anthropic sources.",
-  "footnote": "Cross-checked on May 4, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
+  "subtitle": "October 24, 2025 — June 2026. Company launches plus major Anthropic developer and partner events.",
+  "footnote": "Cross-checked on May 6, 2026 against Anthropic News, Claude blog posts, Claude Help Center release notes, and official Anthropic/Claude event pages.",
   "brandLine": "Anthropic official sources",
   "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
   "members": [
@@ -205,6 +205,26 @@
       "importance": 2
     },
     {
+      "id": "anthropic-2026-03-partner-summit",
+      "date": "2026-03-11",
+      "title": "Anthropic Partner Summit 2026",
+      "shortTitle": "Partner Summit",
+      "kind": "event",
+      "description": "Anthropic hosted its inaugural Partner Summit for strategic partners, spanning enterprise AI strategy, product deep dives, and hands-on collaboration.",
+      "sourceUrl": "https://www.anthropic.com/events/anthropic-partner-kickoff-2026",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "partner-summit",
+        "enterprise"
+      ]
+    },
+    {
       "id": "at-17",
       "date": "2026-03-11",
       "title": "The Anthropic Institute",
@@ -351,6 +371,146 @@
       "tags": [
         "enterprise",
         "governance"
+      ]
+    },
+    {
+      "id": "anthropic-2026-05-briefing-financial-services",
+      "date": "2026-05-05",
+      "title": "The Briefing: Financial Services",
+      "shortTitle": "Financial Briefing",
+      "kind": "event",
+      "description": "Anthropic hosted a virtual enterprise briefing focused on financial services use cases for Claude and agents.",
+      "sourceUrl": "https://www.anthropic.com/events",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "enterprise",
+        "financial-services"
+      ]
+    },
+    {
+      "id": "anthropic-2026-05-code-with-claude-sf",
+      "date": "2026-05-06",
+      "title": "Code with Claude San Francisco",
+      "shortTitle": "Code w/ Claude SF",
+      "kind": "event",
+      "description": "Anthropic opened its Code with Claude developer conference series with hands-on workshops, live demos, and conversations with Claude teams.",
+      "sourceUrl": "https://claude.com/code-with-claude",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "developer-conference",
+        "claude-code"
+      ]
+    },
+    {
+      "id": "anthropic-2026-05-code-with-claude-sf-extended",
+      "date": "2026-05-07",
+      "title": "Code with Claude Extended San Francisco",
+      "shortTitle": "Extended SF",
+      "kind": "event",
+      "description": "Anthropic added a founder- and independent-developer-focused Extended event in San Francisco.",
+      "sourceUrl": "https://claude.com/code-with-claude",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "developer-conference",
+        "founders"
+      ]
+    },
+    {
+      "id": "anthropic-2026-05-code-with-claude-london",
+      "date": "2026-05-19",
+      "title": "Code with Claude London",
+      "shortTitle": "Claude London",
+      "kind": "event",
+      "description": "Anthropic brings Code with Claude to London with workshops, demos, and livestream access.",
+      "sourceUrl": "https://claude.com/code-with-claude",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "developer-conference",
+        "claude-code"
+      ]
+    },
+    {
+      "id": "anthropic-2026-05-code-with-claude-london-extended",
+      "date": "2026-05-20",
+      "title": "Code with Claude Extended London",
+      "shortTitle": "Extended London",
+      "kind": "event",
+      "description": "Anthropic follows the London developer conference with an Extended event for builders and founders.",
+      "sourceUrl": "https://claude.com/code-with-claude",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "developer-conference",
+        "founders"
+      ]
+    },
+    {
+      "id": "anthropic-2026-06-code-with-claude-tokyo",
+      "date": "2026-06-10",
+      "title": "Code with Claude Tokyo",
+      "shortTitle": "Claude Tokyo",
+      "kind": "event",
+      "description": "Anthropic brings Code with Claude to Tokyo with workshops, demos, and livestream access.",
+      "sourceUrl": "https://claude.com/code-with-claude",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "developer-conference",
+        "claude-code"
+      ]
+    },
+    {
+      "id": "anthropic-2026-06-code-with-claude-tokyo-extended",
+      "date": "2026-06-11",
+      "title": "Code with Claude Extended Tokyo",
+      "shortTitle": "Extended Tokyo",
+      "kind": "event",
+      "description": "Anthropic follows the Tokyo developer conference with an Extended event for builders and founders.",
+      "sourceUrl": "https://claude.com/code-with-claude",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "developer-conference",
+        "founders"
       ]
     }
   ]

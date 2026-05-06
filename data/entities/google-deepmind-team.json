@@ -5,7 +5,7 @@
   "description": "High-signal Google DeepMind and Gemini launches from official Google/DeepMind channels.",
   "headline": "Verified Google DeepMind releases across {days} days.",
   "subtitle": "November 2025 — May 2026. Official model/platform announcements plus major Google AI events.",
-  "footnote": "Cross-checked on May 5, 2026 against Google AI, Google DeepMind, and official Google I/O sources. Event entries are marked separately from shipped releases.",
+  "footnote": "Cross-checked on May 6, 2026 against Google AI, Google DeepMind, Google Cloud, and official Google I/O sources. Event entries are marked separately from shipped releases.",
   "brandLine": "Google DeepMind official sources",
   "brandUrl": "https://deepmind.google/blog/",
   "releases": [
@@ -70,6 +70,28 @@
         "robotics",
         "model-card",
         "gemini"
+      ]
+    },
+    {
+      "id": "gdm-2026-04-cloud-next",
+      "date": "2026-04-22",
+      "title": "Google Cloud Next 26",
+      "shortTitle": "Cloud Next",
+      "kind": "event",
+      "description": "Google Cloud Next 26 showcased Google Cloud AI announcements, including Gemini Enterprise Agent Platform, agentic data cloud updates, and new TPU infrastructure.",
+      "sourceUrl": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/next-2026/",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "google-cloud",
+        "gemini",
+        "enterprise-agents",
+        "tpu"
       ]
     },
     {

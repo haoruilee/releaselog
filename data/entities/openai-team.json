@@ -4,8 +4,8 @@
   "type": "team",
   "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
   "headline": "Verified OpenAI launches across {days} days.",
-  "subtitle": "October 21, 2025 — June 2026. Company launches plus major OpenAI/Codex ecosystem events.",
-  "footnote": "Cross-checked on May 5, 2026 against OpenAI announcement pages, OpenAI Help Center release notes, and event pages. Event entries are marked separately from shipped releases.",
+  "subtitle": "October 21, 2025 — September 2026. Company launches plus major OpenAI/Codex ecosystem events.",
+  "footnote": "Cross-checked on May 6, 2026 against OpenAI announcement pages, OpenAI Help Center release notes, and official event pages. Event entries are marked separately from shipped releases.",
   "brandLine": "OpenAI official sources",
   "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
   "members": [
@@ -378,6 +378,27 @@
         "developer-conference",
         "microsoft-build",
         "ai-tools"
+      ]
+    },
+    {
+      "id": "openai-2026-09-devday",
+      "date": "2026-09-29",
+      "title": "OpenAI DevDay 2026",
+      "shortTitle": "DevDay 2026",
+      "kind": "event",
+      "description": "OpenAI announced DevDay 2026 for September 29 in San Francisco, describing it as its biggest event of the year.",
+      "sourceUrl": "https://openai.com/index/devday-2026/",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "devday",
+        "api",
+        "codex"
       ]
     }
   ]

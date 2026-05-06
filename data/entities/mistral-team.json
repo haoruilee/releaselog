@@ -4,8 +4,8 @@
   "type": "team",
   "description": "High-signal Mistral AI releases from official Mistral channels.",
   "headline": "Verified Mistral releases across {days} days.",
-  "subtitle": "November 2025 — April 2026. Official Mistral model and platform releases.",
-  "footnote": "Cross-checked on May 4, 2026 against official Mistral announcements and docs.",
+  "subtitle": "November 2025 — May 2026. Official Mistral model/platform releases plus flagship Mistral events.",
+  "footnote": "Cross-checked on May 6, 2026 against official Mistral announcements, docs, and event pages.",
   "brandLine": "Mistral official sources",
   "brandUrl": "https://docs.mistral.ai/resources/changelogs",
   "releases": [
@@ -58,6 +58,27 @@
       ]
     },
     {
+      "id": "mistral-2026-03-nvidia-gtc",
+      "date": "2026-03-16",
+      "title": "Mistral AI at NVIDIA GTC 2026",
+      "shortTitle": "Mistral @ GTC",
+      "kind": "event",
+      "description": "Mistral AI participated at NVIDIA GTC 2026 with sessions and meetings around open models, optimization, inference, and deployment at scale.",
+      "sourceUrl": "https://events.mistralai.com/nvidia-gtc-2026/",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "gtc",
+        "open-models",
+        "inference"
+      ]
+    },
+    {
       "id": "mistral-2026-04-small-4",
       "date": "2026-04-18",
       "title": "Mistral Small 4 released",
@@ -84,6 +105,27 @@
         "model",
         "multimodal",
         "coding"
+      ]
+    },
+    {
+      "id": "mistral-2026-05-ai-now-summit",
+      "date": "2026-05-28",
+      "title": "Mistral AI Now Summit",
+      "shortTitle": "AI Now Summit",
+      "kind": "event",
+      "description": "Mistral AI hosts AI Now Summit in Paris, a flagship event for leaders and builders focused on industrializing AI and moving from POC to production.",
+      "sourceUrl": "https://ainowsummit.com/",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "event",
+        "ai-now",
+        "summit",
+        "paris"
       ]
     }
   ]

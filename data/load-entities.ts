@@ -1,5 +1,6 @@
 import type { EntityConfig } from "./types";
 import registry from "./entity-registry.json";
+import aiEvents from "./entities/ai-events.json";
 import anthropicTeam from "./entities/anthropic-team.json";
 import apiTeam from "./entities/api-team.json";
 import claudeProduct from "./entities/claude-product.json";
@@ -11,6 +12,7 @@ import xaiTeam from "./entities/xai-team.json";
 import googleDeepmindTeam from "./entities/google-deepmind-team.json";
 
 const entityByFile: Record<string, EntityConfig> = {
+  "ai-events.json": aiEvents as EntityConfig,
   "anthropic-team.json": anthropicTeam as EntityConfig,
   "api-team.json": apiTeam as EntityConfig,
   "claude-product.json": claudeProduct as EntityConfig,

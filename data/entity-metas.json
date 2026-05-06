@@ -1,12 +1,38 @@
 [
   {
+    "id": "ai-events",
+    "name": "AI Events",
+    "type": "product",
+    "description": "Major official AI, developer, infrastructure, and model ecosystem events verified against primary event pages.",
+    "headline": "Major official AI events across {days} days.",
+    "subtitle": "March — November 2026. Official AI conferences, launch events, developer summits, and flagship ecosystem gatherings.",
+    "footnote": "Cross-checked on May 6, 2026 against official event pages and official company announcement pages. Event entries are marked separately from shipped releases.",
+    "brandLine": "Official event sources",
+    "brandUrl": "https://openai.com/index/devday-2026/",
+    "members": [
+      {
+        "name": "Events desk"
+      }
+    ],
+    "theme": {
+      "primary": "#8b5cf6",
+      "bgPage": "#0b0a12",
+      "bgPanel": "#141120",
+      "bgEmptyCell": "#1d1830",
+      "bgActiveCell": "#6d28d9",
+      "textPrimary": "#f5f3ff",
+      "textSecondary": "#c4b5fd",
+      "accentNumber": "#a78bfa"
+    }
+  },
+  {
     "id": "anthropic-team",
     "name": "Anthropic Team",
     "type": "team",
     "description": "High-signal Anthropic launches verified against official Anthropic, Claude, and Claude Help sources.",
     "headline": "Verified Anthropic launches across {days} days.",
-    "subtitle": "October 24, 2025 — April 27, 2026. Company-level launches from official Anthropic sources.",
-    "footnote": "Cross-checked on May 4, 2026 against Anthropic News, Claude blog posts, and Claude Help Center release notes.",
+    "subtitle": "October 24, 2025 — June 2026. Company launches plus major Anthropic developer and partner events.",
+    "footnote": "Cross-checked on May 6, 2026 against Anthropic News, Claude blog posts, Claude Help Center release notes, and official Anthropic/Claude event pages.",
     "brandLine": "Anthropic official sources",
     "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
     "members": [
@@ -75,8 +101,8 @@
     "type": "team",
     "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
     "headline": "Verified OpenAI launches across {days} days.",
-    "subtitle": "October 21, 2025 — June 2026. Company launches plus major OpenAI/Codex ecosystem events.",
-    "footnote": "Cross-checked on May 5, 2026 against OpenAI announcement pages, OpenAI Help Center release notes, and event pages. Event entries are marked separately from shipped releases.",
+    "subtitle": "October 21, 2025 — September 2026. Company launches plus major OpenAI/Codex ecosystem events.",
+    "footnote": "Cross-checked on May 6, 2026 against OpenAI announcement pages, OpenAI Help Center release notes, and official event pages. Event entries are marked separately from shipped releases.",
     "brandLine": "OpenAI official sources",
     "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
     "members": [
@@ -136,7 +162,7 @@
     "description": "High-signal Google DeepMind and Gemini launches from official Google/DeepMind channels.",
     "headline": "Verified Google DeepMind releases across {days} days.",
     "subtitle": "November 2025 — May 2026. Official model/platform announcements plus major Google AI events.",
-    "footnote": "Cross-checked on May 5, 2026 against Google AI, Google DeepMind, and official Google I/O sources. Event entries are marked separately from shipped releases.",
+    "footnote": "Cross-checked on May 6, 2026 against Google AI, Google DeepMind, Google Cloud, and official Google I/O sources. Event entries are marked separately from shipped releases.",
     "brandLine": "Google DeepMind official sources",
     "brandUrl": "https://deepmind.google/blog/"
   },
@@ -157,8 +183,8 @@
     "type": "team",
     "description": "High-signal Mistral AI releases from official Mistral channels.",
     "headline": "Verified Mistral releases across {days} days.",
-    "subtitle": "November 2025 — April 2026. Official Mistral model and platform releases.",
-    "footnote": "Cross-checked on May 4, 2026 against official Mistral announcements and docs.",
+    "subtitle": "November 2025 — May 2026. Official Mistral model/platform releases plus flagship Mistral events.",
+    "footnote": "Cross-checked on May 6, 2026 against official Mistral announcements, docs, and event pages.",
     "brandLine": "Mistral official sources",
     "brandUrl": "https://docs.mistral.ai/resources/changelogs"
   }
