@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/site-url";
 import { entityMetas } from "@/data";
-import { RESET_EVENTS } from "@/data/reset-log";
+import { RESET_AGENT_SLUGS, RESET_EVENTS } from "@/data/reset-log";
 
 export const dynamic = "force-static";
 
@@ -25,10 +25,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
+  const resetAgentRoutes: MetadataRoute.Sitemap = RESET_AGENT_SLUGS.map((agent) => ({
+    url: `${base}/reset-log/${agent}`,
+    lastModified: now,
+    changeFrequency: "weekly",
+    priority: 0.7,
+  }));
+
   return [
     { url: `${base}/`, lastModified: now, changeFrequency: "daily", priority: 1 },
     ...entityRoutes,
     { url: `${base}/reset-log`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
+    ...resetAgentRoutes,
     ...resetEventRoutes,
     { url: `${base}/pricing`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/subscribe`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },

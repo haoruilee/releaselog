@@ -12,6 +12,8 @@
 
 export type ResetAgent = "claude-code" | "codex";
 
+export const RESET_AGENT_SLUGS: ResetAgent[] = ["claude-code", "codex"];
+
 export type ResetEventType =
   | "policy_change" // a new quota / rate-limit policy was introduced or changed
   | "manual_reset" // a one-time vendor-granted reset of existing quotas
@@ -264,6 +266,10 @@ export function filterResetEventsByAgent(
 
 export function getResetEventBySlug(slug: string): ResetEvent | undefined {
   return RESET_EVENTS.find((e) => e.slug === slug);
+}
+
+export function isResetAgent(value: string): value is ResetAgent {
+  return value === "claude-code" || value === "codex";
 }
 
 /** Up to `limit` other events for the same agent, sorted by date descending. */

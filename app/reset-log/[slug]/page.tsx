@@ -5,13 +5,16 @@ import { format, parseISO } from "date-fns";
 import {
   AGENT_LABELS,
   AGENT_VENDORS,
+  RESET_AGENT_SLUGS,
   RESET_EVENTS,
   RESET_EVENT_TYPE_LABELS,
   getRelatedResetEvents,
   getResetEventBySlug,
+  isResetAgent,
   type ResetAgent,
 } from "@/data/reset-log";
 import { getSiteUrl } from "@/lib/site-url";
+import { ResetLogList } from "../ResetLogList";
 
 const AGENT_ACCENT: Record<ResetAgent, string> = {
   "claude-code": "#cc785c",
@@ -28,11 +31,34 @@ interface PageProps {
  * no per-event code required.
  */
 export function generateStaticParams() {
-  return RESET_EVENTS.map((e) => ({ slug: e.slug }));
+  return [
+    ...RESET_AGENT_SLUGS.map((slug) => ({ slug })),
+    ...RESET_EVENTS.map((e) => ({ slug: e.slug })),
+  ];
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  if (isResetAgent(slug)) {
+    const agentLabel = AGENT_LABELS[slug];
+    return {
+      title: `${agentLabel} Reset Log`,
+      description: `A dated log of public ${agentLabel} rate-limit, quota, and usage-window changes with official source links.`,
+      alternates: { canonical: `/reset-log/${slug}` },
+      openGraph: {
+        type: "article",
+        title: `${agentLabel} Reset Log`,
+        description: `Public ${agentLabel} reset and quota-change events, curated from official records.`,
+        url: `/reset-log/${slug}`,
+      },
+      twitter: {
+        card: "summary",
+        title: `${agentLabel} Reset Log`,
+        description: `Public ${agentLabel} reset and quota-change events, curated from official records.`,
+      },
+    };
+  }
+
   const event = getResetEventBySlug(slug);
   if (!event) return {};
 
@@ -69,6 +95,8 @@ function formatDate(iso: string): string {
 
 export default async function ResetEventPage({ params }: PageProps) {
   const { slug } = await params;
+  if (isResetAgent(slug)) return <ResetLogList filter={slug} />;
+
   const event = getResetEventBySlug(slug);
   if (!event) notFound();
 
@@ -129,7 +157,7 @@ export default async function ResetEventPage({ params }: PageProps) {
         "@type": "ListItem",
         position: 3,
         name: agentLabel,
-        item: `${siteUrl}/reset-log?agent=${event.agent}`,
+        item: `${siteUrl}/reset-log/${event.agent}`,
       },
       { "@type": "ListItem", position: 4, name: event.title, item: canonicalUrl },
     ],
@@ -160,7 +188,7 @@ export default async function ResetEventPage({ params }: PageProps) {
           </Link>
           <span aria-hidden>/</span>
           <Link
-            href={`/reset-log?agent=${event.agent}`}
+            href={`/reset-log/${event.agent}`}
             className="hover:text-primary"
           >
             {agentLabel}

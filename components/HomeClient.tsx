@@ -132,6 +132,19 @@ export default function HomeClient({ initialEntityId }: Props) {
             posterMode={posterMode}
           />
 
+          {!posterMode && (
+            <EntitySwitcher
+              entities={entityMetas}
+              selectedId={entityMeta.id}
+              onChange={(id) => {
+                setSelectedEntityId(id);
+                setSelectedDate(null);
+                router.push(`/${id}`);
+              }}
+              posterMode={posterMode}
+            />
+          )}
+
           <SummaryStats stats={stats} compact={selectedRange === 6} />
 
           <CalendarBoard
@@ -146,16 +159,6 @@ export default function HomeClient({ initialEntityId }: Props) {
         {!posterMode && (
           <div className="mt-8 flex flex-col gap-6 border-b border-white/5 pb-8 md:flex-row md:items-end md:justify-between">
             <div className="flex flex-col gap-4">
-              <EntitySwitcher
-                entities={entityMetas}
-                selectedId={entityMeta.id}
-                onChange={(id) => {
-                  setSelectedEntityId(id);
-                  setSelectedDate(null);
-                  router.push(`/${id}`);
-                }}
-                posterMode={posterMode}
-              />
               <RangeSwitcher
                 value={selectedRange}
                 onChange={(v) => {
