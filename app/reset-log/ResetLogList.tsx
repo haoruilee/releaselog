@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { format, parseISO } from "date-fns";
 import { entityMetas } from "@/data";
 import {
@@ -11,8 +12,21 @@ import {
   type ResetAgent,
   type ResetEvent,
 } from "@/data/reset-log";
+import { ResetLogCalendar } from "./ResetLogCalendar";
+import { ResetLogExportButton } from "./ResetLogExportButton";
 
 type AgentFilter = ResetAgent | "all";
+
+const RESET_LOG_THEME = {
+  "--bg-page": "#eef8f0",
+  "--bg-panel": "#f8fff9",
+  "--bg-empty-cell": "#d9ecde",
+  "--bg-active-cell": "#b7dfc3",
+  "--text-primary": "#123d2b",
+  "--text-secondary": "#4f7b61",
+  "--accent": "#2f8f5b",
+  "--accent-number": "#1f7a4a",
+} as CSSProperties;
 
 function formatDate(iso: string): string {
   return format(parseISO(iso), "MMM d, yyyy");
@@ -48,17 +62,24 @@ export function ResetLogList({ filter = "all" }: { filter?: AgentFilter }) {
       ? "Quota resets & rate-limit changes for Codex and Claude Code."
       : `${AGENT_LABELS[filter]} quota resets & rate-limit changes.`;
 
+  const exportFilenamePrefix =
+    filter === "all" ? "reset-log" : `reset-log-${filter}`;
+
   return (
-    <div className="min-h-screen bg-page text-primary">
+    <div className="min-h-screen bg-page text-primary" style={RESET_LOG_THEME}>
       <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-        <div className="mb-10 flex items-center justify-between gap-3">
+        <div
+          data-export-exclude
+          className="mb-10 flex items-center justify-between gap-3"
+        >
           <Link
             href="/"
             className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary hover:text-primary"
           >
             ← ReleaseLog
           </Link>
-          <div className="flex items-center gap-4 text-xs">
+          <div className="flex items-center gap-3 text-xs">
+            <ResetLogExportButton filenamePrefix={exportFilenamePrefix} />
             <Link
               href="/pricing"
               className="font-medium text-secondary underline-offset-4 hover:text-primary hover:underline"
@@ -74,27 +95,36 @@ export function ResetLogList({ filter = "all" }: { filter?: AgentFilter }) {
           </div>
         </div>
 
-        <header className="max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">
-            Reset Log
-          </p>
-          <h1 className="mt-2 font-serif text-4xl text-primary sm:text-5xl">
-            {heading}
-          </h1>
-          <p className="mt-4 text-base text-secondary sm:text-lg">
-            A dated record of every publicly-announced change to subscription
-            quotas, rolling windows, and one-off resets for subscription-based
-            code agents. Every entry links to the official record — vendor
-            announcement, help-center article, changelog, or staff post.
-          </p>
-          {lastUpdated && (
-            <p className="mt-3 text-xs text-secondary/70">
-              Last logged event: {formatDate(lastUpdated)}.
+        <div data-export-root className="rounded-2xl bg-page">
+          <header className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">
+              Reset Log
             </p>
-          )}
-        </header>
+            <h1 className="mt-2 font-serif text-4xl text-primary sm:text-5xl">
+              {heading}
+            </h1>
+            <p className="mt-4 text-base text-secondary sm:text-lg">
+              A dated record of every publicly-announced change to subscription
+              quotas, rolling windows, and one-off resets for subscription-based
+              code agents. Every entry links to the official record — vendor
+              announcement, help-center article, changelog, or staff post.
+            </p>
+            {lastUpdated && (
+              <p className="mt-3 text-xs text-secondary/70">
+                Last logged event: {formatDate(lastUpdated)}.
+              </p>
+            )}
+          </header>
+
+          <ResetLogCalendar events={events} />
+
+          <p className="mt-6 text-[11px] uppercase tracking-[0.25em] text-secondary/70">
+            releaselog.site/reset-log
+          </p>
+        </div>
 
         <nav
+          data-export-exclude
           aria-label="Switch content area"
           className="mt-8 flex flex-wrap items-center gap-2"
         >
@@ -130,6 +160,7 @@ export function ResetLogList({ filter = "all" }: { filter?: AgentFilter }) {
         </nav>
 
         <nav
+          data-export-exclude
           aria-label="Filter by agent"
           className="mt-5 flex flex-wrap items-center gap-2"
         >
@@ -166,18 +197,24 @@ export function ResetLogList({ filter = "all" }: { filter?: AgentFilter }) {
         </nav>
 
         {events.length === 0 ? (
-          <p className="mt-12 rounded-2xl bg-panel/50 p-6 text-sm text-secondary ring-1 ring-white/5">
+          <p
+            data-export-exclude
+            className="mt-12 rounded-2xl bg-panel/50 p-6 text-sm text-secondary ring-1 ring-white/5"
+          >
             No events recorded for this filter yet.
           </p>
         ) : (
-          <ol className="mt-10 space-y-6">
+          <ol data-export-exclude className="mt-12 space-y-6">
             {events.map((event) => (
               <ResetEventCard key={event.id} event={event} />
             ))}
           </ol>
         )}
 
-        <footer className="mt-16 space-y-3 border-t border-white/5 pt-6 text-xs text-secondary/80">
+        <footer
+          data-export-exclude
+          className="mt-16 space-y-3 border-t border-white/5 pt-6 text-xs text-secondary/80"
+        >
           <p>
             Spotted a missing reset or a wrong source? Email{" "}
             <a

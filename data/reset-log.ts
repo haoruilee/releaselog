@@ -78,6 +78,58 @@ export const RESET_EVENT_TYPE_LABELS: Record<ResetEventType, string> = {
 export const RESET_EVENTS: ResetEvent[] = [
   // ─────────────────────────────────────────── Codex ───────────────────────────────────────────
   {
+    id: "cdx-2026-04-21-4m-users-reset",
+    slug: "codex-4m-active-users-reset-2026-04-21",
+    date: "2026-04-21",
+    agent: "codex",
+    plans: ["ChatGPT Plus", "ChatGPT Pro", "Business", "Enterprise"],
+    type: "manual_reset",
+    title: "Codex rate limits reset at 4M active users milestone",
+    summary:
+      "Sam Altman announced that Codex had reached 4 million active users less than two weeks after the 3M milestone and that OpenAI would reset rate limits that day. This was the next milestone reset under the earlier pledge to reset limits at each additional million users up to 10M.",
+    details: [
+      "Reset announced on April 21, 2026.",
+      "Followed the April 7 3M weekly-user reset commitment.",
+      "Public reporting quoted Altman's post: “Codex hit 4M active users… We will reset rate limits today!”",
+    ],
+    source: {
+      label: "Sam Altman post quoted by IBTimes (Apr 21, 2026)",
+      url: "https://www.ibtimes.sg/openais-codex-adds-1-million-just-2-weeks-after-crossing-3m-users-time-hit-reset-button-85603",
+    },
+    secondarySources: [
+      {
+        label: "Codex milestone reset discussion",
+        url: "https://github.com/openai/codex/issues/20395",
+      },
+    ],
+  },
+  {
+    id: "cdx-2026-04-09-pro-tier-promo-reset",
+    slug: "codex-pro-tier-usage-promo-reset-2026-04-09",
+    date: "2026-04-09",
+    agent: "codex",
+    plans: ["ChatGPT Pro $100", "ChatGPT Pro $200"],
+    type: "limit_increase",
+    title: "New Pro tier launches with temporary Codex usage boost and reset",
+    summary:
+      "OpenAI announced a new $100/month Pro tier for Codex-heavy users, temporarily raising it to up to 10× Plus usage through May 31. OpenAI also extended the $200 Pro 2× Codex usage promo through May 31 and said it had reset Codex rate limits again for existing $200 Pro users.",
+    details: [
+      "Pro $100: standard 5× Plus usage, temporarily boosted to up to 10× Plus through May 31, 2026.",
+      "Pro $200: remains highest-usage tier; 2× Codex promo extended through May 31, 2026.",
+      "Announcement explicitly included another Codex rate-limit reset for existing $200 Pro users.",
+    ],
+    source: {
+      label: "OpenAI on Threads — new Pro tier and Codex usage promo",
+      url: "https://www.threads.com/@openai/post/DW7RXR7EnRC/theres-a-new-pro-tier-in-town-to-celebrate-the-launch-were-increasing-codex",
+    },
+    secondarySources: [
+      {
+        label: "Codex pricing page",
+        url: "https://developers.openai.com/codex/pricing",
+      },
+    ],
+  },
+  {
     id: "cdx-2026-04-28-paid-plan-reset",
     slug: "codex-paid-plans-reset-2026-04-28",
     date: "2026-04-28",
@@ -140,18 +192,19 @@ export const RESET_EVENTS: ResetEvent[] = [
   {
     id: "cdx-2025-token-rate-card",
     slug: "codex-token-based-rate-card-2025-09-15",
-    date: "2025-09-15",
+    date: "2026-04-02",
     agent: "codex",
     plans: ["ChatGPT Plus", "ChatGPT Pro", "Business", "Enterprise"],
     type: "policy_change",
     title: "Codex moves to a token-based rate card",
     summary:
-      "OpenAI replaced the rough \"per-message\" usage estimates with a token-based rate card: credits are computed against input, cached input, and output tokens. Plan limits now reset on rolling 5-hour and weekly windows priced at the published rates.",
+      "OpenAI began moving Codex pricing from average per-message estimates to token-based credit rates, with usage computed against input, cached input, and output tokens. The Codex pricing page continues to describe 5-hour usage windows and notes that additional weekly limits may apply.",
     details: [
-      "Plus: 15–80 local Codex messages per 5-hour window (model-dependent).",
-      "Pro $100: ~5× Plus on the 5-hour window plus a weekly cap.",
-      "Pro $200: ~20× Plus on the 5-hour window plus a higher weekly cap.",
-      "Business / Enterprise: no fixed per-seat rate limits — usage scales with credits.",
+      "As of April 2, Codex rate cards started moving to credits per million input, cached input, and output tokens.",
+      "Plus: GPT-5.5 shows 15–80 local messages per 5-hour window.",
+      "Pro $100: 5× Plus by default, with a temporary 10× promo through May 31, 2026.",
+      "Pro $200: 20× Plus by default, with a temporary 25× 5-hour limit promo through May 31, 2026.",
+      "Enterprise / Edu flexible-pricing usage scales with credits rather than fixed per-seat limits.",
     ],
     source: {
       label: "Codex rate card (OpenAI Help Center)",
@@ -170,6 +223,33 @@ export const RESET_EVENTS: ResetEvent[] = [
   },
 
   // ─────────────────────────────────────── Claude Code ─────────────────────────────────────────
+  {
+    id: "cc-2026-04-07-max-plan-weekly-resets",
+    slug: "claude-code-max-plan-weekly-resets-2026-04-07",
+    date: "2026-04-07",
+    agent: "claude-code",
+    plans: ["Max 5x", "Max 20x"],
+    type: "limit_increase",
+    title: "Max tiers define 5x/20x Claude Code capacity and weekly reset windows",
+    summary:
+      "Anthropic's Max plan documentation states that Max 5x provides 5× Pro usage per session and Max 20x provides 20× Pro usage per session, with two weekly usage limits that reset seven days after the user's session starts.",
+    details: [
+      "Max 5x: 5× more usage per session than Pro.",
+      "Max 20x: 20× more usage per session than Pro.",
+      "Max plans have two weekly usage limits: one across all models and another for Sonnet models only.",
+      "Both weekly limits reset seven days after the session starts.",
+    ],
+    source: {
+      label: "What is the Max plan? (Claude Help Center)",
+      url: "https://support.anthropic.com/en/articles/11049741-what-is-the-max-plan",
+    },
+    secondarySources: [
+      {
+        label: "Use Claude Code with your Pro or Max plan",
+        url: "https://support.anthropic.com/en/articles/11145838-using-claude-code-with-your-max-plan",
+      },
+    ],
+  },
   {
     id: "cc-2026-05-06-5h-doubled",
     slug: "claude-code-5-hour-limits-doubled-2026-05-06",

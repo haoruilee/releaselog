@@ -133,16 +133,42 @@ export default function HomeClient({ initialEntityId }: Props) {
           />
 
           {!posterMode && (
-            <EntitySwitcher
-              entities={entityMetas}
-              selectedId={entityMeta.id}
-              onChange={(id) => {
-                setSelectedEntityId(id);
-                setSelectedDate(null);
-                router.push(`/${id}`);
-              }}
-              posterMode={posterMode}
-            />
+            <div
+              data-export-exclude
+              className="space-y-5 rounded-2xl bg-panel/40 p-4 ring-1 ring-white/5"
+            >
+              <EntitySwitcher
+                entities={entityMetas}
+                selectedId={entityMeta.id}
+                onChange={(id) => {
+                  setSelectedEntityId(id);
+                  setSelectedDate(null);
+                  router.push(`/${id}`);
+                }}
+                posterMode={posterMode}
+              />
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="flex flex-wrap items-center gap-4">
+                  <RangeSwitcher
+                    value={selectedRange}
+                    onChange={(v) => {
+                      setSelectedRange(v);
+                      setSelectedDate(null);
+                    }}
+                    posterMode={posterMode}
+                  />
+                  <div className="rounded-full bg-empty-cell/50 px-3 py-1 text-xs text-secondary ring-1 ring-white/5">
+                    Theme:{" "}
+                    <span className="font-medium text-accent">{entityMeta.name}</span>
+                  </div>
+                </div>
+                <PosterToolbar
+                  posterMode={posterMode}
+                  onPosterModeChange={setPosterMode}
+                  exportTargetRef={exportTargetRef}
+                />
+              </div>
+            </div>
           )}
 
           <SummaryStats stats={stats} compact={selectedRange === 6} />
@@ -155,25 +181,6 @@ export default function HomeClient({ initialEntityId }: Props) {
             onSelectDate={setSelectedDate}
           />
         </div>
-
-        {!posterMode && (
-          <div className="mt-8 flex flex-col gap-6 border-b border-white/5 pb-8 md:flex-row md:items-end md:justify-between">
-            <div className="flex flex-col gap-4">
-              <RangeSwitcher
-                value={selectedRange}
-                onChange={(v) => {
-                  setSelectedRange(v);
-                  setSelectedDate(null);
-                }}
-                posterMode={posterMode}
-              />
-            </div>
-            <div className="rounded-full bg-empty-cell/50 px-3 py-1 text-xs text-secondary ring-1 ring-white/5">
-              Theme:{" "}
-              <span className="font-medium text-accent">{entityMeta.name}</span>
-            </div>
-          </div>
-        )}
 
         <div className="mt-10 pb-24">
           <footer className="space-y-4 border-t border-white/5 pt-8 text-sm text-secondary/70">
@@ -215,16 +222,6 @@ export default function HomeClient({ initialEntityId }: Props) {
           </footer>
         </div>
       </div>
-
-      {!posterMode && (
-        <div className="mx-auto max-w-6xl px-4 pb-10 sm:px-8 md:px-12">
-          <PosterToolbar
-            posterMode={posterMode}
-            onPosterModeChange={setPosterMode}
-            exportTargetRef={exportTargetRef}
-          />
-        </div>
-      )}
 
       {posterMode && (
         <PosterToolbar

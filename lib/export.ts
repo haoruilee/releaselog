@@ -8,6 +8,10 @@ export async function exportElementAsPng(
     pixelRatio: 2,
     cacheBust: true,
     backgroundColor: getComputedStyle(element).getPropertyValue("--bg-page").trim() || "#0c0a09",
+    filter: (node) => {
+      if (!(node instanceof HTMLElement)) return true;
+      return !node.closest("[data-export-exclude]");
+    },
   });
   const link = document.createElement("a");
   link.download = filename;
