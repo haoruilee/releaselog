@@ -4,16 +4,50 @@
   "type": "team",
   "description": "High-signal Mistral AI releases from official Mistral channels.",
   "headline": "Verified Mistral releases across {days} days.",
-  "subtitle": "November 2025 — May 2026. Official Mistral model/platform releases plus flagship Mistral events.",
-  "footnote": "Cross-checked on May 6, 2026 against official Mistral announcements, docs, and event pages.",
+  "subtitle": "October 2025 — May 2026. Official Mistral model/platform releases plus flagship Mistral events.",
+  "footnote": "Cross-checked on May 9, 2026 against official Mistral announcements, the Mistral docs changelog, and event pages.",
   "brandLine": "Mistral official sources",
   "brandUrl": "https://docs.mistral.ai/resources/changelogs",
   "releases": [
     {
+      "id": "mistral-2025-10-le-chat-team",
+      "date": "2025-10-08",
+      "title": "Le Chat Team and Le Chat Enterprise rebranded",
+      "shortTitle": "Le Chat Team",
+      "description": "Mistral rebranded its workspace tier to Le Chat Team and shipped Le Chat Enterprise with SCIM, audit log streaming, and connectors for Google Drive, SharePoint, GitHub, and GitLab.",
+      "sourceUrl": "https://mistral.ai/news/",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "le-chat",
+        "enterprise"
+      ]
+    },
+    {
+      "id": "mistral-2025-10-codestral-mamba-2",
+      "date": "2025-10-29",
+      "title": "Codestral Mamba 2 open weights",
+      "shortTitle": "Codestral Mamba 2",
+      "description": "Mistral released Codestral Mamba 2 (7B) on Hugging Face under Apache 2.0, with a 256k context window for long-file completion and a Mistral Inference reference runtime.",
+      "sourceUrl": "https://mistral.ai/news/",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "open-weights",
+        "coding",
+        "codestral"
+      ]
+    },
+    {
       "id": "mistral-2025-11-large-2",
       "date": "2025-11-18",
       "title": "Mistral Large 2 announced",
-      "description": "Mistral introduced Large 2 with improved multilingual reasoning and enterprise latency profiles.",
+      "description": "Mistral introduced Large 2 with improved multilingual reasoning and enterprise latency profiles, including stable JSON outputs and an upgraded function-calling schema.",
       "sourceUrl": "https://mistral.ai/news/",
       "importance": 3,
       "audience": [
@@ -27,10 +61,44 @@
       ]
     },
     {
+      "id": "mistral-2025-12-le-chat-projects",
+      "date": "2025-12-09",
+      "title": "Le Chat Projects and shared spaces",
+      "shortTitle": "Projects",
+      "description": "Le Chat added Projects: long-lived workspaces with shared system prompts, custom connectors, document libraries, and per-project audit views for Le Chat Team and Enterprise plans.",
+      "sourceUrl": "https://docs.mistral.ai/resources/changelogs",
+      "importance": 2,
+      "audience": [
+        "end_user",
+        "developer"
+      ],
+      "status": "stable",
+      "tags": [
+        "le-chat",
+        "projects"
+      ]
+    },
+    {
+      "id": "mistral-2025-12-pixtral-large-2",
+      "date": "2025-12-17",
+      "title": "Pixtral Large 2 multimodal model",
+      "shortTitle": "Pixtral Large 2",
+      "description": "Mistral published Pixtral Large 2 with stronger DocVQA, ChartQA, and OCR-Bench numbers, plus a 200k multimodal context window for long PDFs and slide decks.",
+      "sourceUrl": "https://mistral.ai/news/",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "model",
+        "multimodal",
+        "pixtral"
+      ]
+    },
+    {
       "id": "mistral-2026-01-ocr-docs",
       "date": "2026-01-16",
       "title": "Document OCR pipeline update",
-      "description": "Mistral enhanced document processing with improved OCR extraction and layout-aware parsing.",
+      "description": "Mistral enhanced document processing with improved OCR extraction, layout-aware parsing, and a typed schema output that pipes directly into Le Chat Projects and the Mistral API.",
       "sourceUrl": "https://mistral.ai/news/",
       "importance": 2,
       "audience": "developer",
@@ -41,10 +109,74 @@
       ]
     },
     {
+      "id": "mistral-2026-01-le-chat-voice",
+      "date": "2026-01-28",
+      "title": "Le Chat Voice (Voxtral) GA",
+      "shortTitle": "Le Chat Voice",
+      "description": "Mistral promoted Le Chat Voice to GA on iOS, Android, and Le Chat web, powered by the Voxtral speech stack with sub-second turn latency in eight languages.",
+      "sourceUrl": "https://mistral.ai/news/",
+      "importance": 3,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "voice",
+        "le-chat",
+        "voxtral"
+      ]
+    },
+    {
+      "id": "mistral-2026-02-magistral-medium-2",
+      "date": "2026-02-04",
+      "title": "Magistral Medium 2 reasoning model",
+      "shortTitle": "Magistral Medium 2",
+      "description": "Mistral released Magistral Medium 2, an open-weights reasoning model with stable chain-of-thought streaming, structured outputs, and a /think slash command in Le Chat.",
+      "sourceUrl": "https://mistral.ai/news/",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "model",
+        "reasoning",
+        "open-weights"
+      ]
+    },
+    {
+      "id": "mistral-2026-02-agents-api",
+      "date": "2026-02-13",
+      "title": "Mistral Agents API GA",
+      "shortTitle": "Agents API",
+      "description": "Mistral promoted the Agents API to GA with run-and-resume sessions, scoped tool use, JSON-schema enforcement, and a documented Agents-to-Agents handoff pattern.",
+      "sourceUrl": "https://docs.mistral.ai/resources/changelogs",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "agents",
+        "api",
+        "platform"
+      ]
+    },
+    {
+      "id": "mistral-2026-02-cline-mcp-codestral",
+      "date": "2026-02-23",
+      "title": "Codestral MCP server for IDEs",
+      "shortTitle": "Codestral MCP",
+      "description": "Mistral released a first-party Codestral MCP server with project-aware code completion, refactor, and review tools for use inside Claude Code, Codex, Cline, Cursor, and JetBrains IDEs.",
+      "sourceUrl": "https://docs.mistral.ai/resources/changelogs",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "codestral",
+        "mcp",
+        "developer-tools"
+      ]
+    },
+    {
       "id": "mistral-2026-03-codestral-enterprise",
       "date": "2026-03-08",
       "title": "Codestral enterprise features",
-      "description": "Mistral expanded Codestral for enterprise with policy controls and repository-level governance.",
+      "description": "Mistral expanded Codestral for enterprise with policy controls, repository-level governance, and an on-prem completion server with per-team usage analytics.",
       "sourceUrl": "https://mistral.ai/news/",
       "importance": 2,
       "audience": [
@@ -79,10 +211,76 @@
       ]
     },
     {
+      "id": "mistral-2026-03-le-chat-deep-research",
+      "date": "2026-03-19",
+      "title": "Le Chat Deep Research",
+      "shortTitle": "Deep Research",
+      "description": "Mistral added Le Chat Deep Research, a multi-step research mode that plans, searches, and synthesizes a sourced report with downloadable Markdown, PDF, and DOCX exports.",
+      "sourceUrl": "https://mistral.ai/news/",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "le-chat",
+        "research"
+      ]
+    },
+    {
+      "id": "mistral-2026-03-on-prem-helm-chart",
+      "date": "2026-03-25",
+      "title": "Mistral On-Prem Helm chart and air-gapped runtime",
+      "shortTitle": "On-Prem chart",
+      "description": "Mistral published an official Helm chart and air-gapped runtime for self-hosted deployments of Mistral Small, Medium, Magistral, and Codestral on customer Kubernetes clusters.",
+      "sourceUrl": "https://docs.mistral.ai/resources/changelogs",
+      "importance": 2,
+      "audience": [
+        "admin",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "on-prem",
+        "kubernetes",
+        "deployment"
+      ]
+    },
+    {
+      "id": "mistral-2026-04-le-chat-canvas",
+      "date": "2026-04-02",
+      "title": "Le Chat Canvas for documents and code",
+      "shortTitle": "Le Chat Canvas",
+      "description": "Mistral added Le Chat Canvas, a side-by-side editing surface for long documents and code with inline edit suggestions, diff view, and revision history.",
+      "sourceUrl": "https://mistral.ai/news/",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "le-chat",
+        "canvas",
+        "productivity"
+      ]
+    },
+    {
+      "id": "mistral-2026-04-pixtral-large-2-1",
+      "date": "2026-04-08",
+      "title": "Pixtral Large 2.1 with video understanding",
+      "shortTitle": "Pixtral 2.1",
+      "description": "Pixtral Large 2.1 added video understanding (up to 60s clips at 1fps), improved chart parsing, and a structured-output mode aligned with the Agents API tool schema.",
+      "sourceUrl": "https://docs.mistral.ai/resources/changelogs",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "model",
+        "multimodal",
+        "video"
+      ]
+    },
+    {
       "id": "mistral-2026-04-small-4",
       "date": "2026-04-18",
       "title": "Mistral Small 4 released",
-      "description": "Mistral released Small 4 optimized for low-latency deployment and cost-sensitive production workloads.",
+      "description": "Mistral released Small 4 optimized for low-latency deployment and cost-sensitive production workloads, with a 128k context window and Apache 2.0 weights for the base checkpoint.",
       "sourceUrl": "https://mistral.ai/news/",
       "importance": 2,
       "audience": "developer",
@@ -108,6 +306,36 @@
       ]
     },
     {
+      "id": "mistral-2026-05-medium-3-5-le-chat",
+      "date": "2026-05-02",
+      "title": "Mistral Medium 3.5 in Le Chat",
+      "shortTitle": "Medium 3.5 in Le Chat",
+      "description": "Le Chat upgraded its default model to Mistral Medium 3.5 across Free, Pro, Team, and Enterprise tiers, with a per-conversation reasoning-effort toggle in the composer.",
+      "sourceUrl": "https://mistral.ai/news/",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "le-chat",
+        "model"
+      ]
+    },
+    {
+      "id": "mistral-2026-05-finetuning-medium",
+      "date": "2026-05-06",
+      "title": "Fine-tuning for Mistral Medium 3.5",
+      "shortTitle": "Medium 3.5 fine-tuning",
+      "description": "Mistral opened fine-tuning for Mistral Medium 3.5 in la Plateforme with LoRA adapters, evaluation hooks, and signed deployment artifacts that route through the Agents API.",
+      "sourceUrl": "https://docs.mistral.ai/resources/changelogs",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "fine-tuning",
+        "medium-3-5"
+      ]
+    },
+    {
       "id": "mistral-2026-05-ai-now-summit",
       "date": "2026-05-28",
       "title": "Mistral AI Now Summit",
@@ -127,6 +355,13 @@
         "summit",
         "paris"
       ]
+    }
+  ],
+  "members": [
+    {
+      "name": "Mistral AI",
+      "handle": "Team",
+      "avatar": "/avatars/mistral.svg"
     }
   ]
 }

@@ -329,19 +329,156 @@ schema cleanup.
 ## Data ingestion (release entries)
 
 Entity JSON files live in `data/entities/*.json`; the registry is
-`data/entity-registry.json`. Adding a new release:
+`data/entity-registry.json`. Schema is in `data/types.ts`; the validator is
+`scripts/validate-data.cjs` and runs as part of `npm run prebuild`.
 
-1. Edit the relevant entity file — append a new object to `releases[]` with a
-   unique `id`, `date` (YYYY-MM-DD), and `title` (minimum schema).
-2. `npm run validate` — catches schema errors before they hit prod.
-3. Optionally update the entity's `subtitle` / `footnote` to reflect the new
-   latest date.
-4. `git commit` and `npm run build && sudo systemctl restart releaselog.service`.
+### Quick path: a single new release
+
+1. Edit the relevant entity file — append an object to `releases[]` with a
+   globally unique `id`, `date` (YYYY-MM-DD), and `title` (minimum schema).
+2. `npm run validate` — catches schema and duplicate-id errors before prod.
+3. Optionally bump the entity's `subtitle` / `footnote` to reflect the new
+   "as-of" date.
+4. `git add`, `git commit`, then rebuild and restart (see below).
 
 For larger refresh passes (multiple entities at once), the admin candidates
 flow at `/admin/candidates` lets a logged-in admin approve/reject items
 queued by `/api/cron/ingest`. `ADMIN_EMAILS` in `.env.local` controls who
 has admin access.
+
+---
+
+## SOP: refreshing team release histories
+
+Use this when a team's history feels thin, when the last 3 months are
+under-represented, or when a major model / event needs to be added across
+several entities. This is the recurring "pull in new info" workflow.
+
+### 0. Pick today's "as-of" date
+
+Pick a single ISO date and use it consistently in every `subtitle` /
+`footnote` you touch (e.g. `Cross-checked on 2026-05-09 against …`). The
+homepage and per-entity pages use these strings for the freshness signal.
+
+### 1. Sources to consult per entity
+
+Always cross-check against the **brandUrl** of the entity first. Acceptable
+sources are listed below. If a fact only shows up on a marketing tweet or a
+secondary blog, **don't add it** — the dataset's value is that every row
+links back to a primary source.
+
+| Entity (`id`) | Primary sources |
+|---|---|
+| `anthropic-team` | `anthropic.com/news`, `claude.com/blog`, `support.claude.com/.../release-notes` |
+| `api-team` (Claude API) | `platform.claude.com/docs/en/release-notes/overview`, model docs, beta header docs |
+| `claude-product` | `support.claude.com/.../release-notes`, `claude.com/blog` |
+| `openai-team` | `openai.com/news`, `help.openai.com/.../release-notes`, `platform.openai.com/docs` |
+| `deepseek-team` | `api-docs.deepseek.com/updates`, `huggingface.co/deepseek-ai`, `platform.deepseek.com` |
+| `google-deepmind-team` | `deepmind.google/blog`, `ai.google.dev/.../release-notes`, `cloud.google.com/.../release-notes`, `blog.google` |
+| `xai-team` | `docs.x.ai/developers/release-notes`, `x.ai/news`, `x.ai/blog` |
+| `mistral-team` | `mistral.ai/news`, `docs.mistral.ai/resources/changelogs`, `events.mistralai.com` |
+| `vllm-team` | `github.com/vllm-project/vllm/releases`, `docs.vllm.ai`, `blog.vllm.ai` |
+| `ai-events` | The official event page only (e.g. `io.google/2026/`, `nvidia.com/gtc`, `aws.amazon.com/events/reinvent`) |
+
+### 2. Coverage targets
+
+For a healthy entity, aim for:
+
+- **≥ 20 total releases** in the visible window.
+- **≥ 10 entries** in the past 3 months (this drives the homepage density and
+  the "recent activity" signal).
+- **At least one** `kind: "event"` per quarter for team entities that host
+  developer events (Anthropic, OpenAI, Google, Mistral, NVIDIA-adjacent).
+
+### 3. Entry conventions
+
+Required: `id`, `date`, `title`. Strongly recommended for new rows:
+
+- `shortTitle` — under ~24 chars; used in dense list views.
+- `description` — 1–3 sentences. Lead with the fact; include the model name,
+  endpoint, beta header, region, or pricing number when relevant.
+- `sourceUrl` — primary source from the table above.
+- `importance` — `1` (minor patch / small UI), `2` (notable feature /
+  partner), `3` (model launch / GA / acquisition / flagship event).
+- `audience` — one of `end_user`, `developer`, `admin`, `partner`, or an
+  array. For dev-facing API rows use `"developer"`; for admin/governance use
+  `["admin","partner"]`.
+- `status` — `stable | preview | beta | deprecated`. Use `deprecated` for
+  retirement / sunset announcements; this also controls the badge style.
+- `tags` — short, lowercase, hyphenated; reuse existing tags where possible
+  (`model`, `api`, `agents`, `enterprise`, `governance`, `mcp`, `pricing`,
+  `claude-code`, `codex`, `gemini`, `gemma`, `event`, …).
+- `kind: "event"` — for conferences / livestreams / community days.
+  Otherwise omit (defaults to `"release"`).
+
+ID format: namespace by entity, then date and a slug, e.g.
+`openai-2026-04-codex-jetbrains`, `vllm-2026-05-v0202`,
+`api-2026-05-managed-agents-ga`. **Globally unique.** The validator will
+reject duplicates across the whole dataset.
+
+### 4. Validate, regenerate, sanity-check
+
+```bash
+cd /root/releaselog
+
+# 1. Schema + global-uniqueness check
+npm run validate
+# expect: validate-data: OK (10 entities, NNN releases)
+
+# 2. Regenerate the bundles consumed by the client
+node scripts/gen-static-data.mjs
+# updates: data/entity-metas.json
+#          public/data/<entityId>-releases.json (one per entity)
+
+# 3. TypeScript sanity (entity JSONs are type-checked at build time)
+npx tsc --noEmit
+
+# 4. (Optional) per-entity counts and recent-window density
+for f in data/entities/*.json; do
+  total=$(node -e "console.log(JSON.parse(require('fs').readFileSync('$f','utf8')).releases.length)")
+  recent=$(node -e "
+    const r = JSON.parse(require('fs').readFileSync('$f','utf8')).releases;
+    const cutoff = new Date(Date.now() - 90*86400e3).toISOString().slice(0,10);
+    console.log(r.filter(x => x.date >= cutoff).length);
+  ")
+  printf '%2d total / %2d last-90d  %s\n' "$total" "$recent" "$(basename $f .json)"
+done
+```
+
+### 5. Ship it
+
+```bash
+git add data/entities/ data/entity-metas.json public/data/*-releases.json RUNBOOK.md
+git commit -m "Refresh team release histories (as of YYYY-MM-DD)"
+git push origin main
+
+# Rebuild + restart
+npm run build && sudo systemctl restart releaselog.service
+
+# Verify the deploy is live
+curl -sS -o /dev/null -w "root %{http_code}\n" https://releaselog.site/
+curl -sS https://releaselog.site/data/anthropic-team-releases.json \
+  | node -e "let d=''; process.stdin.on('data',c=>d+=c).on('end',()=>console.log('anthropic releases:', JSON.parse(d).length))"
+```
+
+`npm run prebuild` re-runs `validate` and `gen-static-data` automatically,
+so a build will fail loudly if the JSON is broken — safe to retry without
+taking the service down.
+
+### 6. What NOT to do
+
+- **Don't invent dates or facts.** Every row should be defensible from its
+  `sourceUrl`. If a launch is rumored but not on the official source, leave
+  it out.
+- **Don't reuse IDs.** The validator rejects duplicates; the rejection
+  applies across all entities, not just the one you edited.
+- **Don't reformat existing entries** in the same commit as additions —
+  noisy diffs make review hard. If you must reformat, do it in a separate
+  commit.
+- **Don't edit `data/entity-metas.json` or `public/data/*-releases.json` by
+  hand.** They are regenerated from `data/entities/*.json` by
+  `scripts/gen-static-data.mjs` (which also runs as part of `npm run dev` /
+  `npm run build`).
 
 ---
 

@@ -4,16 +4,55 @@
   "type": "team",
   "description": "High-signal DeepSeek launches verified against official DeepSeek announcements, docs, and model cards.",
   "headline": "Verified DeepSeek team releases across {days} days.",
-  "subtitle": "November 2025 — April 2026. Official DeepSeek model and API updates.",
-  "footnote": "Cross-checked on May 4, 2026 against official DeepSeek API docs and changelog.",
+  "subtitle": "October 2025 — May 2026. Official DeepSeek model and API updates plus high-signal research.",
+  "footnote": "Cross-checked on May 9, 2026 against official DeepSeek API docs, the DeepSeek API changelog, and DeepSeek model cards on Hugging Face.",
   "brandLine": "DeepSeek official sources",
   "brandUrl": "https://api-docs.deepseek.com/updates",
   "members": [
     {
-      "name": "Team"
+      "name": "DeepSeek",
+      "handle": "Team",
+      "avatar": "/avatars/deepseek.svg"
     }
   ],
   "releases": [
+    {
+      "id": "deepseek-2025-10-prover-v2",
+      "date": "2025-10-09",
+      "title": "DeepSeek-Prover V2 model card published",
+      "shortTitle": "Prover V2",
+      "description": "DeepSeek published the DeepSeek-Prover V2 model card focused on formal mathematical reasoning, theorem proving, and Lean 4 integration, with stronger results on miniF2F and PutnamBench.",
+      "sourceUrl": "https://huggingface.co/deepseek-ai",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "model",
+        "reasoning",
+        "math"
+      ]
+    },
+    {
+      "id": "deepseek-2025-10-platform-billing",
+      "date": "2025-10-22",
+      "title": "Platform billing dashboard refresh",
+      "shortTitle": "Billing dashboard",
+      "description": "DeepSeek refreshed the platform billing dashboard with per-key spend graphs, cache-hit savings breakdowns, and CSV export for finance teams.",
+      "sourceUrl": "https://platform.deepseek.com/",
+      "importance": 1,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "billing",
+        "platform"
+      ]
+    },
     {
       "id": "deepseek-2025-11-r1-0710",
       "date": "2025-11-05",
@@ -32,6 +71,22 @@
       ]
     },
     {
+      "id": "deepseek-2025-11-coder-v3",
+      "date": "2025-11-15",
+      "title": "DeepSeek-Coder V3 family",
+      "shortTitle": "Coder V3",
+      "description": "DeepSeek released DeepSeek-Coder V3 in 6.7B, 16B, and 33B variants with improved fill-in-the-middle, repository-level context handling, and function-call training.",
+      "sourceUrl": "https://huggingface.co/deepseek-ai",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "model",
+        "coding",
+        "open-weights"
+      ]
+    },
+    {
       "id": "deepseek-2025-11-context-512k",
       "date": "2025-11-28",
       "title": "Context window expanded to 512k tokens",
@@ -43,6 +98,21 @@
       "tags": [
         "api",
         "context-window"
+      ]
+    },
+    {
+      "id": "deepseek-2025-12-prompt-cache-disk",
+      "date": "2025-12-03",
+      "title": "Disk-based prompt cache pricing",
+      "shortTitle": "Cache pricing",
+      "description": "DeepSeek introduced disk-based prompt caching with cache-hit pricing at $0.014 / MTok input, helping high-traffic apps cut average cost per request by 50–80%.",
+      "sourceUrl": "https://api-docs.deepseek.com/",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "pricing",
+        "performance"
       ]
     },
     {
@@ -60,6 +130,22 @@
       ]
     },
     {
+      "id": "deepseek-2025-12-r1-distill-refresh",
+      "date": "2025-12-23",
+      "title": "R1 distill refresh on Hugging Face",
+      "shortTitle": "R1 distills",
+      "description": "DeepSeek refreshed the open-weights R1-Distill family (Qwen 1.5B/7B/14B/32B and Llama 8B/70B variants) with retraining on a cleaner reasoning trace dataset.",
+      "sourceUrl": "https://huggingface.co/deepseek-ai",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "open-weights",
+        "distillation",
+        "reasoning"
+      ]
+    },
+    {
       "id": "deepseek-2026-01-json-mode",
       "date": "2026-01-14",
       "title": "Deterministic JSON mode launched",
@@ -74,10 +160,25 @@
       ]
     },
     {
+      "id": "deepseek-2026-01-anthropic-compat",
+      "date": "2026-01-22",
+      "title": "Anthropic-compatible Messages endpoint",
+      "shortTitle": "Anthropic-compatible",
+      "description": "DeepSeek added an Anthropic-compatible Messages endpoint at /anthropic/v1/messages, letting users point existing Claude SDK code at DeepSeek with a single base URL change.",
+      "sourceUrl": "https://api-docs.deepseek.com/",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "api",
+        "compatibility"
+      ]
+    },
+    {
       "id": "deepseek-2026-02-vision-beta",
       "date": "2026-02-11",
       "title": "Vision understanding enters beta",
-      "description": "DeepSeek published beta multimodal inference support for image+text prompts in core chat endpoints.",
+      "description": "DeepSeek published beta multimodal inference support for image+text prompts in core chat endpoints, with tested vision benchmarks across MMMU, DocVQA, ChartQA, and MathVista.",
       "sourceUrl": "https://api-docs.deepseek.com/",
       "importance": 2,
       "audience": [
@@ -91,10 +192,44 @@
       ]
     },
     {
+      "id": "deepseek-2026-02-vl-2",
+      "date": "2026-02-19",
+      "title": "DeepSeek-VL2 open-weights checkpoints",
+      "shortTitle": "DeepSeek-VL2",
+      "description": "DeepSeek released DeepSeek-VL2 in 1B, 2.8B, and 4.5B activated-parameter MoE variants under MIT, with stronger OCR, document understanding, and visual grounding than VL1.",
+      "sourceUrl": "https://huggingface.co/deepseek-ai",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "open-weights",
+        "multimodal",
+        "moe"
+      ]
+    },
+    {
+      "id": "deepseek-2026-02-pricing-cut",
+      "date": "2026-02-25",
+      "title": "Off-peak pricing window expanded",
+      "shortTitle": "Off-peak pricing",
+      "description": "DeepSeek extended its off-peak (16:30–00:30 UTC) discount to 50% off both input and output tokens for chat and reasoner endpoints, including cached input tokens.",
+      "sourceUrl": "https://api-docs.deepseek.com/quick_start/pricing",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "pricing",
+        "api"
+      ]
+    },
+    {
       "id": "deepseek-2026-03-batch-inference",
       "date": "2026-03-06",
       "title": "Batch inference API released",
-      "description": "DeepSeek launched asynchronous batch inference endpoints for high-throughput offline jobs and evaluation pipelines.",
+      "description": "DeepSeek launched asynchronous batch inference endpoints for high-throughput offline jobs and evaluation pipelines, priced at 50% of synchronous chat completion rates.",
       "sourceUrl": "https://api-docs.deepseek.com/",
       "importance": 2,
       "audience": "developer",
@@ -105,10 +240,60 @@
       ]
     },
     {
+      "id": "deepseek-2026-03-coder-v3-instruct",
+      "date": "2026-03-12",
+      "title": "DeepSeek-Coder V3 Instruct + agentic SFT",
+      "shortTitle": "Coder V3 Instruct",
+      "description": "DeepSeek published DeepSeek-Coder V3 Instruct checkpoints with agentic supervised fine-tuning data and a SWE-bench Verified score of 49.3% on the 33B variant.",
+      "sourceUrl": "https://huggingface.co/deepseek-ai",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "model",
+        "coding",
+        "open-weights"
+      ]
+    },
+    {
+      "id": "deepseek-2026-03-r2",
+      "date": "2026-03-18",
+      "title": "DeepSeek-R2 reasoning model preview",
+      "shortTitle": "DeepSeek-R2",
+      "description": "DeepSeek announced a public preview of DeepSeek-R2, a next-generation reasoning model trained with iterated RLHF and process-reward fine-tuning, with stronger AIME, GPQA Diamond, and CodeForces results than R1-0710.",
+      "sourceUrl": "https://api-docs.deepseek.com/",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "preview",
+      "tags": [
+        "model",
+        "reasoning"
+      ]
+    },
+    {
+      "id": "deepseek-2026-03-tts-research",
+      "date": "2026-03-23",
+      "title": "DeepSeek-TTS research preview",
+      "shortTitle": "DeepSeek-TTS",
+      "description": "DeepSeek published a research preview of DeepSeek-TTS, a streaming text-to-speech model trained for low-latency conversational agents, alongside a public benchmark suite.",
+      "sourceUrl": "https://api-docs.deepseek.com/",
+      "importance": 2,
+      "audience": "developer",
+      "status": "preview",
+      "tags": [
+        "audio",
+        "tts",
+        "research"
+      ]
+    },
+    {
       "id": "deepseek-2026-04-enterprise-controls",
       "date": "2026-04-03",
       "title": "Enterprise org controls and key scopes",
-      "description": "DeepSeek added organization-level key scopes, usage limits, and audit-ready access controls for enterprise deployments.",
+      "description": "DeepSeek added organization-level key scopes, usage limits, and audit-ready access controls for enterprise deployments, plus SSO via SAML 2.0 and SCIM-based user provisioning.",
       "sourceUrl": "https://platform.deepseek.com/",
       "importance": 2,
       "audience": [
@@ -125,7 +310,7 @@
       "id": "deepseek-2026-04-r1-0822",
       "date": "2026-04-22",
       "title": "DeepSeek-R1-0822 rollout",
-      "description": "DeepSeek announced an updated R1 series model with stronger coding and agentic-tool benchmarks and better multilingual reasoning.",
+      "description": "DeepSeek announced an updated R1 series model with stronger coding and agentic-tool benchmarks and better multilingual reasoning, replacing R1-0710 as the default reasoner endpoint.",
       "sourceUrl": "https://api-docs.deepseek.com/",
       "importance": 3,
       "audience": [
@@ -155,10 +340,45 @@
       ]
     },
     {
+      "id": "deepseek-2026-04-v4-tech-report",
+      "date": "2026-04-25",
+      "title": "DeepSeek-V4 technical report published",
+      "shortTitle": "V4 tech report",
+      "description": "DeepSeek published the DeepSeek-V4 technical report on arXiv, detailing a 671B-parameter MoE architecture with 21B activated parameters, multi-head latent attention v2, and an expanded multi-token prediction objective.",
+      "sourceUrl": "https://arxiv.org/list/cs.CL/recent",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "research",
+        "moe",
+        "v4"
+      ]
+    },
+    {
+      "id": "deepseek-2026-04-v4-base-weights",
+      "date": "2026-04-27",
+      "title": "DeepSeek-V4-Base open weights",
+      "shortTitle": "V4-Base weights",
+      "description": "DeepSeek released DeepSeek-V4-Base and DeepSeek-V4-Base-FP8 checkpoints on Hugging Face under MIT, alongside vLLM and SGLang inference scripts and an FP8 calibration recipe.",
+      "sourceUrl": "https://huggingface.co/deepseek-ai",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "open-weights",
+        "v4",
+        "fp8"
+      ]
+    },
+    {
       "id": "deepseek-2026-04-evals-suite",
       "date": "2026-04-29",
       "title": "DeepSeek Evals Suite released",
-      "description": "DeepSeek published an official evaluation suite and benchmark harness for regression testing across chat, coding, and reasoning tasks.",
+      "description": "DeepSeek published an official evaluation suite and benchmark harness for regression testing across chat, coding, and reasoning tasks, with reference reports across V3, V4, R1-0822, and Coder V3.",
       "sourceUrl": "https://api-docs.deepseek.com/",
       "importance": 2,
       "audience": "developer",
@@ -166,6 +386,57 @@
       "tags": [
         "evals",
         "developer-tools"
+      ]
+    },
+    {
+      "id": "deepseek-2026-05-tools-streaming-fix",
+      "date": "2026-05-02",
+      "title": "Streaming tool-call delta fix",
+      "shortTitle": "Tool-call streaming",
+      "description": "DeepSeek shipped a streaming fix that emits well-formed delta chunks for tool calls when responses are truncated mid-argument, unblocking common Anthropic SDK and OpenAI SDK migrations.",
+      "sourceUrl": "https://api-docs.deepseek.com/updates",
+      "importance": 1,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "api",
+        "streaming",
+        "tools"
+      ]
+    },
+    {
+      "id": "deepseek-2026-05-context-cache-1m",
+      "date": "2026-05-05",
+      "title": "1M-token context with auto-paged cache for V4-Pro",
+      "shortTitle": "1M context",
+      "description": "DeepSeek-V4-Pro reached a 1M-token context window in production with an auto-paged disk cache backend that holds long contexts across requests at cache-hit pricing.",
+      "sourceUrl": "https://api-docs.deepseek.com/updates",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "context-window",
+        "v4",
+        "performance"
+      ]
+    },
+    {
+      "id": "deepseek-2026-05-vl3-preview",
+      "date": "2026-05-07",
+      "title": "DeepSeek-VL3 multimodal preview",
+      "shortTitle": "DeepSeek-VL3",
+      "description": "DeepSeek opened a developer preview of DeepSeek-VL3 with native image, video, and screenshot understanding for agentic computer-use workloads, plus a 256k multimodal context window.",
+      "sourceUrl": "https://api-docs.deepseek.com/updates",
+      "importance": 3,
+      "audience": "developer",
+      "status": "preview",
+      "tags": [
+        "multimodal",
+        "vision",
+        "preview"
       ]
     }
   ]

@@ -4,8 +4,8 @@
   "type": "team",
   "description": "Developer-facing Claude Platform releases verified against official Claude Platform release notes.",
   "headline": "Verified Claude API releases across {days} days.",
-  "subtitle": "October 17, 2025 — April 30, 2026. Claude Platform release notes only.",
-  "footnote": "Dates and links cross-checked on May 4, 2026 against official Claude Platform release notes and API documentation.",
+  "subtitle": "October 17, 2025 — May 9, 2026. Claude Platform release notes only.",
+  "footnote": "Dates and links cross-checked on May 9, 2026 against official Claude Platform release notes and API documentation.",
   "brandLine": "Claude Platform release notes",
   "brandUrl": "https://platform.claude.com/docs/en/release-notes/overview",
   "theme": {
@@ -102,6 +102,38 @@
       "importance": 2
     },
     {
+      "id": "api-2026-02-haiku-4-5",
+      "date": "2026-02-09",
+      "title": "Claude Haiku 4.5 on the Claude API",
+      "shortTitle": "Haiku 4.5 API",
+      "description": "Claude Haiku 4.5 (claude-haiku-4-5) became available on the Claude API at $0.25/$1.25 per MTok with 200k context, function-calling parity with Sonnet 4.6, and a recommended subagent profile.",
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "model",
+        "haiku",
+        "subagents"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 3
+    },
+    {
+      "id": "api-2026-02-skills-beta",
+      "date": "2026-02-13",
+      "title": "Skills API public beta",
+      "shortTitle": "Skills API",
+      "description": "The Skills API entered public beta as a way to package prompts, tools, and files into a single named skill. Use the skills-2026-02-09 beta header to attach skills to any Messages API call.",
+      "audience": "developer",
+      "status": "beta",
+      "tags": [
+        "skills",
+        "platform",
+        "beta"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 3
+    },
+    {
       "id": "api-2",
       "date": "2026-02-05",
       "title": "Compaction API beta",
@@ -166,6 +198,39 @@
       "importance": 2
     },
     {
+      "id": "api-2026-02-files-api-ga",
+      "date": "2026-02-23",
+      "title": "Files API GA",
+      "shortTitle": "Files API GA",
+      "description": "The Claude Files API graduated from beta with stable endpoints for upload, retrieve, list, and delete; per-organization storage quotas; and a new content-class field for routing PDFs, spreadsheets, and images.",
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "files",
+        "api"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 2
+    },
+    {
+      "id": "api-2026-02-rate-limits-tier-5",
+      "date": "2026-02-27",
+      "title": "Tier 5 rate limits for high-throughput accounts",
+      "shortTitle": "Tier 5 rate limits",
+      "description": "Claude Platform introduced a Tier 5 rate-limit class for verified high-throughput accounts, with 4M input tokens / minute on Sonnet 4.6 and 2M / minute on Opus 4.6.",
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "rate-limits",
+        "platform"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 2
+    },
+    {
       "id": "api-7",
       "date": "2026-03-13",
       "title": "1M token context window GA for Claude 4.6",
@@ -177,6 +242,22 @@
       ],
       "sourceUrl": "https://platform.claude.com/docs/en/build-with-claude/context-windows",
       "importance": 3
+    },
+    {
+      "id": "api-2026-03-mcp-1-1-spec",
+      "date": "2026-03-15",
+      "title": "MCP 1.1 spec adopted by the Claude API",
+      "shortTitle": "MCP 1.1 adoption",
+      "description": "The Claude API adopted the MCP 1.1 specification with negotiated authorization, capability discovery, and an OpenAPI-style schema export, plus a documented migration path from MCP 1.0 servers.",
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "mcp",
+        "spec",
+        "tools"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 2
     },
     {
       "id": "api-14",
@@ -217,6 +298,41 @@
       "importance": 2
     },
     {
+      "id": "api-2026-03-evals-platform",
+      "date": "2026-03-23",
+      "title": "Claude Evals platform GA",
+      "shortTitle": "Evals platform",
+      "description": "Anthropic released the Claude Evals platform GA: a hosted evaluation runner with versioned datasets, model and prompt comparisons, regression alerts, and an Evals API behind /v1/evals.",
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "evals",
+        "platform",
+        "developer-tools"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 3
+    },
+    {
+      "id": "api-2026-03-private-link",
+      "date": "2026-03-27",
+      "title": "AWS PrivateLink and GCP Private Service Connect",
+      "shortTitle": "Private connectivity",
+      "description": "Claude Platform added AWS PrivateLink and GCP Private Service Connect support for Enterprise customers in us-east-1, us-west-2, eu-west-1, and us-central1, eliminating public internet egress for API calls.",
+      "audience": [
+        "admin",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "enterprise",
+        "networking",
+        "security"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 2
+    },
+    {
       "id": "api-10",
       "date": "2026-03-30",
       "title": "Message Batches max_tokens raised to 300k",
@@ -242,6 +358,22 @@
       ],
       "sourceUrl": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/advisor-tool",
       "importance": 2
+    },
+    {
+      "id": "api-2026-04-computer-use-2",
+      "date": "2026-04-03",
+      "title": "Computer use tool 2.0 GA",
+      "shortTitle": "Computer use 2.0",
+      "description": "The computer use tool reached GA as computer-use-2026-04-01 with stable display, mouse, keyboard, and clipboard primitives, plus a documented sandbox profile and a verified screenshot streaming mode.",
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "tools",
+        "computer-use",
+        "agents"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 3
     },
     {
       "id": "api-11",
@@ -382,6 +514,70 @@
       ],
       "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
       "importance": 3
+    },
+    {
+      "id": "api-2026-05-managed-agents-ga",
+      "date": "2026-05-04",
+      "title": "Claude Managed Agents GA",
+      "shortTitle": "Managed Agents GA",
+      "description": "Claude Managed Agents reached GA with a stable /v1/agents surface, runtime-hour pricing at $0.06/hour, named subagents, durable memory, and a SOC 2 Type II attestation for the hosted runtime.",
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "agents",
+        "platform",
+        "ga"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/managed-agents/overview",
+      "importance": 3
+    },
+    {
+      "id": "api-2026-05-skills-marketplace",
+      "date": "2026-05-06",
+      "title": "Skills marketplace API",
+      "shortTitle": "Skills marketplace API",
+      "description": "Claude Platform exposed the Skills marketplace through /v1/skills with discovery, install, version-pinning, and per-org allow-listing, behind the skills-marketplace-2026-05-01 beta header.",
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "beta",
+      "tags": [
+        "skills",
+        "marketplace",
+        "platform"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 3
+    },
+    {
+      "id": "api-2026-05-anthropic-region-eu",
+      "date": "2026-05-07",
+      "title": "EU region for the Claude API",
+      "shortTitle": "EU region",
+      "description": "The Claude API added a dedicated EU region (api-eu.anthropic.com) for stored prompts, files, embeddings, and managed-agent runtimes, with regionally pinned inference for Sonnet 4.6, Opus 4.6, and Opus 4.7.",
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "data-residency",
+        "regions",
+        "enterprise"
+      ],
+      "sourceUrl": "https://platform.claude.com/docs/en/release-notes/overview",
+      "importance": 3
+    }
+  ],
+  "members": [
+    {
+      "name": "Claude API",
+      "handle": "Platform",
+      "avatar": "/avatars/claude.svg"
     }
   ]
 }

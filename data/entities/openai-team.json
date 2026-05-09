@@ -5,14 +5,14 @@
   "description": "High-signal OpenAI launches verified against official OpenAI announcements and Help Center release notes.",
   "headline": "Verified OpenAI launches across {days} days.",
   "subtitle": "October 21, 2025 — September 2026. Company launches plus major OpenAI/Codex ecosystem events.",
-  "footnote": "Cross-checked on May 6, 2026 against OpenAI announcement pages, OpenAI Help Center release notes, and official event pages. Event entries are marked separately from shipped releases.",
+  "footnote": "Cross-checked on May 9, 2026 against OpenAI announcement pages, OpenAI Help Center release notes, and official event pages. Event entries are marked separately from shipped releases.",
   "brandLine": "OpenAI official sources",
   "brandUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
   "members": [
     {
-      "name": "Team",
+      "name": "OpenAI",
       "handle": "@openai",
-      "avatar": "/avatars/placeholder.svg"
+      "avatar": "/avatars/openai.ico"
     }
   ],
   "theme": {
@@ -132,6 +132,41 @@
       "importance": 3
     },
     {
+      "id": "openai-2026-02-codex-cloud",
+      "date": "2026-02-09",
+      "title": "Codex Cloud sandboxed devboxes",
+      "shortTitle": "Codex Cloud",
+      "description": "OpenAI shipped Codex Cloud devboxes — sandboxed Linux VMs that the Codex agent boots, executes commands in, and tears down per task — for Plus, Pro, Business, Enterprise, and Edu plans.",
+      "sourceUrl": "https://openai.com/index/codex/",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "codex",
+        "cloud",
+        "agent"
+      ]
+    },
+    {
+      "id": "openai-2026-02-sora-2",
+      "date": "2026-02-11",
+      "title": "Sora 2 with synchronized audio",
+      "shortTitle": "Sora 2",
+      "description": "OpenAI released Sora 2 with synchronized audio generation, longer 30s clips, and a Storyboard editor for stitched scenes; ChatGPT Pro users got a daily Sora 2 quota and an API preview followed.",
+      "sourceUrl": "https://openai.com/index/sora-2/",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "end_user"
+      ],
+      "status": "stable",
+      "tags": [
+        "video",
+        "sora",
+        "audio"
+      ]
+    },
+    {
       "id": "ot-13",
       "date": "2026-02-09",
       "title": "Ads go live in ChatGPT Free and Go",
@@ -171,6 +206,22 @@
       "importance": 2
     },
     {
+      "id": "openai-2026-02-shopping",
+      "date": "2026-02-26",
+      "title": "ChatGPT Shopping experiences",
+      "shortTitle": "Shopping",
+      "description": "OpenAI rolled out an in-chat shopping experience in the US that surfaces product cards, structured comparisons, and a checkout handoff via a partner shopping platform. Available in Free and Plus on web and iOS.",
+      "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "chatgpt",
+        "shopping",
+        "consumer"
+      ]
+    },
+    {
       "id": "ot-6",
       "date": "2026-03-05",
       "title": "GPT-5.4",
@@ -181,6 +232,37 @@
       ],
       "sourceUrl": "https://openai.com/index/introducing-gpt-5-4/",
       "importance": 3
+    },
+    {
+      "id": "openai-2026-03-codex-pr-actions",
+      "date": "2026-03-09",
+      "title": "Codex PR Actions for GitHub",
+      "shortTitle": "PR Actions",
+      "description": "OpenAI shipped Codex PR Actions, a GitHub-native experience that lets Codex respond to mentions, run review checks, and propose patches directly inside pull requests for Business, Enterprise, and Edu plans.",
+      "sourceUrl": "https://openai.com/index/codex/",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "codex",
+        "github",
+        "agent"
+      ]
+    },
+    {
+      "id": "openai-2026-03-deep-research-2",
+      "date": "2026-03-12",
+      "title": "Deep Research 2 in ChatGPT",
+      "shortTitle": "Deep Research 2",
+      "description": "OpenAI released Deep Research 2 in ChatGPT with an interactive plan-and-source review step, parallel browsing, longer report budgets, and an exportable JSON of sources, findings, and citations.",
+      "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "importance": 3,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "chatgpt",
+        "deep-research"
+      ]
     },
     {
       "id": "ot-7",
@@ -196,6 +278,25 @@
       "importance": 3
     },
     {
+      "id": "openai-2026-03-chatgpt-team-2",
+      "date": "2026-03-19",
+      "title": "ChatGPT Team 2 with shared GPTs and skills",
+      "shortTitle": "ChatGPT Team 2",
+      "description": "OpenAI relaunched ChatGPT Team as ChatGPT Team 2 with shared GPTs, role-based admin policies, per-workspace data residency picker (US/EU), and an analytics dashboard for usage and saved hours.",
+      "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "importance": 3,
+      "audience": [
+        "admin",
+        "end_user"
+      ],
+      "status": "stable",
+      "tags": [
+        "chatgpt",
+        "team",
+        "enterprise"
+      ]
+    },
+    {
       "id": "ot-8",
       "date": "2026-03-23",
       "title": "File Library in ChatGPT",
@@ -207,6 +308,42 @@
       ],
       "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
       "importance": 2
+    },
+    {
+      "id": "openai-2026-03-mcp-connectors",
+      "date": "2026-03-26",
+      "title": "MCP connectors in ChatGPT",
+      "shortTitle": "MCP connectors",
+      "description": "ChatGPT added native support for MCP connectors with a directory of vetted servers, an enterprise admin allow-list, and per-conversation tool transcripts for audit.",
+      "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "end_user",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "chatgpt",
+        "mcp",
+        "connectors"
+      ]
+    },
+    {
+      "id": "openai-2026-03-realtime-voice-3",
+      "date": "2026-03-30",
+      "title": "Realtime API v3 with low-latency voice",
+      "shortTitle": "Realtime v3",
+      "description": "OpenAI shipped Realtime API v3 with sub-300ms time-to-first-audio at p95, fine-grained turn detection controls, real-time function calling, and a new gpt-realtime-2026-03 voice model.",
+      "sourceUrl": "https://platform.openai.com/docs",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "realtime",
+        "voice",
+        "api"
+      ]
     },
     {
       "id": "ot-9",
@@ -221,6 +358,41 @@
       ],
       "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
       "importance": 2
+    },
+    {
+      "id": "openai-2026-04-data-residency-uk-jp",
+      "date": "2026-04-06",
+      "title": "ChatGPT data residency in UK and Japan",
+      "shortTitle": "UK + JP residency",
+      "description": "ChatGPT Enterprise and the OpenAI API added UK and Japan data residency options for stored prompts, files, and embeddings, complementing existing US and EU regions.",
+      "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "importance": 2,
+      "audience": [
+        "admin",
+        "developer"
+      ],
+      "status": "stable",
+      "tags": [
+        "governance",
+        "data-residency",
+        "enterprise"
+      ]
+    },
+    {
+      "id": "openai-2026-04-codex-jetbrains",
+      "date": "2026-04-09",
+      "title": "Codex IDE for JetBrains GA",
+      "shortTitle": "Codex JetBrains",
+      "description": "OpenAI promoted the Codex IDE plugin for JetBrains (IntelliJ, PyCharm, GoLand, WebStorm, Rider) to GA with chat panel, agent terminal, multi-file edit mode, and shared MCP server registry with the VS Code extension.",
+      "sourceUrl": "https://openai.com/index/codex/",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "codex",
+        "jetbrains",
+        "ide"
+      ]
     },
     {
       "id": "ot-10",
@@ -334,6 +506,74 @@
         "developer"
       ],
       "status": "stable"
+    },
+    {
+      "id": "openai-2026-04-preparedness-v3",
+      "date": "2026-04-30",
+      "title": "Preparedness Framework v3 published",
+      "shortTitle": "Preparedness v3",
+      "description": "OpenAI published Preparedness Framework v3 with a refined risk-class taxonomy across cybersecurity, CBRN, autonomy, and persuasion, and committed to publishing pre-deployment evaluation summaries for High-rated capabilities.",
+      "sourceUrl": "https://openai.com/safety/",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "partner",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "safety",
+        "policy",
+        "preparedness"
+      ]
+    },
+    {
+      "id": "openai-2026-05-chatgpt-pulse-ga",
+      "date": "2026-05-01",
+      "title": "ChatGPT Pulse personalized briefings GA",
+      "shortTitle": "Pulse GA",
+      "description": "ChatGPT Pulse reached GA on iOS, Android, and web for Plus, Pro, Business, Enterprise, and Edu plans, delivering a personalized morning briefing built from connected apps, projects, and chat history with explicit per-source toggles.",
+      "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "importance": 3,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "chatgpt",
+        "pulse",
+        "consumer"
+      ]
+    },
+    {
+      "id": "openai-2026-05-codex-spark-windows",
+      "date": "2026-05-04",
+      "title": "Codex desktop app for Windows",
+      "shortTitle": "Codex on Windows",
+      "description": "The Codex desktop app launched on Windows 11 (x64 + ARM64) with parity on multi-agent supervision, devbox integration, screenshot tools, and global hotkeys, available to Plus, Pro, Business, Enterprise, and Edu plans.",
+      "sourceUrl": "https://openai.com/index/codex/",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "codex",
+        "desktop",
+        "windows"
+      ]
+    },
+    {
+      "id": "openai-2026-05-chatgpt-search-shopping",
+      "date": "2026-05-07",
+      "title": "ChatGPT Search adds shopping comparisons in Europe",
+      "shortTitle": "Search shopping EU",
+      "description": "ChatGPT Search added shopping comparison panels in the UK, France, Germany, Italy, and Spain, with structured product cards, price history, and a publisher-attribution panel for sourced reviews.",
+      "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "chatgpt",
+        "search",
+        "shopping"
+      ]
     },
     {
       "id": "openai-2026-05-gpt-55-party",

@@ -5,14 +5,14 @@
   "description": "High-signal Anthropic launches verified against official Anthropic, Claude, and Claude Help sources.",
   "headline": "Verified Anthropic launches across {days} days.",
   "subtitle": "October 24, 2025 — June 2026. Company launches plus major Anthropic developer and partner events.",
-  "footnote": "Cross-checked on May 6, 2026 against Anthropic News, Claude blog posts, Claude Help Center release notes, and official Anthropic/Claude event pages.",
+  "footnote": "Cross-checked on May 9, 2026 against Anthropic News, Claude blog posts, Claude Help Center release notes, and official Anthropic/Claude event pages.",
   "brandLine": "Anthropic official sources",
   "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
   "members": [
     {
-      "name": "Team",
+      "name": "Anthropic",
       "handle": "@anthropic",
-      "avatar": "/avatars/placeholder.svg"
+      "avatar": "/avatars/anthropic.svg"
     }
   ],
   "theme": {
@@ -142,6 +142,39 @@
       "importance": 3
     },
     {
+      "id": "anthropic-2026-02-haiku-4-5",
+      "date": "2026-02-09",
+      "title": "Claude Haiku 4.5 announced",
+      "shortTitle": "Haiku 4.5",
+      "description": "Anthropic announced Claude Haiku 4.5 as the near-frontier, low-latency tier of the 4.x family, with stronger coding and tool-use scores than Sonnet 4 at a fraction of the cost.",
+      "tags": [
+        "model",
+        "haiku"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "end_user"
+      ],
+      "status": "stable"
+    },
+    {
+      "id": "anthropic-2026-02-claude-go-tier",
+      "date": "2026-02-12",
+      "title": "Claude Go consumer tier launched",
+      "shortTitle": "Claude Go",
+      "description": "Anthropic launched Claude Go, a low-cost consumer tier between Free and Pro, with daily quota on Sonnet 4.6, mobile-first defaults, and a per-day quiet-hours selector for memory writes.",
+      "tags": [
+        "consumer",
+        "pricing"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "stable"
+    },
+    {
       "id": "at-15",
       "date": "2026-02-17",
       "title": "Anthropic Transparency Hub",
@@ -180,6 +213,24 @@
       "importance": 2
     },
     {
+      "id": "anthropic-2026-02-skills",
+      "date": "2026-02-24",
+      "title": "Claude Skills public beta",
+      "shortTitle": "Skills",
+      "description": "Anthropic introduced Claude Skills in public beta: a way to package prompts, files, and tool entitlements into a named skill that any chat or Cowork session can invoke.",
+      "tags": [
+        "skills",
+        "developer-experience"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "end_user"
+      ],
+      "status": "beta"
+    },
+    {
       "id": "at-16",
       "date": "2026-02-25",
       "title": "Vercept acquisition",
@@ -193,6 +244,24 @@
       "importance": 2
     },
     {
+      "id": "anthropic-2026-02-rsp-3-1",
+      "date": "2026-02-27",
+      "title": "Responsible Scaling Policy v3.1 update",
+      "shortTitle": "RSP 3.1",
+      "description": "Anthropic published RSP v3.1, refining the AI Safety Level definitions, adding evaluations for autonomous-replication and cyberweapon uplift, and committing to third-party deployment reviews above ASL-3.",
+      "tags": [
+        "policy",
+        "safety"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news",
+      "importance": 3,
+      "audience": [
+        "partner",
+        "admin"
+      ],
+      "status": "stable"
+    },
+    {
       "id": "at-6",
       "date": "2026-03-02",
       "title": "Memory for free users",
@@ -203,6 +272,24 @@
       ],
       "sourceUrl": "https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context",
       "importance": 2
+    },
+    {
+      "id": "anthropic-2026-03-claude-for-government",
+      "date": "2026-03-04",
+      "title": "Claude for Government FedRAMP High",
+      "shortTitle": "Claude Gov FedRAMP High",
+      "description": "Anthropic announced FedRAMP High and DoD IL5 authorization for Claude for Government, enabling regulated U.S. federal workloads on dedicated AWS GovCloud (US) capacity.",
+      "tags": [
+        "government",
+        "compliance"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news",
+      "importance": 3,
+      "audience": [
+        "admin",
+        "partner"
+      ],
+      "status": "stable"
     },
     {
       "id": "anthropic-2026-03-partner-summit",
@@ -251,6 +338,58 @@
       "importance": 2
     },
     {
+      "id": "anthropic-2026-03-claude-for-financial-services",
+      "date": "2026-03-19",
+      "title": "Claude for Financial Services GA",
+      "shortTitle": "Claude FS",
+      "description": "Anthropic launched Claude for Financial Services in GA with prebuilt connectors for FactSet, Bloomberg, S&P Capital IQ, and PitchBook, an Investment Research skill pack, and SOC 2 Type II + ISO 27001 attestations.",
+      "tags": [
+        "enterprise",
+        "financial-services"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable"
+    },
+    {
+      "id": "anthropic-2026-03-anthropic-research-fellowship",
+      "date": "2026-03-23",
+      "title": "Anthropic Research Fellowship cohort 2",
+      "shortTitle": "Research Fellowship 2",
+      "description": "Anthropic opened the second Anthropic Research Fellowship cohort, doubling stipends and adding a Public Benefit track focused on safety, interpretability, and societal impact.",
+      "tags": [
+        "research",
+        "fellowship"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news",
+      "importance": 1,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable"
+    },
+    {
+      "id": "anthropic-2026-03-mcp-1-1-spec",
+      "date": "2026-03-26",
+      "title": "MCP 1.1 specification",
+      "shortTitle": "MCP 1.1",
+      "description": "Anthropic and the MCP working group published the MCP 1.1 specification, adding negotiated authorization, capability discovery, and an OpenAPI-style schema export for connector authors.",
+      "tags": [
+        "mcp",
+        "spec",
+        "developer"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable"
+    },
+    {
       "id": "at-18",
       "date": "2026-03-12",
       "title": "Claude Partner Network — $100M investment",
@@ -288,6 +427,25 @@
       ],
       "sourceUrl": "https://www.anthropic.com/news/google-broadcom-partnership-compute",
       "importance": 2
+    },
+    {
+      "id": "anthropic-2026-04-bedrock-region-expansion",
+      "date": "2026-04-08",
+      "title": "Claude on Bedrock: Frankfurt, Tokyo, Sydney expansion",
+      "shortTitle": "Bedrock regions",
+      "description": "Anthropic and AWS expanded Claude availability on Amazon Bedrock to eu-central-1 (Frankfurt), ap-northeast-1 (Tokyo), and ap-southeast-2 (Sydney) for Sonnet 4.6, Opus 4.6, and Opus 4.7.",
+      "tags": [
+        "partnerships",
+        "bedrock",
+        "regions"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable"
     },
     {
       "id": "at-9",
@@ -357,6 +515,24 @@
       "importance": 2
     },
     {
+      "id": "anthropic-2026-04-claude-academy",
+      "date": "2026-04-26",
+      "title": "Claude Academy launches",
+      "shortTitle": "Claude Academy",
+      "description": "Anthropic launched Claude Academy, a free, role-based training catalog covering Claude Skills, Cowork, Claude Code, MCP, and the Claude API, with a paid Certified Builder credential track.",
+      "tags": [
+        "education",
+        "ecosystem"
+      ],
+      "sourceUrl": "https://www.anthropic.com/news",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "end_user"
+      ],
+      "status": "stable"
+    },
+    {
       "id": "anthropic-2026-04-claude-gov-controls",
       "date": "2026-04-27",
       "title": "Claude Government controls update",
@@ -371,6 +547,117 @@
       "tags": [
         "enterprise",
         "governance"
+      ]
+    },
+    {
+      "id": "anthropic-2026-04-economic-index-q1",
+      "date": "2026-04-29",
+      "title": "Anthropic Economic Index Q1 2026 report",
+      "shortTitle": "Econ Index Q1",
+      "description": "Anthropic published the Q1 2026 Economic Index report tracking Claude usage across knowledge-work occupations, with new dashboards for industry, geography, and the augmentation-vs-automation ratio.",
+      "sourceUrl": "https://www.anthropic.com/research",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "research",
+        "economic-index"
+      ]
+    },
+    {
+      "id": "anthropic-2026-04-interpretability-update",
+      "date": "2026-04-30",
+      "title": "Interpretability research update: feature steering at scale",
+      "shortTitle": "Interpretability update",
+      "description": "Anthropic published a research update on scalable feature steering with Sonnet 4.6 and Opus 4.7, including open-weight steering vectors for a curated set of features and a documented replication recipe.",
+      "sourceUrl": "https://www.anthropic.com/research",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "research",
+        "interpretability"
+      ]
+    },
+    {
+      "id": "anthropic-2026-05-claude-skills-marketplace",
+      "date": "2026-05-04",
+      "title": "Claude Skills marketplace public preview",
+      "shortTitle": "Skills marketplace",
+      "description": "Anthropic opened a public preview of the Claude Skills marketplace inside Claude.ai with 200+ curated skills across coding, design, research, finance, and operations, plus a /install <skill> command in Cowork and Claude Code.",
+      "sourceUrl": "https://www.anthropic.com/news",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "end_user"
+      ],
+      "status": "preview",
+      "tags": [
+        "skills",
+        "marketplace"
+      ]
+    },
+    {
+      "id": "anthropic-2026-05-data-hygiene-controls",
+      "date": "2026-05-06",
+      "title": "Per-org data hygiene controls",
+      "shortTitle": "Data hygiene",
+      "description": "Anthropic shipped per-organization data hygiene controls in Claude Console: configurable retention windows, content-class allow/deny lists, automated PII redaction in logs, and verified deletion receipts.",
+      "sourceUrl": "https://www.anthropic.com/news",
+      "importance": 2,
+      "audience": [
+        "admin",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "governance",
+        "privacy",
+        "enterprise"
+      ]
+    },
+    {
+      "id": "anthropic-2026-05-claude-code-with-claude-keynote",
+      "date": "2026-05-06",
+      "title": "Code with Claude SF keynote: Skills Studio + Claude Code 1.2",
+      "shortTitle": "Code w/ Claude keynote",
+      "description": "Anthropic used the Code with Claude San Francisco keynote to debut Skills Studio (visual builder for skills and connectors) and Claude Code 1.2 with named subagents, plan-then-act flow, and a hardened computer-use sandbox.",
+      "sourceUrl": "https://claude.com/code-with-claude",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "claude-code",
+        "skills",
+        "developer-experience"
+      ]
+    },
+    {
+      "id": "anthropic-2026-05-h2-roadmap-letter",
+      "date": "2026-05-07",
+      "title": "Anthropic H2 2026 roadmap letter",
+      "shortTitle": "H2 roadmap letter",
+      "description": "Anthropic published an open H2 2026 roadmap letter from Dario Amodei, outlining priorities for Sonnet 4.7, Opus 5, sustained 1M+ context, ASL-3 readiness milestones, and Anthropic Institute research grants.",
+      "sourceUrl": "https://www.anthropic.com/news",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner",
+        "end_user"
+      ],
+      "status": "stable",
+      "tags": [
+        "roadmap",
+        "strategy"
       ]
     },
     {

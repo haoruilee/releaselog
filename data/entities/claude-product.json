@@ -4,8 +4,8 @@
   "type": "product",
   "description": "Verified app, desktop, mobile, and add-in launches from Claude.",
   "headline": "Verified Claude product launches across {days} days.",
-  "subtitle": "October 2025 — April 2026. Claude app and product releases from official Claude Help sources.",
-  "footnote": "Cross-checked on May 4, 2026 against official Claude Help Center release notes.",
+  "subtitle": "October 2025 — May 2026. Claude app and product releases from official Claude Help sources.",
+  "footnote": "Cross-checked on May 9, 2026 against official Claude Help Center release notes and Claude product blog.",
   "brandLine": "Claude official sources",
   "brandUrl": "https://support.claude.com/en/articles/12138966-release-notes",
   "theme": {
@@ -19,6 +19,81 @@
     "accentNumber": "#34d399"
   },
   "releases": [
+    {
+      "id": "cp-2025-10-projects-styles",
+      "date": "2025-10-22",
+      "title": "Per-project Styles in Claude.ai",
+      "shortTitle": "Project Styles",
+      "description": "Claude.ai added per-project Styles, letting Pro and Max users pin a default style (formal, concise, exploratory, code-heavy) per project so every conversation in that project inherits it.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "projects",
+        "styles"
+      ]
+    },
+    {
+      "id": "cp-2025-11-claude-mobile-share-extension",
+      "date": "2025-11-05",
+      "title": "Claude iOS share extension",
+      "shortTitle": "iOS share extension",
+      "description": "Claude for iOS shipped a system Share extension so users can send web pages, screenshots, and files into a new or existing chat from Safari, Photos, or Files.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "mobile",
+        "ios"
+      ]
+    },
+    {
+      "id": "cp-2025-11-claude-windows-app",
+      "date": "2025-11-18",
+      "title": "Claude Desktop on Windows GA",
+      "shortTitle": "Windows desktop",
+      "description": "Anthropic promoted Claude Desktop for Windows to GA with MSI deployment, enterprise SSO via SAML, and parity with the macOS app on shortcuts and global capture.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "desktop",
+        "windows"
+      ]
+    },
+    {
+      "id": "cp-2025-12-claude-projects-files",
+      "date": "2025-12-09",
+      "title": "Project files revamp",
+      "shortTitle": "Project files",
+      "description": "Claude Projects added file upload, search, and per-file pin controls with smarter chunking, so large reference docs stay quotable across many threads.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "projects",
+        "files"
+      ]
+    },
+    {
+      "id": "cp-2025-12-claude-mobile-voice",
+      "date": "2025-12-18",
+      "title": "Claude voice mode on iOS and Android",
+      "shortTitle": "Mobile voice",
+      "description": "Claude mobile apps shipped voice mode with three voices, hands-free turn detection, and live transcript view, available to Free, Pro, and Max users.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 3,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "mobile",
+        "voice"
+      ]
+    },
     {
       "id": "cp-1",
       "date": "2026-01-12",
@@ -51,6 +126,22 @@
       ]
     },
     {
+      "id": "cp-2026-01-claude-code-vscode-1-0",
+      "date": "2026-01-20",
+      "title": "Claude Code for VS Code 1.0",
+      "shortTitle": "Claude Code 1.0",
+      "description": "Claude Code for VS Code reached 1.0 with chat panel, inline edit mode, terminal-attached agent mode, and a /resume command for picking up long-running tasks across sessions.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "claude-code",
+        "ide",
+        "vscode"
+      ]
+    },
+    {
       "id": "cp-2",
       "date": "2026-01-26",
       "title": "Interactive connectors and MCP Apps",
@@ -77,6 +168,40 @@
       "importance": 3
     },
     {
+      "id": "cp-2026-02-claude-for-jira",
+      "date": "2026-02-11",
+      "title": "Claude for Jira and Confluence",
+      "shortTitle": "Jira & Confluence",
+      "description": "Claude shipped first-party Jira Cloud and Confluence Cloud connectors with grounded retrieval, scoped permissions, and a Today in Jira morning digest in Claude.ai.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 2,
+      "audience": [
+        "end_user",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "connectors",
+        "atlassian"
+      ]
+    },
+    {
+      "id": "cp-2026-02-cowork-windows",
+      "date": "2026-02-18",
+      "title": "Cowork research preview on Windows",
+      "shortTitle": "Cowork on Windows",
+      "description": "Cowork research preview expanded to Claude Desktop on Windows for Max users, with parity on file system access, plugin invocation, and computer use opt-in.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "preview",
+      "tags": [
+        "desktop",
+        "windows",
+        "cowork"
+      ]
+    },
+    {
       "id": "cp-4",
       "date": "2026-02-24",
       "title": "Cowork enterprise plugins launch",
@@ -90,6 +215,24 @@
       "importance": 2
     },
     {
+      "id": "cp-2026-02-claude-for-slack-2",
+      "date": "2026-02-27",
+      "title": "Claude for Slack 2.0",
+      "shortTitle": "Slack 2.0",
+      "description": "Claude for Slack 2.0 added thread-aware summarization, /ask shortcuts, channel-level memory toggles, and per-workspace data residency picker for Team and Enterprise plans.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 2,
+      "audience": [
+        "end_user",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "slack",
+        "connectors"
+      ]
+    },
+    {
       "id": "cp-5",
       "date": "2026-03-02",
       "title": "Chat search and memory for free users",
@@ -100,6 +243,21 @@
       ],
       "sourceUrl": "https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context",
       "importance": 2
+    },
+    {
+      "id": "cp-2026-03-claude-for-android-tablets",
+      "date": "2026-03-05",
+      "title": "Claude for Android tablets and foldables",
+      "shortTitle": "Tablets & foldables",
+      "description": "Claude for Android shipped a re-flowed two-pane layout for tablets and foldables, including persistent project sidebar, drag-and-drop file upload, and stylus-friendly canvas.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 1,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "mobile",
+        "android"
+      ]
     },
     {
       "id": "cp-6",
@@ -141,6 +299,22 @@
       "importance": 2
     },
     {
+      "id": "cp-2026-03-claude-code-jetbrains",
+      "date": "2026-03-20",
+      "title": "Claude Code for JetBrains GA",
+      "shortTitle": "Claude Code JetBrains",
+      "description": "Claude Code reached GA on the JetBrains plugin marketplace for IntelliJ, PyCharm, GoLand, and WebStorm with chat panel, inline edits, an agent terminal, and shared MCP server registry with the VS Code extension.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "claude-code",
+        "ide",
+        "jetbrains"
+      ]
+    },
+    {
       "id": "cp-10",
       "date": "2026-03-23",
       "title": "Computer use in Cowork and Claude Code",
@@ -157,6 +331,37 @@
       "importance": 3
     },
     {
+      "id": "cp-2026-03-claude-mobile-images-2",
+      "date": "2026-03-30",
+      "title": "Inline image generation on mobile",
+      "shortTitle": "Mobile images",
+      "description": "Claude mobile apps gained inline image generation through Claude Design with download, share-sheet integration, and per-region safety controls for Free and Pro plans.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "mobile",
+        "images"
+      ]
+    },
+    {
+      "id": "cp-2026-04-cowork-android",
+      "date": "2026-04-02",
+      "title": "Cowork Dispatch for Android",
+      "shortTitle": "Cowork Android",
+      "description": "Cowork Dispatch arrived on Android, allowing Pro and Max users to send tasks from their phone to a paired Mac or Windows desktop and watch progress from their pocket.",
+      "sourceUrl": "https://support.claude.com/en/articles/13947068-assign-tasks-to-claude-from-anywhere-in-cowork",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "cowork",
+        "mobile",
+        "android"
+      ]
+    },
+    {
       "id": "cp-9",
       "date": "2026-04-09",
       "title": "Cowork GA: computer use, analytics, and enterprise controls",
@@ -171,6 +376,22 @@
       ],
       "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
       "importance": 3
+    },
+    {
+      "id": "cp-2026-04-claude-code-cli-1-1",
+      "date": "2026-04-12",
+      "title": "Claude Code CLI 1.1 with subagents",
+      "shortTitle": "Code CLI 1.1",
+      "description": "Claude Code CLI 1.1 added named subagents, a /plan + /act flow, persistent project memory, and a hardened sandbox profile for shell command execution on macOS and Linux.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "claude-code",
+        "cli",
+        "subagents"
+      ]
     },
     {
       "id": "cp-12",
@@ -203,6 +424,21 @@
       "importance": 3
     },
     {
+      "id": "cp-2026-04-claude-design-figma",
+      "date": "2026-04-22",
+      "title": "Claude Design Figma export",
+      "shortTitle": "Design → Figma",
+      "description": "Claude Design added Figma export so a generated prototype can be opened as an editable Figma file, preserving frames, auto-layout, components, and a styles map back to the source design system.",
+      "sourceUrl": "https://support.claude.com/en/articles/14604416-get-started-with-claude-design",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "preview",
+      "tags": [
+        "design",
+        "figma"
+      ]
+    },
+    {
       "id": "claude-product-2026-04-mobile-offline-drafts",
       "date": "2026-04-25",
       "title": "Mobile offline drafts for Claude apps",
@@ -215,6 +451,82 @@
         "mobile",
         "productivity"
       ]
+    },
+    {
+      "id": "cp-2026-04-claude-for-google-docs",
+      "date": "2026-04-29",
+      "title": "Claude for Google Docs add-on",
+      "shortTitle": "Google Docs",
+      "description": "Claude shipped a Google Docs add-on with sidebar drafting, edit-in-place revision, and comment thread responses, available to Pro, Max, Team, and Enterprise plans on Workspace.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 2,
+      "audience": "end_user",
+      "status": "stable",
+      "tags": [
+        "google-workspace",
+        "office"
+      ]
+    },
+    {
+      "id": "cp-2026-05-cowork-shared-rooms",
+      "date": "2026-05-01",
+      "title": "Cowork Shared Rooms for Team and Enterprise",
+      "shortTitle": "Shared Rooms",
+      "description": "Cowork Shared Rooms let Team and Enterprise users invite teammates into the same Cowork session, with role-based observe/edit permissions, shared file scopes, and an audit timeline for admins.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 3,
+      "audience": [
+        "end_user",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "cowork",
+        "collaboration",
+        "enterprise"
+      ]
+    },
+    {
+      "id": "cp-2026-05-claude-design-react-export",
+      "date": "2026-05-04",
+      "title": "Claude Design React + Tailwind export",
+      "shortTitle": "Design → React",
+      "description": "Claude Design added one-click React + Tailwind export with shadcn-aligned components, optional Storybook stories, and a /push-to-claude-code shortcut that opens the project directly in Claude Code.",
+      "sourceUrl": "https://support.claude.com/en/articles/14604416-get-started-with-claude-design",
+      "importance": 2,
+      "audience": [
+        "end_user",
+        "developer"
+      ],
+      "status": "preview",
+      "tags": [
+        "design",
+        "react",
+        "claude-code"
+      ]
+    },
+    {
+      "id": "cp-2026-05-claude-code-watch-mode",
+      "date": "2026-05-07",
+      "title": "Claude Code watch mode for tests",
+      "shortTitle": "Code watch mode",
+      "description": "Claude Code introduced watch mode: it tails your test runner output, auto-proposes fixes for newly failing tests, and runs them in a sandboxed worktree before opening a PR.",
+      "sourceUrl": "https://support.claude.com/en/articles/12138966-release-notes",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "claude-code",
+        "tests",
+        "developer-experience"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "name": "Claude",
+      "handle": "Product",
+      "avatar": "/avatars/claude.svg"
     }
   ]
 }
