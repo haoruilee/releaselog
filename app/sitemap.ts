@@ -9,11 +9,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const base = getSiteUrl();
   const now = new Date();
 
+  const HOME_ENTITY_ID = "anthropic-team";
+
   const entityRoutes: MetadataRoute.Sitemap = entityMetas.map((e) => ({
     url: `${base}/${e.id}`,
     lastModified: now,
     changeFrequency: "daily",
-    priority: 0.9,
+    priority: e.id === HOME_ENTITY_ID ? 1 : 0.9,
   }));
 
   // One entry per reset event — each has its own static detail page at
@@ -32,8 +34,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  // The site root (`/`) renders the same content as `/anthropic-team` and
+  // declares its canonical URL as `/anthropic-team`. To avoid sending Google
+  // duplicate-canonical signals we list `/anthropic-team` only (priority 1
+  // above) and skip a separate `/` entry.
   return [
-    { url: `${base}/`, lastModified: now, changeFrequency: "daily", priority: 1 },
     ...entityRoutes,
     { url: `${base}/reset-log`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     ...resetAgentRoutes,
