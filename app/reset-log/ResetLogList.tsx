@@ -12,6 +12,8 @@ import {
   type ResetAgent,
   type ResetEvent,
 } from "@/data/reset-log";
+import { getServerTranslator, type Translator } from "@/lib/i18n";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ResetLogCalendar } from "./ResetLogCalendar";
 import { ResetLogExportButton } from "./ResetLogExportButton";
 
@@ -32,21 +34,32 @@ function formatDate(iso: string): string {
   return format(parseISO(iso), "MMM d, yyyy");
 }
 
-const FILTER_OPTIONS: { value: AgentFilter; label: string; href: string }[] = [
-  { value: "all", label: "All agents", href: "/reset-log" },
-  ...RESET_AGENT_SLUGS.map((agent) => ({
-    value: agent,
-    label: AGENT_LABELS[agent],
-    href: `/reset-log/${agent}`,
-  })),
-];
+function buildFilterOptions(t: Translator): {
+  value: AgentFilter;
+  label: string;
+  href: string;
+}[] {
+  return [
+    { value: "all", label: t("switcher.all_agents"), href: "/reset-log" },
+    ...RESET_AGENT_SLUGS.map((agent) => ({
+      value: agent,
+      label: AGENT_LABELS[agent],
+      href: `/reset-log/${agent}`,
+    })),
+  ];
+}
 
 const AGENT_ACCENT: Record<ResetAgent, string> = {
   "claude-code": "#cc785c",
   codex: "#10a37f",
 };
 
-export function ResetLogList({ filter = "all" }: { filter?: AgentFilter }) {
+export async function ResetLogList({
+  filter = "all",
+}: {
+  filter?: AgentFilter;
+}) {
+  const { t } = await getServerTranslator();
   const allEvents = getResetEventsSorted();
   const events = filterResetEventsByAgent(allEvents, filter);
 
@@ -59,11 +72,13 @@ export function ResetLogList({ filter = "all" }: { filter?: AgentFilter }) {
   const lastUpdated = events[0]?.date ?? allEvents[0]?.date;
   const heading =
     filter === "all"
-      ? "Quota resets & rate-limit changes for Codex and Claude Code."
-      : `${AGENT_LABELS[filter]} quota resets & rate-limit changes.`;
+      ? t("reset_log.heading_all")
+      : t("reset_log.heading_agent", { agent: AGENT_LABELS[filter] });
 
   const exportFilenamePrefix =
     filter === "all" ? "reset-log" : `reset-log-${filter}`;
+
+  const filterOptions = buildFilterOptions(t);
 
   return (
     <div className="min-h-screen bg-page text-primary" style={RESET_LOG_THEME}>
@@ -76,21 +91,22 @@ export function ResetLogList({ filter = "all" }: { filter?: AgentFilter }) {
             href="/"
             className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary hover:text-primary"
           >
-            ← ReleaseLog
+            {t("nav.back_home")}
           </Link>
           <div className="flex items-center gap-3 text-xs">
+            <LanguageSwitcher />
             <ResetLogExportButton filenamePrefix={exportFilenamePrefix} />
             <Link
               href="/pricing"
               className="font-medium text-secondary underline-offset-4 hover:text-primary hover:underline"
             >
-              Pricing
+              {t("nav.pricing")}
             </Link>
             <Link
               href="/subscribe"
               className="font-medium text-accent underline-offset-4 hover:underline"
             >
-              Subscribe
+              {t("nav.subscribe")}
             </Link>
           </div>
         </div>
@@ -98,20 +114,17 @@ export function ResetLogList({ filter = "all" }: { filter?: AgentFilter }) {
         <div data-export-root className="rounded-2xl bg-page">
           <header className="max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">
-              Reset Log
+              {t("reset_log.kicker")}
             </p>
             <h1 className="mt-2 font-serif text-4xl text-primary sm:text-5xl">
               {heading}
             </h1>
             <p className="mt-4 text-base text-secondary sm:text-lg">
-              A dated record of every publicly-announced change to subscription
-              quotas, rolling windows, and one-off resets for subscription-based
-              code agents. Every entry links to the official record — vendor
-              announcement, help-center article, changelog, or staff post.
+              {t("reset_log.intro")}
             </p>
             {lastUpdated && (
               <p className="mt-3 text-xs text-secondary/70">
-                Last logged event: {formatDate(lastUpdated)}.
+                {t("reset_log.last_logged", { date: formatDate(lastUpdated) })}
               </p>
             )}
           </header>
@@ -125,11 +138,11 @@ export function ResetLogList({ filter = "all" }: { filter?: AgentFilter }) {
 
         <nav
           data-export-exclude
-          aria-label="Switch content area"
+          aria-label={t("switcher.team_product")}
           className="mt-8 flex flex-wrap items-center gap-2"
         >
           <span className="text-xs uppercase tracking-wider text-secondary/80">
-            Team / product
+            {t("switcher.team_product")}
           </span>
           <div className="flex flex-wrap gap-2">
             {entityMetas.slice(0, 1).map((entity) => (
@@ -145,7 +158,7 @@ export function ResetLogList({ filter = "all" }: { filter?: AgentFilter }) {
               href="/reset-log"
               className="rounded-full bg-active-cell px-4 py-1.5 text-sm font-medium text-primary shadow-sm ring-1 ring-white/10"
             >
-              Reset Log
+              {t("switcher.reset_log")}
             </Link>
             {entityMetas.slice(1).map((entity) => (
               <Link
@@ -161,13 +174,13 @@ export function ResetLogList({ filter = "all" }: { filter?: AgentFilter }) {
 
         <nav
           data-export-exclude
-          aria-label="Filter by agent"
+          aria-label={t("switcher.agent")}
           className="mt-5 flex flex-wrap items-center gap-2"
         >
           <span className="text-xs uppercase tracking-wider text-secondary/80">
-            Agent
+            {t("switcher.agent")}
           </span>
-          {FILTER_OPTIONS.map((opt) => {
+          {filterOptions.map((opt) => {
             const active = filter === opt.value;
             return (
               <Link
@@ -201,12 +214,12 @@ export function ResetLogList({ filter = "all" }: { filter?: AgentFilter }) {
             data-export-exclude
             className="mt-12 rounded-2xl bg-panel/50 p-6 text-sm text-secondary ring-1 ring-white/5"
           >
-            No events recorded for this filter yet.
+            {t("reset_log.no_events")}
           </p>
         ) : (
           <ol data-export-exclude className="mt-12 space-y-6">
             {events.map((event) => (
-              <ResetEventCard key={event.id} event={event} />
+              <ResetEventCard key={event.id} event={event} t={t} />
             ))}
           </ol>
         )}
@@ -216,27 +229,29 @@ export function ResetLogList({ filter = "all" }: { filter?: AgentFilter }) {
           className="mt-16 space-y-3 border-t border-white/5 pt-6 text-xs text-secondary/80"
         >
           <p>
-            Spotted a missing reset or a wrong source? Email{" "}
+            {t("reset_log.footer_email_lead")}{" "}
             <a
               href="mailto:haoruileee@gmail.com"
               className="text-accent underline-offset-4 hover:underline"
             >
               haoruileee@gmail.com
             </a>{" "}
-            with the date and the official record URL and we&rsquo;ll add it.
+            {t("reset_log.footer_email_tail")}
           </p>
-          <p>
-            Reset Log is curated manually from vendor announcements and help-center
-            pages. It does not predict future resets — it only records ones that
-            have already been publicly announced.
-          </p>
+          <p>{t("reset_log.footer_disclaimer")}</p>
         </footer>
       </div>
     </div>
   );
 }
 
-function ResetEventCard({ event }: { event: ResetEvent }) {
+function ResetEventCard({
+  event,
+  t,
+}: {
+  event: ResetEvent;
+  t: Translator;
+}) {
   const agentLabel = AGENT_LABELS[event.agent];
   const vendor = AGENT_VENDORS[event.agent];
   const accent = AGENT_ACCENT[event.agent];
@@ -272,7 +287,7 @@ function ResetEventCard({ event }: { event: ResetEvent }) {
         </span>
         {event.effectiveDate && event.effectiveDate !== event.date && (
           <span className="text-[11px] text-secondary/80">
-            Effective {formatDate(event.effectiveDate)}
+            {t("reset_log.effective", { date: formatDate(event.effectiveDate) })}
           </span>
         )}
       </div>
@@ -321,14 +336,14 @@ function ResetEventCard({ event }: { event: ResetEvent }) {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1 rounded-full bg-accent/10 px-3 py-1 font-medium text-accent ring-1 ring-accent/30 hover:bg-accent/20"
         >
-          Official record: {event.source.label}
+          {t("reset_log.official_record", { label: event.source.label })}
           <span aria-hidden>↗</span>
         </a>
         <Link
           href={`/reset-log/${event.slug}`}
           className="font-medium text-secondary underline-offset-4 hover:text-primary hover:underline"
         >
-          Read full event →
+          {t("reset_log.read_full")}
         </Link>
         {event.secondarySources?.map((src) => (
           <a

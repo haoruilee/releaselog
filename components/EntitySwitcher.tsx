@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { EntityMeta } from "@/data/types";
+import { useT } from "@/components/I18nProvider";
 
 type Props = {
   entities: EntityMeta[];
@@ -16,6 +17,7 @@ export function EntitySwitcher({
   onChange,
   posterMode,
 }: Props) {
+  const t = useT();
   if (posterMode) return null;
 
   const renderEntityButton = (e: EntityMeta) => {
@@ -39,7 +41,7 @@ export function EntitySwitcher({
   return (
     <div className="flex flex-wrap items-center gap-2">
       <span className="text-xs uppercase tracking-wider text-secondary/80">
-        Team / product
+        {t("switcher.team_product")}
       </span>
       <div className="flex flex-wrap gap-2">
         {entities.slice(0, 1).map(renderEntityButton)}
@@ -47,7 +49,7 @@ export function EntitySwitcher({
           href="/reset-log"
           className="rounded-full bg-empty-cell px-4 py-1.5 text-sm font-medium text-secondary transition-colors hover:bg-panel hover:text-primary"
         >
-          Reset Log
+          {t("switcher.reset_log")}
         </Link>
         {entities.slice(1).map(renderEntityButton)}
       </div>

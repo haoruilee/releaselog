@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { format } from "date-fns";
 import type { ReleaseItem } from "@/data/types";
 import { getSourceLabel } from "@/lib/source-label";
+import { useT } from "@/components/I18nProvider";
 
 type Props = {
   dateStr: string | null;
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export function DayDetails({ dateStr, items, onClose, entityId }: Props) {
+  const t = useT();
   // Close on Escape key
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -46,7 +48,7 @@ export function DayDetails({ dateStr, items, onClose, entityId }: Props) {
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close"
+            aria-label={t("day.close")}
             className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-secondary hover:bg-empty-cell hover:text-primary transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
@@ -99,7 +101,7 @@ export function DayDetails({ dateStr, items, onClose, entityId }: Props) {
                     )}
                     {item.kind === "event" && (
                       <span className="rounded-full bg-empty-cell/80 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-accent ring-1 ring-white/10">
-                        event
+                        {t("day.event_badge")}
                       </span>
                     )}
                   </div>
@@ -115,7 +117,7 @@ export function DayDetails({ dateStr, items, onClose, entityId }: Props) {
                   )}
                   {audiences.length > 0 && (
                     <p className="mt-2 text-xs text-secondary/80">
-                      For: {audiences.join(", ").replaceAll("_", " ")}
+                      {t("day.for")} {audiences.join(", ").replaceAll("_", " ")}
                     </p>
                   )}
                   {item.howTo &&
@@ -125,7 +127,7 @@ export function DayDetails({ dateStr, items, onClose, entityId }: Props) {
                         {item.howTo.prerequisites &&
                           item.howTo.prerequisites.length > 0 && (
                             <p className="text-xs font-medium text-secondary">
-                              Before:{" "}
+                              {t("day.before")}{" "}
                               {item.howTo.prerequisites.join(" · ")}
                             </p>
                           )}

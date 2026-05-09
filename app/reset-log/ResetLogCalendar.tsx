@@ -7,6 +7,7 @@ import type { ReleaseItem } from "@/data/types";
 import { buildCalendarMonths, filterReleasesInRange } from "@/lib/calendar";
 import { getRangeBounds } from "@/lib/stats";
 import { AGENT_LABELS, type ResetEvent } from "@/data/reset-log";
+import { useT } from "@/components/I18nProvider";
 
 function todayNoon(): Date {
   const d = new Date();
@@ -34,6 +35,7 @@ function toCalendarItem(event: ResetEvent): ReleaseItem {
 }
 
 export function ResetLogCalendar({ events }: { events: ResetEvent[] }) {
+  const t = useT();
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const today = useMemo(() => todayNoon(), []);
   const todayKey = useMemo(() => dateKey(today), [today]);
@@ -57,10 +59,10 @@ export function ResetLogCalendar({ events }: { events: ResetEvent[] }) {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="font-sans text-sm font-semibold uppercase tracking-[0.2em] text-accent">
-            Calendar
+            {t("reset_log.calendar_heading")}
           </h2>
           <p className="mt-1 text-sm text-secondary">
-            Usage resets and rate-limit changes plotted by announcement date.
+            {t("reset_log.calendar_helper")}
           </p>
         </div>
       </div>

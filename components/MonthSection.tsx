@@ -1,9 +1,18 @@
 "use client";
 
 import type { CalendarMonth } from "@/lib/calendar";
+import { useT } from "@/components/I18nProvider";
 import { DayCell } from "./DayCell";
 
-const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const WEEKDAY_KEYS = [
+  "weekdays.mon",
+  "weekdays.tue",
+  "weekdays.wed",
+  "weekdays.thu",
+  "weekdays.fri",
+  "weekdays.sat",
+  "weekdays.sun",
+] as const;
 
 type Props = {
   month: CalendarMonth;
@@ -22,18 +31,19 @@ export function MonthSection({
   todayKey,
   onSelectDate,
 }: Props) {
+  const t = useT();
   return (
     <section className="space-y-3">
       <h2 className="font-sans text-sm font-semibold uppercase tracking-[0.2em] text-accent">
         {month.monthLabel.split(" ")[0]?.toUpperCase() ?? month.monthLabel}
       </h2>
       <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
-        {weekdays.map((w) => (
+        {WEEKDAY_KEYS.map((key) => (
           <div
-            key={w}
+            key={key}
             className="pb-1 text-center text-[10px] font-medium uppercase tracking-wider text-secondary/50"
           >
-            {w}
+            {t(key)}
           </div>
         ))}
         {month.weeks.map((week) =>

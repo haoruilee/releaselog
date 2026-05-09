@@ -1,5 +1,7 @@
 "use client";
 
+import { useT } from "@/components/I18nProvider";
+
 type Range = 1 | 3 | 6;
 
 type Props = {
@@ -15,12 +17,13 @@ const options: { value: Range; label: string }[] = [
 ];
 
 export function RangeSwitcher({ value, onChange, posterMode }: Props) {
+  const t = useT();
   if (posterMode) return null;
 
   return (
     <div className="flex flex-wrap items-center gap-2">
       <span className="text-xs uppercase tracking-wider text-secondary/80">
-        Range
+        {t("switcher.range")}
       </span>
       <div className="inline-flex rounded-full bg-empty-cell p-1 ring-1 ring-white/5">
         {options.map((o) => {

@@ -3,6 +3,7 @@
 import type { RefObject } from "react";
 import { useState } from "react";
 import { exportElementAsPng } from "@/lib/export";
+import { useT } from "@/components/I18nProvider";
 
 type Props = {
   posterMode: boolean;
@@ -16,6 +17,7 @@ export function PosterToolbar({
   exportTargetRef,
 }: Props) {
   const [exporting, setExporting] = useState(false);
+  const t = useT();
 
   async function handleExport() {
     const el = exportTargetRef.current?.querySelector("[data-export-root]") as
@@ -38,7 +40,7 @@ export function PosterToolbar({
           onClick={() => onPosterModeChange(false)}
           className="rounded-full px-4 py-2 text-sm font-medium text-primary ring-1 ring-white/15 hover:bg-empty-cell"
         >
-          Exit poster mode
+          {t("poster.exit")}
         </button>
         <button
           type="button"
@@ -46,7 +48,7 @@ export function PosterToolbar({
           disabled={exporting}
           className="rounded-full bg-active-cell px-4 py-2 text-sm font-medium text-primary disabled:opacity-50"
         >
-          {exporting ? "Exporting…" : "Export PNG"}
+          {exporting ? t("poster.exporting") : t("poster.export")}
         </button>
       </div>
     );
@@ -59,7 +61,7 @@ export function PosterToolbar({
         onClick={() => onPosterModeChange(true)}
         className="rounded-full bg-empty-cell px-4 py-2 text-sm font-medium text-secondary ring-1 ring-white/10 transition-colors hover:text-primary"
       >
-        Poster mode
+        {t("poster.enter")}
       </button>
       <button
         type="button"
@@ -67,10 +69,10 @@ export function PosterToolbar({
         disabled={exporting}
         className="rounded-full bg-panel px-4 py-2 text-sm font-medium text-primary ring-1 ring-white/10 hover:bg-empty-cell disabled:opacity-50"
       >
-        {exporting ? "Exporting…" : "Export PNG"}
+        {exporting ? t("poster.exporting") : t("poster.export")}
       </button>
       <p className="text-xs text-secondary/70">
-        Poster mode hides controls for a clean capture.
+        {t("poster.hint")}
       </p>
     </div>
   );

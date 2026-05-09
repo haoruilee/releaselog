@@ -1,25 +1,28 @@
 import type { Metadata } from "next";
+import { getServerTranslator } from "@/lib/i18n";
 import { ResetLogList } from "./ResetLogList";
 
-const TITLE = "Reset Log — Codex & Claude Code quota events";
-const DESCRIPTION =
-  "A dated log of every public rate-limit, quota, and usage-window change to the two subscription-based code agents — Anthropic's Claude Code and OpenAI's Codex — with a link to the official record for each event.";
-
-export const metadata: Metadata = {
-  title: "Reset Log",
-  description: DESCRIPTION,
-  alternates: { canonical: "/reset-log" },
-  openGraph: {
-    title: TITLE,
-    description: DESCRIPTION,
-    type: "article",
-  },
-  twitter: {
-    card: "summary",
-    title: TITLE,
-    description: DESCRIPTION,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getServerTranslator();
+  const title = t("meta.reset_log_title");
+  const ogTitle = t("meta.reset_log_og_title");
+  const description = t("meta.reset_log_description");
+  return {
+    title,
+    description,
+    alternates: { canonical: "/reset-log" },
+    openGraph: {
+      title: ogTitle,
+      description,
+      type: "article",
+    },
+    twitter: {
+      card: "summary",
+      title: ogTitle,
+      description,
+    },
+  };
+}
 
 export default function ResetLogPage() {
   return <ResetLogList />;

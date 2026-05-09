@@ -3,6 +3,8 @@ import { Instrument_Serif, DM_Sans } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { getSiteUrl } from "@/lib/site-url";
+import { I18nProvider } from "@/components/I18nProvider";
+import { getLocale, getMessagesFor } from "@/lib/i18n";
 
 function metadataBaseUrl(): URL {
   const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
@@ -63,13 +65,15 @@ const jsonLd = {
   url: getSiteUrl(),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = getMessagesFor(locale);
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+    <html lang={locale} className={`${serif.variable} ${sans.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -84,7 +88,9 @@ export default function RootLayout({
         )}
       </head>
       <body className="min-h-screen font-sans antialiased">
-        {children}
+        <I18nProvider locale={locale} messages={messages}>
+          {children}
+        </I18nProvider>
         {gaId && (
           <>
             <Script

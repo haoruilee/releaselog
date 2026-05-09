@@ -1,4 +1,7 @@
+"use client";
+
 import type { SummaryStats as SummaryStatsType } from "@/lib/stats";
+import { useT } from "@/components/I18nProvider";
 
 type Props = {
   stats: SummaryStatsType;
@@ -6,12 +9,13 @@ type Props = {
 };
 
 export function SummaryStats({ stats, compact }: Props) {
+  const t = useT();
   const items = [
-    { label: "Total logs", value: stats.totalItems },
-    { label: "Releases", value: stats.totalReleases },
-    { label: "Events", value: stats.totalEvents },
-    { label: "Active days", value: stats.activeDays },
-    { label: "Avg / week", value: stats.avgPerWeek },
+    { label: t("stats.total_logs"), value: stats.totalItems },
+    { label: t("stats.releases"), value: stats.totalReleases },
+    { label: t("stats.events"), value: stats.totalEvents },
+    { label: t("stats.active_days"), value: stats.activeDays },
+    { label: t("stats.avg_per_week"), value: stats.avgPerWeek },
   ];
 
   return (
@@ -32,7 +36,7 @@ export function SummaryStats({ stats, compact }: Props) {
       {!compact && stats.busiestMonthLabel && (
         <div className="rounded-xl bg-panel/80 px-4 py-3 ring-1 ring-white/5">
           <p className="text-xs uppercase tracking-wide text-secondary">
-            Busiest month
+            {t("stats.busiest_month")}
           </p>
           <p className="mt-1 text-lg font-medium text-primary">
             {stats.busiestMonthLabel}

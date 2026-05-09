@@ -1,0 +1,98 @@
+{
+  "brand": {
+    "name": "ReleaseLog"
+  },
+  "nav": {
+    "pricing": "定价",
+    "subscribe": "订阅",
+    "back_home": "← ReleaseLog"
+  },
+  "headline": {
+    "default": "{name} 在过去 {days} 天里的全部发布。"
+  },
+  "header": {
+    "team_members": "团队成员"
+  },
+  "switcher": {
+    "team_product": "团队 / 产品",
+    "reset_log": "重置日志",
+    "agent": "Agent",
+    "all_agents": "全部 Agent",
+    "range": "时间范围",
+    "theme": "主题:"
+  },
+  "stats": {
+    "total_logs": "总条目",
+    "releases": "发布",
+    "events": "事件",
+    "active_days": "活跃天数",
+    "avg_per_week": "周均",
+    "busiest_month": "最忙月份"
+  },
+  "poster": {
+    "enter": "海报模式",
+    "exit": "退出海报模式",
+    "export": "导出 PNG",
+    "exporting": "导出中…",
+    "hint": "海报模式会隐藏控件,便于截图。",
+    "export_aria": "将本页导出为 PNG 图像"
+  },
+  "day": {
+    "close": "关闭",
+    "for": "面向:",
+    "before": "前置条件:",
+    "event_badge": "事件"
+  },
+  "footer": {
+    "subscribe_label": "订阅",
+    "subscribe_intro": " —— 每个团队都有独立的 Atom 订阅源(也可订阅全部);你的阅读器会自动保持同步。可选每周邮件摘要。",
+    "share_hint": "分享:对本页截图,或使用导出 PNG(仅包含标题、统计与日历)。"
+  },
+  "reset_log": {
+    "kicker": "重置日志",
+    "heading_all": "Codex 与 Claude Code 的额度重置与速率变更。",
+    "heading_agent": "{agent} 的额度重置与速率变更。",
+    "intro": "记录所有公开宣布的订阅额度、滚动窗口和一次性重置事件,仅针对订阅制代码 Agent。每条记录都附有官方来源——厂商公告、帮助中心文章、更新日志或员工发帖。",
+    "last_logged": "最近一次记录:{date}。",
+    "calendar_heading": "日历",
+    "calendar_helper": "按公告日期排布的额度重置与速率变更。",
+    "no_events": "当前筛选条件下暂无记录。",
+    "footer_email_lead": "发现遗漏或错误来源?请邮件至",
+    "footer_email_tail": "附上日期与官方来源链接,我们会补充。",
+    "footer_disclaimer": "重置日志由厂商公告和帮助文档手工整理,只记录已经公开宣布的事件,不预测未来重置。",
+    "effective": "生效日期 {date}",
+    "official_record": "官方来源:{label}",
+    "read_full": "查看完整事件 →",
+    "at_a_glance": "事件概览",
+    "what_changed": "变更内容",
+    "official_record_section": "官方来源",
+    "official_record_lead": "本事件在 {vendor} 的官方材料中有记录。下方链接即为我们引用的权威来源。",
+    "additional_references": "其他参考",
+    "more_events": "更多 {agent} 事件",
+    "all_events_back": "← 返回全部事件",
+    "found_issue": "发现问题?",
+    "field_agent": "Agent",
+    "field_event_type": "事件类型",
+    "field_announced": "公告日期",
+    "field_effective": "生效日期",
+    "field_plans": "涉及套餐"
+  },
+  "weekdays": {
+    "mon": "一",
+    "tue": "二",
+    "wed": "三",
+    "thu": "四",
+    "fri": "五",
+    "sat": "六",
+    "sun": "日"
+  },
+  "language": {
+    "label": "语言",
+    "switch_to_aria": "切换语言到 {label}"
+  },
+  "meta": {
+    "reset_log_title": "重置日志",
+    "reset_log_og_title": "重置日志 —— Codex 与 Claude Code 的额度事件",
+    "reset_log_description": "完整记录两款订阅制代码 Agent —— Anthropic 的 Claude Code 与 OpenAI 的 Codex —— 所有公开宣布的速率、额度与使用窗口变更,每条记录都附带官方来源链接。"
+  }
+}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { exportElementAsPng } from "@/lib/export";
+import { useT } from "@/components/I18nProvider";
 
 interface Props {
   filenamePrefix?: string;
@@ -13,6 +14,7 @@ export function ResetLogExportButton({
   className,
 }: Props) {
   const [exporting, setExporting] = useState(false);
+  const t = useT();
 
   async function handleExport() {
     if (typeof document === "undefined") return;
@@ -38,9 +40,9 @@ export function ResetLogExportButton({
         className ??
         "rounded-full bg-[var(--bg-empty-cell)] px-3 py-1.5 text-xs font-medium text-secondary ring-1 ring-black/10 transition-colors hover:bg-[var(--bg-active-cell)] hover:text-primary disabled:opacity-50"
       }
-      aria-label="Export this page as a PNG image"
+      aria-label={t("poster.export_aria")}
     >
-      {exporting ? "Exporting…" : "Export PNG"}
+      {exporting ? t("poster.exporting") : t("poster.export")}
     </button>
   );
 }

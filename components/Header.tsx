@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import type { EntityMeta } from "@/data/types";
+import { useT } from "@/components/I18nProvider";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 type Props = {
   entity: EntityMeta;
@@ -8,9 +12,15 @@ type Props = {
 };
 
 export function Header({ entity, daySpan, posterMode }: Props) {
+  const t = useT();
+
+  // Headline tokens come from the entity JSON in English; we fall back to a
+  // localized template (with `{name}` / `{days}` interpolated) when the
+  // entity didn't override it. Translating per-entity copy is intentionally
+  // out of scope (event content stays in source language).
   const headline =
     entity.headline?.replace("{name}", entity.name).replace("{days}", String(daySpan)) ??
-    `Everything ${entity.name} shipped in ${daySpan} days.`;
+    t("headline.default", { name: entity.name, days: daySpan });
 
   const parts = headline.split(entity.name);
   const hasSplit = parts.length > 1;
@@ -27,22 +37,23 @@ export function Header({ entity, daySpan, posterMode }: Props) {
             ✦
           </span>
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">
-            ReleaseLog
+            {t("brand.name")}
           </span>
         </div>
         {!posterMode && (
-          <nav className="flex items-center gap-4">
+          <nav data-export-exclude className="flex items-center gap-4">
+            <LanguageSwitcher />
             <Link
               href="/pricing"
               className="text-xs font-medium text-secondary underline-offset-4 hover:text-primary hover:underline"
             >
-              Pricing
+              {t("nav.pricing")}
             </Link>
             <Link
               href="/subscribe"
               className="text-xs font-medium text-accent underline-offset-4 hover:underline"
             >
-              Subscribe
+              {t("nav.subscribe")}
             </Link>
           </nav>
         )}
@@ -69,7 +80,7 @@ export function Header({ entity, daySpan, posterMode }: Props) {
       {entity.members && entity.members.length > 0 && !posterMode && (
         <section className="pt-2">
           <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
-            Team members
+            {t("header.team_members")}
           </h3>
           <div className="flex flex-wrap gap-4">
           {entity.members.map((m) => (

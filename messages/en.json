@@ -1,0 +1,98 @@
+{
+  "brand": {
+    "name": "ReleaseLog"
+  },
+  "nav": {
+    "pricing": "Pricing",
+    "subscribe": "Subscribe",
+    "back_home": "← ReleaseLog"
+  },
+  "headline": {
+    "default": "Everything {name} shipped in {days} days."
+  },
+  "header": {
+    "team_members": "Team members"
+  },
+  "switcher": {
+    "team_product": "Team / product",
+    "reset_log": "Reset Log",
+    "agent": "Agent",
+    "all_agents": "All agents",
+    "range": "Range",
+    "theme": "Theme:"
+  },
+  "stats": {
+    "total_logs": "Total logs",
+    "releases": "Releases",
+    "events": "Events",
+    "active_days": "Active days",
+    "avg_per_week": "Avg / week",
+    "busiest_month": "Busiest month"
+  },
+  "poster": {
+    "enter": "Poster mode",
+    "exit": "Exit poster mode",
+    "export": "Export PNG",
+    "exporting": "Exporting…",
+    "hint": "Poster mode hides controls for a clean capture.",
+    "export_aria": "Export this page as a PNG image"
+  },
+  "day": {
+    "close": "Close",
+    "for": "For:",
+    "before": "Before:",
+    "event_badge": "event"
+  },
+  "footer": {
+    "subscribe_label": "Subscribe",
+    "subscribe_intro": " — Atom feeds for each team (or all together); your reader stays in sync. Optional weekly email when enabled.",
+    "share_hint": "Share: screenshot this page or use Export PNG (header, stats, and calendar only)."
+  },
+  "reset_log": {
+    "kicker": "Reset Log",
+    "heading_all": "Quota resets & rate-limit changes for Codex and Claude Code.",
+    "heading_agent": "{agent} quota resets & rate-limit changes.",
+    "intro": "A dated record of every publicly-announced change to subscription quotas, rolling windows, and one-off resets for subscription-based code agents. Every entry links to the official record — vendor announcement, help-center article, changelog, or staff post.",
+    "last_logged": "Last logged event: {date}.",
+    "calendar_heading": "Calendar",
+    "calendar_helper": "Usage resets and rate-limit changes plotted by announcement date.",
+    "no_events": "No events recorded for this filter yet.",
+    "footer_email_lead": "Spotted a missing reset or a wrong source? Email",
+    "footer_email_tail": "with the date and the official record URL and we'll add it.",
+    "footer_disclaimer": "Reset Log is curated manually from vendor announcements and help-center pages. It does not predict future resets — it only records ones that have already been publicly announced.",
+    "effective": "Effective {date}",
+    "official_record": "Official record: {label}",
+    "read_full": "Read full event →",
+    "at_a_glance": "At a glance",
+    "what_changed": "What changed",
+    "official_record_section": "Official record",
+    "official_record_lead": "This event is documented in {vendor}'s own materials. The link below is the canonical source we cite.",
+    "additional_references": "Additional references",
+    "more_events": "More {agent} events",
+    "all_events_back": "← All reset events",
+    "found_issue": "Found an issue?",
+    "field_agent": "Agent",
+    "field_event_type": "Event type",
+    "field_announced": "Announced",
+    "field_effective": "Effective",
+    "field_plans": "Plans affected"
+  },
+  "weekdays": {
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat",
+    "sun": "Sun"
+  },
+  "language": {
+    "label": "Language",
+    "switch_to_aria": "Switch language to {label}"
+  },
+  "meta": {
+    "reset_log_title": "Reset Log",
+    "reset_log_og_title": "Reset Log — Codex & Claude Code quota events",
+    "reset_log_description": "A dated log of every public rate-limit, quota, and usage-window change to the two subscription-based code agents — Anthropic's Claude Code and OpenAI's Codex — with a link to the official record for each event."
+  }
+}

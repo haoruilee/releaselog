@@ -14,6 +14,7 @@ import {
   type ResetAgent,
 } from "@/data/reset-log";
 import { getSiteUrl } from "@/lib/site-url";
+import { getServerTranslator } from "@/lib/i18n";
 import { ResetLogList } from "../ResetLogList";
 
 const AGENT_ACCENT: Record<ResetAgent, string> = {
@@ -100,6 +101,8 @@ export default async function ResetEventPage({ params }: PageProps) {
   const event = getResetEventBySlug(slug);
   if (!event) notFound();
 
+  const { t } = await getServerTranslator();
+
   const agentLabel = AGENT_LABELS[event.agent];
   const vendor = AGENT_VENDORS[event.agent];
   const accent = AGENT_ACCENT[event.agent];
@@ -180,11 +183,11 @@ export default async function ResetEventPage({ params }: PageProps) {
           className="mb-8 flex flex-wrap items-center gap-2 text-xs text-secondary"
         >
           <Link href="/" className="hover:text-primary">
-            ReleaseLog
+            {t("brand.name")}
           </Link>
           <span aria-hidden>/</span>
           <Link href="/reset-log" className="hover:text-primary">
-            Reset Log
+            {t("reset_log.kicker")}
           </Link>
           <span aria-hidden>/</span>
           <Link
@@ -223,7 +226,7 @@ export default async function ResetEventPage({ params }: PageProps) {
               </span>
               {event.effectiveDate && event.effectiveDate !== event.date && (
                 <span className="rounded-full bg-empty-cell/40 px-2 py-0.5 text-[11px] text-secondary ring-1 ring-white/5">
-                  Effective {formatDate(event.effectiveDate)}
+                  {t("reset_log.effective", { date: formatDate(event.effectiveDate) })}
                 </span>
               )}
             </div>
@@ -237,12 +240,12 @@ export default async function ResetEventPage({ params }: PageProps) {
 
           <section className="mt-8 rounded-2xl bg-panel/60 p-5 ring-1 ring-white/5 sm:p-6">
             <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">
-              At a glance
+              {t("reset_log.at_a_glance")}
             </h2>
             <dl className="mt-4 grid gap-4 text-sm sm:grid-cols-2">
               <div>
                 <dt className="text-xs uppercase tracking-wider text-secondary/70">
-                  Agent
+                  {t("reset_log.field_agent")}
                 </dt>
                 <dd className="mt-1 text-primary">
                   {agentLabel} <span className="text-secondary">· {vendor}</span>
@@ -250,19 +253,19 @@ export default async function ResetEventPage({ params }: PageProps) {
               </div>
               <div>
                 <dt className="text-xs uppercase tracking-wider text-secondary/70">
-                  Event type
+                  {t("reset_log.field_event_type")}
                 </dt>
                 <dd className="mt-1 text-primary">{typeLabel}</dd>
               </div>
               <div>
                 <dt className="text-xs uppercase tracking-wider text-secondary/70">
-                  Announced
+                  {t("reset_log.field_announced")}
                 </dt>
                 <dd className="mt-1 text-primary">{formatDate(event.date)}</dd>
               </div>
               <div>
                 <dt className="text-xs uppercase tracking-wider text-secondary/70">
-                  Effective
+                  {t("reset_log.field_effective")}
                 </dt>
                 <dd className="mt-1 text-primary">
                   {formatDate(event.effectiveDate ?? event.date)}
@@ -270,7 +273,7 @@ export default async function ResetEventPage({ params }: PageProps) {
               </div>
               <div className="sm:col-span-2">
                 <dt className="text-xs uppercase tracking-wider text-secondary/70">
-                  Plans affected
+                  {t("reset_log.field_plans")}
                 </dt>
                 <dd className="mt-1 flex flex-wrap gap-1.5">
                   {event.plans.map((plan) => (
@@ -289,7 +292,7 @@ export default async function ResetEventPage({ params }: PageProps) {
           {event.details && event.details.length > 0 && (
             <section className="mt-8">
               <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">
-                What changed
+                {t("reset_log.what_changed")}
               </h2>
               <ul className="mt-3 space-y-2 text-sm text-secondary sm:text-base">
                 {event.details.map((d, i) => (
@@ -306,11 +309,10 @@ export default async function ResetEventPage({ params }: PageProps) {
 
           <section className="mt-8 rounded-2xl bg-accent/5 p-5 ring-1 ring-accent/30 sm:p-6">
             <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
-              Official record
+              {t("reset_log.official_record_section")}
             </h2>
             <p className="mt-2 text-sm text-secondary">
-              This event is documented in {vendor}&rsquo;s own materials. The link
-              below is the canonical source we cite.
+              {t("reset_log.official_record_lead", { vendor })}
             </p>
             <a
               href={event.source.url}
@@ -324,7 +326,7 @@ export default async function ResetEventPage({ params }: PageProps) {
             {event.secondarySources && event.secondarySources.length > 0 && (
               <div className="mt-5">
                 <p className="text-xs uppercase tracking-wider text-secondary/70">
-                  Additional references
+                  {t("reset_log.additional_references")}
                 </p>
                 <ul className="mt-2 space-y-1.5 text-sm">
                   {event.secondarySources.map((src) => (
@@ -347,7 +349,7 @@ export default async function ResetEventPage({ params }: PageProps) {
           {related.length > 0 && (
             <section className="mt-12 border-t border-white/5 pt-8">
               <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">
-                More {agentLabel} events
+                {t("reset_log.more_events", { agent: agentLabel })}
               </h2>
               <ul className="mt-4 space-y-3">
                 {related.map((r) => (
@@ -379,10 +381,10 @@ export default async function ResetEventPage({ params }: PageProps) {
             href="/reset-log"
             className="font-semibold uppercase tracking-[0.25em] hover:text-primary"
           >
-            ← All reset events
+            {t("reset_log.all_events_back")}
           </Link>
           <p>
-            Found an issue?{" "}
+            {t("reset_log.found_issue")}{" "}
             <a
               href="mailto:haoruileee@gmail.com"
               className="text-accent underline-offset-4 hover:underline"
@@ -396,6 +398,7 @@ export default async function ResetEventPage({ params }: PageProps) {
   );
 }
 
-// Static — built once per event at build time, no runtime DB.
-export const dynamic = "force-static";
+// Dynamically rendered: the root layout reads the locale cookie, which opts
+// the whole tree out of static generation. `generateStaticParams` is still
+// used to pre-warm prerender hints for crawlers.
 export const dynamicParams = false;

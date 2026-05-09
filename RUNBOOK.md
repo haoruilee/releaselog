@@ -482,6 +482,91 @@ taking the service down.
 
 ---
 
+## i18n (site chrome)
+
+The site UI (nav, controls, headings, footer) is translated via a small
+in-house framework — release/event content stays in its original language.
+
+### Files
+
+| Piece | Where |
+|---|---|
+| Translations | `messages/<locale>.json` (one file per locale) |
+| Server helpers | `lib/i18n.ts` (`getLocale`, `getServerTranslator`, `makeTranslator`) |
+| React Context | `components/I18nProvider.tsx` (`useT()`, `useLocale()`) |
+| Picker UI | `components/LanguageSwitcher.tsx` (mounted in `Header.tsx` and `app/reset-log/ResetLogList.tsx`) |
+| Cookie | `releaselog_locale` (1 year, `Path=/`, `SameSite=Lax`) |
+
+Locale detection order on every request:
+`releaselog_locale` cookie → `Accept-Language` header → `DEFAULT_LOCALE`
+(`en`).
+
+### Adding strings
+
+1. Add the key to **every** `messages/<locale>.json` file under a logical
+   namespace (`nav.*`, `switcher.*`, `reset_log.*`, etc.). Keys missing from
+   a locale fall back to the literal key string at runtime.
+2. Reference it:
+   - **Client component** (`"use client"`):
+     `import { useT } from "@/components/I18nProvider";`
+     `const t = useT(); … {t("namespace.key", { name: foo })}`
+   - **Server component** (no `"use client"`):
+     `import { getServerTranslator } from "@/lib/i18n";`
+     `const { t } = await getServerTranslator(); … t("namespace.key")`
+3. Interpolation uses `{name}`, `{days}`, etc. — see `headline.default`.
+
+### Adding a language
+
+1. `cp messages/en.json messages/<code>.json` and translate the values.
+2. In `lib/i18n.ts`:
+   - Append the code to `SUPPORTED_LOCALES`.
+   - Import the file and add it to the `MESSAGES` map.
+   - Extend `pickFromAcceptLanguage` if the BCP-47 tag isn't `en` / `zh`.
+3. In `components/LanguageSwitcher.tsx`, add the code/label/aria entry.
+4. Rebuild + restart.
+
+### What's translated and what isn't
+
+- **Translated**: site chrome (nav, switcher labels, range/poster controls,
+  stats labels, footer, weekday letters, reset-log page chrome and per-event
+  page section headings, `<title>` and `<meta description>` of `/reset-log`).
+- **Not translated** (intentional): release entry titles/descriptions/tags,
+  team and entity names, `data/reset-log.ts` event titles/summaries, dates
+  (`MMM d, yyyy`-formatted in English), `<title>` and `<meta>` of per-entity
+  pages (those reflect the entity's English brand line).
+
+### Notes on rendering
+
+Reading `cookies()` in the root layout opts every page out of static
+generation. `app/reset-log/[slug]` previously had `export const dynamic =
+"force-static"`; that was removed when `ResetLogList` became `async`.
+`generateStaticParams` is still used to enumerate valid slugs and 404
+unknown ones (`dynamicParams = false`). For a small site this trade-off is
+fine; if the dynamic-render cost ever becomes a problem, switch the slug
+page to render its own (non-i18n) version of the listing inline.
+
+`STATIC_EXPORT=1 next build` (`npm run build:pages`) still works:
+`getLocale()` is wrapped in try/catch and silently returns `DEFAULT_LOCALE`
+when there is no request context.
+
+### Quick check
+
+```bash
+# EN (default) — should contain English chrome strings
+curl -sS https://releaselog.site/ | grep -oE '(<html lang="[a-z]+"|Pricing|Subscribe|Range)' | sort -u
+
+# ZH — set the cookie and re-fetch
+curl -sS -H 'Cookie: releaselog_locale=zh' https://releaselog.site/ \
+  | grep -oE '(<html lang="[a-z]+"|定价|订阅|时间范围)' | sort -u
+
+# /reset-log title localizes
+curl -sS https://releaselog.site/reset-log | grep -oE '<title>[^<]+</title>'
+curl -sS -H 'Cookie: releaselog_locale=zh' https://releaselog.site/reset-log \
+  | grep -oE '<title>[^<]+</title>'
+```
+
+---
+
 ## Common failure modes
 
 | Symptom | Likely cause | Check |

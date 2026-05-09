@@ -15,6 +15,7 @@ import type { ReleaseItem } from "@/data/types";
 import { buildCalendarMonths, filterReleasesInRange } from "@/lib/calendar";
 import { computeSummaryStats, getRangeBounds } from "@/lib/stats";
 import { resolveTheme, themeToCssVars } from "@/lib/theme";
+import { useT } from "@/components/I18nProvider";
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const USE_SERVER_DATA = process.env.NEXT_PUBLIC_USE_SERVER_DATA !== "0";
@@ -35,6 +36,7 @@ interface Props {
 
 export default function HomeClient({ initialEntityId }: Props) {
   const router = useRouter();
+  const t = useT();
   const [selectedEntityId, setSelectedEntityId] = useState(
     initialEntityId ?? entityMetas[0]?.id ?? "",
   );
@@ -158,7 +160,7 @@ export default function HomeClient({ initialEntityId }: Props) {
                     posterMode={posterMode}
                   />
                   <div className="rounded-full bg-empty-cell/50 px-3 py-1 text-xs text-secondary ring-1 ring-white/5">
-                    Theme:{" "}
+                    {t("switcher.theme")}{" "}
                     <span className="font-medium text-accent">{entityMeta.name}</span>
                   </div>
                 </div>
@@ -206,16 +208,14 @@ export default function HomeClient({ initialEntityId }: Props) {
                     href="/subscribe"
                     className="text-accent underline-offset-4 hover:underline"
                   >
-                    Subscribe
+                    {t("footer.subscribe_label")}
                   </Link>
                   <span className="text-secondary/80">
-                    {" "}
-                    — Atom feeds for each team (or all together); your reader stays in sync. Optional
-                    weekly email when enabled.
+                    {t("footer.subscribe_intro")}
                   </span>
                 </p>
                 <p className="text-secondary/70">
-                  Share: screenshot this page or use Export PNG (header, stats, and calendar only).
+                  {t("footer.share_hint")}
                 </p>
               </div>
             )}
