@@ -497,9 +497,10 @@ in-house framework — release/event content stays in its original language.
 | Picker UI | `components/LanguageSwitcher.tsx` (mounted in `Header.tsx` and `app/reset-log/ResetLogList.tsx`) |
 | Cookie | `releaselog_locale` (1 year, `Path=/`, `SameSite=Lax`) |
 
-Locale detection order on every request:
-`releaselog_locale` cookie → `Accept-Language` header → `DEFAULT_LOCALE`
-(`en`).
+Locale detection on every request: `releaselog_locale` cookie →
+`DEFAULT_LOCALE` (`en`). `Accept-Language` is intentionally **not**
+sniffed — every new visitor lands on the English version, and switches
+locale by clicking the picker (which sets the cookie for 1 year).
 
 ### Adding strings
 

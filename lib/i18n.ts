@@ -35,32 +35,24 @@ export function isLocale(s: string | undefined | null): s is Locale {
   );
 }
 
-function pickFromAcceptLanguage(header: string | null): Locale | null {
-  if (!header) return null;
-  for (const part of header.split(",")) {
-    const tag = part.split(";")[0]?.trim().toLowerCase() ?? "";
-    if (!tag) continue;
-    if (tag.startsWith("zh")) return "zh";
-    if (tag.startsWith("en")) return "en";
-  }
-  return null;
-}
-
 /**
- * Read locale from request cookie / `Accept-Language`. Server-only because it
- * touches `next/headers`. Wrapped in try/catch so a static-export build
- * (which has no request context) silently falls back to `DEFAULT_LOCALE`
- * instead of throwing.
+ * Read locale from request cookie. Server-only because it touches
+ * `next/headers`. Wrapped in try/catch so a static-export build (which has
+ * no request context) silently falls back to `DEFAULT_LOCALE` instead of
+ * throwing.
+ *
+ * Note: we deliberately do NOT sniff `Accept-Language`. The default is
+ * always `DEFAULT_LOCALE` (English) for new visitors; users opt in to
+ * another language via the in-page picker, which sets the
+ * `releaselog_locale` cookie.
  */
 export async function getLocale(): Promise<Locale> {
   try {
-    const { cookies, headers } = await import("next/headers");
+    const { cookies } = await import("next/headers");
     const c = await cookies();
     const fromCookie = c.get(LOCALE_COOKIE)?.value;
     if (isLocale(fromCookie)) return fromCookie;
-    const h = await headers();
-    const fromHeader = pickFromAcceptLanguage(h.get("accept-language"));
-    return fromHeader ?? DEFAULT_LOCALE;
+    return DEFAULT_LOCALE;
   } catch {
     return DEFAULT_LOCALE;
   }
