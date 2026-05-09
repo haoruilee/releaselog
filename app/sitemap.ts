@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/site-url";
 import { entityMetas } from "@/data";
+import { RESET_EVENTS } from "@/data/reset-log";
 
 export const dynamic = "force-static";
 
@@ -15,9 +16,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
+  // One entry per reset event — each has its own static detail page at
+  // /reset-log/{slug}. Adding a new event auto-extends the sitemap.
+  const resetEventRoutes: MetadataRoute.Sitemap = RESET_EVENTS.map((e) => ({
+    url: `${base}/reset-log/${e.slug}`,
+    lastModified: new Date(e.effectiveDate ?? e.date),
+    changeFrequency: "yearly",
+    priority: 0.6,
+  }));
+
   return [
     { url: `${base}/`, lastModified: now, changeFrequency: "daily", priority: 1 },
     ...entityRoutes,
+    { url: `${base}/reset-log`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
+    ...resetEventRoutes,
     { url: `${base}/pricing`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/subscribe`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
   ];

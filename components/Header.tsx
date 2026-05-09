@@ -33,6 +33,12 @@ export function Header({ entity, daySpan, posterMode }: Props) {
         {!posterMode && (
           <nav className="flex items-center gap-4">
             <Link
+              href="/reset-log"
+              className="text-xs font-medium text-secondary underline-offset-4 hover:text-primary hover:underline"
+            >
+              Reset Log
+            </Link>
+            <Link
               href="/pricing"
               className="text-xs font-medium text-secondary underline-offset-4 hover:text-primary hover:underline"
             >
