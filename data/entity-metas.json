@@ -228,5 +228,33 @@
         "avatar": "/avatars/mistral.svg"
       }
     ]
+  },
+  {
+    "id": "radixark-team",
+    "name": "RadixArk Team",
+    "type": "team",
+    "description": "High-signal RadixArk launches plus SGLang inference engine releases and Miles RL framework updates the team co-develops with LMSYS, verified against official RadixArk, SGLang, Miles, and LMSYS sources.",
+    "headline": "Verified RadixArk releases across {days} days.",
+    "subtitle": "October 2025 — May 2026. RadixArk company milestones plus the SGLang inference engine and Miles RL framework the team ships alongside LMSYS Org.",
+    "footnote": "Cross-checked on May 9, 2026 against the official RadixArk launch announcement, sgl-project/sglang GitHub releases, the radixark/miles GitHub repo, and LMSYS Org blog posts. RadixArk spun out of UC Berkeley's SGLang project (Ion Stoica's lab); co-founders Ying Sheng (CEO, ex-xAI) and Banghua Zhu (CTO, ex-NVIDIA).",
+    "brandLine": "RadixArk official sources",
+    "brandUrl": "https://www.radixark.com/",
+    "members": [
+      {
+        "name": "RadixArk",
+        "handle": "Team",
+        "avatar": "/avatars/radixark.svg"
+      }
+    ],
+    "theme": {
+      "primary": "#0891b2",
+      "bgPage": "#08111a",
+      "bgPanel": "#0e1a24",
+      "bgEmptyCell": "#142634",
+      "bgActiveCell": "#0e7490",
+      "textPrimary": "#ecfeff",
+      "textSecondary": "#67e8f9",
+      "accentNumber": "#22d3ee"
+    }
   }
 ]

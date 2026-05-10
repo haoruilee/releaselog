@@ -10,6 +10,7 @@ import vllmTeam from "./entities/vllm-team.json";
 import mistralTeam from "./entities/mistral-team.json";
 import xaiTeam from "./entities/xai-team.json";
 import googleDeepmindTeam from "./entities/google-deepmind-team.json";
+import radixarkTeam from "./entities/radixark-team.json";
 
 const entityByFile: Record<string, EntityConfig> = {
   "ai-events.json": aiEvents as EntityConfig,
@@ -22,6 +23,7 @@ const entityByFile: Record<string, EntityConfig> = {
   "google-deepmind-team.json": googleDeepmindTeam as EntityConfig,
   "xai-team.json": xaiTeam as EntityConfig,
   "mistral-team.json": mistralTeam as EntityConfig,
+  "radixark-team.json": radixarkTeam as EntityConfig,
 };
 
 export function loadEntitiesFromRegistry(): EntityConfig[] {

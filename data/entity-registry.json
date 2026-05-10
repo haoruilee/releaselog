@@ -9,6 +9,7 @@
     "vllm-team.json",
     "google-deepmind-team.json",
     "xai-team.json",
-    "mistral-team.json"
+    "mistral-team.json",
+    "radixark-team.json"
   ]
 }

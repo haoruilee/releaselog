@@ -1,0 +1,175 @@
+{
+  "id": "radixark-team",
+  "name": "RadixArk Team",
+  "type": "team",
+  "description": "High-signal RadixArk launches plus SGLang inference engine releases and Miles RL framework updates the team co-develops with LMSYS, verified against official RadixArk, SGLang, Miles, and LMSYS sources.",
+  "headline": "Verified RadixArk releases across {days} days.",
+  "subtitle": "October 2025 — May 2026. RadixArk company milestones plus the SGLang inference engine and Miles RL framework the team ships alongside LMSYS Org.",
+  "footnote": "Cross-checked on May 9, 2026 against the official RadixArk launch announcement, sgl-project/sglang GitHub releases, the radixark/miles GitHub repo, and LMSYS Org blog posts. RadixArk spun out of UC Berkeley's SGLang project (Ion Stoica's lab); co-founders Ying Sheng (CEO, ex-xAI) and Banghua Zhu (CTO, ex-NVIDIA).",
+  "brandLine": "RadixArk official sources",
+  "brandUrl": "https://www.radixark.com/",
+  "members": [
+    {
+      "name": "RadixArk",
+      "handle": "Team",
+      "avatar": "/avatars/radixark.svg"
+    }
+  ],
+  "theme": {
+    "primary": "#0891b2",
+    "bgPage": "#08111a",
+    "bgPanel": "#0e1a24",
+    "bgEmptyCell": "#142634",
+    "bgActiveCell": "#0e7490",
+    "textPrimary": "#ecfeff",
+    "textSecondary": "#67e8f9",
+    "accentNumber": "#22d3ee"
+  },
+  "releases": [
+    {
+      "id": "radixark-2025-11-miles-launch",
+      "date": "2025-11-19",
+      "kind": "release",
+      "title": "Miles RL framework introduced",
+      "shortTitle": "Miles RL launch",
+      "description": "LMSYS Org introduced Miles, an enterprise-facing reinforcement learning framework for LLM and VLM post-training, as a joint effort with InfiXAI, Ant Group, and the SGLang RL team. Miles co-evolves with the slime project and targets large-scale MoE post-training.",
+      "sourceUrl": "https://lmsys.org/blog/2025-11-19-miles/",
+      "docUrls": [
+        "https://github.com/radixark/miles"
+      ],
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "miles",
+        "rl",
+        "post-training",
+        "lmsys"
+      ]
+    },
+    {
+      "id": "radixark-2026-01-techcrunch-spinout",
+      "date": "2026-01-21",
+      "kind": "event",
+      "title": "TechCrunch reports SGLang spinout as RadixArk",
+      "shortTitle": "Spinout reported",
+      "description": "TechCrunch reported that contributors to the open-source SGLang inference engine had formed RadixArk to commercialize services around the project, citing a $400 million valuation as the inference market accelerated. The official launch followed in May.",
+      "sourceUrl": "https://techcrunch.com/2026/01/21/sources-project-sglang-spins-out-as-radixark-with-400m-valuation-as-inference-market-explodes/",
+      "importance": 2,
+      "audience": "partner",
+      "status": "preview",
+      "tags": [
+        "press",
+        "sglang",
+        "spinout"
+      ]
+    },
+    {
+      "id": "radixark-2026-03-elastic-ep-blog",
+      "date": "2026-03-25",
+      "kind": "release",
+      "title": "LMSYS blog: Elastic EP for partial failure tolerance",
+      "shortTitle": "Elastic EP blog",
+      "description": "LMSYS Org published a deep dive on Elastic NIXL-EP integration in SGLang, explaining how DeepSeek-style MoE deployments survive single-GPU failures by redistributing expert weights and continuing to serve without a full restart. The blog accompanied SGLang PRs #19248, #17374, and #12068.",
+      "sourceUrl": "https://lmsys.org/blog/2026-03-25-eep-partial-failure-tolerance/",
+      "docUrls": [
+        "https://github.com/sgl-project/sglang/pull/19248"
+      ],
+      "importance": 2,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "lmsys",
+        "elastic-ep",
+        "moe",
+        "reliability"
+      ]
+    },
+    {
+      "id": "radixark-2026-04-sglang-v0-5-10",
+      "date": "2026-04-06",
+      "kind": "release",
+      "title": "SGLang v0.5.10 released",
+      "shortTitle": "SGLang v0.5.10",
+      "description": "SGLang v0.5.10 promoted Piecewise CUDA Graph as the default execution mode, integrated Elastic EP for partial failure tolerance on DeepSeek MoE deployments, added a GPU staging buffer for PD disaggregation (~5x TPS on large concurrency), HiSparse sparse attention, FlashInfer MXFP8 kernels, the Transformers 5.3.0 upgrade, FA4 official library support, native MLX backend for Apple Silicon, and LoRA support for MoE layers.",
+      "sourceUrl": "https://github.com/sgl-project/sglang/releases/tag/v0.5.10",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "sglang",
+        "release",
+        "moe",
+        "performance"
+      ]
+    },
+    {
+      "id": "radixark-2026-04-sglang-v0-5-10-post1",
+      "date": "2026-04-09",
+      "kind": "release",
+      "title": "SGLang v0.5.10.post1 patch",
+      "shortTitle": "v0.5.10.post1",
+      "description": "Patch release that bumped flashinfer from v0.6.7.post2 to v0.6.7.post3 to resolve an issue in its JIT cubin downloader.",
+      "sourceUrl": "https://github.com/sgl-project/sglang/releases/tag/v0.5.10.post1",
+      "importance": 1,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "sglang",
+        "patch",
+        "flashinfer"
+      ]
+    },
+    {
+      "id": "radixark-2026-05-radixark-launch",
+      "date": "2026-05-05",
+      "kind": "event",
+      "title": "RadixArk launches with $100M seed at $400M valuation",
+      "shortTitle": "RadixArk launch",
+      "description": "RadixArk officially launched with a $100M seed round led by Accel and co-led by Spark Capital at a $400M post-money valuation. Co-founders Ying Sheng (CEO, ex-xAI) and Banghua Zhu (CTO, ex-NVIDIA) said the company will keep growing SGLang and Miles as open-source projects while building managed inference and training infrastructure. Investors include NVentures, AMD, MediaTek, Databricks, John Schulman, Lip-Bu Tan, and Igor Babuschkin.",
+      "sourceUrl": "https://www.radixark.com/blog/radixark-launches-100m-seed",
+      "docUrls": [
+        "https://www.accel.com/noteworthies/investing-in-radixark-building-an-open-universal-inference-engine",
+        "https://siliconangle.com/2026/05/05/nvidia-amd-back-100m-round-ai-tooling-startup-radixark/"
+      ],
+      "importance": 3,
+      "audience": [
+        "partner",
+        "developer"
+      ],
+      "status": "stable",
+      "tags": [
+        "company",
+        "funding",
+        "launch"
+      ]
+    },
+    {
+      "id": "radixark-2026-05-sglang-v0-5-11",
+      "date": "2026-05-05",
+      "kind": "release",
+      "title": "SGLang v0.5.11 released",
+      "shortTitle": "SGLang v0.5.11",
+      "description": "SGLang v0.5.11 made CUDA 13 + PyTorch 2.11 the default build, enabled Speculative Decoding V2 with overlap scheduling by default, shipped a Decode Radix Cache for prefix caching under PD disaggregation, added DFLASH speculative decoding kernels and FA3 alongside FA4, plus day-0 model support for Gemma 4, GLM-5.1, Qwen3.6, MiMo-V2.5/V2.5-Pro, Ling-2.6-Flash, Mistral Medium 3.5, and Kimi-K2.6, and LoRA support for DeepSeek-V3 and Kimi-K2.",
+      "sourceUrl": "https://github.com/sgl-project/sglang/releases/tag/v0.5.11",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "sglang",
+        "release",
+        "speculative-decoding",
+        "cuda13"
+      ]
+    }
+  ]
+}
