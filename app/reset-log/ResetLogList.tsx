@@ -1,8 +1,8 @@
 import Link from "next/link";
-import type { CSSProperties } from "react";
 import { format, parseISO } from "date-fns";
 import { entityMetas } from "@/data";
 import {
+  AGENT_ACCENT,
   AGENT_LABELS,
   AGENT_VENDORS,
   RESET_AGENT_SLUGS,
@@ -18,17 +18,6 @@ import { ResetLogCalendar } from "./ResetLogCalendar";
 import { ResetLogExportButton } from "./ResetLogExportButton";
 
 type AgentFilter = ResetAgent | "all";
-
-const RESET_LOG_THEME = {
-  "--bg-page": "#eef8f0",
-  "--bg-panel": "#f8fff9",
-  "--bg-empty-cell": "#d9ecde",
-  "--bg-active-cell": "#b7dfc3",
-  "--text-primary": "#123d2b",
-  "--text-secondary": "#4f7b61",
-  "--accent": "#2f8f5b",
-  "--accent-number": "#1f7a4a",
-} as CSSProperties;
 
 function formatDate(iso: string): string {
   return format(parseISO(iso), "MMM d, yyyy");
@@ -48,11 +37,6 @@ function buildFilterOptions(t: Translator): {
     })),
   ];
 }
-
-const AGENT_ACCENT: Record<ResetAgent, string> = {
-  "claude-code": "#cc785c",
-  codex: "#10a37f",
-};
 
 export async function ResetLogList({
   filter = "all",
@@ -81,7 +65,7 @@ export async function ResetLogList({
   const filterOptions = buildFilterOptions(t);
 
   return (
-    <div className="min-h-screen bg-page text-primary" style={RESET_LOG_THEME}>
+    <div className="min-h-screen bg-page text-primary">
       <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
         <div
           data-export-exclude
@@ -272,12 +256,12 @@ function ResetEventCard({
         <Link
           href={`/reset-log/${event.agent}`}
           className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium ring-1 ring-white/10"
-          style={{ color: accent }}
+          style={{ color: accent.badge }}
         >
           <span
             aria-hidden
             className="h-1.5 w-1.5 rounded-full"
-            style={{ backgroundColor: accent }}
+            style={{ backgroundColor: accent.badge }}
           />
           {agentLabel}
           <span className="text-secondary/70">· {vendor}</span>

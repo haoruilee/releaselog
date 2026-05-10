@@ -72,6 +72,36 @@ export const RESET_EVENT_TYPE_LABELS: Record<ResetEventType, string> = {
 };
 
 /**
+ * Per-agent visual accent used everywhere on the Reset Log surface (badges,
+ * dots, calendar cells). Single source of truth so the list, calendar, and
+ * per-event detail page stay in sync.
+ *
+ *   • Claude Code → warm orange (matches the site's default --accent)
+ *   • Codex       → white (high contrast against the dark page)
+ */
+export interface AgentAccent {
+  /** Solid background color for filled calendar cells. */
+  bg: string;
+  /** Foreground color readable on `bg` — used to override default text-primary inside filled cells. */
+  text: string;
+  /** Compact accent color used for inline dots, links and badges on dark surfaces. */
+  badge: string;
+}
+
+export const AGENT_ACCENT: Record<ResetAgent, AgentAccent> = {
+  "claude-code": {
+    bg: "#c2410c",
+    text: "#fef3e2",
+    badge: "#ea580c",
+  },
+  codex: {
+    bg: "#f5f5f5",
+    text: "#0c0a09",
+    badge: "#ffffff",
+  },
+};
+
+/**
  * Curated list. Newest entries first is fine — the page sorts by date
  * descending before rendering, so insertion order doesn't matter.
  */

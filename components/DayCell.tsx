@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import type { ReleaseItem } from "@/data/types";
 import { format, isToday } from "date-fns";
 
@@ -35,6 +36,19 @@ export function DayCell({
     return <div className="min-h-[88px] rounded-lg opacity-0" aria-hidden />;
   }
 
+  // Items can opt in to a per-agent / per-brand color. We pick the first
+  // override (sortItemsForCell already promotes the most important item) so
+  // the cell visually belongs to the dominant event for the day.
+  const accentItem = hasItems
+    ? items.find((it) => it.accentColor) ?? null
+    : null;
+  const wrapperStyle: CSSProperties | undefined = accentItem?.accentColor
+    ? { backgroundColor: accentItem.accentColor }
+    : undefined;
+  const accentTextStyle: CSSProperties | undefined = accentItem?.accentTextColor
+    ? { color: accentItem.accentTextColor }
+    : undefined;
+
   const base =
     "group relative flex min-h-[88px] flex-col rounded-lg p-2 text-left transition-all sm:min-h-[100px]";
   const bg = hasItems
@@ -61,7 +75,7 @@ export function DayCell({
   const overflow = Math.max(0, items.length - visible.length);
 
   return (
-    <div className={`${base} ${bg} ${ring} ${futureClass}`}>
+    <div className={`${base} ${bg} ${ring} ${futureClass}`} style={wrapperStyle}>
       {isFuture && (
         <div
           aria-hidden
@@ -78,13 +92,20 @@ export function DayCell({
         className={`pointer-events-none relative z-10 flex items-center justify-between text-[11px] font-medium tabular-nums sm:text-xs ${
           hasItems ? "text-primary/90" : "text-secondary/60"
         }`}
+        style={hasItems ? accentTextStyle : undefined}
       >
         <span>{dayNum}</span>
-        {isFuture && <span className="h-1.5 w-1.5 rounded-full bg-primary/45" aria-hidden />}
+        {isFuture && (
+          <span
+            className="h-1.5 w-1.5 rounded-full bg-primary/45"
+            style={accentTextStyle}
+            aria-hidden
+          />
+        )}
       </span>
       <div className="pointer-events-none relative z-10 mt-1 flex flex-1 flex-col gap-0.5 overflow-hidden text-left">
         {showCountOnly && hasItems && (
-          <span className="text-xs font-semibold text-primary">
+          <span className="text-xs font-semibold text-primary" style={accentTextStyle}>
             {items.length} log{items.length === 1 ? "" : "s"}
           </span>
         )}
@@ -97,24 +118,37 @@ export function DayCell({
                 target="_blank"
                 rel="noreferrer"
                 className="pointer-events-auto line-clamp-1 text-[10px] leading-tight text-primary underline-offset-2 hover:underline focus:outline-none focus-visible:underline sm:text-[11px]"
+                style={accentTextStyle}
                 title={item.title}
               >
-                {item.kind === "event" && <span className="mr-1 text-primary/70">Event</span>}
+                {item.kind === "event" && (
+                  <span className="mr-1 text-primary/70" style={accentTextStyle}>
+                    Event
+                  </span>
+                )}
                 {item.shortTitle ?? item.title}
               </a>
             ) : (
               <span
                 key={item.id}
                 className="line-clamp-1 text-[10px] leading-tight text-primary sm:text-[11px]"
+                style={accentTextStyle}
                 title={item.title}
               >
-                {item.kind === "event" && <span className="mr-1 text-primary/70">Event</span>}
+                {item.kind === "event" && (
+                  <span className="mr-1 text-primary/70" style={accentTextStyle}>
+                    Event
+                  </span>
+                )}
                 {item.shortTitle ?? item.title}
               </span>
             ),
           )}
         {!showCountOnly && overflow > 0 && (
-          <span className="text-[10px] font-medium text-primary/80">
+          <span
+            className="text-[10px] font-medium text-primary/80"
+            style={accentTextStyle}
+          >
             +{overflow} more
           </span>
         )}
@@ -123,6 +157,11 @@ export function DayCell({
         <div
           aria-hidden
           className="pointer-events-none absolute bottom-1.5 right-1.5 h-1.5 w-6 rounded-full bg-primary/35"
+          style={
+            accentTextStyle
+              ? { backgroundColor: accentTextStyle.color, opacity: 0.35 }
+              : undefined
+          }
         />
       )}
     </div>

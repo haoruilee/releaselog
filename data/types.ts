@@ -50,6 +50,16 @@ export type ReleaseItem = {
   audience?: ReleaseAudience | ReleaseAudience[];
   status?: ReleaseStatus;
   relatedIds?: string[];
+  /**
+   * Optional per-item visual override for the calendar day cell. When set,
+   * `accentColor` replaces the default `--bg-active-cell` background and
+   * `accentTextColor` overrides the cell's foreground text color so it stays
+   * readable on the chosen background. Used by the Reset Log calendar to
+   * color cells per agent (e.g. orange for Claude Code, white for Codex)
+   * without per-page theme forks.
+   */
+  accentColor?: string;
+  accentTextColor?: string;
 };
 
 export type ThemeConfig = {

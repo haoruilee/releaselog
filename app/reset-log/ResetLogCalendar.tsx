@@ -6,7 +6,7 @@ import { DayDetails } from "@/components/DayDetails";
 import type { ReleaseItem } from "@/data/types";
 import { buildCalendarMonths, filterReleasesInRange } from "@/lib/calendar";
 import { getRangeBounds } from "@/lib/stats";
-import { AGENT_LABELS, type ResetEvent } from "@/data/reset-log";
+import { AGENT_ACCENT, AGENT_LABELS, type ResetEvent } from "@/data/reset-log";
 import { useT } from "@/components/I18nProvider";
 
 function todayNoon(): Date {
@@ -20,6 +20,7 @@ function dateKey(d: Date): string {
 }
 
 function toCalendarItem(event: ResetEvent): ReleaseItem {
+  const accent = AGENT_ACCENT[event.agent];
   return {
     id: event.id,
     date: event.date,
@@ -31,6 +32,8 @@ function toCalendarItem(event: ResetEvent): ReleaseItem {
     docUrls: [event.source.url, ...(event.secondarySources?.map((s) => s.url) ?? [])],
     tags: [AGENT_LABELS[event.agent], event.type.replaceAll("_", " "), ...event.plans],
     importance: event.type === "manual_reset" ? 3 : 2,
+    accentColor: accent.bg,
+    accentTextColor: accent.text,
   };
 }
 

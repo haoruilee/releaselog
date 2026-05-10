@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { format, parseISO } from "date-fns";
 import {
+  AGENT_ACCENT,
   AGENT_LABELS,
   AGENT_VENDORS,
   RESET_AGENT_SLUGS,
@@ -11,16 +12,10 @@ import {
   getRelatedResetEvents,
   getResetEventBySlug,
   isResetAgent,
-  type ResetAgent,
 } from "@/data/reset-log";
 import { getSiteUrl } from "@/lib/site-url";
 import { getServerTranslator } from "@/lib/i18n";
 import { ResetLogList } from "../ResetLogList";
-
-const AGENT_ACCENT: Record<ResetAgent, string> = {
-  "claude-code": "#cc785c",
-  codex: "#10a37f",
-};
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -211,12 +206,12 @@ export default async function ResetEventPage({ params }: PageProps) {
               </time>
               <span
                 className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium ring-1 ring-white/10"
-                style={{ color: accent }}
+                style={{ color: accent.badge }}
               >
                 <span
                   aria-hidden
                   className="h-1.5 w-1.5 rounded-full"
-                  style={{ backgroundColor: accent }}
+                  style={{ backgroundColor: accent.badge }}
                 />
                 {agentLabel}
                 <span className="text-secondary/70">· {vendor}</span>
