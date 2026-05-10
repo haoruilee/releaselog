@@ -27,6 +27,23 @@
   },
   "releases": [
     {
+      "id": "radixark-2025-11-sglang-diffusion-launch",
+      "date": "2025-11-07",
+      "kind": "release",
+      "title": "SGLang-Diffusion launched",
+      "shortTitle": "SGLang-Diffusion",
+      "description": "LMSYS Org launched SGLang-Diffusion, extending the SGLang serving runtime to image and video diffusion models. The first wave shipped with FLUX, Stable Diffusion 3, and Qwen Image support, and reused SGLang's scheduler and KV-style caches for end-to-end diffusion serving.",
+      "sourceUrl": "https://lmsys.org/blog/2025-11-07-sglang-diffusion/",
+      "importance": 3,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "sglang-diffusion",
+        "lmsys",
+        "launch"
+      ]
+    },
+    {
       "id": "radixark-2025-11-miles-launch",
       "date": "2025-11-19",
       "kind": "release",
@@ -48,6 +65,129 @@
       ]
     },
     {
+      "id": "radixark-2025-11-unified-fp8-rl",
+      "date": "2025-11-19",
+      "kind": "release",
+      "title": "Unified FP8 for stable MoE RL training",
+      "shortTitle": "Unified FP8 for RL",
+      "description": "LMSYS Org published Unified FP8, a recipe to move beyond mixed-precision and run MoE reinforcement learning end-to-end in FP8 with stable convergence. The blog accompanied Miles updates and showed accelerated MoE RL training without quality regressions on representative MoE checkpoints.",
+      "sourceUrl": "https://lmsys.org/blog/2025-11-19-fp8-rl/",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "miles",
+        "rl",
+        "fp8",
+        "lmsys"
+      ]
+    },
+    {
+      "id": "radixark-2025-12-modelopt-integration",
+      "date": "2025-12-02",
+      "kind": "release",
+      "title": "Native NVIDIA Model Optimizer integration",
+      "shortTitle": "ModelOpt integration",
+      "description": "LMSYS published a deep dive on SGLang's native NVIDIA Model Optimizer integration for seamless quantization and deployment, with reported up to 2x per-GPU throughput on Blackwell hardware spanning DGX Spark to GB300 NVL72.",
+      "sourceUrl": "https://lmsys.org/blog/2025-12-02-modelopt-quantization/",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "sglang",
+        "quantization",
+        "blackwell",
+        "lmsys"
+      ]
+    },
+    {
+      "id": "radixark-2025-12-sglang-v0-5-6",
+      "date": "2025-12-03",
+      "kind": "release",
+      "title": "SGLang v0.5.6 released",
+      "shortTitle": "SGLang v0.5.6",
+      "description": "SGLang v0.5.6 added DeepSeek V3.2 / V3.2 Speciale support, blockwise diffusion language models, day-0 support for new diffusion models (Flux2, Z-image), introduced JIT Kernels, upgraded to PyTorch 2.9, and shipped Kimi-K2-Thinking model enhancements plus DeepSeek-v3-fp4 / GLM-4.6 / Kimi-K2 performance work.",
+      "sourceUrl": "https://github.com/sgl-project/sglang/releases/tag/v0.5.6",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "sglang",
+        "release",
+        "deepseek-v3.2",
+        "torch-2.9"
+      ]
+    },
+    {
+      "id": "radixark-2026-01-sglang-v0-5-7",
+      "date": "2026-01-01",
+      "kind": "release",
+      "title": "SGLang v0.5.7 released",
+      "shortTitle": "SGLang v0.5.7",
+      "description": "SGLang v0.5.7 shipped day-0 support for Mimo-V2-Flash, Nemotron-Nano-v3, and LLaDA 2.0; SGLang-Diffusion gained Qwen-Image and Qwen-Image-Edit support, EAGLE 3 speculative-decoding draft models, plus Model Gateway v0.3.0 with scalable pipeline parallelism, dynamic chunking for ultra-long contexts, and encoder disaggregation for multimodal models.",
+      "sourceUrl": "https://github.com/sgl-project/sglang/releases/tag/v0.5.7",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "sglang",
+        "release",
+        "diffusion",
+        "model-gateway"
+      ]
+    },
+    {
+      "id": "radixark-2026-01-epd-disaggregation",
+      "date": "2026-01-12",
+      "kind": "release",
+      "title": "EPD: elastic encoder scaling for VLMs",
+      "shortTitle": "EPD disaggregation",
+      "description": "LMSYS published EPD Disaggregation in SGLang — an elastic-encoder-scaling architecture for vision-language models that lets the multimodal encoder scale independently from prefill and decode workers, improving GPU utilization and latency for production VLM serving.",
+      "sourceUrl": "https://lmsys.org/blog/2026-01-12-epd/",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "sglang",
+        "vlm",
+        "disaggregation",
+        "lmsys"
+      ]
+    },
+    {
+      "id": "radixark-2026-01-pipeline-parallelism-million-token",
+      "date": "2026-01-15",
+      "kind": "release",
+      "title": "Pipeline parallelism scales SGLang to million-token contexts",
+      "shortTitle": "Pipeline parallelism",
+      "description": "LMSYS detailed SGLang's chunked pipeline parallelism design that scales context windows past one million tokens. The post covered scheduler changes, chunked prefill ordering, and load-balancing strategies that keep all pipeline stages saturated.",
+      "sourceUrl": "https://lmsys.org/blog/2026-01-15-chunked-pipeline/",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "sglang",
+        "pipeline-parallelism",
+        "long-context",
+        "lmsys"
+      ]
+    },
+    {
       "id": "radixark-2026-01-techcrunch-spinout",
       "date": "2026-01-21",
       "kind": "event",
@@ -62,6 +202,88 @@
         "press",
         "sglang",
         "spinout"
+      ]
+    },
+    {
+      "id": "radixark-2026-02-qwen3-mi300x-latency",
+      "date": "2026-02-11",
+      "kind": "release",
+      "title": "Qwen3 / Qwen3-VL latency optimization on AMD MI300X",
+      "shortTitle": "Qwen3 on MI300X",
+      "description": "LMSYS published joint work with the Qwen C-end Infrastructure Engineering Team and the AMD AI Framework Team on Qwen3 and Qwen3-VL latency optimization on AMD MI300X. Reported gains: Qwen3-235B TTFT 1.67x and TPOT 2.12x; Qwen3-VL-235B TTFT 1.62x and TPOT 1.90x — driven by PTPC-FP8 GEMM, attention/MoE kernel fusion, rocJPEG image decode, and ViT data parallelism, all on SGLang.",
+      "sourceUrl": "https://lmsys.org/blog/2026-02-11-Qwen-latency/",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "sglang",
+        "qwen3",
+        "amd",
+        "mi300x",
+        "lmsys"
+      ]
+    },
+    {
+      "id": "radixark-2026-02-sglang-diffusion-advanced-opts",
+      "date": "2026-02-16",
+      "kind": "release",
+      "title": "SGLang-Diffusion advanced optimizations for video generation",
+      "shortTitle": "SGLang-Diffusion v2",
+      "description": "LMSYS shared the next round of SGLang-Diffusion optimizations focused on production-ready video generation: layerwise DiT offload (--dit-layerwise-offload) cutting peak VRAM by up to 30 GB and improving performance up to 58%, Cache-DiT integration up to +165%, plus AMD / RTX 4090 / RTX 5090 support and additional attention/parallelism options.",
+      "sourceUrl": "https://lmsys.org/blog/2026-02-16-sglang-diffusion-advanced-optimizations/",
+      "importance": 2,
+      "audience": "developer",
+      "status": "stable",
+      "tags": [
+        "sglang-diffusion",
+        "video",
+        "performance",
+        "lmsys"
+      ]
+    },
+    {
+      "id": "radixark-2026-02-sglang-v0-5-9",
+      "date": "2026-02-24",
+      "kind": "release",
+      "title": "SGLang v0.5.9 released",
+      "shortTitle": "SGLang v0.5.9",
+      "description": "SGLang v0.5.9 shipped LoRA weight-loading overlap, TRT-LLM NSA kernel integration for DeepSeek V3.2, the FlashInfer MoE dispatcher, and FA4 attention support for multimodal encoders, alongside scheduler and stability improvements.",
+      "sourceUrl": "https://github.com/sgl-project/sglang/releases/tag/v0.5.9",
+      "importance": 3,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "sglang",
+        "release",
+        "lora",
+        "fa4"
+      ]
+    },
+    {
+      "id": "radixark-2026-03-nemotron-3-super-day0",
+      "date": "2026-03-11",
+      "kind": "release",
+      "title": "SGLang adds day-0 support for NVIDIA Nemotron 3 Super",
+      "shortTitle": "Nemotron 3 Super day-0",
+      "description": "LMSYS and the NVIDIA Nemotron team announced SGLang day-0 support for NVIDIA Nemotron 3 Super, including bf16/fp8/nvfp4 paths and a cookbook for high-efficiency multi-agent system deployments built on the new model family.",
+      "sourceUrl": "https://www.lmsys.org/blog/2026-03-11-run-nvidia-nemotron-3-super",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "partner"
+      ],
+      "status": "stable",
+      "tags": [
+        "sglang",
+        "nemotron",
+        "nvidia",
+        "lmsys"
       ]
     },
     {
@@ -86,6 +308,24 @@
         "elastic-ep",
         "moe",
         "reliability"
+      ]
+    },
+    {
+      "id": "radixark-2026-03-gtc-2026-highlights",
+      "date": "2026-03-25",
+      "kind": "event",
+      "title": "Highlights of SGLang at NVIDIA GTC 2026",
+      "shortTitle": "SGLang at GTC 2026",
+      "description": "LMSYS recapped SGLang's presence at NVIDIA GTC 2026 — joint sessions with NVIDIA on Blackwell deployments (GB200 / GB300 NVL72), DeepSeek-V3.2 acceleration, model-optimizer integration, and the SGLang ecosystem roadmap.",
+      "sourceUrl": "https://www.lmsys.org/blog/2026-03-25-gtc2026",
+      "importance": 2,
+      "audience": "partner",
+      "status": "stable",
+      "tags": [
+        "lmsys",
+        "event",
+        "gtc",
+        "nvidia"
       ]
     },
     {
@@ -124,6 +364,27 @@
         "sglang",
         "patch",
         "flashinfer"
+      ]
+    },
+    {
+      "id": "radixark-2026-04-hisparse-sparse-attention",
+      "date": "2026-04-10",
+      "kind": "release",
+      "title": "HiSparse: hierarchical-memory sparse attention",
+      "shortTitle": "HiSparse",
+      "description": "LMSYS published HiSparse, a sparse-attention backend that uses hierarchical memory to accelerate long-context inference in SGLang. The post described the algorithm, kernel design, and end-to-end serving wins over dense attention on long-context Llama and DeepSeek workloads.",
+      "sourceUrl": "https://www.lmsys.org/blog/2026-04-10-sglang-hisparse",
+      "importance": 2,
+      "audience": [
+        "developer",
+        "admin"
+      ],
+      "status": "stable",
+      "tags": [
+        "sglang",
+        "sparse-attention",
+        "long-context",
+        "lmsys"
       ]
     },
     {
