@@ -29,6 +29,7 @@ const waitTimeoutMs = Number.parseInt(process.env.AI_HARNESS_WAIT_TIMEOUT_MS || 
 const pollMs = Number.parseInt(process.env.AI_HARNESS_POLL_MS || "5000", 10);
 const busyTimeoutMs = Number.parseInt(process.env.AI_HARNESS_BUSY_TIMEOUT_MS || "3300000", 10);
 const goalPrefix = process.env.AI_HARNESS_GOAL_PREFIX || "/goal";
+const skipNoCandidateRecord = process.env.AI_HARNESS_SKIP_NO_CANDIDATE_RECORD === "1";
 
 function ensureDirs() {
   for (const path of [contextDir, outboxDir, stateDir]) {
@@ -467,6 +468,10 @@ async function main() {
   clearActiveRun();
 
   if (intent === "release_publish" && candidates.length === 0) {
+    if (skipNoCandidateRecord) {
+      console.log(JSON.stringify({ ok: true, status: "no_pending_candidates", recorded: false }));
+      return;
+    }
     await recordHarnessRun({
       id: runId,
       provider: "harness",

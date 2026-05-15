@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { XMLParser } from "fast-xml-parser";
+import { entities } from "@/data";
 import { ensureDb } from "@/lib/db";
 import { sha256 } from "@/lib/security";
 import { syncReleaseSources, type ReleaseSourceRecord, type ReleaseSourceType } from "@/lib/source-registry";
@@ -43,6 +44,13 @@ type FetchResult = {
   finalUrl: string;
 };
 
+type DuplicateRelease = {
+  id: string;
+  title: string;
+  date: string;
+  source: "static" | "runtime";
+};
+
 class FetchSourceError extends Error {
   statusCode?: number;
   metadata?: Record<string, unknown>;
@@ -61,6 +69,102 @@ function stripHtml(html: string): string {
     .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function normalizeWhitespace(value: string): string {
+  return value.replace(/\s+/g, " ").trim();
+}
+
+function normalizePageFingerprintText(value: string): string {
+  return normalizeWhitespace(value)
+    .replace(/\bUpdated:?\s+(?:just now|\d+\s+(?:minute|minutes|hour|hours|day|days)\s+ago)\b/gi, "Updated")
+    .replace(/\bLast updated:?\s+(?:just now|\d+\s+(?:minute|minutes|hour|hours|day|days)\s+ago)\b/gi, "Last updated")
+    .replace(/\bUpdated\s+\d+\s+(?:minute|minutes|hour|hours|day|days)\s+ago\b/gi, "Updated")
+    .replace(/\b\d+\s+(?:minute|minutes|hour|hours)\s+ago\b/gi, "")
+    .replace(/\bToday at \d{1,2}:\d{2}(?:\s?[AP]M)?\b/gi, "Today")
+    .replace(/\bYesterday at \d{1,2}:\d{2}(?:\s?[AP]M)?\b/gi, "Yesterday")
+    .replace(/\b\d{1,2}:\d{2}(?::\d{2})?\s?(?:AM|PM)?\b/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function normalizeReleaseTitle(value: string): string {
+  return normalizeWhitespace(value)
+    .replace(datedSectionPattern, " ")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .toLowerCase()
+    .trim();
+}
+
+function titleLooksSame(candidateTitle: string, releaseTitle: string): boolean {
+  const candidate = normalizeReleaseTitle(candidateTitle);
+  const release = normalizeReleaseTitle(releaseTitle);
+  if (!candidate || !release || release.length < 8) return false;
+  return candidate === release || candidate.includes(release) || release.includes(candidate);
+}
+
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+] as const;
+
+const datedSectionPattern = new RegExp(`\\b(${monthNames.join("|")})\\s+(\\d{1,2}),\\s+(\\d{4})\\b`, "g");
+
+function monthNumber(month: string): string {
+  const index = monthNames.findIndex((entry) => entry.toLowerCase() === month.toLowerCase());
+  return String(Math.max(0, index) + 1).padStart(2, "0");
+}
+
+function dateFromMatch(match: RegExpExecArray): string {
+  return `${match[3]}-${monthNumber(match[1] ?? "")}-${String(match[2] ?? "").padStart(2, "0")}`;
+}
+
+function titleFromDatedSection(dateText: string, sectionText: string): string {
+  const withoutDate = normalizeWhitespace(sectionText.slice(dateText.length));
+  const words = withoutDate.split(" ").filter(Boolean);
+  const titleWords = words.slice(0, 14);
+  return normalizeWhitespace(`${dateText} — ${titleWords.join(" ")}`) || dateText;
+}
+
+function eventsFromDatedReleaseSections(source: ReleaseSourceRecord, result: FetchResult, text: string): CollectorEvent[] {
+  const normalized = normalizePageFingerprintText(text);
+  const matches = [...normalized.matchAll(datedSectionPattern)];
+  if (matches.length === 0) return [];
+
+  const maxSections = Math.max(1, Math.min(20, getConfigNumber(source.config, "sectionLimit", 8)));
+  return matches.slice(0, maxSections).map((match, index) => {
+    const next = matches[index + 1];
+    const section = normalizeWhitespace(normalized.slice(match.index ?? 0, next?.index ?? normalized.length)).slice(0, 2400);
+    const dateText = match[0] ?? "";
+    const publishedDate = dateFromMatch(match);
+    const title = titleFromDatedSection(dateText, section);
+    const fingerprintSource = `${source.id}\n${publishedDate}\n${result.finalUrl}\n${section.slice(0, 1200)}`;
+    return {
+      eventType: "release_note_section",
+      title,
+      body: section,
+      sourceUrl: result.finalUrl,
+      publishedAt: `${publishedDate}T00:00:00.000Z`,
+      fingerprint: sha256(fingerprintSource),
+      confidence: 0.78,
+      raw: {
+        extractor: "dated_release_sections",
+        sourceExtractor: source.type,
+        contentType: result.contentType,
+        sectionDate: publishedDate,
+      },
+    };
+  });
 }
 
 function getConfigNumber(config: Record<string, unknown>, key: string, fallback: number): number {
@@ -229,9 +333,16 @@ function eventsFromSitemap(source: ReleaseSourceRecord, result: FetchResult): Co
 
 function eventsFromPage(source: ReleaseSourceRecord, result: FetchResult): CollectorEvent[] {
   const text = stripHtml(result.body);
+  if (source.config.extractDatedSections === true) {
+    const sectionEvents = eventsFromDatedReleaseSections(source, result, text);
+    if (sectionEvents.length > 0) {
+      return sectionEvents;
+    }
+  }
   const titleMatch = result.body.match(/<title[^>]*>([^<]+)<\/title>/i);
   const title = titleMatch?.[1]?.trim() || `${source.label} updated`;
   const snippet = text.slice(0, 2400);
+  const fingerprintText = normalizePageFingerprintText(text).slice(0, 12000);
   return [
     {
       eventType: "page_change",
@@ -239,9 +350,9 @@ function eventsFromPage(source: ReleaseSourceRecord, result: FetchResult): Colle
       body: snippet,
       sourceUrl: result.finalUrl,
       publishedAt: null,
-      fingerprint: sha256(snippet),
+      fingerprint: sha256(`${result.finalUrl}\n${fingerprintText}`),
       confidence: source.type === "browser_page" ? 0.56 : 0.5,
-      raw: { extractor: source.type, contentType: result.contentType },
+      raw: { extractor: source.type, contentType: result.contentType, stableFingerprint: true },
     },
   ];
 }
@@ -284,6 +395,41 @@ function mapSource(row: SourceRow): ReleaseSourceRecord {
     priority: row.priority,
     config: row.config ?? {},
   };
+}
+
+async function findDuplicateRelease(source: ReleaseSourceRecord, event: CollectorEvent): Promise<DuplicateRelease | null> {
+  const eventDate = event.publishedAt?.slice(0, 10) ?? null;
+  if (!eventDate) return null;
+  const allowBodyMatch = event.eventType !== "release_note_section";
+
+  const entity = entities.find((entry) => entry.id === source.entityId);
+  const staticMatch = entity?.releases.find((release) => (
+    release.date === eventDate &&
+    (titleLooksSame(event.title, release.title) || Boolean(allowBodyMatch && event.body && titleLooksSame(event.body, release.title)))
+  ));
+  if (staticMatch) {
+    return {
+      id: staticMatch.id,
+      title: staticMatch.title,
+      date: staticMatch.date,
+      source: "static",
+    };
+  }
+
+  const sql = await ensureDb();
+  if (!sql) return null;
+  const rows = await sql<Array<{ id: string; title: string; date: string }>>`
+    select id, title, date
+    from published_releases
+    where entity_id = ${source.entityId}
+      and date = ${eventDate}
+    order by published_at desc
+    limit 50
+  `;
+  const runtimeMatch = rows.find((release) => (
+    titleLooksSame(event.title, release.title) || Boolean(allowBodyMatch && event.body && titleLooksSame(event.body, release.title))
+  ));
+  return runtimeMatch ? { ...runtimeMatch, source: "runtime" } : null;
 }
 
 export async function enqueueDueSourceJobs(limit = 100): Promise<{ synced: number; enqueued: number }> {
@@ -374,6 +520,7 @@ async function createCandidateForEvent(source: ReleaseSourceRecord, event: Colle
   `;
   if (duplicate[0]) return duplicate[0].id;
 
+  const duplicateRelease = await findDuplicateRelease(source, event);
   const candidateId = randomUUID();
   await sql`
     insert into release_candidates (
@@ -385,12 +532,13 @@ async function createCandidateForEvent(source: ReleaseSourceRecord, event: Colle
       source_fingerprint,
       raw_title,
       raw_body,
-      raw_published_at,
-      status,
-      fetched_at,
-      metadata,
-      created_at,
-      updated_at
+	      raw_published_at,
+	      status,
+	      fetched_at,
+	      rejection_reason,
+	      metadata,
+	      created_at,
+	      updated_at
     )
     values (
       ${candidateId},
@@ -402,9 +550,23 @@ async function createCandidateForEvent(source: ReleaseSourceRecord, event: Colle
       ${event.title},
       ${event.body},
       ${event.publishedAt ? new Date(event.publishedAt).toISOString() : null},
-      ${"pending"},
+      ${duplicateRelease ? "rejected" : "pending"},
       now(),
-      ${sql.json({ ...event.raw, releaseEventId: eventId, confidence: event.confidence, eventType: event.eventType } as never)},
+      ${duplicateRelease ? `Already represented by ${duplicateRelease.source} release ${duplicateRelease.id}: ${duplicateRelease.title}` : null},
+      ${sql.json({
+        ...event.raw,
+        releaseEventId: eventId,
+        confidence: event.confidence,
+        eventType: event.eventType,
+        autoReview: duplicateRelease
+          ? {
+              action: "reject",
+              reason: "deterministic_duplicate_release",
+              duplicateRelease,
+              reviewedAt: new Date().toISOString(),
+            }
+          : undefined,
+      } as never)},
       now(),
       now()
     )

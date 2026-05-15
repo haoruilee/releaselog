@@ -786,9 +786,10 @@ curl -sS -H 'Cookie: releaselog_locale=zh' https://releaselog.site/reset-log \
 | Stripe test-mode webhook retries fail after going live | Production only has the live webhook signing secret, but the test-mode endpoint signs with its own secret | Set `STRIPE_TEST_SECRET_KEY` and `STRIPE_TEST_WEBHOOK_SECRET`, then rebuild/restart and resend a test event. |
 | "No such price: …; a similar object exists in live mode, but a test mode key was used" | `STRIPE_PRICE_PRO_*` is from the other mode than the active secret key | Re-copy the Price IDs from the Dashboard with the correct mode toggle. |
 | `current_period_end` is NULL in `subscriptions` | Reading the wrong field on newer Stripe API versions | Confirm `lib/billing.ts` reads `subscription.items.data[*].current_period_end` (fixed in commit `6bc2028`). Rebuild if you changed code. |
-| Magic-link always shows `invalid_token` | Gmail prefetched and consumed the token | Use the Copy-Link-Address workaround or the direct-session bypass above. |
+| Magic-link always shows `invalid_token` | Old links were consumed before the confirmation-page fix, or the link is expired | Request a fresh link. Current `/api/auth/verify` GET only renders a confirmation page; POST consumes the token. |
 | Webhook endpoint URL shown as `https://releaselog.site` (no path) in Dashboard | Someone forgot the path when creating the endpoint | Edit the endpoint and append `/api/webhooks/stripe` — signing secret is preserved. |
 | Checkout redirects show preview/success but no DB row | `syncCheckoutSession` is running but `customer.subscription.*` events aren't being forwarded | Verify all four event types are enabled on the webhook endpoint. |
+| Admin monitor looks like "all rejected" | Repeated page-change snapshots are being rejected after the real release was already published | Check "Release outcomes" and "Duplicate rejection rollup" separately on `/admin/monitor`. |
 
 ---
 
@@ -810,6 +811,10 @@ systemctl is-active cloudflared-releaselog.service
 
 # Notification timers
 systemctl list-timers --all | grep releaselog
+
+# AI review timers: hourly deep review plus fast pending-candidate review
+systemctl list-timers --all 'releaselog-ai-review*' --no-pager
+systemctl is-active releaselog-ai-review.timer releaselog-ai-review-fast.timer
 
 # Send-worker endpoint loaded (200 on valid auth, 401 without)
 curl -sS -H "Authorization: Bearer $CRON_SECRET" \

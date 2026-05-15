@@ -138,9 +138,48 @@ export default async function AdminMonitorPage() {
 
         <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <Metric label="Agent state" value={data.headline.agentHealth} detail={`${data.headline.latestHarnessProvider ?? "no provider"} · ${data.headline.latestHarnessIntent ?? "no intent"}`} />
-          <Metric label="Pending candidates" value={data.headline.pendingCandidates} detail={`${countValue(data.counts.candidatesByStatus, "approved")} approved · ${countValue(data.counts.candidatesByStatus, "rejected")} rejected`} />
+          <Metric label="Pending candidates" value={data.headline.pendingCandidates} detail={`${countValue(data.counts.candidateOutcomes24h, "duplicate_rejected")} duplicate rejects 24h`} />
           <Metric label="Published 24h" value={data.headline.published24h} detail={latestReview ? `last apply ${formatDuration(latestReview.durationMs)}` : "no review runs"} />
-          <Metric label="Source events 24h" value={data.headline.sourceEvents24h} detail={`${countValue(data.counts.jobsByStatus, "queued")} queued jobs`} />
+          <Metric label="Source events 24h" value={data.headline.sourceEvents24h} detail={`${data.headline.sourceFailures6h} failures 6h · ${countValue(data.counts.jobsByStatus, "queued")} queued jobs`} />
+        </div>
+
+        <div className="mt-6 grid gap-5 xl:grid-cols-[1.15fr,0.85fr]">
+          <Section
+            title="Release outcomes"
+            action={<Pill tone={data.headline.published24h > 0 ? "published" : "neutral"}>{data.headline.published24h} published 24h</Pill>}
+          >
+            <div className="grid gap-4 lg:grid-cols-[1fr,0.85fr]">
+              <div className="space-y-3">
+                {data.recentReleases.slice(0, 5).map((release) => (
+                  <div key={release.id} className="rounded-lg bg-empty-cell/25 p-3 ring-1 ring-white/5">
+                    <p className="text-sm font-medium">{release.title}</p>
+                    <p className="mt-1 text-xs text-secondary">{release.entityId} · {release.date} · published {formatTime(release.publishedAt)}</p>
+                  </div>
+                ))}
+                {data.recentReleases.length === 0 && <p className="text-sm text-secondary">No published releases yet.</p>}
+              </div>
+              <CountBars counts={data.counts.candidateOutcomes24h} />
+            </div>
+          </Section>
+
+          <Section
+            title="Duplicate rejection rollup"
+            action={<Pill tone={data.headline.duplicateRejected24h > 0 ? "rejected" : "neutral"}>{data.headline.duplicateRejected24h} in 24h</Pill>}
+          >
+            <div className="space-y-3">
+              {data.duplicateRejections.map((item) => (
+                <div key={`${item.sourceLabel}-${item.title}`} className="rounded-lg bg-empty-cell/25 p-3 ring-1 ring-white/5">
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="text-sm font-medium leading-snug">{item.title}</p>
+                    <Pill tone="rejected">{item.count}x</Pill>
+                  </div>
+                  <p className="mt-1 text-xs text-secondary">{item.sourceLabel} · last {formatTime(item.lastSeenAt)}</p>
+                  {item.reason && <p className="mt-2 text-xs leading-relaxed text-secondary">{item.reason}</p>}
+                </div>
+              ))}
+              {data.duplicateRejections.length === 0 && <p className="text-sm text-secondary">No duplicate rejection cluster in the last 24 hours.</p>}
+            </div>
+          </Section>
         </div>
 
         <div className="mt-6 grid gap-5 xl:grid-cols-[1.25fr,0.75fr]">
@@ -256,11 +295,20 @@ export default async function AdminMonitorPage() {
             </div>
           </Section>
 
-          <Section title="Collector failures">
-            <div className="space-y-3">
-              {data.sourceFailures.length === 0 && <p className="text-sm text-secondary">No recent source failures.</p>}
-              {data.sourceFailures.map((failure) => (
-                <div key={failure.id} className="rounded-lg bg-empty-cell/30 p-3 ring-1 ring-white/5">
+	          <Section title="Collector failures">
+	            <div className="space-y-3">
+	              {data.sourceFailureSummary.map((failure) => (
+	                <div key={`${failure.sourceId}-${failure.statusCode}-${failure.error}`} className="rounded-lg bg-red-950/25 p-3 ring-1 ring-red-500/10">
+	                  <div className="flex flex-wrap items-center justify-between gap-2">
+	                    <div className="text-sm font-medium">{failure.entityId} · {failure.label}</div>
+	                    <Pill tone="failed">{failure.count}x · {failure.statusCode ?? "error"}</Pill>
+	                  </div>
+	                  <p className="mt-2 text-xs text-secondary">{failure.error ?? "No error message"} · last {formatTime(failure.lastFailedAt)}</p>
+	                </div>
+	              ))}
+	              {data.sourceFailures.length === 0 && data.sourceFailureSummary.length === 0 && <p className="text-sm text-secondary">No recent source failures.</p>}
+	              {data.sourceFailures.map((failure) => (
+	                <div key={failure.id} className="rounded-lg bg-empty-cell/30 p-3 ring-1 ring-white/5">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="text-sm font-medium">{failure.entityId} · {failure.label}</div>
                     <Pill tone="failed">{failure.statusCode ?? failure.status}</Pill>

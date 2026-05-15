@@ -78,6 +78,24 @@ type RecentReleaseRow = {
   published_at: Date;
 };
 
+type DuplicateRejectionRow = {
+  raw_title: string;
+  source_label: string;
+  count: number | string;
+  last_seen_at: Date;
+  reason: string | null;
+};
+
+type SourceFailureSummaryRow = {
+  source_id: string;
+  source_label: string;
+  entity_id: string;
+  status_code: number | null;
+  error: string | null;
+  count: number | string;
+  last_failed_at: Date;
+};
+
 type SourceLagRow = {
   id: string;
   entity_id: string;
@@ -161,11 +179,14 @@ export async function getAdminMonitorData() {
     sourceFailures,
     recentCandidates,
     recentReleases,
-    sourceLag,
-    pendingCandidateRows,
-    published24Rows,
-    events24Rows,
-  ] = await Promise.all([
+	    sourceLag,
+	    pendingCandidateRows,
+	    published24Rows,
+	    events24Rows,
+	    candidateOutcomeRows,
+	    duplicateRejections,
+	    sourceFailureSummary,
+	  ] = await Promise.all([
     sql<HarnessRow[]>`
       select id,
              provider,
@@ -237,10 +258,10 @@ export async function getAdminMonitorData() {
       where enabled = true
       group by source_type
     `,
-    sql<SourceFailureRow[]>`
-      select r.id,
-             r.source_id,
-             s.label as source_label,
+	    sql<SourceFailureRow[]>`
+	      select r.id,
+	             r.source_id,
+	             s.label as source_label,
              s.entity_id,
              s.source_type,
              r.status,
@@ -248,12 +269,12 @@ export async function getAdminMonitorData() {
              r.error,
              r.started_at,
              r.finished_at
-      from source_fetch_runs r
-      join release_sources s on s.id = r.source_id
-      where r.status <> 'completed'
-      order by r.started_at desc
-      limit 12
-    `,
+	      from source_fetch_runs r
+	      join release_sources s on s.id = r.source_id
+	      where r.status = 'failed'
+	      order by r.started_at desc
+	      limit 12
+	    `,
     sql<RecentCandidateRow[]>`
       select id,
              entity_id,
@@ -298,12 +319,61 @@ export async function getAdminMonitorData() {
       from published_releases
       where published_at > now() - interval '24 hours'
     `,
-    sql<{ count: number | string }[]>`
-      select count(*)::int as count
-      from release_events
-      where created_at > now() - interval '24 hours'
-    `,
-  ]);
+	    sql<{ count: number | string }[]>`
+	      select count(*)::int as count
+	      from release_events
+	      where created_at > now() - interval '24 hours'
+	    `,
+	    sql<CountRow[]>`
+	      select
+	        case
+	          when status = 'approved' then 'approved'
+	          when status = 'pending' then 'pending'
+	          when status = 'rejected' and metadata ? 'autoReview' then 'auto_rejected'
+	          when status = 'rejected' and lower(coalesce(rejection_reason, '')) like '%duplicate%' then 'duplicate_rejected'
+	          when status = 'rejected' then 'rejected_other'
+	          else status
+	        end as key,
+	        count(*)::int as count
+	      from release_candidates
+	      where created_at > now() - interval '24 hours'
+	         or updated_at > now() - interval '24 hours'
+	      group by 1
+	    `,
+	    sql<DuplicateRejectionRow[]>`
+	      select raw_title,
+	             source_label,
+	             count(*)::int as count,
+	             max(updated_at) as last_seen_at,
+	             max(rejection_reason) as reason
+	      from release_candidates
+	      where status = 'rejected'
+	        and updated_at > now() - interval '24 hours'
+	        and (
+	          lower(coalesce(rejection_reason, '')) like '%duplicate%'
+	          or metadata ? 'autoReview'
+	        )
+	      group by raw_title, source_label
+	      order by count(*) desc, max(updated_at) desc
+	      limit 8
+	    `,
+	    sql<SourceFailureSummaryRow[]>`
+	      select r.source_id,
+	             s.label as source_label,
+	             s.entity_id,
+	             r.status_code,
+	             r.error,
+	             count(*)::int as count,
+	             max(r.started_at) as last_failed_at
+	      from source_fetch_runs r
+	      join release_sources s on s.id = r.source_id
+	      where r.status = 'failed'
+	        and r.started_at > now() - interval '6 hours'
+	      group by r.source_id, s.label, s.entity_id, r.status_code, r.error
+	      order by count(*) desc, max(r.started_at) desc
+	      limit 8
+	    `,
+	  ]);
 
   const latestHarness = harnessRuns[0] ? summarizeHarness(harnessRuns[0]) : null;
   const lastStartedAt = latestHarness?.startedAt ? new Date(latestHarness.startedAt) : null;
@@ -325,14 +395,17 @@ export async function getAdminMonitorData() {
       minutesSinceLastRun,
       pendingCandidates: toNumber(pendingCandidateRows[0]?.count),
       published24h: toNumber(published24Rows[0]?.count),
-      sourceEvents24h: toNumber(events24Rows[0]?.count),
-    },
-    counts: {
-      harnessByStatus24h: counts(harnessStatusRows),
-      candidatesByStatus: counts(candidateStatusRows),
-      jobsByStatus: counts(jobStatusRows),
-      sourcesByType: counts(sourceTypeRows),
-    },
+	      sourceEvents24h: toNumber(events24Rows[0]?.count),
+	      duplicateRejected24h: toNumber(candidateOutcomeRows.find((row) => row.key === "duplicate_rejected")?.count) + toNumber(candidateOutcomeRows.find((row) => row.key === "auto_rejected")?.count),
+	      sourceFailures6h: sourceFailureSummary.reduce((sum, row) => sum + toNumber(row.count), 0),
+	    },
+	    counts: {
+	      harnessByStatus24h: counts(harnessStatusRows),
+	      candidatesByStatus: counts(candidateStatusRows),
+	      candidateOutcomes24h: counts(candidateOutcomeRows),
+	      jobsByStatus: counts(jobStatusRows),
+	      sourcesByType: counts(sourceTypeRows),
+	    },
     harnessRuns: harnessRuns.map(summarizeHarness),
     harnessEvents: harnessEvents.map((row) => ({
       id: row.id,
@@ -378,14 +451,30 @@ export async function getAdminMonitorData() {
       status: row.status,
       createdAt: row.created_at.toISOString(),
     })),
-    recentReleases: recentReleases.map((row) => ({
-      id: row.id,
-      entityId: row.entity_id,
-      title: row.title,
-      date: row.date,
-      publishedAt: row.published_at.toISOString(),
-    })),
-    sourceLag: sourceLag.map((row) => ({
+	    recentReleases: recentReleases.map((row) => ({
+	      id: row.id,
+	      entityId: row.entity_id,
+	      title: row.title,
+	      date: row.date,
+	      publishedAt: row.published_at.toISOString(),
+	    })),
+	    duplicateRejections: duplicateRejections.map((row) => ({
+	      title: row.raw_title,
+	      sourceLabel: row.source_label,
+	      count: toNumber(row.count),
+	      lastSeenAt: row.last_seen_at.toISOString(),
+	      reason: row.reason,
+	    })),
+	    sourceFailureSummary: sourceFailureSummary.map((row) => ({
+	      sourceId: row.source_id,
+	      label: row.source_label,
+	      entityId: row.entity_id,
+	      statusCode: row.status_code,
+	      error: row.error,
+	      count: toNumber(row.count),
+	      lastFailedAt: row.last_failed_at.toISOString(),
+	    })),
+	    sourceLag: sourceLag.map((row) => ({
       id: row.id,
       entityId: row.entity_id,
       label: row.label,
