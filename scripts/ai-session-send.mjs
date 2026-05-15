@@ -57,12 +57,13 @@ export function sessionExists(sessionName) {
 export function providerConfig(provider, cwd = root) {
   const normalized = provider === "claude" ? "claude" : "codex";
   if (normalized === "claude") {
+    const allowedTools = process.env.AI_HARNESS_CLAUDE_ALLOWED_TOOLS || "Read,Glob,Grep,LS,Bash,Write,Edit,MultiEdit";
     return {
       provider: "claude",
       command: "claude",
       sessionName: process.env.AI_HARNESS_CLAUDE_SESSION || "releaselog-ai-goal-claude",
       service: process.env.AI_HARNESS_CLAUDE_SERVICE || "releaselog-ai-goal-claude-session.service",
-      launchCommand: `exec claude --permission-mode dontAsk --add-dir ${shellQuote(cwd)}`,
+      launchCommand: `exec claude --permission-mode dontAsk --allowedTools ${shellQuote(allowedTools)} --add-dir ${shellQuote(cwd)}`,
     };
   }
   return {
@@ -78,7 +79,8 @@ export function providerPromptCommand(provider, prompt, cwd = root) {
   const normalized = provider === "claude" ? "claude" : "codex";
   const quotedPrompt = shellQuote(prompt);
   if (normalized === "claude") {
-    return `claude -c --permission-mode dontAsk --add-dir ${shellQuote(cwd)} ${quotedPrompt} || exec claude --permission-mode dontAsk --add-dir ${shellQuote(cwd)} ${quotedPrompt}`;
+    const allowedTools = process.env.AI_HARNESS_CLAUDE_ALLOWED_TOOLS || "Read,Glob,Grep,LS,Bash,Write,Edit,MultiEdit";
+    return `exec claude ${quotedPrompt} --permission-mode dontAsk --allowedTools ${shellQuote(allowedTools)} --add-dir ${shellQuote(cwd)}`;
   }
   return `exec codex -C ${shellQuote(cwd)} --dangerously-bypass-approvals-and-sandbox --no-alt-screen ${quotedPrompt}`;
 }
@@ -109,7 +111,10 @@ export async function ensureProviderSession(provider, options = {}) {
     return config;
   }
 
-  startSessionViaSystemd(config.service) || startSessionDirect(config, cwd);
+  startSessionViaSystemd(config.service);
+  if (!sessionExists(config.sessionName)) {
+    startSessionDirect(config, cwd);
+  }
   const deadline = Date.now() + (options.waitMs ?? 15000);
   while (Date.now() < deadline) {
     if (sessionExists(config.sessionName)) return config;

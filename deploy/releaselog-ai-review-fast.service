@@ -1,15 +1,15 @@
 [Unit]
 Description=ReleaseLog fast AI release review
-After=docker.service releaselog-ai-goal-session.service cloudflared-releaselog.service
-Wants=docker.service releaselog-ai-goal-session.service
+After=docker.service releaselog-ai-goal-claude-session.service cloudflared-releaselog.service
+Wants=docker.service releaselog-ai-goal-claude-session.service
 
 [Service]
 Type=oneshot
 WorkingDirectory=/root/releaselog
 Environment=RELEASELOG_ROOT=/root/releaselog
 Environment=RELEASELOG_ENV_FILE=/root/releaselog/.env.docker
-Environment=AI_HARNESS_PRIMARY_CLI=codex
-Environment=AI_HARNESS_FALLBACK_CLI=claude
+Environment=AI_HARNESS_PRIMARY_CLI=claude
+Environment=AI_HARNESS_FALLBACK_CLI=codex
 Environment=AI_HARNESS_INTENT=release_publish
 Environment=AI_HARNESS_BATCH_LIMIT=8
 Environment=AI_HARNESS_WAIT_TIMEOUT_MS=2700000

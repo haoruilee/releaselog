@@ -168,10 +168,16 @@ now runs one scheduler pass plus one collector pass.
 
 ### Autonomous AI Harness
 
+See [docs/agent-harness.md](docs/agent-harness.md) for the full operator and
+implementation guide. It covers tmux usage, the outbox protocol, harness
+lifecycle, failure modes, database events, and why this design works with real
+interactive AI CLIs.
+
 The review/deploy step is intentionally host-side because it uses the real
-logged-in `codex` CLI on this machine, with `claude` as fallback. The CLI runs
-as a persistent tmux session and receives `/goal` tasks from the harness. Codex
-runs without its own sandbox so it can write the outbox and make repo edits; the
+logged-in `claude` CLI on this machine, with `codex` as fallback. The CLI runs
+as a persistent tmux session and receives `/goal` tasks from the harness. Claude
+is started with `Write,Bash` allowed tools so it can write the outbox and make
+repo edits; the
 harness, not the CLI terminal output, owns publish/deploy authority.
 
 ```bash
@@ -180,12 +186,12 @@ sudo cp /root/releaselog/deploy/releaselog-ai-goal-claude-session.service /etc/s
 sudo cp /root/releaselog/deploy/releaselog-ai-review.service /etc/systemd/system/
 sudo cp /root/releaselog/deploy/releaselog-ai-review.timer /etc/systemd/system/
 sudo systemctl daemon-reload
-sudo systemctl enable --now releaselog-ai-goal-session.service
+sudo systemctl enable --now releaselog-ai-goal-claude-session.service
 sudo systemctl enable --now releaselog-ai-review.timer
 
 systemctl list-timers --all 'releaselog-ai-review*'
 journalctl -u releaselog-ai-review.service -n 100 --no-pager
-tmux attach -t releaselog-ai-goal
+tmux attach -t releaselog-ai-goal-claude
 ```
 
 `scripts/ai-harness.mjs` reads pending candidates from
@@ -213,15 +219,16 @@ Code deploy rules:
 Useful env values in `.env.docker`:
 
 ```bash
-AI_REVIEW_CLI=codex               # claude or codex
+AI_REVIEW_CLI=claude              # claude or codex
 AI_REVIEW_BATCH_LIMIT=8
 AI_REVIEW_MAX_BUDGET_USD=2
 AI_REVIEW_DRY_RUN=0               # set to 1 to record decisions without applying
-AI_HARNESS_PRIMARY_CLI=codex
-AI_HARNESS_FALLBACK_CLI=claude
+AI_HARNESS_PRIMARY_CLI=claude
+AI_HARNESS_FALLBACK_CLI=codex
 AI_HARNESS_INTENT=auto            # release_publish, code_deploy, or auto
 AI_HARNESS_WAIT_TIMEOUT_MS=2700000
 AI_HARNESS_DRY_RUN=0
+AI_HARNESS_CLAUDE_ALLOWED_TOOLS=Read,Glob,Grep,LS,Bash,Write,Edit,MultiEdit
 GITHUB_TOKEN=                     # optional, raises GitHub API rate limit
 BROWSERLESS_CONTENT_URL=          # optional browser fallback endpoint
 ```
