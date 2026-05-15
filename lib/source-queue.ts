@@ -182,6 +182,10 @@ function getConfigBoolean(config: Record<string, unknown>, key: string, fallback
   return typeof value === "boolean" ? value : fallback;
 }
 
+function getFetchTimeoutMs(source: ReleaseSourceRecord, key = "timeoutMs", fallback = 45000): number {
+  return Math.max(5000, Math.min(120000, getConfigNumber(source.config, key, fallback)));
+}
+
 function asRecord(value: unknown): Record<string, unknown> | null {
   return value && typeof value === "object" ? (value as Record<string, unknown>) : null;
 }
@@ -204,11 +208,23 @@ async function fetchText(url: string, source: ReleaseSourceRecord): Promise<Fetc
     headers.Authorization = `Bearer ${githubToken}`;
   }
 
-  const response = await fetch(url, {
-    headers,
-    cache: "no-store",
-    redirect: "follow",
-  });
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      headers,
+      cache: "no-store",
+      redirect: "follow",
+      signal: AbortSignal.timeout(getFetchTimeoutMs(source)),
+    });
+  } catch (error) {
+    const message = error instanceof Error && error.name === "TimeoutError" ? "fetch_timeout" : "fetch_network_error";
+    const wrapped = new FetchSourceError(message);
+    wrapped.metadata = {
+      url,
+      message: error instanceof Error ? error.message : String(error),
+    };
+    throw wrapped;
+  }
   if (!response.ok) {
     const error = new FetchSourceError(`fetch_failed:${response.status}`);
     error.statusCode = response.status;
@@ -232,6 +248,7 @@ async function fetchBrowserText(source: ReleaseSourceRecord): Promise<FetchResul
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ url: source.url }),
+    signal: AbortSignal.timeout(getFetchTimeoutMs(source, "browserTimeoutMs", 120000)),
   });
   if (!response.ok) {
     const error = new FetchSourceError(`browser_fetch_failed:${response.status}`);
@@ -485,8 +502,50 @@ function linkMatchesSourceConfig(source: ReleaseSourceRecord, url: string): bool
   }
 }
 
+function arrayFromXmlValue(value: unknown): unknown[] {
+  if (Array.isArray(value)) return value;
+  return value === undefined || value === null ? [] : [value];
+}
+
+function stringFromXmlValue(value: unknown): string {
+  if (typeof value === "string") return value.trim();
+  const record = asRecord(value);
+  if (!record) return "";
+  return String(record["#text"] ?? "").trim();
+}
+
+function discoverXmlSitemapLinks(source: ReleaseSourceRecord, body: string): string[] {
+  if (!body.includes("<urlset") || !body.includes("<url")) return [];
+  let parsed: Record<string, unknown>;
+  try {
+    parsed = xmlParser.parse(body) as Record<string, unknown>;
+  } catch {
+    return [];
+  }
+  const urlset = asRecord(parsed.urlset);
+  if (!urlset) return [];
+
+  const entries: Array<{ url: string; lastmod: string }> = [];
+  for (const rawEntry of arrayFromXmlValue(urlset.url)) {
+    const entry = asRecord(rawEntry);
+    if (!entry) continue;
+    const url = stringFromXmlValue(entry.loc);
+    if (!url) continue;
+    if (!linkMatchesSourceConfig(source, url)) continue;
+    const lastmod = stringFromXmlValue(entry.lastmod);
+    entries.push({ url, lastmod });
+  }
+
+  return entries
+    .sort((a, b) => b.lastmod.localeCompare(a.lastmod))
+    .map((entry) => entry.url);
+}
+
 function discoverPageLinks(source: ReleaseSourceRecord, result: FetchResult): string[] {
   const links = new Set<string>();
+  for (const url of discoverXmlSitemapLinks(source, result.body)) {
+    links.add(url);
+  }
   const hrefPattern = /href=["']([^"'#]+)["']/gi;
   let match: RegExpExecArray | null;
   while ((match = hrefPattern.exec(result.body))) {

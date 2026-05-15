@@ -1,6 +1,314 @@
 {
   "sources": [
     {
+      "id": "ai-events:brand",
+      "entityId": "ai-events",
+      "type": "page_change",
+      "label": "Official event sources",
+      "url": "https://openai.com/index/devday-2026/",
+      "pollIntervalSeconds": 300,
+      "priority": 5,
+      "config": {
+        "readerOnly": true,
+        "readerFallback": true,
+        "inferPublishedAt": true
+      }
+    },
+    {
+      "id": "anthropic-team:brand",
+      "entityId": "anthropic-team",
+      "type": "page_change",
+      "label": "Claude release notes",
+      "url": "https://support.claude.com/en/articles/12138966-release-notes",
+      "pollIntervalSeconds": 300,
+      "priority": 7,
+      "config": {
+        "readerOnly": true,
+        "readerFallback": true,
+        "extractDatedSections": true,
+        "sectionLimit": 12,
+        "suppressGenericPageChange": true
+      }
+    },
+    {
+      "id": "anthropic-team:site-sitemap",
+      "entityId": "anthropic-team",
+      "type": "sitemap",
+      "label": "Anthropic sitemap",
+      "url": "https://www.anthropic.com/sitemap.xml",
+      "pollIntervalSeconds": 300,
+      "priority": 10,
+      "config": {
+        "discoverPageLinks": true,
+        "discoveredEventType": "news_article",
+        "inferPublishedAt": true,
+        "linkLimit": 12,
+        "linkPattern": "^https://www\\.anthropic\\.com/(news|research)/"
+      }
+    },
+    {
+      "id": "api-team:brand",
+      "entityId": "api-team",
+      "type": "page_change",
+      "label": "Claude API release notes",
+      "url": "https://platform.claude.com/docs/en/release-notes/overview",
+      "pollIntervalSeconds": 300,
+      "priority": 9,
+      "config": {
+        "extractDatedSections": true,
+        "sectionLimit": 12,
+        "suppressGenericPageChange": true
+      }
+    },
+    {
+      "id": "claude-product:brand",
+      "entityId": "claude-product",
+      "type": "page_change",
+      "label": "Claude release notes",
+      "url": "https://support.claude.com/en/articles/12138966-release-notes",
+      "pollIntervalSeconds": 300,
+      "priority": 9,
+      "config": {
+        "readerOnly": true,
+        "readerFallback": true,
+        "extractDatedSections": true,
+        "sectionLimit": 12,
+        "suppressGenericPageChange": true
+      }
+    },
+    {
+      "id": "claude-product:blog-sitemap",
+      "entityId": "claude-product",
+      "type": "sitemap",
+      "label": "Claude blog sitemap",
+      "url": "https://claude.com/sitemap.xml",
+      "pollIntervalSeconds": 300,
+      "priority": 8,
+      "config": {
+        "discoverPageLinks": true,
+        "discoveredEventType": "news_article",
+        "inferPublishedAt": true,
+        "linkLimit": 12,
+        "linkPattern": "^https://claude\\.com/blog/"
+      }
+    },
+    {
+      "id": "openai-team:brand",
+      "entityId": "openai-team",
+      "type": "page_change",
+      "label": "ChatGPT release notes",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "pollIntervalSeconds": 300,
+      "priority": 9,
+      "config": {
+        "readerOnly": true,
+        "readerFallback": true,
+        "extractDatedSections": true,
+        "sectionLimit": 12,
+        "suppressGenericPageChange": true
+      }
+    },
+    {
+      "id": "openai-team:news-feed",
+      "entityId": "openai-team",
+      "type": "feed",
+      "label": "OpenAI News RSS",
+      "url": "https://openai.com/news/rss.xml",
+      "pollIntervalSeconds": 300,
+      "priority": 10,
+      "config": {
+        "entryLimit": 12
+      }
+    },
+    {
+      "id": "openai-team:platform-changelog",
+      "entityId": "openai-team",
+      "type": "page_change",
+      "label": "OpenAI API changelog",
+      "url": "https://platform.openai.com/docs/changelog",
+      "pollIntervalSeconds": 300,
+      "priority": 8,
+      "config": {
+        "readerOnly": true,
+        "readerFallback": true,
+        "extractDatedSections": true,
+        "sectionLimit": 12,
+        "suppressGenericPageChange": true
+      }
+    },
+    {
+      "id": "deepseek-team:brand",
+      "entityId": "deepseek-team",
+      "type": "page_change",
+      "label": "DeepSeek API updates",
+      "url": "https://api-docs.deepseek.com/updates",
+      "pollIntervalSeconds": 300,
+      "priority": 9,
+      "config": {
+        "extractDatedSections": true,
+        "sectionLimit": 12,
+        "suppressGenericPageChange": true
+      }
+    },
+    {
+      "id": "deepseek-team:docs-sitemap",
+      "entityId": "deepseek-team",
+      "type": "sitemap",
+      "label": "DeepSeek docs sitemap",
+      "url": "https://api-docs.deepseek.com/sitemap.xml",
+      "pollIntervalSeconds": 300,
+      "priority": 6,
+      "config": {
+        "discoverPageLinks": true,
+        "discoveredEventType": "docs_page",
+        "inferPublishedAt": true,
+        "linkLimit": 8,
+        "linkPattern": "^https://api-docs\\.deepseek\\.com/updates"
+      }
+    },
+    {
+      "id": "vllm-team:blog-sitemap",
+      "entityId": "vllm-team",
+      "type": "sitemap",
+      "label": "vLLM blog sitemap",
+      "url": "https://blog.vllm.ai/sitemap.xml",
+      "pollIntervalSeconds": 300,
+      "priority": 8,
+      "config": {
+        "discoverPageLinks": true,
+        "discoveredEventType": "news_article",
+        "inferPublishedAt": true,
+        "linkLimit": 12,
+        "linkPattern": "^https://vllm\\.ai/blog/\\d{4}-\\d{2}-\\d{2}-"
+      }
+    },
+    {
+      "id": "google-deepmind-team:deepmind-rss",
+      "entityId": "google-deepmind-team",
+      "type": "feed",
+      "label": "Google DeepMind RSS",
+      "url": "https://deepmind.google/blog/rss.xml",
+      "pollIntervalSeconds": 300,
+      "priority": 10,
+      "config": {
+        "entryLimit": 10
+      }
+    },
+    {
+      "id": "google-deepmind-team:google-ai-rss",
+      "entityId": "google-deepmind-team",
+      "type": "feed",
+      "label": "Google AI blog RSS",
+      "url": "https://blog.google/technology/ai/rss/",
+      "pollIntervalSeconds": 300,
+      "priority": 8,
+      "config": {
+        "entryLimit": 10
+      }
+    },
+    {
+      "id": "google-deepmind-team:gemini-api-changelog",
+      "entityId": "google-deepmind-team",
+      "type": "page_change",
+      "label": "Gemini API release notes",
+      "url": "https://ai.google.dev/gemini-api/docs/changelog?hl=en",
+      "pollIntervalSeconds": 300,
+      "priority": 9,
+      "config": {
+        "extractDatedSections": true,
+        "sectionLimit": 12,
+        "suppressGenericPageChange": true
+      }
+    },
+    {
+      "id": "google-deepmind-team:vertex-release-notes",
+      "entityId": "google-deepmind-team",
+      "type": "page_change",
+      "label": "Vertex AI release notes",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+      "pollIntervalSeconds": 300,
+      "priority": 8,
+      "config": {
+        "extractDatedSections": true,
+        "sectionLimit": 12,
+        "suppressGenericPageChange": true
+      }
+    },
+    {
+      "id": "mistral-team:brand",
+      "entityId": "mistral-team",
+      "type": "page_change",
+      "label": "Mistral changelog",
+      "url": "https://docs.mistral.ai/resources/changelogs",
+      "pollIntervalSeconds": 300,
+      "priority": 9,
+      "config": {
+        "readerOnly": true,
+        "readerFallback": true,
+        "extractDatedSections": true,
+        "sectionLimit": 12,
+        "suppressGenericPageChange": true
+      }
+    },
+    {
+      "id": "mistral-team:site-sitemap",
+      "entityId": "mistral-team",
+      "type": "sitemap",
+      "label": "Mistral news sitemap",
+      "url": "https://mistral.ai/sitemap.xml",
+      "pollIntervalSeconds": 300,
+      "priority": 8,
+      "config": {
+        "discoverPageLinks": true,
+        "discoveredEventType": "news_article",
+        "inferPublishedAt": true,
+        "linkLimit": 12,
+        "linkPattern": "^https://mistral\\.ai/news/"
+      }
+    },
+    {
+      "id": "radixark-team:sglang-releases",
+      "entityId": "radixark-team",
+      "type": "github_releases",
+      "label": "SGLang GitHub releases",
+      "url": "https://github.com/sgl-project/sglang/releases",
+      "pollIntervalSeconds": 300,
+      "priority": 10,
+      "config": {}
+    },
+    {
+      "id": "radixark-team:lmsys-blog",
+      "entityId": "radixark-team",
+      "type": "sitemap",
+      "label": "LMSYS blog",
+      "url": "https://www.lmsys.org/sitemap.xml",
+      "pollIntervalSeconds": 300,
+      "priority": 6,
+      "config": {
+        "discoverPageLinks": true,
+        "discoveredEventType": "news_article",
+        "inferPublishedAt": true,
+        "linkLimit": 8,
+        "linkPattern": "^https://lmsys\\.org/blog/\\d{4}-\\d{2}-\\d{2}-"
+      }
+    },
+    {
+      "id": "ai-events:anthropic-events",
+      "entityId": "ai-events",
+      "type": "page_change",
+      "label": "Anthropic events",
+      "url": "https://www.anthropic.com/events",
+      "pollIntervalSeconds": 300,
+      "priority": 6,
+      "config": {
+        "discoverPageLinks": true,
+        "discoveredEventType": "event_page",
+        "inferPublishedAt": true,
+        "linkLimit": 8,
+        "linkPattern": "^https://www\\.anthropic\\.com/events/"
+      }
+    },
+    {
       "id": "xai-team:brand",
       "entityId": "xai-team",
       "type": "page_change",
