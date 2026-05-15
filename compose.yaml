@@ -18,6 +18,7 @@ x-app-env: &app-env
   DATABASE_URL: postgres://${POSTGRES_USER:-releaselog}:${POSTGRES_PASSWORD:-releaselog}@db:5432/${POSTGRES_DB:-releaselog}
   NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
   NEXT_PUBLIC_USE_SERVER_DATA: ${NEXT_PUBLIC_USE_SERVER_DATA:-1}
+  BROWSERLESS_CONTENT_URL: "${BROWSERLESS_CONTENT_URL:-http://browserless:3000/content?token=${BROWSERLESS_TOKEN:-releaselog-browserless}}"
 
 services:
   db:

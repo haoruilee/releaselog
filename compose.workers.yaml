@@ -1,4 +1,13 @@
 services:
+  browserless:
+    image: ghcr.io/browserless/chromium:latest
+    restart: unless-stopped
+    environment:
+      TOKEN: ${BROWSERLESS_TOKEN:-releaselog-browserless}
+      CONCURRENT: ${BROWSERLESS_CONCURRENT:-2}
+      TIMEOUT: ${BROWSERLESS_TIMEOUT:-120000}
+    shm_size: "1gb"
+
   send-worker:
     image: releaselog-app:${RELEASELOG_IMAGE_TAG:-local}
     restart: unless-stopped

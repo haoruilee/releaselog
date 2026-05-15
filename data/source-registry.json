@@ -1,3 +1,71 @@
 {
-  "sources": []
+  "sources": [
+    {
+      "id": "xai-team:brand",
+      "entityId": "xai-team",
+      "type": "page_change",
+      "label": "xAI official sources",
+      "url": "https://docs.x.ai/developers/release-notes",
+      "pollIntervalSeconds": 300,
+      "priority": 5,
+      "config": {
+        "extractDatedSections": true,
+        "sectionLimit": 8,
+        "suppressGenericPageChange": true
+      }
+    },
+    {
+      "id": "xai-team:sitemap",
+      "entityId": "xai-team",
+      "type": "page_change",
+      "label": "xAI sitemap",
+      "url": "https://x.ai/sitemap.xml",
+      "pollIntervalSeconds": 300,
+      "priority": 10,
+      "config": {
+        "readerOnly": true,
+        "readerFallback": true,
+        "discoverPageLinks": true,
+        "discoveredEventType": "news_article",
+        "inferPublishedAt": true,
+        "linkLimit": 12,
+        "linkPattern": "^https://x\\.ai/news/"
+      }
+    },
+    {
+      "id": "xai-team:news",
+      "entityId": "xai-team",
+      "type": "browser_page",
+      "label": "xAI News",
+      "url": "https://x.ai/news",
+      "enabled": false,
+      "pollIntervalSeconds": 300,
+      "priority": 1,
+      "config": {
+        "browserFallback": true,
+        "readerFallback": true,
+        "discoverPageLinks": true,
+        "discoveredEventType": "news_article",
+        "inferPublishedAt": true,
+        "linkLimit": 12,
+        "linkPattern": "^https://x\\.ai/news/"
+      }
+    },
+    {
+      "id": "xai-team:news:grok-build-cli",
+      "entityId": "xai-team",
+      "type": "browser_page",
+      "label": "xAI News",
+      "url": "https://x.ai/news/grok-build-cli",
+      "pollIntervalSeconds": 300,
+      "priority": 10,
+      "config": {
+        "readerOnly": true,
+        "readerFallback": true,
+        "eventType": "news_article",
+        "eventTitle": "Introducing Grok Build Early Beta",
+        "publishedAt": "2026-05-14T00:00:00.000Z"
+      }
+    }
+  ]
 }

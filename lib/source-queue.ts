@@ -125,7 +125,7 @@ function monthNumber(month: string): string {
   return String(Math.max(0, index) + 1).padStart(2, "0");
 }
 
-function dateFromMatch(match: RegExpExecArray): string {
+function dateFromMatch(match: RegExpExecArray | RegExpMatchArray): string {
   return `${match[3]}-${monthNumber(match[1] ?? "")}-${String(match[2] ?? "").padStart(2, "0")}`;
 }
 
@@ -170,6 +170,16 @@ function eventsFromDatedReleaseSections(source: ReleaseSourceRecord, result: Fet
 function getConfigNumber(config: Record<string, unknown>, key: string, fallback: number): number {
   const value = Number(config[key]);
   return Number.isFinite(value) ? value : fallback;
+}
+
+function getConfigString(config: Record<string, unknown>, key: string): string | null {
+  const value = config[key];
+  return typeof value === "string" && value.trim() ? value.trim() : null;
+}
+
+function getConfigBoolean(config: Record<string, unknown>, key: string, fallback = false): boolean {
+  const value = config[key];
+  return typeof value === "boolean" ? value : fallback;
 }
 
 function asRecord(value: unknown): Record<string, unknown> | null {
@@ -234,6 +244,55 @@ async function fetchBrowserText(source: ReleaseSourceRecord): Promise<FetchResul
     body: await response.text(),
     finalUrl: source.url,
   };
+}
+
+function isBlockedFetchResult(result: FetchResult): boolean {
+  const text = stripHtml(result.body).toLowerCase();
+  return (
+    (text.includes("cloudflare") && text.includes("you have been blocked")) ||
+    (text.includes("attention required") && text.includes("please enable cookies")) ||
+    text.includes("access denied")
+  );
+}
+
+function readerFallbackUrl(url: string, source: ReleaseSourceRecord): string {
+  const template = getConfigString(source.config, "readerUrlTemplate");
+  if (template) return template.replace(/\{url\}/g, encodeURI(url));
+  return `https://r.jina.ai/${url}`;
+}
+
+async function fetchReaderText(url: string, source: ReleaseSourceRecord): Promise<FetchResult> {
+  const readerUrl = readerFallbackUrl(url, source);
+  const result = await fetchText(readerUrl, { ...source, url: readerUrl });
+  return {
+    ...result,
+    finalUrl: url,
+    contentType: `${result.contentType || "text/plain"}; reader-fallback`,
+  };
+}
+
+async function fetchPageWithFallback(source: ReleaseSourceRecord, url = source.url): Promise<FetchResult> {
+  const sourceForUrl: ReleaseSourceRecord = { ...source, url };
+  if (source.config.readerOnly === true) {
+    return fetchReaderText(url, sourceForUrl);
+  }
+  let result: FetchResult;
+  try {
+    result = source.type === "browser_page" ? await fetchBrowserText(sourceForUrl) : await fetchText(url, sourceForUrl);
+  } catch (error) {
+    if (source.config.browserFallback === true) {
+      result = await fetchBrowserText(sourceForUrl);
+    } else if (source.config.readerFallback === true) {
+      return fetchReaderText(url, sourceForUrl);
+    } else {
+      throw error;
+    }
+  }
+
+  if (source.config.readerFallback === true && isBlockedFetchResult(result)) {
+    return fetchReaderText(url, sourceForUrl);
+  }
+  return result;
 }
 
 function eventsFromFeed(source: ReleaseSourceRecord, result: FetchResult): CollectorEvent[] {
@@ -331,6 +390,41 @@ function eventsFromSitemap(source: ReleaseSourceRecord, result: FetchResult): Co
     });
 }
 
+function firstHtmlText(html: string, tagName: string): string | null {
+  const match = html.match(new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)<\\/${tagName}>`, "i"));
+  return match?.[1] ? stripHtml(match[1]) : null;
+}
+
+function titleFromPage(source: ReleaseSourceRecord, result: FetchResult): string {
+  const configuredTitle = getConfigString(source.config, "eventTitle");
+  if (configuredTitle) return configuredTitle;
+  const readerTitle = result.body.match(/^Title:\s*(.+)$/im)?.[1]?.trim();
+  if (readerTitle) return readerTitle;
+  const h1 = firstHtmlText(result.body, "h1");
+  if (h1) return h1;
+  const titleMatch = result.body.match(/<title[^>]*>([^<]+)<\/title>/i);
+  return titleMatch?.[1]?.trim() || `${source.label} updated`;
+}
+
+function normalizeOptionalDate(value: string | null): string | null {
+  if (!value) return null;
+  const parsed = Date.parse(value);
+  return Number.isNaN(parsed) ? null : new Date(parsed).toISOString();
+}
+
+function inferPublishedAtFromText(text: string): string | null {
+  const readerPublishedAt = (
+    text.match(/Published Time:\s*([0-9]{4}-[0-9]{2}-[0-9]{2}(?:T[0-9:.+-]+Z?)?)/i)?.[1] ??
+    text.match(/^Published Time:\s*(.+)$/im)?.[1]
+  )?.trim();
+  const normalizedReaderPublishedAt = normalizeOptionalDate(readerPublishedAt ?? null);
+  if (normalizedReaderPublishedAt) return normalizedReaderPublishedAt;
+  const normalized = normalizePageFingerprintText(text);
+  const match = [...normalized.matchAll(datedSectionPattern)][0];
+  if (!match) return null;
+  return `${dateFromMatch(match)}T00:00:00.000Z`;
+}
+
 function eventsFromPage(source: ReleaseSourceRecord, result: FetchResult): CollectorEvent[] {
   const text = stripHtml(result.body);
   if (source.config.extractDatedSections === true) {
@@ -338,23 +432,131 @@ function eventsFromPage(source: ReleaseSourceRecord, result: FetchResult): Colle
     if (sectionEvents.length > 0) {
       return sectionEvents;
     }
+    if (source.config.suppressGenericPageChange === true) {
+      return [];
+    }
   }
-  const titleMatch = result.body.match(/<title[^>]*>([^<]+)<\/title>/i);
-  const title = titleMatch?.[1]?.trim() || `${source.label} updated`;
+  const configuredPublishedAt = normalizeOptionalDate(getConfigString(source.config, "publishedAt"));
+  const inferredPublishedAt = getConfigBoolean(source.config, "inferPublishedAt")
+    ? inferPublishedAtFromText(text)
+    : null;
+  const publishedAt = configuredPublishedAt ?? inferredPublishedAt;
+  const configuredEventType = getConfigString(source.config, "eventType");
+  const title = titleFromPage(source, result);
   const snippet = text.slice(0, 2400);
   const fingerprintText = normalizePageFingerprintText(text).slice(0, 12000);
+  const metadataConfigured = Boolean(getConfigString(source.config, "eventTitle") || configuredPublishedAt);
   return [
     {
-      eventType: "page_change",
+      eventType: configuredEventType ?? (publishedAt || metadataConfigured ? "announcement_page" : "page_change"),
       title,
       body: snippet,
       sourceUrl: result.finalUrl,
-      publishedAt: null,
-      fingerprint: sha256(`${result.finalUrl}\n${fingerprintText}`),
-      confidence: source.type === "browser_page" ? 0.56 : 0.5,
-      raw: { extractor: source.type, contentType: result.contentType, stableFingerprint: true },
+      publishedAt,
+      fingerprint: sha256(`${result.finalUrl}\n${title}\n${publishedAt ?? ""}\n${fingerprintText}`),
+      confidence: metadataConfigured ? 0.9 : publishedAt ? 0.78 : source.type === "browser_page" ? 0.56 : 0.5,
+      raw: {
+        extractor: source.type,
+        contentType: result.contentType,
+        stableFingerprint: true,
+        configuredTitle: Boolean(getConfigString(source.config, "eventTitle")),
+        configuredPublishedAt: Boolean(configuredPublishedAt),
+        inferredPublishedAt: Boolean(inferredPublishedAt),
+      },
     },
   ];
+}
+
+function linkMatchesSourceConfig(source: ReleaseSourceRecord, url: string): boolean {
+  const pattern = getConfigString(source.config, "linkPattern");
+  if (pattern) {
+    try {
+      return new RegExp(pattern).test(url);
+    } catch {
+      return false;
+    }
+  }
+  try {
+    const sourceUrl = new URL(source.url);
+    const targetUrl = new URL(url);
+    return sourceUrl.hostname === targetUrl.hostname && targetUrl.pathname !== sourceUrl.pathname;
+  } catch {
+    return false;
+  }
+}
+
+function discoverPageLinks(source: ReleaseSourceRecord, result: FetchResult): string[] {
+  const links = new Set<string>();
+  const hrefPattern = /href=["']([^"'#]+)["']/gi;
+  let match: RegExpExecArray | null;
+  while ((match = hrefPattern.exec(result.body))) {
+    try {
+      const url = new URL(match[1]!, result.finalUrl).toString();
+      if (url !== result.finalUrl && linkMatchesSourceConfig(source, url)) {
+        links.add(url);
+      }
+    } catch {
+      // Ignore malformed hrefs; source pages frequently contain framework internals.
+    }
+  }
+  const markdownLinkPattern = /\[[^\]]+\]\((https?:\/\/[^)\s]+)\)/g;
+  while ((match = markdownLinkPattern.exec(result.body))) {
+    try {
+      const url = new URL(match[1]!, result.finalUrl).toString();
+      if (url !== result.finalUrl && linkMatchesSourceConfig(source, url)) {
+        links.add(url);
+      }
+    } catch {
+      // Ignore malformed markdown links from reader fallbacks.
+    }
+  }
+  const limit = Math.max(1, Math.min(20, getConfigNumber(source.config, "linkLimit", 8)));
+  return [...links].slice(0, limit);
+}
+
+async function eventsFromDiscoveredPages(source: ReleaseSourceRecord, result: FetchResult): Promise<CollectorEvent[]> {
+  const links = discoverPageLinks(source, result);
+  const events: CollectorEvent[] = [];
+  for (const url of links) {
+    try {
+      const childSource: ReleaseSourceRecord = {
+        ...source,
+        url,
+        config: {
+          ...source.config,
+          eventType: getConfigString(source.config, "discoveredEventType") ?? "news_article",
+          inferPublishedAt: getConfigBoolean(source.config, "inferPublishedAt", true),
+        },
+      };
+      const childResult = await fetchPageWithFallback(childSource, url);
+      const [event] = eventsFromPage(childSource, childResult);
+      if (event) {
+        events.push({
+          ...event,
+          raw: {
+            ...event.raw,
+            discoveredFrom: result.finalUrl,
+          },
+        });
+      }
+    } catch (error) {
+      events.push({
+        eventType: "link_discovery_error",
+        title: `Failed to collect ${url}`,
+        body: error instanceof Error ? error.message : String(error),
+        sourceUrl: url,
+        publishedAt: null,
+        fingerprint: sha256(`${source.id}\n${url}\nlink_discovery_error`),
+        confidence: 0.1,
+        raw: {
+          extractor: "link_discovery",
+          discoveredFrom: result.finalUrl,
+          error: error instanceof Error ? error.message : String(error),
+        },
+      });
+    }
+  }
+  return events.filter((event) => event.eventType !== "link_discovery_error");
 }
 
 async function collectSourceEvents(source: ReleaseSourceRecord): Promise<{ events: CollectorEvent[]; statusCode: number; metadata: Record<string, unknown> }> {
@@ -365,15 +567,19 @@ async function collectSourceEvents(source: ReleaseSourceRecord): Promise<{ event
 
   let result: FetchResult;
   try {
-    result = source.type === "browser_page" ? await fetchBrowserText(source) : await fetchText(source.url, source);
+    result = await fetchPageWithFallback(source);
   } catch (error) {
-    if (source.config.browserFallback === true) {
-      result = await fetchBrowserText(source);
-    } else {
-      throw error;
-    }
+    throw error;
   }
 
+  if (getConfigBoolean(source.config, "discoverPageLinks")) {
+    const events = await eventsFromDiscoveredPages(source, result);
+    return {
+      events,
+      statusCode: result.statusCode,
+      metadata: { collector: "link_discovery", finalUrl: result.finalUrl, discoveredEvents: events.length },
+    };
+  }
   if (source.type === "feed" || result.contentType.includes("xml") || result.body.includes("<feed") || result.body.includes("<rss")) {
     return { events: eventsFromFeed(source, result), statusCode: result.statusCode, metadata: { collector: "feed", finalUrl: result.finalUrl } };
   }
