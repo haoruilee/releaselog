@@ -18,6 +18,28 @@ body {
   color: var(--text-primary);
 }
 
+input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+textarea,
+select {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  caret-color: #111827;
+  color-scheme: light;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"])::placeholder,
+textarea::placeholder {
+  color: #6b7280 !important;
+  opacity: 1;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #111827 !important;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+}
+
 @layer utilities {
   .bg-page {
     background-color: var(--bg-page);

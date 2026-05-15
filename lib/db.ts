@@ -94,6 +94,98 @@ async function initSchema(sql: Sql): Promise<boolean> {
       last_candidate_id text
     );
 
+    create table if not exists release_sources (
+      id text primary key,
+      entity_id text not null,
+      source_type text not null,
+      label text not null,
+      url text not null,
+      enabled boolean not null default true,
+      poll_interval_seconds integer not null default 300,
+      priority integer not null default 5,
+      config jsonb not null default '{}'::jsonb,
+      last_scheduled_at timestamptz,
+      next_fetch_at timestamptz not null default now(),
+      created_at timestamptz not null default now(),
+      updated_at timestamptz not null default now()
+    );
+
+    create table if not exists fetch_jobs (
+      id text primary key,
+      source_id text not null references release_sources(id) on delete cascade,
+      job_type text not null default 'fetch_source',
+      status text not null default 'queued',
+      priority integer not null default 5,
+      run_after timestamptz not null default now(),
+      attempts integer not null default 0,
+      max_attempts integer not null default 3,
+      locked_at timestamptz,
+      locked_by text,
+      error text,
+      payload jsonb not null default '{}'::jsonb,
+      created_at timestamptz not null default now(),
+      updated_at timestamptz not null default now(),
+      finished_at timestamptz
+    );
+
+    create table if not exists source_fetch_runs (
+      id text primary key,
+      source_id text not null references release_sources(id) on delete cascade,
+      job_id text references fetch_jobs(id) on delete set null,
+      status text not null,
+      started_at timestamptz not null default now(),
+      finished_at timestamptz,
+      status_code integer,
+      fingerprint text,
+      error text,
+      metadata jsonb not null default '{}'::jsonb
+    );
+
+    create table if not exists ai_review_runs (
+      id text primary key,
+      provider text not null,
+      model text,
+      status text not null,
+      command text,
+      started_at timestamptz not null default now(),
+      finished_at timestamptz,
+      exit_code integer,
+      output text,
+      error text,
+      metadata jsonb not null default '{}'::jsonb
+    );
+
+    create table if not exists ai_harness_runs (
+      id text primary key,
+      provider text not null,
+      session_name text,
+      intent text not null,
+      status text not null,
+      ready boolean,
+      risk_level text,
+      context_path text,
+      outbox_path text,
+      checks jsonb not null default '[]'::jsonb,
+      error text,
+      metadata jsonb not null default '{}'::jsonb,
+      started_at timestamptz not null default now(),
+      finished_at timestamptz,
+      updated_at timestamptz not null default now()
+    );
+
+    create table if not exists ai_harness_events (
+      id text primary key,
+      run_id text not null,
+      provider text,
+      session_name text,
+      intent text,
+      phase text not null,
+      level text not null default 'info',
+      message text,
+      metadata jsonb not null default '{}'::jsonb,
+      created_at timestamptz not null default now()
+    );
+
     create table if not exists published_releases (
       id text primary key,
       entity_id text not null,
@@ -137,6 +229,22 @@ async function initSchema(sql: Sql): Promise<boolean> {
       updated_at timestamptz not null default now()
     );
 
+    create table if not exists release_events (
+      id text primary key,
+      source_id text not null references release_sources(id) on delete cascade,
+      entity_id text not null,
+      event_type text not null default 'source_update',
+      title text not null,
+      body text,
+      source_url text not null,
+      published_at timestamptz,
+      fingerprint text not null,
+      confidence numeric(4,3) not null default 0.5,
+      raw jsonb not null default '{}'::jsonb,
+      candidate_id text references release_candidates(id) on delete set null,
+      created_at timestamptz not null default now()
+    );
+
     create table if not exists sent_notifications (
       id text primary key,
       user_id text not null references users(id) on delete cascade,
@@ -151,6 +259,13 @@ async function initSchema(sql: Sql): Promise<boolean> {
 
     create index if not exists idx_release_candidates_status on release_candidates(status, created_at desc);
     create index if not exists idx_release_candidates_source on release_candidates(source_id, source_fingerprint);
+    create index if not exists idx_release_sources_due on release_sources(enabled, next_fetch_at, priority desc);
+    create index if not exists idx_fetch_jobs_claim on fetch_jobs(status, run_after, priority desc, created_at);
+    create index if not exists idx_source_fetch_runs_source_started on source_fetch_runs(source_id, started_at desc);
+    create index if not exists idx_release_events_entity_created on release_events(entity_id, created_at desc);
+    create index if not exists idx_ai_harness_runs_status_started on ai_harness_runs(status, started_at desc);
+    create index if not exists idx_ai_harness_events_run_created on ai_harness_events(run_id, created_at desc);
+    create index if not exists idx_ai_harness_events_created on ai_harness_events(created_at desc);
     create index if not exists idx_published_releases_entity_date on published_releases(entity_id, date desc);
     create index if not exists idx_private_feed_tokens_user on private_feed_tokens(user_id, revoked_at);
     create index if not exists idx_sessions_user on sessions(user_id, expires_at);
@@ -167,6 +282,9 @@ async function initSchema(sql: Sql): Promise<boolean> {
     create unique index if not exists uq_published_releases_source_candidate
       on published_releases (source_candidate_id)
       where source_candidate_id is not null;
+
+    create unique index if not exists uq_release_events_source_fingerprint
+      on release_events (source_id, fingerprint);
 
     create table if not exists sent_digests (
       user_id text not null references users(id) on delete cascade,

@@ -64,8 +64,8 @@ export async function requestMagicLink(emailInput: string, redirectPath?: string
         from,
         to: email,
         subject: "Your ReleaseLog sign-in link",
-        text: `Use this link to sign in to ReleaseLog: ${verifyUrl.toString()}`,
-        html: `<p>Use this link to sign in to ReleaseLog:</p><p><a href="${verifyUrl.toString()}">${verifyUrl.toString()}</a></p>`,
+        text: `Open this link, then press the sign-in button to finish signing in to ReleaseLog: ${verifyUrl.toString()}`,
+        html: `<p>Open this link, then press the sign-in button to finish signing in to ReleaseLog:</p><p><a href="${verifyUrl.toString()}">${verifyUrl.toString()}</a></p>`,
       });
       return {};
     } catch {

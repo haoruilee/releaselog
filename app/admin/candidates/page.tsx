@@ -27,6 +27,9 @@ export default async function AdminCandidatesPage() {
             <Link href="/admin/releases" className="text-accent underline-offset-4 hover:underline">
               Published releases
             </Link>
+            <Link href="/admin/monitor" className="text-accent underline-offset-4 hover:underline">
+              Monitor
+            </Link>
             <Link href="/admin/subscribers" className="text-accent underline-offset-4 hover:underline">
               Subscribers
             </Link>

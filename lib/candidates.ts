@@ -1,20 +1,10 @@
-import { randomUUID } from "node:crypto";
-import { XMLParser } from "fast-xml-parser";
-import { entities, type ReleaseItem } from "@/data";
+import type { ReleaseItem } from "@/data";
 import { ensureDb } from "@/lib/db";
 import { enqueueReleaseNotifications } from "@/lib/notification-queue";
 import { createPublishedRelease, type PublishedReleaseRecord } from "@/lib/releases-store";
-import { sha256 } from "@/lib/security";
+import { runIngestCycle } from "@/lib/source-queue";
 
 export type CandidateStatus = "pending" | "approved" | "rejected";
-
-export type CandidateSource = {
-  id: string;
-  entityId: string;
-  label: string;
-  url: string;
-  type: "page_change" | "feed";
-};
 
 export type ReleaseCandidateRecord = {
   id: string;
@@ -35,6 +25,24 @@ export type ReleaseCandidateRecord = {
   updatedAt: string;
 };
 
+export type CandidateIngestError = {
+  sourceId: string;
+  entityId: string;
+  url: string;
+  error: string;
+};
+
+export type CandidateIngestResult = {
+  synced?: number;
+  enqueued?: number;
+  claimed?: number;
+  checked?: number;
+  created: number;
+  unchanged: number;
+  failed: number;
+  errors: Array<CandidateIngestError | string>;
+};
+
 type CandidateRow = {
   id: string;
   entity_id: string;
@@ -53,12 +61,6 @@ type CandidateRow = {
   created_at: Date;
   updated_at: Date;
 };
-
-const xmlParser = new XMLParser({
-  ignoreAttributes: false,
-  attributeNamePrefix: "",
-  trimValues: true,
-});
 
 function mapCandidate(row: CandidateRow): ReleaseCandidateRecord {
   return {
@@ -81,207 +83,8 @@ function mapCandidate(row: CandidateRow): ReleaseCandidateRecord {
   };
 }
 
-export function getCandidateSources(): CandidateSource[] {
-  return entities
-    .filter((entity) => entity.brandUrl)
-    .map((entity) => ({
-      id: `${entity.id}:brand`,
-      entityId: entity.id,
-      label: entity.brandLine ?? entity.name,
-      url: entity.brandUrl!,
-      type: entity.brandUrl?.endsWith(".xml") ? "feed" : "page_change",
-    }));
-}
-
-function stripHtml(html: string): string {
-  return html
-    .replace(/<script[\s\S]*?<\/script>/gi, " ")
-    .replace(/<style[\s\S]*?<\/style>/gi, " ")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function extractSnapshotFromFeed(xml: string): { title: string; body: string; publishedAt: string | null; fingerprintSource: string } | null {
-  try {
-    const parsed = xmlParser.parse(xml) as Record<string, unknown>;
-    const feed = (parsed.feed ?? parsed.rss) as Record<string, unknown> | undefined;
-    if (!feed) return null;
-    const entriesRaw =
-      (feed.entry as unknown[]) ||
-      ((feed.channel as Record<string, unknown> | undefined)?.item as unknown[]) ||
-      [];
-    const entries = Array.isArray(entriesRaw) ? entriesRaw : [entriesRaw];
-    const first = entries
-      .map((entry) => (entry && typeof entry === "object" ? (entry as Record<string, unknown>) : null))
-      .find(Boolean);
-    if (!first) return null;
-    const title = String(first.title ?? "Feed updated");
-    const publishedAt = String(first.updated ?? first.pubDate ?? first.published ?? "") || null;
-    const links = [first.link, first.id, first.guid]
-      .flatMap((value) => (typeof value === "string" ? [value] : []))
-      .join(" ");
-    const summary = String(first.summary ?? first.description ?? first.content ?? "").slice(0, 1600);
-    return {
-      title,
-      body: summary,
-      publishedAt,
-      fingerprintSource: `${title}\n${publishedAt ?? ""}\n${links}\n${summary}`.trim(),
-    };
-  } catch {
-    return null;
-  }
-}
-
-async function fetchSourceSnapshot(source: CandidateSource): Promise<{
-  title: string;
-  body: string;
-  publishedAt: string | null;
-  fingerprint: string;
-  metadata: Record<string, unknown>;
-}> {
-  const response = await fetch(source.url, {
-    headers: {
-      "User-Agent": "ReleaseLogBot/1.0 (+https://releaselog.example)",
-      Accept: "text/html,application/xml,text/xml,application/rss+xml,application/atom+xml;q=0.9,*/*;q=0.8",
-    },
-    cache: "no-store",
-  });
-  if (!response.ok) {
-    throw new Error(`fetch_failed:${response.status}`);
-  }
-  const contentType = response.headers.get("content-type") ?? "";
-  const body = await response.text();
-
-  if (contentType.includes("xml") || body.includes("<feed") || body.includes("<rss")) {
-    const feedSnapshot = extractSnapshotFromFeed(body);
-    if (feedSnapshot) {
-      return {
-        title: feedSnapshot.title,
-        body: feedSnapshot.body,
-        publishedAt: feedSnapshot.publishedAt,
-        fingerprint: sha256(feedSnapshot.fingerprintSource),
-        metadata: {
-          contentType,
-          extractor: "feed",
-        },
-      };
-    }
-  }
-
-  const text = stripHtml(body);
-  const titleMatch = body.match(/<title[^>]*>([^<]+)<\/title>/i);
-  const title = titleMatch?.[1]?.trim() || `${source.label} updated`;
-  const snippet = text.slice(0, 1800);
-  return {
-    title,
-    body: snippet,
-    publishedAt: null,
-    fingerprint: sha256(snippet),
-    metadata: {
-      contentType,
-      extractor: "page_change",
-    },
-  };
-}
-
-export async function ingestCandidateSources(): Promise<{ checked: number; created: number; unchanged: number }> {
-  const sql = await ensureDb();
-  if (!sql) {
-    throw new Error("db_unconfigured");
-  }
-  const sources = getCandidateSources();
-  let created = 0;
-  let unchanged = 0;
-
-  for (const source of sources) {
-    const snapshot = await fetchSourceSnapshot(source);
-    const checkpointRows = await sql<Array<{ last_fingerprint: string | null }>>`
-      select last_fingerprint
-      from source_checkpoints
-      where source_id = ${source.id}
-      limit 1
-    `;
-    const lastFingerprint = checkpointRows[0]?.last_fingerprint ?? null;
-    if (lastFingerprint === snapshot.fingerprint) {
-      unchanged += 1;
-      await sql`
-        insert into source_checkpoints (source_id, entity_id, url, last_fingerprint, last_fetched_at)
-        values (${source.id}, ${source.entityId}, ${source.url}, ${snapshot.fingerprint}, now())
-        on conflict (source_id) do update
-        set entity_id = excluded.entity_id,
-            url = excluded.url,
-            last_fingerprint = excluded.last_fingerprint,
-            last_fetched_at = excluded.last_fetched_at
-      `;
-      continue;
-    }
-
-    const duplicate = await sql<Array<{ id: string }>>`
-      select id
-      from release_candidates
-      where source_id = ${source.id}
-        and source_fingerprint = ${snapshot.fingerprint}
-      limit 1
-    `;
-    const candidateId = duplicate[0]?.id ?? randomUUID();
-    if (!duplicate[0]) {
-      await sql`
-        insert into release_candidates (
-          id,
-          entity_id,
-          source_id,
-          source_label,
-          source_url,
-          source_fingerprint,
-          raw_title,
-          raw_body,
-          raw_published_at,
-          status,
-          fetched_at,
-          metadata,
-          created_at,
-          updated_at
-        )
-        values (
-          ${candidateId},
-          ${source.entityId},
-          ${source.id},
-          ${source.label},
-          ${source.url},
-          ${snapshot.fingerprint},
-          ${snapshot.title},
-          ${snapshot.body},
-          ${snapshot.publishedAt ? new Date(snapshot.publishedAt).toISOString() : null},
-          ${"pending"},
-          now(),
-          ${JSON.stringify(snapshot.metadata)}::jsonb,
-          now(),
-          now()
-        )
-      `;
-      created += 1;
-    } else {
-      unchanged += 1;
-    }
-
-    await sql`
-      insert into source_checkpoints (source_id, entity_id, url, last_fingerprint, last_fetched_at, last_candidate_id)
-      values (${source.id}, ${source.entityId}, ${source.url}, ${snapshot.fingerprint}, now(), ${candidateId})
-      on conflict (source_id) do update
-      set entity_id = excluded.entity_id,
-          url = excluded.url,
-          last_fingerprint = excluded.last_fingerprint,
-          last_fetched_at = excluded.last_fetched_at,
-          last_candidate_id = excluded.last_candidate_id
-    `;
-  }
-
-  return {
-    checked: sources.length,
-    created,
-    unchanged,
-  };
+export async function ingestCandidateSources(): Promise<CandidateIngestResult> {
+  return runIngestCycle();
 }
 
 export async function listCandidates(status?: CandidateStatus): Promise<ReleaseCandidateRecord[]> {

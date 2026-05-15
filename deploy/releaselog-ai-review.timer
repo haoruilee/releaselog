@@ -1,0 +1,10 @@
+[Unit]
+Description=Run ReleaseLog autonomous AI review hourly
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+Unit=releaselog-ai-review.service
+
+[Install]
+WantedBy=timers.target

@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { getEntityById } from "@/data";
 import { getCurrentUser } from "@/lib/auth";
 import { listRecentPublishedReleases } from "@/lib/releases-store";
@@ -18,7 +19,17 @@ export default async function AdminReleasesPage() {
   return (
     <div className="min-h-screen bg-page text-primary">
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
-        <h1 className="font-serif text-3xl">Published releases</h1>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h1 className="font-serif text-3xl">Published releases</h1>
+          <div className="flex gap-3 text-sm">
+            <Link href="/admin/monitor" className="text-accent underline-offset-4 hover:underline">
+              Monitor
+            </Link>
+            <Link href="/admin/candidates" className="text-accent underline-offset-4 hover:underline">
+              Candidates
+            </Link>
+          </div>
+        </div>
         <div className="mt-6 overflow-hidden rounded-2xl ring-1 ring-white/5">
           <table className="min-w-full divide-y divide-white/5 text-left text-sm">
             <thead className="bg-panel/70 text-secondary">

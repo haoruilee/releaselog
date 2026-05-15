@@ -26,6 +26,13 @@ yarn-error.log*
 
 # env files
 .env*.local
+.env.docker
+.env.docker.*
+!.env.docker.example
+
+# local database backups
+/backups/
+/var/ai-harness/
 
 # vercel
 .vercel

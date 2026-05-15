@@ -1,0 +1,18 @@
+[Unit]
+Description=ReleaseLog persistent Claude Code /goal fallback session
+After=network-online.target docker.service
+Wants=network-online.target docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/root/releaselog
+Environment=RELEASELOG_ROOT=/root/releaselog
+Environment=RELEASELOG_ENV_FILE=/root/releaselog/.env.docker
+Environment=TERM=xterm-256color
+ExecStart=/bin/sh -lc "/usr/bin/tmux has-session -t releaselog-ai-goal-claude 2>/dev/null || /usr/bin/tmux new-session -d -s releaselog-ai-goal-claude -c /root/releaselog 'exec claude --permission-mode dontAsk --add-dir /root/releaselog'"
+ExecStop=/bin/sh -lc "/usr/bin/tmux kill-session -t releaselog-ai-goal-claude 2>/dev/null || true"
+RemainAfterExit=yes
+User=root
+
+[Install]
+WantedBy=multi-user.target

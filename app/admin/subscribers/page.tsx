@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { getCurrentUser } from "@/lib/auth";
 import { listActiveSubscribers } from "@/lib/account-store";
 import { isAdminEmail, isSubscriptionActive } from "@/lib/runtime-config";
@@ -17,7 +18,17 @@ export default async function AdminSubscribersPage() {
   return (
     <div className="min-h-screen bg-page text-primary">
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
-        <h1 className="font-serif text-3xl">Subscribers</h1>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h1 className="font-serif text-3xl">Subscribers</h1>
+          <div className="flex gap-3 text-sm">
+            <Link href="/admin/monitor" className="text-accent underline-offset-4 hover:underline">
+              Monitor
+            </Link>
+            <Link href="/admin/candidates" className="text-accent underline-offset-4 hover:underline">
+              Candidates
+            </Link>
+          </div>
+        </div>
         <div className="mt-6 grid gap-4">
           {subscribers.map(({ user, subscription, preferences }) => (
             <section key={user.id} className="rounded-2xl bg-panel/50 p-5 ring-1 ring-white/5">

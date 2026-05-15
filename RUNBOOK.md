@@ -44,6 +44,216 @@ sudo journalctl -u releaselog.service -f
 If `npm run build` fails, the previous `.next/` build still runs — safe to
 inspect and retry. Don't `systemctl stop` until the rebuild succeeds.
 
+## Dockerized layout
+
+The repo also has a Docker Compose layout for separating immutable app code
+from mutable runtime state:
+
+| Piece | Docker location |
+|---|---|
+| App code | Built into `releaselog-app:<tag>` from `Dockerfile` |
+| Runtime env | `.env.docker` (gitignored, usually copied from `.env.local`) |
+| Postgres data | Docker named volume `releaselog_postgres-data` |
+| Dev dependencies | Docker named volume `releaselog_node-modules` |
+| Dev Next cache | Docker named volume `releaselog_next-cache` |
+| Source registry | DB table `release_sources`, seeded from entity `brandUrl` plus `data/source-registry.json` |
+| Fetch queue | DB table `fetch_jobs`, consumed by `collector-worker` |
+| Fetch audit | DB tables `source_fetch_runs` and `release_events` |
+| AI review | Host systemd timer `releaselog-ai-review.timer`, calls real `claude` or `codex` CLI |
+
+The base Compose file intentionally contains no published port. Use one of the
+overrides below so local development, staging, and production can bind different
+host ports without changing the service definition.
+
+`NEXT_PUBLIC_*` values are passed as Docker build args and may be embedded in
+client assets. Rebuild the app image after changing them.
+
+### Development
+
+```bash
+cd /root/releaselog
+cp .env.docker.example .env.docker
+# edit .env.docker: set secrets if you need Stripe/email/cron flows locally
+# leave APP_PORT unset for the default dev port 3001
+
+docker compose --env-file .env.docker \
+  -f compose.yaml -f compose.dev.yaml \
+  up --build
+
+curl -sS -o /dev/null -w "%{http_code}\n" http://127.0.0.1:3001/
+```
+
+Development mounts the repo into `/app`, but keeps `node_modules`, `.next`, and
+Postgres state in Docker named volumes.
+
+### Production Dry Run
+
+Run the containerized stack beside the current systemd service before cutover:
+
+```bash
+cd /root/releaselog
+cp .env.local .env.docker
+cat >> .env.docker <<'EOF'
+APP_PORT=3300
+POSTGRES_DB=releaselog
+POSTGRES_USER=releaselog
+POSTGRES_PASSWORD=replace-with-a-long-random-password
+NEXT_PUBLIC_SITE_URL=https://releaselog.site
+EOF
+
+docker compose --env-file .env.docker \
+  -f compose.yaml -f compose.prod.yaml \
+  up -d --build db app
+
+curl -sS -o /dev/null -w "%{http_code}\n" http://127.0.0.1:3300/
+```
+
+This starts a fresh empty Postgres volume. Import the current production data
+before doing a real cutover.
+
+### Import Current Postgres Into Docker
+
+```bash
+cd /root/releaselog
+mkdir -p backups
+set -a; . /root/releaselog/.env.local; set +a
+pg_dump -Fc "$DATABASE_URL" -f "backups/releaselog-$(date -u +%Y%m%dT%H%M%SZ).dump"
+
+docker compose --env-file .env.docker -f compose.yaml up -d db
+
+# Replace the filename with the dump generated above.
+docker compose --env-file .env.docker -f compose.yaml exec -T db \
+  sh -lc 'pg_restore --clean --if-exists --no-owner -U "$POSTGRES_USER" -d "$POSTGRES_DB"' \
+  < backups/releaselog-YYYYMMDDTHHMMSSZ.dump
+```
+
+The app auto-creates missing tables on first DB access, but the dump/restore
+path preserves users, subscriptions, feed tokens, candidates, and notification
+history.
+
+### Production Cutover
+
+Only do this after the dry run and data restore are verified.
+
+```bash
+cd /root/releaselog
+# In .env.docker, set APP_PORT=3000 so cloudflared still targets 127.0.0.1:3000.
+
+sudo systemctl disable --now \
+  releaselog-ingest.timer \
+  releaselog-send.timer \
+  releaselog-weekly-digest.timer \
+  releaselog.service
+
+docker compose --env-file .env.docker \
+  -f compose.yaml -f compose.prod.yaml -f compose.workers.yaml \
+  up -d --build
+
+curl -sS -o /dev/null -w "%{http_code}\n" http://127.0.0.1:3000/
+curl -sS -o /dev/null -w "%{http_code}\n" https://releaselog.site/
+```
+
+`compose.workers.yaml` replaces the app-side systemd timers and runs continuous
+queue workers:
+
+| Container | Endpoint | Schedule |
+|---|---|---|
+| `send-worker` | `/api/cron/send-notifications` | every 60 seconds |
+| `source-scheduler-worker` | `/api/cron/source-scheduler` | every 30 seconds |
+| `collector-worker` | `/api/cron/fetch-jobs?limit=5` | every 10 seconds |
+| `weekly-digest-worker` | `/api/cron/weekly-digest` | Mondays 09:00 UTC |
+
+The legacy `/api/cron/ingest` route remains as a compatibility entrypoint. It
+now runs one scheduler pass plus one collector pass.
+
+### Autonomous AI Harness
+
+The review/deploy step is intentionally host-side because it uses the real
+logged-in `codex` CLI on this machine, with `claude` as fallback. The CLI runs
+as a persistent tmux session and receives `/goal` tasks from the harness. Codex
+runs without its own sandbox so it can write the outbox and make repo edits; the
+harness, not the CLI terminal output, owns publish/deploy authority.
+
+```bash
+sudo cp /root/releaselog/deploy/releaselog-ai-goal-session.service /etc/systemd/system/
+sudo cp /root/releaselog/deploy/releaselog-ai-goal-claude-session.service /etc/systemd/system/
+sudo cp /root/releaselog/deploy/releaselog-ai-review.service /etc/systemd/system/
+sudo cp /root/releaselog/deploy/releaselog-ai-review.timer /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now releaselog-ai-goal-session.service
+sudo systemctl enable --now releaselog-ai-review.timer
+
+systemctl list-timers --all 'releaselog-ai-review*'
+journalctl -u releaselog-ai-review.service -n 100 --no-pager
+tmux attach -t releaselog-ai-goal
+```
+
+`scripts/ai-harness.mjs` reads pending candidates from
+`http://127.0.0.1:3000/api/cron/ai-review`, generates a dev/runtime context
+file, injects a `/goal` into the persistent tmux CLI, and waits for a structured
+outbox file under `var/ai-harness/outbox/`. The CLI must write `ready=true`
+before anything is published. The harness then runs the fixed gates and calls
+the app API itself.
+
+Release publish rules:
+
+- auto-publish only happens when the outbox is valid and the candidate apply API
+  accepts the decision
+- `action=approve` still requires `confidence >= 0.85`; lower confidence stays
+  pending with an AI review note
+- the CLI must not call the publish API directly except in dry-run experiments
+
+Code deploy rules:
+
+- the CLI can inspect/edit the repo during the `/goal` session
+- deploy only happens after `npm run validate`, `npm run build`, Docker Compose
+  rebuild, local/public HTTP health, worker status, and timer status pass
+- high-risk outbox results are blocked automatically
+
+Useful env values in `.env.docker`:
+
+```bash
+AI_REVIEW_CLI=codex               # claude or codex
+AI_REVIEW_BATCH_LIMIT=8
+AI_REVIEW_MAX_BUDGET_USD=2
+AI_REVIEW_DRY_RUN=0               # set to 1 to record decisions without applying
+AI_HARNESS_PRIMARY_CLI=codex
+AI_HARNESS_FALLBACK_CLI=claude
+AI_HARNESS_INTENT=auto            # release_publish, code_deploy, or auto
+AI_HARNESS_WAIT_TIMEOUT_MS=2700000
+AI_HARNESS_DRY_RUN=0
+GITHUB_TOKEN=                     # optional, raises GitHub API rate limit
+BROWSERLESS_CONTENT_URL=          # optional browser fallback endpoint
+```
+
+The current run artifacts are local-only and ignored by git:
+
+```bash
+ls -la /root/releaselog/var/ai-harness/
+```
+
+Rollback is straightforward while the old files remain in place:
+
+```bash
+cd /root/releaselog
+docker compose --env-file .env.docker \
+  -f compose.yaml -f compose.prod.yaml -f compose.workers.yaml \
+  down
+
+sudo systemctl disable --now releaselog-ai-review.timer
+sudo systemctl disable --now releaselog-ai-goal-session.service
+sudo systemctl disable --now releaselog-ai-goal-claude-session.service
+
+sudo systemctl enable --now \
+  releaselog.service \
+  releaselog-ingest.timer \
+  releaselog-send.timer \
+  releaselog-weekly-digest.timer
+```
+
+Do not disable the host PostgreSQL cluster just because ReleaseLog has moved to
+Docker. This host may have other local services using the same Postgres daemon.
+
 ---
 
 ## Stripe: test → live switchover

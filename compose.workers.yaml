@@ -1,0 +1,80 @@
+services:
+  send-worker:
+    image: releaselog-app:${RELEASELOG_IMAGE_TAG:-local}
+    restart: unless-stopped
+    env_file:
+      - path: .env.docker
+        required: false
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: postgres://${POSTGRES_USER:-releaselog}:${POSTGRES_PASSWORD:-releaselog}@db:5432/${POSTGRES_DB:-releaselog}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+      NEXT_PUBLIC_USE_SERVER_DATA: ${NEXT_PUBLIC_USE_SERVER_DATA:-1}
+      RELEASELOG_INTERNAL_URL: http://app:3000
+    depends_on:
+      app:
+        condition: service_started
+    command: ["/app/deploy/docker-cron-loop.sh", "/api/cron/send-notifications", "60"]
+
+  source-scheduler-worker:
+    image: releaselog-app:${RELEASELOG_IMAGE_TAG:-local}
+    restart: unless-stopped
+    env_file:
+      - path: .env.docker
+        required: false
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: postgres://${POSTGRES_USER:-releaselog}:${POSTGRES_PASSWORD:-releaselog}@db:5432/${POSTGRES_DB:-releaselog}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+      NEXT_PUBLIC_USE_SERVER_DATA: ${NEXT_PUBLIC_USE_SERVER_DATA:-1}
+      RELEASELOG_INTERNAL_URL: http://app:3000
+    depends_on:
+      app:
+        condition: service_started
+    command: ["/app/deploy/docker-cron-loop.sh", "/api/cron/source-scheduler", "30"]
+
+  collector-worker:
+    image: releaselog-app:${RELEASELOG_IMAGE_TAG:-local}
+    restart: unless-stopped
+    env_file:
+      - path: .env.docker
+        required: false
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: postgres://${POSTGRES_USER:-releaselog}:${POSTGRES_PASSWORD:-releaselog}@db:5432/${POSTGRES_DB:-releaselog}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+      NEXT_PUBLIC_USE_SERVER_DATA: ${NEXT_PUBLIC_USE_SERVER_DATA:-1}
+      RELEASELOG_INTERNAL_URL: http://app:3000
+    depends_on:
+      app:
+        condition: service_started
+    command: ["/app/deploy/docker-cron-loop.sh", "/api/cron/fetch-jobs?limit=5", "10"]
+
+  weekly-digest-worker:
+    image: releaselog-app:${RELEASELOG_IMAGE_TAG:-local}
+    restart: unless-stopped
+    env_file:
+      - path: .env.docker
+        required: false
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: postgres://${POSTGRES_USER:-releaselog}:${POSTGRES_PASSWORD:-releaselog}@db:5432/${POSTGRES_DB:-releaselog}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+      NEXT_PUBLIC_USE_SERVER_DATA: ${NEXT_PUBLIC_USE_SERVER_DATA:-1}
+      RELEASELOG_INTERNAL_URL: http://app:3000
+    depends_on:
+      app:
+        condition: service_started
+    command: ["/app/deploy/docker-cron-loop.sh", "/api/cron/weekly-digest", "604800", "weekly-monday-0900"]

@@ -1,12 +1,11 @@
-import type { NextConfig } from "next";
-
 const staticExport = process.env.STATIC_EXPORT === "1";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH?.trim() || undefined;
 
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   ...(staticExport
     ? {
-        output: "export" as const,
+        output: "export",
         images: { unoptimized: true },
       }
     : {}),
