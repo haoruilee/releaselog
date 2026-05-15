@@ -4,6 +4,8 @@
 
 一句话版本：这不是模型 API 的一次性调用，也不是 CLI callback。系统用 `tmux` 承载真实交互式 CLI，用 `/goal` 下发任务，用 run-specific outbox JSON 作为完成信号，再由 harness 验证 outbox、执行 gates、写数据库事件并完成发布。
 
+如果只想理解 TTY、tmux、Codex CLI 和 Claude Code CLI 的启动差异，先读 [Codex 和 Claude Code 的 TTY / tmux 使用说明](ai-cli-tty-tmux.md)。
+
 ## 设计目标
 
 ReleaseLog 的目标是持续从 Source Registry、Collector Workers 和 Queue 获得 release candidate，再让真实 AI coding agent 审阅这些候选、理解开发环境和运行环境，最后由系统决定是否发布或部署。

@@ -169,9 +169,11 @@ now runs one scheduler pass plus one collector pass.
 ### Autonomous AI Harness
 
 See [docs/agent-harness.md](docs/agent-harness.md) for the full operator and
-implementation guide. It covers tmux usage, the outbox protocol, harness
-lifecycle, failure modes, database events, and why this design works with real
-interactive AI CLIs.
+implementation guide. See [docs/ai-cli-tty-tmux.md](docs/ai-cli-tty-tmux.md)
+for a plain-language explanation of TTY, tmux, and the Codex/Claude Code
+launch differences. Together they cover tmux usage, the outbox protocol,
+harness lifecycle, failure modes, database events, and why this design works
+with real interactive AI CLIs.
 
 The review/deploy step is intentionally host-side because it uses the real
 logged-in `claude` CLI on this machine, with `codex` as fallback. The CLI runs
