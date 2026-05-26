@@ -1,0 +1,42 @@
+{
+  "name": "releaselog-trends",
+  "version": "0.1.1",
+  "description": "Fetch and summarize latest AI release trends from the ReleaseLog API.",
+  "author": {
+    "name": "Haorui",
+    "url": "https://releaselog.site/"
+  },
+  "homepage": "https://releaselog.site/",
+  "repository": "https://github.com/haoruilee/releaselog",
+  "license": "MIT",
+  "keywords": [
+    "ai",
+    "release-notes",
+    "changelog",
+    "trends",
+    "releaselog",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "ReleaseLog Trends",
+    "shortDescription": "Track latest AI releases and launch trends.",
+    "longDescription": "ReleaseLog Trends gives Codex a focused skill and MCP tools for querying releaselog.site API data, summarizing recent AI release activity, comparing teams and products, and grounding answers in dates, source URLs, tags, themes, deduplicated trend counts, and entity metadata.",
+    "developerName": "Haorui",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "websiteURL": "https://releaselog.site/",
+    "privacyPolicyURL": "https://releaselog.site/",
+    "termsOfServiceURL": "https://releaselog.site/",
+    "defaultPrompt": [
+      "What AI releases are trending this week?",
+      "Summarize major AI launches from the last month.",
+      "Compare OpenAI and Anthropic release activity."
+    ],
+    "brandColor": "#111827"
+  }
+}

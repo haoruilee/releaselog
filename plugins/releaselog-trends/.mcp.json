@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "releaselog-trends": {
+      "command": "node",
+      "args": [
+        "./scripts/releaselog-mcp.mjs"
+      ],
+      "cwd": ".",
+      "env": {
+        "RELEASELOG_API_BASE": "https://releaselog.site"
+      },
+      "note": "Local MCP server for querying ReleaseLog API endpoints and summarizing AI release trends. No authentication required."
+    }
+  }
+}

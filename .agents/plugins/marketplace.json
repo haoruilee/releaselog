@@ -1,0 +1,20 @@
+{
+  "name": "releaselog",
+  "interface": {
+    "displayName": "ReleaseLog Plugins"
+  },
+  "plugins": [
+    {
+      "name": "releaselog-trends",
+      "source": {
+        "source": "local",
+        "path": "./plugins/releaselog-trends"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
