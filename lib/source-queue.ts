@@ -854,6 +854,7 @@ async function processFetchJob(workerId: string, job: JobRow): Promise<{ created
     const aggregateFingerprint = sha256(result.events.map((event) => event.fingerprint).join("\n"));
     let created = 0;
     let unchanged = 0;
+    let skippedCandidates = 0;
     let lastCandidateId: string | null = null;
 
     for (const event of result.events) {
@@ -892,6 +893,10 @@ async function processFetchJob(workerId: string, job: JobRow): Promise<{ created
         unchanged += 1;
         continue;
       }
+      if (getConfigBoolean(source.config, "createCandidate", true) === false) {
+        skippedCandidates += 1;
+        continue;
+      }
       const candidateId = await createCandidateForEvent(source, event, inserted[0].id);
       if (candidateId) {
         lastCandidateId = candidateId;
@@ -916,7 +921,7 @@ async function processFetchJob(workerId: string, job: JobRow): Promise<{ created
           finished_at = now(),
           status_code = ${result.statusCode},
           fingerprint = ${aggregateFingerprint || null},
-          metadata = ${sql.json({ ...result.metadata, eventCount: result.events.length, created, unchanged } as never)}
+          metadata = ${sql.json({ ...result.metadata, eventCount: result.events.length, created, unchanged, skippedCandidates } as never)}
       where id = ${runId}
     `;
     await sql`

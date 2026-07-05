@@ -1,7 +1,7 @@
 [Unit]
 Description=Cloudflare named tunnel for ReleaseLog
-After=network.target releaselog.service
-Wants=releaselog.service
+After=network.target docker.service
+Wants=docker.service
 
 [Service]
 Type=simple

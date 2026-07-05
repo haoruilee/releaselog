@@ -1,7 +1,7 @@
 # ReleaseLog Runbook
 
 Operational notes for the production deploy at `https://releaselog.site`
-(Ubuntu 24.04 + systemd + named Cloudflare tunnel + Postgres + Next.js).
+(Ubuntu 24.04 + Docker Compose + systemd timers + named Cloudflare tunnel).
 
 See `README.md` for product/feature documentation. This file is for operators.
 
@@ -12,37 +12,44 @@ See `README.md` for product/feature documentation. This file is for operators.
 | Piece | Where |
 |---|---|
 | App code | `/root/releaselog` |
-| Env file | `/root/releaselog/.env.local` (gitignored) |
-| App service | `systemctl status releaselog.service` → runs `npm run start` on `PORT=3000` |
+| Env file | `/root/releaselog/.env.docker` (gitignored) |
+| App service | Docker Compose service `app`, bound to `127.0.0.1:3000` via `compose.prod.yaml` |
+| Workers | Docker Compose services from `compose.workers.yaml` |
 | Public URL | `https://releaselog.site` via `cloudflared-releaselog.service` |
 | Tunnel config | `/root/.cloudflared/config.yml` (named tunnel `71a2a91d-...`) |
-| Database | Local Postgres, URL in `.env.local` as `DATABASE_URL` |
+| Database | Docker Compose service `db`, persisted in the `releaselog_postgres-data` volume |
+| AI review/deploy harness | Host systemd timers `releaselog-ai-review.timer` and `releaselog-ai-review-fast.timer` |
 
-The app process does NOT hot-reload `.env.local` — it reads env at startup only
-(via `source .env.local` in the systemd unit). Any env change requires a
-restart.
+The app process does NOT hot-reload `.env.docker`. `NEXT_PUBLIC_*` values can
+also be embedded during the Docker build. Any env change requires rebuilding
+and recreating the Compose services.
 
 ---
 
 ## Restart / rebuild cheatsheet
 
 ```bash
-# Code change only (no dep/schema change): rebuild + restart
-cd /root/releaselog && npm run build && sudo systemctl restart releaselog.service
+# Code or env change: rebuild and recreate app/workers
+cd /root/releaselog
+docker compose --env-file .env.docker \
+  -f compose.yaml -f compose.prod.yaml -f compose.workers.yaml \
+  up -d --build --remove-orphans
 
-# Env change only (no code change): restart is enough
-sudo systemctl restart releaselog.service
-
-# Verify the service came up
-systemctl is-active releaselog.service          # expect: active
+docker compose --env-file .env.docker \
+  -f compose.yaml -f compose.prod.yaml -f compose.workers.yaml \
+  ps
+curl -sS -o /dev/null -w "%{http_code}\n" http://127.0.0.1:3000/  # expect: 200
 curl -sS -o /dev/null -w "%{http_code}\n" https://releaselog.site/  # expect: 200
 
-# Tail logs
-sudo journalctl -u releaselog.service -f
+# Tail app logs
+docker compose --env-file .env.docker \
+  -f compose.yaml -f compose.prod.yaml -f compose.workers.yaml \
+  logs -f app
 ```
 
-If `npm run build` fails, the previous `.next/` build still runs — safe to
-inspect and retry. Don't `systemctl stop` until the rebuild succeeds.
+The legacy host `releaselog.service` runs `npm run start` on the same
+`127.0.0.1:3000` endpoint and must stay stopped during Docker production. If it
+is running, Docker deploy gates fail with `address already in use`.
 
 ## Dockerized layout
 

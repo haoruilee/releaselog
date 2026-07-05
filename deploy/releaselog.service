@@ -1,5 +1,5 @@
 [Unit]
-Description=ReleaseLog Next.js service
+Description=ReleaseLog legacy host Next.js service (rollback only)
 After=network.target postgresql.service
 Wants=postgresql.service
 

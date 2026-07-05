@@ -93,6 +93,23 @@
       }
     },
     {
+      "id": "claude-product:claudedevs-x-usage-reset-2026-05-15",
+      "entityId": "claude-product",
+      "type": "page_change",
+      "label": "ClaudeDevs X usage reset",
+      "url": "https://x.com/claudedevs/status/2055347539923308703",
+      "pollIntervalSeconds": 300,
+      "priority": 10,
+      "config": {
+        "readerOnly": true,
+        "readerFallback": true,
+        "createCandidate": false,
+        "eventType": "manual_reset",
+        "eventTitle": "Claude Code 5-hour and weekly rate limits reset",
+        "publishedAt": "2026-05-15T18:00:14.000Z"
+      }
+    },
+    {
       "id": "openai-team:brand",
       "entityId": "openai-team",
       "type": "page_change",

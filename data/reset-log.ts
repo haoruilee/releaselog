@@ -254,6 +254,32 @@ export const RESET_EVENTS: ResetEvent[] = [
 
   // ─────────────────────────────────────── Claude Code ─────────────────────────────────────────
   {
+    id: "cc-2026-05-15-5h-weekly-reset",
+    slug: "claude-code-5-hour-weekly-rate-limits-reset-2026-05-15",
+    date: "2026-05-15",
+    agent: "claude-code",
+    plans: ["Claude Code subscribers"],
+    type: "manual_reset",
+    title: "Claude Code 5-hour and weekly rate limits reset",
+    summary:
+      "@ClaudeDevs announced that Claude Code had reset everyone's 5-hour and weekly rate limits. This is recorded as a one-time manual reset, not a permanent rate-limit policy change.",
+    details: [
+      "Announcement posted at 18:00 UTC on May 15, 2026.",
+      "Scope stated by the official Claude developer account: everyone's 5-hour and weekly rate limits.",
+      "No durable quota increase, billing change, or new reset schedule was announced in the post.",
+    ],
+    source: {
+      label: "@ClaudeDevs on X (May 15, 2026)",
+      url: "https://x.com/claudedevs/status/2055347539923308703",
+    },
+    secondarySources: [
+      {
+        label: "X post mirror via FxTwitter",
+        url: "https://api.fxtwitter.com/claudedevs/status/2055347539923308703",
+      },
+    ],
+  },
+  {
     id: "cc-2026-04-07-max-plan-weekly-resets",
     slug: "claude-code-max-plan-weekly-resets-2026-04-07",
     date: "2026-04-07",
