@@ -134,6 +134,9 @@ export default function HomeClient({ initialEntityId }: Props) {
   return (
     <div data-poster-mode={posterMode} className="min-h-screen bg-page" style={themeToCssVars(theme)}>
       <div ref={exportTargetRef} className="mx-auto max-w-[1344px] px-6 pt-8 sm:px-10 sm:pt-10 lg:px-12">
+        <div className={posterMode ? "block" : "grid gap-8 lg:grid-cols-[208px_minmax(0,1fr)]"}>
+          {!posterMode && <aside data-export-exclude className="hidden lg:block"><div className="sticky top-6"><EntitySwitcher variant="sidebar" entities={entityMetas} selectedId={entityMeta.id} onChange={id => { setSelectedEntityId(id); setSelectedDate(null); router.push(`/${id}`); }} posterMode={posterMode} /></div></aside>}
+          <div className="min-w-0">
         <div
           data-export-root
           className="space-y-7 bg-page"
@@ -149,16 +152,7 @@ export default function HomeClient({ initialEntityId }: Props) {
               data-export-exclude
               className="flex flex-wrap items-center justify-between gap-x-4 gap-y-4"
             >
-              <EntitySwitcher
-                entities={entityMetas}
-                selectedId={entityMeta.id}
-                onChange={(id) => {
-                  setSelectedEntityId(id);
-                  setSelectedDate(null);
-                  router.push(`/${id}`);
-                }}
-                posterMode={posterMode}
-              />
+              <div className="lg:hidden"><EntitySwitcher entities={entityMetas} selectedId={entityMeta.id} onChange={id => { setSelectedEntityId(id); setSelectedDate(null); router.push(`/${id}`); }} posterMode={posterMode} /></div>
               <RangeSwitcher
                 value={selectedRange}
                 onChange={value => { setSelectedRange(value); setSelectedDate(null); }}
@@ -222,6 +216,8 @@ export default function HomeClient({ initialEntityId }: Props) {
               </div>
             )}
           </footer>
+        </div>
+          </div>
         </div>
       </div>
 
