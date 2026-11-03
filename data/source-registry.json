@@ -9,8 +9,8 @@
       "pollIntervalSeconds": 300,
       "priority": 5,
       "config": {
-        "readerOnly": true,
         "readerFallback": true,
+        "browserFallback": true,
         "inferPublishedAt": true
       }
     },
@@ -23,8 +23,8 @@
       "pollIntervalSeconds": 300,
       "priority": 7,
       "config": {
-        "readerOnly": true,
         "readerFallback": true,
+        "browserFallback": true,
         "extractDatedSections": true,
         "sectionLimit": 12,
         "suppressGenericPageChange": true
@@ -69,8 +69,8 @@
       "pollIntervalSeconds": 300,
       "priority": 9,
       "config": {
-        "readerOnly": true,
         "readerFallback": true,
+        "browserFallback": true,
         "extractDatedSections": true,
         "sectionLimit": 12,
         "suppressGenericPageChange": true
@@ -101,8 +101,11 @@
       "pollIntervalSeconds": 300,
       "priority": 10,
       "config": {
-        "readerOnly": true,
+        "alternateUrls": [
+          "https://api.fxtwitter.com/claudedevs/status/2055347539923308703"
+        ],
         "readerFallback": true,
+        "browserFallback": true,
         "createCandidate": false,
         "eventType": "manual_reset",
         "eventTitle": "Claude Code 5-hour and weekly rate limits reset",
@@ -118,8 +121,8 @@
       "pollIntervalSeconds": 300,
       "priority": 9,
       "config": {
-        "readerOnly": true,
         "readerFallback": true,
+        "browserFallback": true,
         "extractDatedSections": true,
         "sectionLimit": 12,
         "suppressGenericPageChange": true
@@ -146,8 +149,8 @@
       "pollIntervalSeconds": 300,
       "priority": 8,
       "config": {
-        "readerOnly": true,
         "readerFallback": true,
+        "browserFallback": true,
         "extractDatedSections": true,
         "sectionLimit": 12,
         "suppressGenericPageChange": true
@@ -260,8 +263,8 @@
       "pollIntervalSeconds": 300,
       "priority": 9,
       "config": {
-        "readerOnly": true,
         "readerFallback": true,
+        "browserFallback": true,
         "extractDatedSections": true,
         "sectionLimit": 12,
         "suppressGenericPageChange": true
@@ -270,9 +273,9 @@
     {
       "id": "mistral-team:site-sitemap",
       "entityId": "mistral-team",
-      "type": "sitemap",
-      "label": "Mistral news sitemap",
-      "url": "https://mistral.ai/sitemap.xml",
+      "type": "page_change",
+      "label": "Mistral news",
+      "url": "https://mistral.ai/news",
       "pollIntervalSeconds": 300,
       "priority": 8,
       "config": {
@@ -280,7 +283,9 @@
         "discoveredEventType": "news_article",
         "inferPublishedAt": true,
         "linkLimit": 12,
-        "linkPattern": "^https://mistral\\.ai/news/"
+        "linkPattern": "^https://mistral\\.ai/news/",
+        "readerFallback": true,
+        "browserFallback": true
       }
     },
     {
@@ -348,8 +353,8 @@
       "pollIntervalSeconds": 300,
       "priority": 10,
       "config": {
-        "readerOnly": true,
         "readerFallback": true,
+        "browserFallback": true,
         "discoverPageLinks": true,
         "discoveredEventType": "news_article",
         "inferPublishedAt": true,
@@ -385,8 +390,8 @@
       "pollIntervalSeconds": 300,
       "priority": 10,
       "config": {
-        "readerOnly": true,
         "readerFallback": true,
+        "browserFallback": true,
         "eventType": "news_article",
         "eventTitle": "Introducing Grok Build Early Beta",
         "publishedAt": "2026-05-14T00:00:00.000Z"

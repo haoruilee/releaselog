@@ -198,45 +198,108 @@ function getLink(value: unknown): string | null {
   return String(record.href ?? record.url ?? "").trim() || null;
 }
 
-async function fetchText(url: string, source: ReleaseSourceRecord): Promise<FetchResult> {
+const BROWSER_USER_AGENT =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36";
+const GOOGLEBOT_USER_AGENT = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
+const BOT_USER_AGENT = "ReleaseLogBot/2.0 (+https://releaselog.site)";
+const FETCH_USER_AGENTS = [BROWSER_USER_AGENT, GOOGLEBOT_USER_AGENT, BOT_USER_AGENT];
+
+function fetchHeaders(url: string, userAgent: string): Record<string, string> {
   const headers: Record<string, string> = {
-    "User-Agent": "ReleaseLogBot/2.0 (+https://releaselog.site)",
-    Accept: "text/html,application/xml,text/xml,application/rss+xml,application/atom+xml,application/json;q=0.9,*/*;q=0.8",
+    "User-Agent": userAgent,
+    Accept: "text/html,application/xhtml+xml,application/xml,text/xml,application/rss+xml,application/atom+xml,application/json;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Cache-Control": "no-cache",
+    Pragma: "no-cache",
   };
+  if (userAgent === BROWSER_USER_AGENT) {
+    headers["Upgrade-Insecure-Requests"] = "1";
+    headers["Sec-Fetch-Dest"] = "document";
+    headers["Sec-Fetch-Mode"] = "navigate";
+    headers["Sec-Fetch-Site"] = "none";
+    headers["sec-ch-ua"] = '"Chromium";v="128", "Not;A=Brand";v="24", "Google Chrome";v="128"';
+    headers["sec-ch-ua-mobile"] = "?0";
+    headers["sec-ch-ua-platform"] = '"Windows"';
+    try {
+      headers.Referer = new URL(url).origin + "/";
+    } catch {
+      // Keep the request even if the candidate URL is not absolute.
+    }
+  }
   const githubToken = process.env.GITHUB_TOKEN?.trim();
   if (githubToken && url.includes("api.github.com")) {
     headers.Authorization = `Bearer ${githubToken}`;
   }
+  const jinaToken = process.env.JINA_API_KEY?.trim();
+  if (jinaToken && url.includes("r.jina.ai")) {
+    headers.Authorization = `Bearer ${jinaToken}`;
+    headers["X-Respond-With"] = "markdown";
+  }
+  return headers;
+}
 
-  let response: Response;
-  try {
-    response = await fetch(url, {
-      headers,
-      cache: "no-store",
-      redirect: "follow",
-      signal: AbortSignal.timeout(getFetchTimeoutMs(source)),
-    });
-  } catch (error) {
-    const message = error instanceof Error && error.name === "TimeoutError" ? "fetch_timeout" : "fetch_network_error";
-    const wrapped = new FetchSourceError(message);
-    wrapped.metadata = {
-      url,
-      message: error instanceof Error ? error.message : String(error),
+function getConfigStringArray(config: Record<string, unknown>, key: string): string[] {
+  const value = config[key];
+  if (Array.isArray(value)) {
+    return value.filter((entry): entry is string => typeof entry === "string" && Boolean(entry.trim())).map((entry) => entry.trim());
+  }
+  return typeof value === "string" && value.trim() ? [value.trim()] : [];
+}
+
+function rewriteFetchUrls(url: string): string[] {
+  const match = url.match(/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\/([^/?#]+)\/status\/(\d+)/i);
+  if (!match) return [];
+  return [`https://api.fxtwitter.com/${match[1]}/status/${match[2]}`];
+}
+
+function candidateFetchUrls(source: ReleaseSourceRecord, url: string): string[] {
+  return [...new Set([url, ...rewriteFetchUrls(url), ...getConfigStringArray(source.config, "alternateUrls")])];
+}
+
+function isRetryableStatus(status: number): boolean {
+  return status === 401 || status === 403 || status === 408 || status === 429 || status === 503;
+}
+
+async function fetchText(url: string, source: ReleaseSourceRecord): Promise<FetchResult> {
+  let lastError: FetchSourceError | null = null;
+  for (const userAgent of FETCH_USER_AGENTS) {
+    let response: Response;
+    try {
+      response = await fetch(url, {
+        headers: fetchHeaders(url, userAgent),
+        cache: "no-store",
+        redirect: "follow",
+        signal: AbortSignal.timeout(getFetchTimeoutMs(source)),
+      });
+    } catch (error) {
+      const message = error instanceof Error && error.name === "TimeoutError" ? "fetch_timeout" : "fetch_network_error";
+      const wrapped = new FetchSourceError(message);
+      wrapped.metadata = {
+        url,
+        message: error instanceof Error ? error.message : String(error),
+        userAgent,
+      };
+      lastError = wrapped;
+      continue;
+    }
+    const result: FetchResult = {
+      statusCode: response.status,
+      contentType: response.headers.get("content-type") ?? "",
+      body: await response.text(),
+      finalUrl: response.url || url,
     };
-    throw wrapped;
+    if (response.ok && !isBlockedFetchResult(result)) {
+      return result;
+    }
+    const error = new FetchSourceError(response.ok ? "fetch_blocked" : `fetch_failed:${response.status}`);
+    error.statusCode = response.ok ? 403 : response.status;
+    error.metadata = { finalUrl: response.url, userAgent, blocked: response.ok };
+    lastError = error;
+    if (!response.ok && !isRetryableStatus(response.status)) {
+      throw error;
+    }
   }
-  if (!response.ok) {
-    const error = new FetchSourceError(`fetch_failed:${response.status}`);
-    error.statusCode = response.status;
-    error.metadata = { finalUrl: response.url };
-    throw error;
-  }
-  return {
-    statusCode: response.status,
-    contentType: response.headers.get("content-type") ?? "",
-    body: await response.text(),
-    finalUrl: response.url || source.url,
-  };
+  throw lastError ?? new FetchSourceError("fetch_failed");
 }
 
 async function fetchBrowserText(source: ReleaseSourceRecord): Promise<FetchResult> {
@@ -266,50 +329,94 @@ async function fetchBrowserText(source: ReleaseSourceRecord): Promise<FetchResul
 function isBlockedFetchResult(result: FetchResult): boolean {
   const text = stripHtml(result.body).toLowerCase();
   return (
-    (text.includes("cloudflare") && text.includes("you have been blocked")) ||
+    (text.includes("cloudflare") && (text.includes("you have been blocked") || text.includes("just a moment"))) ||
     (text.includes("attention required") && text.includes("please enable cookies")) ||
+    (text.includes("checking your browser") && text.includes("cloudflare")) ||
+    text.includes("enable javascript and cookies") ||
     text.includes("access denied")
   );
 }
 
-function readerFallbackUrl(url: string, source: ReleaseSourceRecord): string {
+function readerFallbackUrls(url: string, source: ReleaseSourceRecord): string[] {
   const template = getConfigString(source.config, "readerUrlTemplate");
-  if (template) return template.replace(/\{url\}/g, encodeURI(url));
-  return `https://r.jina.ai/${url}`;
+  const urls = [
+    template ? template.replace(/\{url\}/g, encodeURI(url)) : `https://r.jina.ai/${url}`,
+    `https://web.archive.org/web/2id_/${url}`,
+  ];
+  return [...new Set(urls)];
 }
 
 async function fetchReaderText(url: string, source: ReleaseSourceRecord): Promise<FetchResult> {
-  const readerUrl = readerFallbackUrl(url, source);
-  const result = await fetchText(readerUrl, { ...source, url: readerUrl });
-  return {
-    ...result,
-    finalUrl: url,
-    contentType: `${result.contentType || "text/plain"}; reader-fallback`,
-  };
+  const errors: unknown[] = [];
+  for (const readerUrl of readerFallbackUrls(url, source)) {
+    try {
+      const result = await fetchText(readerUrl, { ...source, url: readerUrl });
+      if (isBlockedFetchResult(result)) continue;
+      return {
+        ...result,
+        finalUrl: url,
+        contentType: `${result.contentType || "text/plain"}; reader-fallback`,
+      };
+    } catch (error) {
+      errors.push(error);
+    }
+  }
+  throw errors[errors.length - 1] ?? new FetchSourceError("reader_fetch_failed");
+}
+
+async function fetchDirectOrBrowser(source: ReleaseSourceRecord, url: string): Promise<FetchResult> {
+  if (source.type === "browser_page") {
+    return fetchBrowserText({ ...source, url });
+  }
+  return fetchText(url, { ...source, url });
+}
+
+async function fetchSingleUrlWithFallback(source: ReleaseSourceRecord, url: string): Promise<FetchResult> {
+  const sourceForUrl: ReleaseSourceRecord = { ...source, url };
+  const errors: unknown[] = [];
+  if (source.config.readerOnly === true) {
+    try {
+      return await fetchReaderText(url, sourceForUrl);
+    } catch (error) {
+      errors.push(error);
+    }
+  }
+  try {
+    const result = await fetchDirectOrBrowser(sourceForUrl, url);
+    if (isBlockedFetchResult(result) && source.config.readerFallback !== false) {
+      return fetchReaderText(url, sourceForUrl);
+    }
+    return result;
+  } catch (error) {
+    errors.push(error);
+    if (source.type !== "browser_page" && source.config.browserFallback !== false) {
+      try {
+        return await fetchBrowserText(sourceForUrl);
+      } catch (browserError) {
+        errors.push(browserError);
+      }
+    }
+    if (source.config.readerFallback !== false) {
+      try {
+        return await fetchReaderText(url, sourceForUrl);
+      } catch (readerError) {
+        errors.push(readerError);
+      }
+    }
+    throw errors[errors.length - 1];
+  }
 }
 
 async function fetchPageWithFallback(source: ReleaseSourceRecord, url = source.url): Promise<FetchResult> {
-  const sourceForUrl: ReleaseSourceRecord = { ...source, url };
-  if (source.config.readerOnly === true) {
-    return fetchReaderText(url, sourceForUrl);
-  }
-  let result: FetchResult;
-  try {
-    result = source.type === "browser_page" ? await fetchBrowserText(sourceForUrl) : await fetchText(url, sourceForUrl);
-  } catch (error) {
-    if (source.config.browserFallback === true) {
-      result = await fetchBrowserText(sourceForUrl);
-    } else if (source.config.readerFallback === true) {
-      return fetchReaderText(url, sourceForUrl);
-    } else {
-      throw error;
+  const errors: unknown[] = [];
+  for (const candidate of candidateFetchUrls(source, url)) {
+    try {
+      return await fetchSingleUrlWithFallback(source, candidate);
+    } catch (error) {
+      errors.push(error);
     }
   }
-
-  if (source.config.readerFallback === true && isBlockedFetchResult(result)) {
-    return fetchReaderText(url, sourceForUrl);
-  }
-  return result;
+  throw errors[errors.length - 1] ?? new FetchSourceError("fetch_failed");
 }
 
 function eventsFromFeed(source: ReleaseSourceRecord, result: FetchResult): CollectorEvent[] {
