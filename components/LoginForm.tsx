@@ -51,9 +51,9 @@ export function LoginForm({ nextPath }: Props) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4 rounded-2xl bg-panel/50 p-6 ring-1 ring-white/5">
+    <form onSubmit={onSubmit} className="space-y-5 rounded-xl border border-slate-200 bg-white p-6 sm:p-8">
       <div>
-        <label htmlFor="login-email" className="sr-only">
+        <label htmlFor="login-email" className="mb-2 block text-sm font-medium text-primary">
           Email
         </label>
         <input
@@ -65,18 +65,18 @@ export function LoginForm({ nextPath }: Props) {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="you@example.com"
-          className="w-full rounded-xl border border-white/10 bg-empty-cell/30 px-4 py-3 text-sm text-primary placeholder:text-secondary/50"
+          className="w-full rounded-xl border border-slate-200 bg-empty-cell/30 px-4 py-3 text-sm text-primary placeholder:text-secondary"
         />
       </div>
       <button
         type="submit"
         disabled={status === "loading"}
-        className="rounded-full bg-active-cell px-5 py-2 text-sm font-medium text-white disabled:opacity-60"
+        className="w-full rounded-lg bg-accent px-5 py-3 text-sm font-semibold text-white disabled:opacity-60"
       >
         {status === "loading" ? "Sending…" : "Email me a sign-in link"}
       </button>
       {message && (
-        <div className="space-y-2 text-sm text-secondary">
+        <div role={status === "err" ? "alert" : "status"} className="space-y-2 text-sm text-secondary">
           <p>{message}</p>
           {previewUrl && (
             <p>

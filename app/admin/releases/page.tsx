@@ -30,7 +30,7 @@ export default async function AdminReleasesPage() {
             </Link>
           </div>
         </div>
-        <div className="mt-6 overflow-hidden rounded-2xl ring-1 ring-white/5">
+        <div className="mt-6 overflow-hidden rounded-2xl ring-1 ring-slate-200">
           <table className="min-w-full divide-y divide-white/5 text-left text-sm">
             <thead className="bg-panel/70 text-secondary">
               <tr>

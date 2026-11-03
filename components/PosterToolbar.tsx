@@ -34,11 +34,11 @@ export function PosterToolbar({
 
   if (posterMode) {
     return (
-      <div className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 flex-wrap justify-center gap-2 rounded-full bg-panel/95 px-4 py-2 shadow-lg ring-1 ring-white/10 backdrop-blur">
+      <div className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 flex-wrap justify-center gap-2 rounded-lg bg-panel/95 px-4 py-2 shadow-lg ring-1 ring-slate-200 backdrop-blur">
         <button
           type="button"
           onClick={() => onPosterModeChange(false)}
-          className="rounded-full px-4 py-2 text-sm font-medium text-primary ring-1 ring-white/15 hover:bg-empty-cell"
+          className="rounded-lg px-4 py-2 text-sm font-medium text-primary ring-1 ring-slate-200 hover:bg-empty-cell"
         >
           {t("poster.exit")}
         </button>
@@ -46,7 +46,7 @@ export function PosterToolbar({
           type="button"
           onClick={handleExport}
           disabled={exporting}
-          className="rounded-full bg-active-cell px-4 py-2 text-sm font-medium text-primary disabled:opacity-50"
+          className="rounded-lg bg-active-cell px-4 py-2 text-sm font-medium text-primary disabled:opacity-50"
         >
           {exporting ? t("poster.exporting") : t("poster.export")}
         </button>
@@ -59,7 +59,7 @@ export function PosterToolbar({
       <button
         type="button"
         onClick={() => onPosterModeChange(true)}
-        className="rounded-full bg-empty-cell px-4 py-2 text-sm font-medium text-secondary ring-1 ring-white/10 transition-colors hover:text-primary"
+        className="rounded-lg bg-empty-cell px-4 py-2 text-sm font-medium text-secondary ring-1 ring-slate-200 transition-colors hover:text-primary"
       >
         {t("poster.enter")}
       </button>
@@ -67,13 +67,11 @@ export function PosterToolbar({
         type="button"
         onClick={handleExport}
         disabled={exporting}
-        className="rounded-full bg-panel px-4 py-2 text-sm font-medium text-primary ring-1 ring-white/10 hover:bg-empty-cell disabled:opacity-50"
+        className="rounded-lg bg-panel px-4 py-2 text-sm font-medium text-primary ring-1 ring-slate-200 hover:bg-empty-cell disabled:opacity-50"
       >
         {exporting ? t("poster.exporting") : t("poster.export")}
       </button>
-      <p className="text-xs text-secondary/70">
-        {t("poster.hint")}
-      </p>
+
     </div>
   );
 }

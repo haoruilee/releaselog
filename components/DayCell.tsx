@@ -33,7 +33,7 @@ export function DayCell({
   const isTodayCell = isToday(d);
 
   if (!inMonth) {
-    return <div className="min-h-[88px] rounded-lg opacity-0" aria-hidden />;
+    return <div className="calendar-cell min-h-[88px] bg-panel" aria-hidden />;
   }
 
   // Items can opt in to a per-agent / per-brand color. We pick the first
@@ -43,31 +43,31 @@ export function DayCell({
     ? items.find((it) => it.accentColor) ?? null
     : null;
   const wrapperStyle: CSSProperties | undefined = accentItem?.accentColor
-    ? { backgroundColor: accentItem.accentColor }
+    ? { backgroundColor: `color-mix(in srgb, ${accentItem.accentColor} 13%, white)` }
     : undefined;
   const accentTextStyle: CSSProperties | undefined = accentItem?.accentTextColor
-    ? { color: accentItem.accentTextColor }
+    ? { color: "#29313a" }
     : undefined;
 
   const base =
-    "group relative flex min-h-[88px] flex-col rounded-lg p-2 text-left transition-all sm:min-h-[100px]";
+    "calendar-cell group relative flex min-h-[88px] flex-col p-2 text-left transition-colors sm:min-h-[100px]";
   const bg = hasItems
     ? isFuture
-      ? "bg-active-cell/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_10px_30px_rgba(0,0,0,0.22)] backdrop-blur-sm"
+      ? "bg-active-cell/55"
       : "bg-active-cell"
     : isFuture
-      ? "bg-empty-cell/45 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-sm"
-      : "bg-empty-cell";
+      ? "bg-panel"
+      : "bg-white";
   const ring = selected
-    ? "ring-2 ring-white ring-offset-2 ring-offset-[var(--bg-page)]"
+    ? "ring-2 ring-inset ring-accent"
     : isTodayCell && hasItems
-      ? "ring-1 ring-white/40"
+      ? "ring-1 ring-slate-200"
       : isFuture && hasItems
-        ? "ring-1 ring-white/20"
+        ? "ring-1 ring-slate-200"
         : isFuture
-          ? "ring-1 ring-white/10"
-      : "ring-1 ring-white/5";
-  const futureClass = isFuture ? "opacity-75 saturate-[0.82]" : "";
+          ? "ring-1 ring-slate-200"
+      : "ring-1 ring-slate-200";
+  const futureClass = "";
 
   const visible = showCountOnly
     ? []
@@ -76,37 +76,28 @@ export function DayCell({
 
   return (
     <div className={`${base} ${bg} ${ring} ${futureClass}`} style={wrapperStyle}>
-      {isFuture && (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-lg bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.14),transparent_42%)]"
-        />
-      )}
+
       <button
         type="button"
         onClick={() => onSelect(dateStr)}
         aria-label={`Show logs for ${dateStr}`}
-        className="absolute inset-0 z-0 rounded-lg hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+        aria-pressed={selected}
+        data-has-items={hasItems}
+        className="absolute inset-0 z-0 hover:bg-black/[.025] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
       />
       <span
         className={`pointer-events-none relative z-10 flex items-center justify-between text-[11px] font-medium tabular-nums sm:text-xs ${
-          hasItems ? "text-primary/90" : "text-secondary/60"
+          hasItems ? "text-primary/90" : "text-secondary"
         }`}
         style={hasItems ? accentTextStyle : undefined}
       >
         <span>{dayNum}</span>
-        {isFuture && (
-          <span
-            className="h-1.5 w-1.5 rounded-full bg-primary/45"
-            style={accentTextStyle}
-            aria-hidden
-          />
-        )}
+
       </span>
       <div className="pointer-events-none relative z-10 mt-1 flex flex-1 flex-col gap-0.5 overflow-hidden text-left">
         {showCountOnly && hasItems && (
-          <span className="text-xs font-semibold text-primary" style={accentTextStyle}>
-            {items.length} log{items.length === 1 ? "" : "s"}
+          <span className="calendar-count text-xs font-medium text-accent" style={accentTextStyle}>
+            {items.length}
           </span>
         )}
         {!showCountOnly &&

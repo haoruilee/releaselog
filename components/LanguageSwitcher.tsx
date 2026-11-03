@@ -33,7 +33,7 @@ export function LanguageSwitcher({ className, size = "sm" }: Props) {
   };
 
   const buttonPad =
-    size === "sm" ? "px-2 py-0.5 text-[11px]" : "px-2.5 py-1 text-xs";
+    size === "sm" ? "min-h-8 px-2 py-1 text-xs" : "min-h-9 px-2.5 py-1 text-xs";
 
   return (
     <div

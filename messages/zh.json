@@ -59,7 +59,7 @@
     "no_events": "当前筛选条件下暂无记录。",
     "footer_email_lead": "发现遗漏或错误来源?请邮件至",
     "footer_email_tail": "附上日期与官方来源链接,我们会补充。",
-    "footer_disclaimer": "重置日志由厂商公告和帮助文档手工整理,只记录已经公开宣布的事件,不预测未来重置。",
+    "footer_disclaimer": "Reset Log 汇集公开归档与可追溯的厂商公告，记录已公布的变化，不预测未来重置，也不保证某个账户的额度已恢复。",
     "effective": "生效日期 {date}",
     "official_record": "官方来源:{label}",
     "read_full": "查看完整事件 →",
@@ -101,9 +101,9 @@
   "ads": {
     "label": "广告",
     "open": "赞助合作",
-    "headline": "让关注下一次发布的开发者，发现你的产品。",
-    "description": "在 AI 模型、开发工具与编程助手的更新旁，向真正关心这些产品的人展示你的品牌。",
-    "learn_more": "了解赞助合作",
+    "headline": "在 ReleaseLog 展示你的产品",
+    "description": "面向关注 AI 发布与官方活动的读者。",
+    "learn_more": "查看广告位",
     "partner": "ReleaseLog 赞助商",
     "media_title": "你的下一批用户，正在这里关注下一次发布。",
     "media_description": "面向 AI 开发者与工具构建者，提供清晰标注、适配手机与桌面的横幅广告及原生赞助位置。",
@@ -116,5 +116,33 @@
     "contact_title": "一起选择合适的展示位置。",
     "contact_description": "请提供产品链接、展示素材、预期时间与广告位置，我们会沟通档期与合作细节。",
     "editorial": "所有广告均明确标注。赞助合作不会影响内容判断，也不会改变我们收录的事件。"
+  },
+  "site": {
+    "calendar": "发布日历",
+    "navigation": "主导航",
+    "menu": "打开导航",
+    "skip": "跳转到正文",
+    "footer": "页尾导航",
+    "advertise": "广告合作",
+    "recent": "最近发布",
+    "all_teams": "所有团队",
+    "more_teams": "更多团队",
+    "loading": "正在加载发布记录…",
+    "load_error": "发布记录暂时无法加载，请重试。",
+    "retry": "重试",
+    "no_releases": "这个时间范围内暂无发布记录。",
+    "date": "日期",
+    "release": "发布内容",
+    "source": "来源",
+    "show_calendar": "展开日历",
+    "hide_calendar": "收起日历"
+  },
+  "timeline": {
+    "search": "搜索公告",
+    "placeholder": "搜索标题、模型或日期…",
+    "count": "已显示 {visible} 条，共 {total} 条",
+    "more": "加载更多记录",
+    "empty": "没有匹配的公告。",
+    "clear": "清空搜索"
   }
 }

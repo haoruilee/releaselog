@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useId, useRef } from "react";
 import { format } from "date-fns";
 import type { ReleaseItem } from "@/data/types";
 import { getSourceLabel } from "@/lib/source-label";
@@ -16,33 +16,35 @@ type Props = {
 
 export function DayDetails({ dateStr, items, onClose, entityId }: Props) {
   const t = useT();
-  // Close on Escape key
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const titleId = useId();
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", handleKey);
-    return () => document.removeEventListener("keydown", handleKey);
-  }, [onClose]);
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const overflow = document.body.style.overflow;
+    dialog.showModal();
+    document.body.style.overflow = "hidden";
+    return () => { dialog.close(); document.body.style.overflow = overflow; if (previous?.isConnected) previous.focus(); };
+  }, []);
 
   if (!dateStr || items.length === 0) return null;
 
   const d = new Date(dateStr + "T12:00:00");
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-        onClick={onClose}
-        aria-hidden
-      />
-
+    <dialog ref={dialogRef} aria-labelledby={titleId} onCancel={event => { event.preventDefault(); onClose(); }} onClick={event => { if (event.target === event.currentTarget) onClose(); }} onKeyDown={event => {
+      if (event.key !== "Tab") return;
+      const controls = [...event.currentTarget.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex="0"]')];
+      const first = controls[0]; const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    }} className="m-auto max-h-[85dvh] w-[calc(100%_-_32px)] max-w-2xl rounded-xl border border-slate-200 bg-white p-0 shadow-2xl">
       {/* Panel */}
-      <div className="relative z-10 w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl bg-panel ring-1 ring-white/10 shadow-2xl">
+      <div className="relative w-full bg-white">
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between gap-4 rounded-t-2xl bg-panel/95 px-6 py-4 backdrop-blur-sm border-b border-white/5">
-          <h3 className="font-serif text-xl text-primary">
+        <div className="sticky top-0 z-10 flex items-center justify-between gap-4 rounded-t-2xl bg-panel/95 px-6 py-4 backdrop-blur-sm border-b border-slate-200">
+          <h3 id={titleId} className="font-serif text-2xl text-primary">
             {format(d, "EEEE, MMMM d, yyyy")}
           </h3>
           <button
@@ -79,7 +81,7 @@ export function DayDetails({ dateStr, items, onClose, entityId }: Props) {
                 <li
                   key={item.id}
                   id={anchorId}
-                  className="scroll-mt-24 border-b border-white/5 pb-4 last:border-0 last:pb-0"
+                  className="scroll-mt-24 border-b border-slate-200 pb-4 last:border-0 last:pb-0"
                 >
                   <div className="flex flex-wrap items-baseline gap-2">
                     {item.sourceUrl ? (
@@ -100,7 +102,7 @@ export function DayDetails({ dateStr, items, onClose, entityId }: Props) {
                       </span>
                     )}
                     {item.kind === "event" && (
-                      <span className="rounded-full bg-empty-cell/80 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-accent ring-1 ring-white/10">
+                      <span className="rounded-full bg-empty-cell/80 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-accent ring-1 ring-slate-200">
                         {t("day.event_badge")}
                       </span>
                     )}
@@ -116,14 +118,14 @@ export function DayDetails({ dateStr, items, onClose, entityId }: Props) {
                     </p>
                   )}
                   {audiences.length > 0 && (
-                    <p className="mt-2 text-xs text-secondary/80">
+                    <p className="mt-2 text-xs text-secondary">
                       {t("day.for")} {audiences.join(", ").replaceAll("_", " ")}
                     </p>
                   )}
                   {item.howTo &&
                     (item.howTo.prerequisites?.length ||
                       item.howTo.steps.length) && (
-                      <div className="mt-3 rounded-xl bg-empty-cell/40 px-3 py-2 ring-1 ring-white/5">
+                      <div className="mt-3 rounded-xl bg-empty-cell/40 px-3 py-2 ring-1 ring-slate-200">
                         {item.howTo.prerequisites &&
                           item.howTo.prerequisites.length > 0 && (
                             <p className="text-xs font-medium text-secondary">
@@ -186,6 +188,6 @@ export function DayDetails({ dateStr, items, onClose, entityId }: Props) {
           </ul>
         </div>
       </div>
-    </div>
+    </dialog>
   );
 }

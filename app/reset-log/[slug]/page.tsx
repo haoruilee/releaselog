@@ -172,7 +172,7 @@ export default async function ResetEventPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
 
-      <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+      <div className="mx-auto max-w-4xl px-6 py-10 sm:px-10">
         <nav
           aria-label="Breadcrumb"
           className="mb-8 flex flex-wrap items-center gap-2 text-xs text-secondary"
@@ -205,7 +205,7 @@ export default async function ResetEventPage({ params }: PageProps) {
                 {formatDate(event.date)}
               </time>
               <span
-                className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium ring-1 ring-white/10"
+                className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium ring-1 ring-slate-200"
                 style={{ color: accent.badge }}
               >
                 <span
@@ -214,32 +214,32 @@ export default async function ResetEventPage({ params }: PageProps) {
                   style={{ backgroundColor: accent.badge }}
                 />
                 {agentLabel}
-                <span className="text-secondary/70">· {vendor}</span>
+                <span className="text-secondary">· {vendor}</span>
               </span>
-              <span className="rounded-full bg-empty-cell/60 px-2 py-0.5 text-[11px] font-medium text-secondary ring-1 ring-white/5">
+              <span className="rounded-full bg-empty-cell/60 px-2 py-0.5 text-[11px] font-medium text-secondary ring-1 ring-slate-200">
                 {typeLabel}
               </span>
               {event.effectiveDate && event.effectiveDate !== event.date && (
-                <span className="rounded-full bg-empty-cell/40 px-2 py-0.5 text-[11px] text-secondary ring-1 ring-white/5">
+                <span className="rounded-full bg-empty-cell/40 px-2 py-0.5 text-[11px] text-secondary ring-1 ring-slate-200">
                   {t("reset_log.effective", { date: formatDate(event.effectiveDate) })}
                 </span>
               )}
             </div>
 
-            <h1 className="font-serif text-3xl text-primary sm:text-4xl md:text-5xl">
+            <h1 className="editorial-title text-4xl text-primary sm:text-5xl">
               {event.title}
             </h1>
 
             <p className="text-base text-secondary sm:text-lg">{event.summary}</p>
           </header>
 
-          <section className="mt-8 rounded-2xl bg-panel/60 p-5 ring-1 ring-white/5 sm:p-6">
+          <section className="mt-8 rounded-2xl bg-panel/60 p-5 ring-1 ring-slate-200 sm:p-6">
             <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">
               {t("reset_log.at_a_glance")}
             </h2>
             <dl className="mt-4 grid gap-4 text-sm sm:grid-cols-2">
               <div>
-                <dt className="text-xs uppercase tracking-wider text-secondary/70">
+                <dt className="text-xs uppercase tracking-wider text-secondary">
                   {t("reset_log.field_agent")}
                 </dt>
                 <dd className="mt-1 text-primary">
@@ -247,19 +247,19 @@ export default async function ResetEventPage({ params }: PageProps) {
                 </dd>
               </div>
               <div>
-                <dt className="text-xs uppercase tracking-wider text-secondary/70">
+                <dt className="text-xs uppercase tracking-wider text-secondary">
                   {t("reset_log.field_event_type")}
                 </dt>
                 <dd className="mt-1 text-primary">{typeLabel}</dd>
               </div>
               <div>
-                <dt className="text-xs uppercase tracking-wider text-secondary/70">
+                <dt className="text-xs uppercase tracking-wider text-secondary">
                   {t("reset_log.field_announced")}
                 </dt>
                 <dd className="mt-1 text-primary">{formatDate(event.date)}</dd>
               </div>
               <div>
-                <dt className="text-xs uppercase tracking-wider text-secondary/70">
+                <dt className="text-xs uppercase tracking-wider text-secondary">
                   {t("reset_log.field_effective")}
                 </dt>
                 <dd className="mt-1 text-primary">
@@ -267,14 +267,14 @@ export default async function ResetEventPage({ params }: PageProps) {
                 </dd>
               </div>
               <div className="sm:col-span-2">
-                <dt className="text-xs uppercase tracking-wider text-secondary/70">
+                <dt className="text-xs uppercase tracking-wider text-secondary">
                   {t("reset_log.field_plans")}
                 </dt>
                 <dd className="mt-1 flex flex-wrap gap-1.5">
                   {event.plans.map((plan) => (
                     <span
                       key={plan}
-                      className="rounded-full bg-empty-cell/60 px-2 py-0.5 text-[11px] font-medium text-secondary ring-1 ring-white/5"
+                      className="rounded-full bg-empty-cell/60 px-2 py-0.5 text-[11px] font-medium text-secondary ring-1 ring-slate-200"
                     >
                       {plan}
                     </span>
@@ -320,7 +320,7 @@ export default async function ResetEventPage({ params }: PageProps) {
             </a>
             {event.secondarySources && event.secondarySources.length > 0 && (
               <div className="mt-5">
-                <p className="text-xs uppercase tracking-wider text-secondary/70">
+                <p className="text-xs uppercase tracking-wider text-secondary">
                   {t("reset_log.additional_references")}
                 </p>
                 <ul className="mt-2 space-y-1.5 text-sm">
@@ -342,7 +342,7 @@ export default async function ResetEventPage({ params }: PageProps) {
           </section>
 
           {related.length > 0 && (
-            <section className="mt-12 border-t border-white/5 pt-8">
+            <section className="mt-12 border-t border-slate-200 pt-8">
               <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">
                 {t("reset_log.more_events", { agent: agentLabel })}
               </h2>
@@ -351,7 +351,7 @@ export default async function ResetEventPage({ params }: PageProps) {
                   <li key={r.id}>
                     <Link
                       href={`/reset-log/${r.slug}`}
-                      className="group flex flex-col gap-1 rounded-xl bg-panel/40 p-4 ring-1 ring-white/5 transition-colors hover:bg-panel"
+                      className="group flex flex-col gap-1 rounded-xl bg-panel/40 p-4 ring-1 ring-slate-200 transition-colors hover:bg-panel"
                     >
                       <div className="flex items-center gap-2 text-xs text-secondary">
                         <time dateTime={r.date} className="font-mono">
@@ -371,7 +371,7 @@ export default async function ResetEventPage({ params }: PageProps) {
           )}
         </article>
 
-        <footer className="mt-16 flex flex-wrap items-center justify-between gap-3 border-t border-white/5 pt-6 text-xs text-secondary/80">
+        <footer className="mt-16 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-6 text-xs text-secondary">
           <Link
             href="/reset-log"
             className="font-semibold uppercase tracking-[0.25em] hover:text-primary"

@@ -31,7 +31,7 @@ export default async function AdminSubscribersPage() {
         </div>
         <div className="mt-6 grid gap-4">
           {subscribers.map(({ user, subscription, preferences }) => (
-            <section key={user.id} className="rounded-2xl bg-panel/50 p-5 ring-1 ring-white/5">
+            <section key={user.id} className="rounded-2xl bg-panel/50 p-5 ring-1 ring-slate-200">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <h2 className="text-base font-semibold">{user.email}</h2>
@@ -49,7 +49,7 @@ export default async function AdminSubscribersPage() {
             </section>
           ))}
           {subscribers.length === 0 && (
-            <div className="rounded-2xl bg-panel/50 p-6 ring-1 ring-white/5 text-sm text-secondary">
+            <div className="rounded-2xl bg-panel/50 p-6 ring-1 ring-slate-200 text-sm text-secondary">
               No subscribers yet.
             </div>
           )}

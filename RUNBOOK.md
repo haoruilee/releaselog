@@ -1,6 +1,6 @@
 # ReleaseLog Runbook
 
-## Current production release (2026-11-03)
+## Current production release (2026-11-03, light editorial redesign)
 
 This section supersedes the historical build/restart examples below. All
 compilation, frontend builds and Docker image builds run only on
@@ -8,18 +8,18 @@ compilation, frontend builds and Docker image builds run only on
 `compose up --build` on this host. Use verified immutable images, not mutable
 tags, and keep traffic rollback independent of database restoration.
 
-- Public app: `releaselog-app-green-20261103`, `127.0.0.1:3001`,
-  network `releaselog_default`, unique alias `releaselog-app-green`.
+- Public app: `releaselog-app-light-20261103`, `127.0.0.1:3002`,
+  network `releaselog_default`, unique alias `releaselog-app-light`.
+  Immutable image: `releaselog/app:mobbin-light-20261103-r3`.
 - Public tunnel: `cloudflared-releaselog-public.service`, dedicated config
   `/root/.cloudflared/releaselog-public-independent.yml`. It routes only
-  `releaselog.site` to port 3001. Metrics/readiness: `127.0.0.1:20451/ready`.
+  `releaselog.site` to port 3002. Metrics/readiness: `127.0.0.1:20451/ready`.
 - The older `cloudflared-releaselog.service` serves many unrelated domains.
   **Do not restart it or replace its shared configuration for this site.**
-- Old app `releaselog-app-1` on port 3000 and the four HTTP-only workers remain
-  the compatible background/control plane and immediate public rollback target.
-  Do not start a duplicate scheduler, sender or collector. An attempted idle
-  worker migration was aborted because its PID1 shell ignored SIGTERM; no
-  forced stop was performed and its restart policy was restored.
+- Previous public app `releaselog-app-green-20261103` on port 3001 remains
+  available for immediate traffic rollback. Old control app `releaselog-app-1`
+  on port 3000 and its four HTTP-only workers retain the compatible background
+  plane. Do not start duplicate schedulers, senders or collectors.
 - AI review: only `releaselog-ai-review.timer`, once per hour, explicit
   `AI_HARNESS_INTENT=release_publish`. The fast timer is disabled. Native CLI
   project settings are private/ignored under `.claude/settings.local.json`.
@@ -32,14 +32,19 @@ tags, and keep traffic rollback independent of database restoration.
   `SPONSOR_IMAGE_URL`. These require a green-container env refresh, not a
   frontend rebuild. No advertiser is activated in this release.
 
-Release evidence and the guarded CNAME deploy/rollback tool are stored privately
-at `/root/ops-private/releaselog-site-refresh-20261103/`. Run
-`python3 .../switch-dns.py rollback` only after checking old app health; it
-changes only the captured root CNAME and preserves MX/TXT records. The green
-container mounts the merged old/new immutable static assets read-only to keep
-existing browser tabs working. Retain both images and the verified DB dump.
+Release evidence is private at `/root/ops-private/releaselog-mobbin-20261103/`.
+Traffic rollback, after checking port 3001 health:
+`python3 /root/ops-private/releaselog-mobbin-20261103/switch-public.py 3001`.
+It starts a healthy dedicated-tunnel replica before gracefully replacing the
+canonical connector, then stops the temporary replica. No DNS or database
+restoration is needed. The latest release retained all 122 sitemap URLs; the
+old/new immutable static paths are merged read-only for existing browser tabs.
+The shared multi-domain tunnel was not restarted. Retain both images and the
+previous verified DB dump under the site-refresh-20261103 evidence directory.
 
-See [release acceptance](docs/site-refresh-20261103.md) for tests and limitations.
+See [frontend design practices](docs/frontend-design.md) and the private build,
+synthetic/public browser acceptance and connector handoff receipts. The previous
+functional release is documented in [site-refresh-20261103.md](docs/site-refresh-20261103.md).
 
 Operational notes for the production deploy at `https://releaselog.site`
 (Ubuntu 24.04 + Docker Compose + systemd timers + named Cloudflare tunnel).

@@ -33,15 +33,15 @@ export function MonthSection({
 }: Props) {
   const t = useT();
   return (
-    <section className="space-y-3">
-      <h2 className="font-sans text-sm font-semibold uppercase tracking-[0.2em] text-accent">
-        {month.monthLabel.split(" ")[0]?.toUpperCase() ?? month.monthLabel}
+    <section className="calendar-month">
+      <h2 className="bg-panel px-4 py-3 font-serif text-[23px] text-primary">
+        {month.monthLabel}
       </h2>
-      <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
+      <div className="grid grid-cols-7">
         {WEEKDAY_KEYS.map((key) => (
           <div
             key={key}
-            className="pb-1 text-center text-[10px] font-medium uppercase tracking-wider text-secondary/50"
+            className="py-2 text-center text-[11px] font-medium text-secondary"
           >
             {t(key)}
           </div>

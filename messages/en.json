@@ -59,7 +59,7 @@
     "no_events": "No events recorded for this filter yet.",
     "footer_email_lead": "Spotted a missing reset or a wrong source? Email",
     "footer_email_tail": "with the date and the official record URL and we'll add it.",
-    "footer_disclaimer": "Reset Log is curated manually from vendor announcements and help-center pages. It does not predict future resets — it only records ones that have already been publicly announced.",
+    "footer_disclaimer": "Reset Log combines public archives with traceable vendor announcements. It records published changes, not predictions or a guarantee of an individual account reset.",
     "effective": "Effective {date}",
     "official_record": "Official record: {label}",
     "read_full": "Read full event →",
@@ -101,9 +101,9 @@
   "ads": {
     "label": "Advertisement",
     "open": "Sponsorship opportunities",
-    "headline": "Meet the builders following what’s next.",
-    "description": "Put your product alongside AI releases, developer tools, and coding-agent updates.",
-    "learn_more": "Explore sponsorship",
+    "headline": "Advertise with ReleaseLog",
+    "description": "Reach a focused audience following AI releases and official events.",
+    "learn_more": "View placements",
     "partner": "ReleaseLog sponsor",
     "media_title": "Your next users are already following the next release.",
     "media_description": "Reach a focused audience of AI developers and tool builders. Choose a clearly labeled banner or native sponsorship, with responsive placements across the calendar and Reset Log.",
@@ -116,5 +116,33 @@
     "contact_title": "Let’s find the right placement.",
     "contact_description": "Send your product URL, artwork, preferred dates, and placement. We’ll discuss availability and campaign details.",
     "editorial": "Advertising is clearly labeled. Sponsorship does not influence editorial decisions or the events we report."
+  },
+  "site": {
+    "calendar": "Calendar",
+    "navigation": "Main navigation",
+    "menu": "Open navigation",
+    "skip": "Skip to content",
+    "footer": "Footer navigation",
+    "advertise": "Advertise",
+    "recent": "Recent releases",
+    "all_teams": "All teams",
+    "more_teams": "More teams",
+    "loading": "Loading releases…",
+    "load_error": "Releases could not be loaded. Please try again.",
+    "retry": "Try again",
+    "no_releases": "No releases in this date range.",
+    "date": "Date",
+    "release": "Release",
+    "source": "Source",
+    "show_calendar": "Show calendar",
+    "hide_calendar": "Hide calendar"
+  },
+  "timeline": {
+    "search": "Search announcements",
+    "placeholder": "Search by title, agent or date…",
+    "count": "{visible} of {total} events",
+    "more": "Load more events",
+    "empty": "No announcements match your search.",
+    "clear": "Clear search"
   }
 }

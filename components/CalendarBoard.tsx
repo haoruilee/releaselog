@@ -16,7 +16,7 @@ function densityForRange(rangeMonths: 1 | 3 | 6): {
   showCountOnly: boolean;
 } {
   if (rangeMonths === 1) return { maxVisible: 3, showCountOnly: false };
-  if (rangeMonths === 3) return { maxVisible: 2, showCountOnly: false };
+  if (rangeMonths === 3) return { maxVisible: 0, showCountOnly: true };
   return { maxVisible: 1, showCountOnly: true };
 }
 
@@ -30,7 +30,7 @@ export function CalendarBoard({
   const { maxVisible, showCountOnly } = densityForRange(rangeMonths);
 
   return (
-    <div className="space-y-12">
+    <div className="calendar-board" data-months={rangeMonths}>
       {months.map((m) => (
         <MonthSection
           key={m.monthKey}

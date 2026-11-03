@@ -32,7 +32,7 @@ function toCalendarItem(event: ResetEvent): ReleaseItem {
     docUrls: [event.source.url, ...(event.secondarySources?.map((s) => s.url) ?? [])],
     tags: [AGENT_LABELS[event.agent], event.type.replaceAll("_", " "), ...event.plans],
     importance: event.type === "manual_reset" ? 3 : 2,
-    accentColor: accent.bg,
+    accentColor: accent.badge,
     accentTextColor: accent.text,
   };
 }
@@ -40,6 +40,7 @@ function toCalendarItem(event: ResetEvent): ReleaseItem {
 export function ResetLogCalendar({ events }: { events: ResetEvent[] }) {
   const t = useT();
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(false);
   const today = useMemo(() => todayNoon(), []);
   const todayKey = useMemo(() => dateKey(today), [today]);
   const { start, end } = useMemo(() => getRangeBounds(today, 3), [today]);
@@ -58,18 +59,9 @@ export function ResetLogCalendar({ events }: { events: ResetEvent[] }) {
   }, [itemsInRange, selectedDate]);
 
   return (
-    <section className="mt-10 space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h2 className="font-sans text-sm font-semibold uppercase tracking-[0.2em] text-accent">
-            {t("reset_log.calendar_heading")}
-          </h2>
-          <p className="mt-1 text-sm text-secondary">
-            {t("reset_log.calendar_helper")}
-          </p>
-        </div>
-      </div>
-
+    <section className="reset-calendar mt-6">
+      <button type="button" aria-expanded={expanded} aria-controls="reset-calendar-grid" onClick={() => setExpanded(v => !v)} className="flex min-h-11 w-full items-center justify-between rounded-lg border border-slate-200 px-4 text-sm font-medium text-primary md:hidden">{t(expanded ? "site.hide_calendar" : "site.show_calendar")} <span aria-hidden>{expanded ? "−" : "+"}</span></button>
+      <div id="reset-calendar-grid" className={`${expanded ? "block" : "hidden"} mt-3 rounded-xl border border-slate-200 p-4 md:mt-0 md:block`}>
       <CalendarBoard
         months={months}
         rangeMonths={3}
@@ -77,6 +69,8 @@ export function ResetLogCalendar({ events }: { events: ResetEvent[] }) {
         todayKey={todayKey}
         onSelectDate={setSelectedDate}
       />
+      <div className="mt-3 flex flex-wrap items-center gap-5 border-t border-slate-200 pt-3 text-xs text-secondary"><span className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-sm bg-orange-100" aria-hidden />Codex</span><span className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-sm bg-green-100" aria-hidden />Claude Code</span><span>{t("reset_log.calendar_helper")}</span></div>
+      </div>
 
       {selectedDate && itemsForSelectedDay.length > 0 && (
         <DayDetails

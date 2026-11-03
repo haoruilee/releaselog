@@ -93,14 +93,14 @@ export interface AgentAccent {
 
 export const AGENT_ACCENT: Record<ResetAgent, AgentAccent> = {
   "claude-code": {
-    bg: "#c2410c",
-    text: "#fef3e2",
-    badge: "#ea580c",
+    bg: "#eaf5ee",
+    text: "#205b3d",
+    badge: "#205b3d",
   },
   codex: {
-    bg: "#f5f5f5",
-    text: "#0c0a09",
-    badge: "#ffffff",
+    bg: "#fff0e6",
+    text: "#9a3412",
+    badge: "#9a3412",
   },
 };
 

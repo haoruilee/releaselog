@@ -26,8 +26,8 @@ export function PricingCheckoutButtons({
   const [error, setError] = useState<string | null>(null);
 
   const baseClasses = primary
-    ? "inline-flex w-full items-center justify-center rounded-full bg-active-cell px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
-    : "inline-flex w-full items-center justify-center rounded-full border border-white/10 px-5 py-2.5 text-sm font-medium text-primary disabled:opacity-60";
+    ? "inline-flex w-full items-center justify-center rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
+    : "inline-flex w-full items-center justify-center rounded-lg border border-slate-200 px-5 py-2.5 text-sm font-medium text-primary disabled:opacity-60";
 
   if (!isLoggedIn) {
     return (
@@ -85,7 +85,7 @@ export function PricingCheckoutButtons({
           Checkout is temporarily unavailable. Try again shortly.
         </p>
       )}
-      {error && <p className="mt-2 text-xs text-red-400">{error}</p>}
+      {error && <p className="mt-2 text-xs text-red-700">{error}</p>}
     </div>
   );
 }

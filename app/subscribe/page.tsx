@@ -18,7 +18,7 @@ export default async function SubscribePage() {
 
   return (
     <div className="min-h-screen bg-page text-primary">
-      <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+      <div className="mx-auto max-w-4xl px-6 py-10 sm:px-10">
         <div className="flex items-center justify-between gap-3">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">ReleaseLog</p>
           <Link
@@ -28,7 +28,7 @@ export default async function SubscribePage() {
             View pricing →
           </Link>
         </div>
-        <h1 className="mt-2 font-serif text-3xl text-primary sm:text-4xl">Subscribe</h1>
+        <h1 className="editorial-title mt-5 text-4xl text-primary sm:text-5xl">Subscribe</h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-secondary">
           Public release logs stay open. Pro unlocks realtime email alerts and a private RSS feed
           scoped to the teams you actually track.

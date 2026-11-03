@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import type { EntityMeta } from "@/data/types";
 import { useT } from "@/components/I18nProvider";
 
@@ -26,11 +25,12 @@ export function EntitySwitcher({
       <button
         key={e.id}
         type="button"
+        aria-pressed={active}
         onClick={() => onChange(e.id)}
-        className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+        className={`rounded-lg border px-3 py-2 text-[13px] font-medium transition-colors ${
           active
-            ? "bg-active-cell text-primary shadow-sm ring-1 ring-white/10"
-            : "bg-empty-cell text-secondary hover:bg-panel hover:text-primary"
+            ? "border-orange-200 bg-orange-50 text-accent"
+            : "border-slate-200 bg-white text-secondary hover:bg-panel hover:text-primary"
         }`}
       >
         {e.name}
@@ -39,20 +39,16 @@ export function EntitySwitcher({
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <span className="text-xs uppercase tracking-wider text-secondary/80">
+    <div className="flex min-w-0 flex-wrap items-center gap-2">
+      <span className="sr-only">
         {t("switcher.team_product")}
       </span>
-      <div className="flex flex-wrap gap-2">
-        {entities.slice(0, 1).map(renderEntityButton)}
-        <Link
-          href="/reset-log"
-          className="rounded-full bg-empty-cell px-4 py-1.5 text-sm font-medium text-secondary transition-colors hover:bg-panel hover:text-primary"
-        >
-          {t("switcher.reset_log")}
-        </Link>
-        {entities.slice(1).map(renderEntityButton)}
+      <div className="hidden flex-wrap gap-2 xl:flex">
+        {entities.slice(0, 5).map(renderEntityButton)}
       </div>
+      <select aria-label={t("site.all_teams")} value={selectedId} onChange={event => onChange(event.target.value)} className="min-h-10 w-[160px] max-w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-secondary xl:max-w-[160px]">
+        {entities.map(entity => <option key={entity.id} value={entity.id}>{entity.name}</option>)}
+      </select>
     </div>
   );
 }

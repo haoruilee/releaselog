@@ -46,6 +46,9 @@ export default function HomeClient({ initialEntityId }: Props) {
   const [posterMode, setPosterMode] = useState(false);
 
   const [releases, setReleases] = useState<ReleaseItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
+  const [retry, setRetry] = useState(0);
   const pendingReleaseIdRef = useRef<string | null>(null);
 
   const exportTargetRef = useRef<HTMLDivElement>(null);
@@ -64,13 +67,17 @@ export default function HomeClient({ initialEntityId }: Props) {
   const todayKey = useMemo(() => dateKey(todayNoon()), []);
 
   useEffect(() => {
+    const controller = new AbortController();
     setReleases([]);
+    setLoading(true);
+    setLoadError(false);
     const endpoint = USE_SERVER_DATA
       ? `${BASE_PATH}/api/v1/entity-releases/${selectedEntityId}`
       : `${BASE_PATH}/data/${selectedEntityId}-releases.json`;
-    fetch(endpoint)
-      .then((r) => r.json())
+    fetch(endpoint, { signal: controller.signal })
+      .then((r) => { if (!r.ok) throw new Error("release_fetch_failed"); return r.json(); })
       .then((data: ReleaseItem[] | { releases?: ReleaseItem[] }) => {
+        if (controller.signal.aborted) return;
         const releasesList = Array.isArray(data) ? data : data.releases ?? [];
         setReleases(releasesList);
         if (pendingReleaseIdRef.current) {
@@ -79,8 +86,10 @@ export default function HomeClient({ initialEntityId }: Props) {
           pendingReleaseIdRef.current = null;
         }
       })
-      .catch(() => setReleases([]));
-  }, [selectedEntityId]);
+      .catch(() => { if (!controller.signal.aborted) setLoadError(true); })
+      .finally(() => { if (!controller.signal.aborted) setLoading(false); });
+    return () => controller.abort();
+  }, [selectedEntityId, retry]);
 
   // Hash-based deep linking: #feed-{entityId}-{releaseId}
   useEffect(() => {
@@ -123,11 +132,11 @@ export default function HomeClient({ initialEntityId }: Props) {
   if (!entityMeta) return null;
 
   return (
-    <div className="min-h-screen bg-page" style={themeToCssVars(theme)}>
-      <div ref={exportTargetRef} className="mx-auto max-w-6xl px-4 pt-8 sm:px-8 md:px-12">
+    <div data-poster-mode={posterMode} className="min-h-screen bg-page" style={themeToCssVars(theme)}>
+      <div ref={exportTargetRef} className="mx-auto max-w-[1344px] px-6 pt-8 sm:px-10 sm:pt-10 lg:px-12">
         <div
           data-export-root
-          className="space-y-10 rounded-2xl bg-page p-4 sm:p-6 md:p-8"
+          className="space-y-7 bg-page"
         >
           <Header
             entity={entityMeta}
@@ -138,7 +147,7 @@ export default function HomeClient({ initialEntityId }: Props) {
           {!posterMode && (
             <div
               data-export-exclude
-              className="space-y-5 rounded-2xl bg-panel/40 p-4 ring-1 ring-white/5"
+              className="flex flex-wrap items-center justify-between gap-x-4 gap-y-4"
             >
               <EntitySwitcher
                 entities={entityMetas}
@@ -150,33 +159,18 @@ export default function HomeClient({ initialEntityId }: Props) {
                 }}
                 posterMode={posterMode}
               />
-              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div className="flex flex-wrap items-center gap-4">
-                  <RangeSwitcher
-                    value={selectedRange}
-                    onChange={(v) => {
-                      setSelectedRange(v);
-                      setSelectedDate(null);
-                    }}
-                    posterMode={posterMode}
-                  />
-                  <div className="rounded-full bg-empty-cell/50 px-3 py-1 text-xs text-secondary ring-1 ring-white/5">
-                    {t("switcher.theme")}{" "}
-                    <span className="font-medium text-accent">{entityMeta.name}</span>
-                  </div>
-                </div>
-                <PosterToolbar
-                  posterMode={posterMode}
-                  onPosterModeChange={setPosterMode}
-                  exportTargetRef={exportTargetRef}
-                />
-              </div>
+              <RangeSwitcher
+                value={selectedRange}
+                onChange={value => { setSelectedRange(value); setSelectedDate(null); }}
+                posterMode={posterMode}
+              />
+              <PosterToolbar posterMode={posterMode} onPosterModeChange={setPosterMode} exportTargetRef={exportTargetRef} />
             </div>
           )}
 
-          {!posterMode && <AdPlacement position="calendar-banner" />}
+          <SummaryStats stats={stats} compact={selectedRange === 6} loading={loading} />
 
-          <SummaryStats stats={stats} compact={selectedRange === 6} />
+          {loadError && <div role="alert" className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800"><p>{t("site.load_error")}</p><button type="button" onClick={() => setRetry(v => v + 1)} className="rounded-md border border-red-300 px-4 py-2 font-medium">{t("site.retry")}</button></div>}
 
           <CalendarBoard
             months={calendarMonths}
@@ -185,10 +179,15 @@ export default function HomeClient({ initialEntityId }: Props) {
             todayKey={todayKey}
             onSelectDate={setSelectedDate}
           />
+          {!posterMode && <AdPlacement position="calendar-banner" />}
+          {!posterMode && <section data-export-exclude className="pb-4" aria-busy={loading}>
+            <h2 className="font-serif text-3xl text-primary">{t("site.recent")}</h2>
+            {loading ? <p role="status" className="py-8 text-sm text-secondary">{t("site.loading")}</p> : !loadError && releasesInRange.length === 0 ? <p className="py-8 text-sm text-secondary">{t("site.no_releases")}</p> : <ol className="mt-5 divide-y divide-slate-200 border-y border-slate-200">{[...releasesInRange].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 8).map(item => <li key={item.id} className="grid gap-2 py-4 sm:grid-cols-[120px_1fr_auto] sm:gap-6"><time dateTime={item.date} className="text-xs text-secondary sm:pt-1">{item.date}</time><button type="button" data-release-row onClick={() => setSelectedDate(item.date)} className="text-left text-sm font-medium leading-relaxed text-primary hover:text-accent">{item.title}</button>{item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noreferrer" className="text-xs text-accent sm:pt-1">{t("site.source")} ↗</a>}</li>)}</ol>}
+          </section>}
         </div>
 
-        <div className="mt-10 pb-24">
-          <footer className="space-y-4 border-t border-white/5 pt-8 text-sm text-secondary/70">
+        <div className="mt-8 pb-12">
+          <footer className="space-y-4 border-t border-slate-200 pt-8 text-sm text-secondary">
             {entityMeta.footnote && <p>{entityMeta.footnote}</p>}
             <p>
               {entityMeta.brandLine ?? "ReleaseLog"}
@@ -213,11 +212,11 @@ export default function HomeClient({ initialEntityId }: Props) {
                   >
                     {t("footer.subscribe_label")}
                   </Link>
-                  <span className="text-secondary/80">
+                  <span className="text-secondary">
                     {t("footer.subscribe_intro")}
                   </span>
                 </p>
-                <p className="text-secondary/70">
+                <p className="text-secondary">
                   {t("footer.share_hint")}
                 </p>
               </div>

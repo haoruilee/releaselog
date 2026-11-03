@@ -138,7 +138,7 @@ export function SubscribeClient(props: Props) {
       </section>
 
       {!props.isLoggedIn && (
-        <section className="rounded-2xl bg-panel/50 p-6 ring-1 ring-white/5">
+        <section className="rounded-2xl bg-panel/50 p-6 ring-1 ring-slate-200">
           <p className="text-sm text-secondary">
             Sign in to subscribe to realtime email and generate your private RSS URL.
           </p>
@@ -152,19 +152,19 @@ export function SubscribeClient(props: Props) {
 
       {props.isLoggedIn && (
         <>
-          <section className="rounded-2xl bg-panel/50 p-6 ring-1 ring-white/5">
+          <section className="rounded-2xl bg-panel/50 p-6 ring-1 ring-slate-200">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="text-base font-semibold text-primary">Account</h2>
                 <p className="text-sm text-secondary">{props.email}</p>
-                <p className="text-xs text-secondary/80">
+                <p className="text-xs text-secondary">
                   Subscription status: {props.subscriptionStatus ?? "not_started"}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={logout}
-                className="rounded-full border border-white/10 px-4 py-2 text-sm text-primary"
+                className="rounded-full border border-slate-200 px-4 py-2 text-sm text-primary"
               >
                 Log out
               </button>
@@ -172,7 +172,7 @@ export function SubscribeClient(props: Props) {
           </section>
 
           {!props.isPro && (
-            <section className="rounded-2xl bg-panel/50 p-6 ring-1 ring-white/5">
+            <section className="rounded-2xl bg-panel/50 p-6 ring-1 ring-slate-200">
               <h2 className="text-base font-semibold text-primary">Upgrade to Pro</h2>
               <p className="mt-2 text-sm text-secondary">
                 Pro unlocks realtime email alerts and a private RSS feed that tracks only the teams
@@ -183,7 +183,7 @@ export function SubscribeClient(props: Props) {
                   type="button"
                   disabled={!props.checkoutEnabled}
                   onClick={() => startCheckout("monthly")}
-                  className="rounded-full bg-active-cell px-5 py-2 text-sm font-medium text-white disabled:opacity-50"
+                  className="rounded-full bg-accent px-5 py-2 text-sm font-medium text-white disabled:opacity-50"
                 >
                   Start monthly plan
                 </button>
@@ -191,7 +191,7 @@ export function SubscribeClient(props: Props) {
                   type="button"
                   disabled={!props.checkoutEnabled}
                   onClick={() => startCheckout("yearly")}
-                  className="rounded-full border border-white/10 px-5 py-2 text-sm text-primary disabled:opacity-50"
+                  className="rounded-full border border-slate-200 px-5 py-2 text-sm text-primary disabled:opacity-50"
                 >
                   Start yearly plan
                 </button>
@@ -199,7 +199,7 @@ export function SubscribeClient(props: Props) {
             </section>
           )}
 
-          <section className="rounded-2xl bg-panel/50 p-6 ring-1 ring-white/5">
+          <section className="rounded-2xl bg-panel/50 p-6 ring-1 ring-slate-200">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="text-base font-semibold text-primary">Notification preferences</h2>
@@ -211,7 +211,7 @@ export function SubscribeClient(props: Props) {
                 <button
                   type="button"
                   onClick={openPortal}
-                  className="rounded-full border border-white/10 px-4 py-2 text-sm text-primary"
+                  className="rounded-full border border-slate-200 px-4 py-2 text-sm text-primary"
                 >
                   Manage billing
                 </button>
@@ -222,7 +222,7 @@ export function SubscribeClient(props: Props) {
               {props.entities.map((entity) => (
                 <label
                   key={entity.id}
-                  className="flex cursor-pointer items-start gap-3 rounded-lg bg-empty-cell/40 px-3 py-2 ring-1 ring-white/5"
+                  className="flex cursor-pointer items-start gap-3 rounded-lg bg-empty-cell/40 px-3 py-2 ring-1 ring-slate-200"
                 >
                   <input
                     type="checkbox"
@@ -259,7 +259,7 @@ export function SubscribeClient(props: Props) {
                 type="button"
                 onClick={savePreferences}
                 disabled={saving}
-                className="rounded-full bg-active-cell px-5 py-2 text-sm font-medium text-white disabled:opacity-60"
+                className="rounded-full bg-accent px-5 py-2 text-sm font-medium text-white disabled:opacity-60"
               >
                 {saving ? "Saving…" : "Save preferences"}
               </button>
@@ -267,7 +267,7 @@ export function SubscribeClient(props: Props) {
                 <button
                   type="button"
                   onClick={rotateFeedToken}
-                  className="rounded-full border border-white/10 px-5 py-2 text-sm text-primary"
+                  className="rounded-full border border-slate-200 px-5 py-2 text-sm text-primary"
                 >
                   Rotate private RSS URL
                 </button>

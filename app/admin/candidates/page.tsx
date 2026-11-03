@@ -38,7 +38,7 @@ export default async function AdminCandidatesPage() {
 
         <div className="mt-8 space-y-6">
           {candidates.length === 0 && (
-            <div className="rounded-2xl bg-panel/50 p-6 ring-1 ring-white/5 text-sm text-secondary">
+            <div className="rounded-2xl bg-panel/50 p-6 ring-1 ring-slate-200 text-sm text-secondary">
               No candidates yet. Run the ingest cron or call `/api/cron/ingest`.
             </div>
           )}
@@ -48,7 +48,7 @@ export default async function AdminCandidatesPage() {
             return (
               <section
                 key={candidate.id}
-                className="grid gap-6 rounded-2xl bg-panel/50 p-6 ring-1 ring-white/5 lg:grid-cols-[1.1fr,1fr]"
+                className="grid gap-6 rounded-2xl bg-panel/50 p-6 ring-1 ring-slate-200 lg:grid-cols-[1.1fr,1fr]"
               >
                 <div className="space-y-3">
                   <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.18em] text-secondary">
@@ -68,7 +68,7 @@ export default async function AdminCandidatesPage() {
                   <form
                     action={`/api/admin/candidates/${candidate.id}/approve`}
                     method="post"
-                    className="space-y-3 rounded-xl bg-empty-cell/30 p-4 ring-1 ring-white/5"
+                    className="space-y-3 rounded-xl bg-empty-cell/30 p-4 ring-1 ring-slate-200"
                   >
                     <input type="hidden" name="entityId" value={candidate.entityId} />
                     <label className="block text-xs uppercase tracking-[0.18em] text-secondary">
@@ -77,7 +77,7 @@ export default async function AdminCandidatesPage() {
                         type="date"
                         name="date"
                         defaultValue={defaults.date ?? inferDateFromCandidate(candidate)}
-                        className="mt-2 w-full rounded-lg border border-white/10 bg-page/60 px-3 py-2 text-sm text-primary"
+                        className="mt-2 w-full rounded-lg border border-slate-200 bg-page/60 px-3 py-2 text-sm text-primary"
                       />
                     </label>
                     <label className="block text-xs uppercase tracking-[0.18em] text-secondary">
@@ -86,7 +86,7 @@ export default async function AdminCandidatesPage() {
                         type="text"
                         name="title"
                         defaultValue={defaults.title}
-                        className="mt-2 w-full rounded-lg border border-white/10 bg-page/60 px-3 py-2 text-sm text-primary"
+                        className="mt-2 w-full rounded-lg border border-slate-200 bg-page/60 px-3 py-2 text-sm text-primary"
                       />
                     </label>
                     <label className="block text-xs uppercase tracking-[0.18em] text-secondary">
@@ -95,7 +95,7 @@ export default async function AdminCandidatesPage() {
                         name="whatChanged"
                         defaultValue={candidate.rawBody ?? ""}
                         rows={4}
-                        className="mt-2 w-full rounded-lg border border-white/10 bg-page/60 px-3 py-2 text-sm text-primary"
+                        className="mt-2 w-full rounded-lg border border-slate-200 bg-page/60 px-3 py-2 text-sm text-primary"
                       />
                     </label>
                     <label className="block text-xs uppercase tracking-[0.18em] text-secondary">
@@ -104,7 +104,7 @@ export default async function AdminCandidatesPage() {
                         type="url"
                         name="sourceUrl"
                         defaultValue={candidate.sourceUrl}
-                        className="mt-2 w-full rounded-lg border border-white/10 bg-page/60 px-3 py-2 text-sm text-primary"
+                        className="mt-2 w-full rounded-lg border border-slate-200 bg-page/60 px-3 py-2 text-sm text-primary"
                       />
                     </label>
                     <div className="grid gap-3 sm:grid-cols-2">
@@ -114,7 +114,7 @@ export default async function AdminCandidatesPage() {
                           type="text"
                           name="tags"
                           placeholder="comma,separated"
-                          className="mt-2 w-full rounded-lg border border-white/10 bg-page/60 px-3 py-2 text-sm text-primary"
+                          className="mt-2 w-full rounded-lg border border-slate-200 bg-page/60 px-3 py-2 text-sm text-primary"
                         />
                       </label>
                       <label className="block text-xs uppercase tracking-[0.18em] text-secondary">
@@ -123,14 +123,14 @@ export default async function AdminCandidatesPage() {
                           type="text"
                           name="audience"
                           placeholder="developer,end_user"
-                          className="mt-2 w-full rounded-lg border border-white/10 bg-page/60 px-3 py-2 text-sm text-primary"
+                          className="mt-2 w-full rounded-lg border border-slate-200 bg-page/60 px-3 py-2 text-sm text-primary"
                         />
                       </label>
                     </div>
                     <div className="flex flex-wrap gap-3">
                       <button
                         type="submit"
-                        className="rounded-full bg-active-cell px-4 py-2 text-sm font-medium text-white"
+                        className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white"
                       >
                         Approve and publish
                       </button>
@@ -140,7 +140,7 @@ export default async function AdminCandidatesPage() {
                   <form
                     action={`/api/admin/candidates/${candidate.id}/reject`}
                     method="post"
-                    className="rounded-xl bg-empty-cell/20 p-4 ring-1 ring-white/5"
+                    className="rounded-xl bg-empty-cell/20 p-4 ring-1 ring-slate-200"
                   >
                     <label className="block text-xs uppercase tracking-[0.18em] text-secondary">
                       Reject reason
@@ -148,12 +148,12 @@ export default async function AdminCandidatesPage() {
                         type="text"
                         name="reason"
                         placeholder="Not a new release"
-                        className="mt-2 w-full rounded-lg border border-white/10 bg-page/60 px-3 py-2 text-sm text-primary"
+                        className="mt-2 w-full rounded-lg border border-slate-200 bg-page/60 px-3 py-2 text-sm text-primary"
                       />
                     </label>
                     <button
                       type="submit"
-                      className="mt-3 rounded-full border border-white/10 px-4 py-2 text-sm text-primary"
+                      className="mt-3 rounded-full border border-slate-200 px-4 py-2 text-sm text-primary"
                     >
                       Reject
                     </button>

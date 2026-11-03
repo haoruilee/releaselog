@@ -1,5 +1,6 @@
 import { AdvertisingProvider, SiteSponsorFooter } from "@/components/Advertising";
 import { getAdvertisingConfig } from "@/lib/advertising";
+import { SiteHeader, SiteFooter } from "@/components/SiteChrome";
 import type { Metadata } from "next";
 import { Instrument_Serif, DM_Sans } from "next/font/google";
 import Script from "next/script";
@@ -85,8 +86,10 @@ export default async function RootLayout({
       <body className="min-h-screen font-sans antialiased">
         <I18nProvider locale={locale} messages={messages}>
           <AdvertisingProvider config={getAdvertisingConfig()}>
-            {children}
+            <SiteHeader />
+            <div id="main-content" tabIndex={-1} className="site-content outline-none">{children}</div>
             <SiteSponsorFooter />
+            <SiteFooter />
           </AdvertisingProvider>
         </I18nProvider>
         {gaId && (

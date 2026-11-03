@@ -41,17 +41,17 @@ function statusTone(status: string): string {
   if (["failed", "degraded", "rejected"].includes(status)) {
     return "bg-red-500/15 text-red-200 ring-red-400/20";
   }
-  return "bg-empty-cell/60 text-secondary ring-white/10";
+  return "bg-empty-cell/60 text-secondary ring-slate-200";
 }
 
 function Pill({ children, tone = "neutral" }: { children: ReactNode; tone?: string }) {
-  const className = tone === "neutral" ? "bg-empty-cell/60 text-secondary ring-white/10" : statusTone(tone);
+  const className = tone === "neutral" ? "bg-empty-cell/60 text-secondary ring-slate-200" : statusTone(tone);
   return <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ring-1 ${className}`}>{children}</span>;
 }
 
 function Metric({ label, value, detail }: { label: string; value: string | number; detail?: string }) {
   return (
-    <div className="rounded-lg bg-panel/55 p-4 ring-1 ring-white/5">
+    <div className="rounded-lg bg-panel/55 p-4 ring-1 ring-slate-200">
       <p className="text-xs uppercase tracking-[0.18em] text-secondary">{label}</p>
       <p className="mt-3 text-3xl font-semibold text-primary">{value}</p>
       {detail && <p className="mt-2 text-sm text-secondary">{detail}</p>}
@@ -84,7 +84,7 @@ function CountBars({ counts }: { counts: Record<string, number> }) {
 
 function Section({ title, children, action }: { title: string; children: ReactNode; action?: ReactNode }) {
   return (
-    <section className="rounded-lg bg-panel/45 p-5 ring-1 ring-white/5">
+    <section className="rounded-lg bg-panel/45 p-5 ring-1 ring-slate-200">
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-lg font-semibold text-primary">{title}</h2>
         {action}
@@ -152,7 +152,7 @@ export default async function AdminMonitorPage() {
             <div className="grid gap-4 lg:grid-cols-[1fr,0.85fr]">
               <div className="space-y-3">
                 {data.recentReleases.slice(0, 5).map((release) => (
-                  <div key={release.id} className="rounded-lg bg-empty-cell/25 p-3 ring-1 ring-white/5">
+                  <div key={release.id} className="rounded-lg bg-empty-cell/25 p-3 ring-1 ring-slate-200">
                     <p className="text-sm font-medium">{release.title}</p>
                     <p className="mt-1 text-xs text-secondary">{release.entityId} · {release.date} · published {formatTime(release.publishedAt)}</p>
                   </div>
@@ -169,7 +169,7 @@ export default async function AdminMonitorPage() {
           >
             <div className="space-y-3">
               {data.duplicateRejections.map((item) => (
-                <div key={`${item.sourceLabel}-${item.title}`} className="rounded-lg bg-empty-cell/25 p-3 ring-1 ring-white/5">
+                <div key={`${item.sourceLabel}-${item.title}`} className="rounded-lg bg-empty-cell/25 p-3 ring-1 ring-slate-200">
                   <div className="flex items-start justify-between gap-3">
                     <p className="text-sm font-medium leading-snug">{item.title}</p>
                     <Pill tone="rejected">{item.count}x</Pill>
@@ -190,7 +190,7 @@ export default async function AdminMonitorPage() {
           >
             <div className="space-y-3">
               {data.harnessRuns.slice(0, 8).map((run) => (
-                <div key={run.id} className="rounded-lg bg-empty-cell/30 p-4 ring-1 ring-white/5">
+                <div key={run.id} className="rounded-lg bg-empty-cell/30 p-4 ring-1 ring-slate-200">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
@@ -236,7 +236,7 @@ export default async function AdminMonitorPage() {
             title="Agent event stream"
             action={<Pill tone={data.harnessEvents[0]?.level === "error" ? "failed" : data.harnessEvents[0]?.phase ?? "neutral"}>{data.harnessEvents.length} events</Pill>}
           >
-            <div className="overflow-hidden rounded-lg ring-1 ring-white/5">
+            <div className="overflow-hidden rounded-lg ring-1 ring-slate-200">
               <table className="min-w-full divide-y divide-white/5 text-left text-sm">
                 <thead className="bg-empty-cell/60 text-secondary">
                   <tr>
@@ -272,7 +272,7 @@ export default async function AdminMonitorPage() {
 
         <div className="mt-5 grid gap-5 xl:grid-cols-2">
           <Section title="AI review applies">
-            <div className="overflow-hidden rounded-lg ring-1 ring-white/5">
+            <div className="overflow-hidden rounded-lg ring-1 ring-slate-200">
               <table className="min-w-full divide-y divide-white/5 text-left text-sm">
                 <thead className="bg-empty-cell/60 text-secondary">
                   <tr>
@@ -309,7 +309,7 @@ export default async function AdminMonitorPage() {
 	              ))}
 	              {data.sourceFailures.length === 0 && data.sourceFailureSummary.length === 0 && <p className="text-sm text-secondary">No recent source failures.</p>}
 	              {data.sourceFailures.map((failure) => (
-	                <div key={failure.id} className="rounded-lg bg-empty-cell/30 p-3 ring-1 ring-white/5">
+	                <div key={failure.id} className="rounded-lg bg-empty-cell/30 p-3 ring-1 ring-slate-200">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="text-sm font-medium">{failure.entityId} · {failure.label}</div>
                     <Pill tone="failed">{failure.statusCode ?? failure.status}</Pill>

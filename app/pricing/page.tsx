@@ -54,7 +54,7 @@ export default async function PricingPage() {
 
   return (
     <div className="min-h-screen bg-page text-primary">
-      <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+      <div className="mx-auto max-w-[1344px] px-6 py-10 sm:px-10 lg:px-12">
         <div className="mb-10 flex items-center justify-between gap-3">
           <Link
             href="/"
@@ -79,14 +79,11 @@ export default async function PricingPage() {
           )}
         </div>
 
-        <header className="max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">
-            Pricing
-          </p>
-          <h1 className="mt-2 font-serif text-4xl text-primary sm:text-5xl">
+        <header className="max-w-6xl">
+                    <h1 className="editorial-title text-4xl text-primary sm:text-[48px] lg:text-[52px]">
             Track every AI shipment without the noise.
           </h1>
-          <p className="mt-4 text-base text-secondary sm:text-lg">
+          <p className="mt-4 max-w-4xl text-base leading-relaxed text-secondary sm:text-[17px]">
             ReleaseLog is a verified, time-ordered feed of product releases and platform updates
             from Anthropic, the Claude API team, Claude Product, and OpenAI. The public calendar
             and Atom feeds are free forever. Upgrade to Pro for realtime email alerts and a
@@ -95,9 +92,9 @@ export default async function PricingPage() {
         </header>
 
         <section className="mt-12 grid gap-6 md:grid-cols-3">
-          <article className="flex flex-col rounded-2xl bg-panel/50 p-6 ring-1 ring-white/5">
+          <article className="flex flex-col rounded-xl border border-slate-200 bg-white p-7">
             <header>
-              <h2 className="text-lg font-semibold text-primary">Free</h2>
+              <h2 className="font-serif text-3xl text-primary">Free</h2>
               <p className="mt-1 text-sm text-secondary">
                 For anyone who wants to keep an eye on AI platform shipping.
               </p>
@@ -115,17 +112,17 @@ export default async function PricingPage() {
             <div className="mt-6">
               <Link
                 href="/"
-                className="inline-flex rounded-full border border-white/10 px-5 py-2 text-sm text-primary hover:bg-empty-cell/40"
+                className="inline-flex rounded-full border border-slate-200 px-5 py-2 text-sm text-primary hover:bg-empty-cell/40"
               >
                 Browse the calendar
               </Link>
             </div>
           </article>
 
-          <article className="flex flex-col rounded-2xl bg-panel p-6 ring-1 ring-accent/40 md:-my-2 md:scale-[1.02]">
+          <article className="flex flex-col rounded-xl border border-slate-200 border-t-[3px] border-t-accent bg-white p-7">
             <header>
               <div className="flex items-center gap-2">
-                <h2 className="text-lg font-semibold text-primary">Pro — Monthly</h2>
+                <h2 className="font-serif text-3xl text-primary">Pro — Monthly</h2>
                 <span className="rounded-full bg-accent/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-accent">
                   Most flexible
                 </span>
@@ -163,10 +160,10 @@ export default async function PricingPage() {
             </div>
           </article>
 
-          <article className="flex flex-col rounded-2xl bg-panel/50 p-6 ring-1 ring-white/5">
+          <article className="flex flex-col rounded-xl border border-slate-200 bg-white p-7">
             <header>
               <div className="flex items-center gap-2">
-                <h2 className="text-lg font-semibold text-primary">Pro — Yearly</h2>
+                <h2 className="font-serif text-3xl text-primary">Pro — Yearly</h2>
                 {savingsLabel && (
                   <span className="rounded-full bg-empty-cell/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
                     {savingsLabel}
@@ -204,7 +201,7 @@ export default async function PricingPage() {
           </article>
         </section>
 
-        <section className="mt-16 rounded-2xl bg-panel/50 p-6 ring-1 ring-white/5">
+        <section className="mt-16 rounded-xl border border-slate-200 bg-white p-7">
           <h2 className="text-base font-semibold text-primary">What’s in Pro</h2>
           <dl className="mt-4 grid gap-6 text-sm text-secondary sm:grid-cols-2">
             <div>
@@ -291,7 +288,7 @@ export default async function PricingPage() {
           </div>
         </section>
 
-        <footer className="mt-16 border-t border-white/5 pt-6 text-xs text-secondary">
+        <footer className="mt-16 border-t border-slate-200 pt-6 text-xs text-secondary">
           <p>
             Prices shown in USD. Taxes (if applicable) are calculated at checkout. By subscribing
             you agree that ReleaseLog will charge the displayed amount to your payment method on

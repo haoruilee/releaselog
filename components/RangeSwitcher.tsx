@@ -21,11 +21,11 @@ export function RangeSwitcher({ value, onChange, posterMode }: Props) {
   if (posterMode) return null;
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <span className="text-xs uppercase tracking-wider text-secondary/80">
+    <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t("switcher.range")}>
+      <span className="sr-only">
         {t("switcher.range")}
       </span>
-      <div className="inline-flex rounded-full bg-empty-cell p-1 ring-1 ring-white/5">
+      <div className="inline-flex rounded-md bg-empty-cell p-1 ring-1 ring-slate-200">
         {options.map((o) => {
           const active = o.value === value;
           return (
@@ -33,7 +33,8 @@ export function RangeSwitcher({ value, onChange, posterMode }: Props) {
               key={o.value}
               type="button"
               onClick={() => onChange(o.value)}
-              className={`rounded-full px-3 py-1 text-sm font-medium transition-colors ${
+              aria-pressed={active}
+              className={`rounded-md px-3 py-1 text-sm font-medium transition-colors ${
                 active
                   ? "bg-panel text-primary shadow-sm"
                   : "text-secondary hover:text-primary"
