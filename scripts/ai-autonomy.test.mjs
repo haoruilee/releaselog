@@ -1,0 +1,24 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { autonomousReviewPolicy, compactReviewCandidates, normalizeAutonomousOutbox as normalize, reviewFingerprint as fp, skipUnchangedBlocked as skip } from './ai-autonomy.mjs';
+const candidates = [{ id: 'a', rawTitle: 'New SDK', rawBody: 'v2 released', sourceUrl: 'https://example.org/release' }, { id: 'b', rawTitle: 'Company appointment' }];
+const ready = { intent: 'release_publish', ready: true, riskLevel: 'low', decisions: [{ candidateId: 'a', action: 'approve', confidence: .9, release: { title: 'SDK v2' } }, { candidateId: 'b', action: 'reject', reason: 'not a release' }] };
+test('verified approval and terminal rejection preserved', () => assert.deepEqual(normalize(ready, candidates), ready));
+test('human deferral becomes terminal rejection without publishing', () => { const x=structuredClone(ready);x.decisions[0].action='needs_review';assert.equal(normalize(x,candidates).decisions[0].action,'reject');assert.equal(x.decisions[0].action,'needs_review'); });
+test('low-confidence approvals never enter human pending queue', () => {for(const v of [.84,undefined,NaN,Infinity]) { const x=structuredClone(ready);x.decisions[0].confidence=v;assert.equal(normalize(x,candidates).decisions[0].action,'reject'); }});
+test('threshold approval preserved', () => {const x=structuredClone(ready);x.decisions[0].confidence=.85;assert.equal(normalize(x,candidates).decisions[0].action,'approve');});
+test('infrastructure blocked ready=false never forced ready', () => {const x={intent:'release_publish',ready:false};assert.equal(normalize(x,candidates),x);});
+test('deployment intent never normalized', () => {const x={intent:'code_deploy',ready:true};assert.equal(normalize(x,candidates),x);});
+test('missing decisions rejected', () => assert.throws(()=>normalize({...ready,decisions:[]},candidates),/incomplete/));
+test('duplicate decisions rejected', () => assert.throws(()=>normalize({...ready,decisions:[ready.decisions[0],ready.decisions[0]]},candidates),/duplicate/));
+test('unknown candidate rejected', () => assert.throws(()=>normalize({...ready,decisions:[{candidateId:'z',action:'approve'}]},candidates),/unknown/));
+test('invalid action rejected', () => assert.throws(()=>normalize({...ready,decisions:[{candidateId:'a',action:'ignore'}]},candidates),/invalid_action/));
+test('fingerprint stable across ordering and old human review timestamps', () => assert.equal(fp(candidates),fp([...candidates].reverse().map(c=>({...c,metadata:{aiReview:{action:'needs_review',reviewedAt:Date.now()}}})))));
+test('new evidence changes fingerprint', () => assert.notEqual(fp(candidates),fp(candidates.map(c=>({...c,rawBody:'new evidence'})))));
+test('unchanged blocked and failed batches cooled down, changed candidates eligible', () => {for(const status of ['blocked','failed'])assert.equal(skip({fingerprint:fp(candidates),status,at:1000},fp(candidates),2000),true);assert.equal(skip({fingerprint:fp(candidates),status:'blocked',at:1000},'new',2000),false);});
+test('success, expired cooldown and future timestamps cannot suppress review', () => {assert.equal(skip({fingerprint:'x',status:'published',at:1000},'x',2000),false);assert.equal(skip({fingerprint:'x',status:'blocked',at:1000},'x',1001+86400000),false);assert.equal(skip({fingerprint:'x',status:'blocked',at:3000},'x',2000),false);});
+test('autonomous policy retains confidence, environment and effect boundaries', () => {for(const t of ['0.85','environment','Do not publish','Do not ask a human'])assert.ok(autonomousReviewPolicy.includes(t));});
+
+import { providerPromptCommand } from './ai-session-send.mjs';
+test('review inputs drop obsolete human instructions and bound source bodies', () => { const original = [{ id:'a', rawBody:'x'.repeat(10000), metadata:{aiReview:{reason:'ask human'}} }];const compact=compactReviewCandidates(original);assert.equal(compact[0].rawBody.length,1600);assert.equal(compact[0].metadata,undefined);assert.equal(original[0].rawBody.length,10000); });
+test('review CLI exposes only evidence reading and outbox writing', () => {const old=process.env.AI_HARNESS_INTENT;try{process.env.AI_HARNESS_INTENT='release_publish';const command=providerPromptCommand('claude','review','/fixture');assert.ok(command.includes('--tools Read,Write'));assert.ok(command.includes('--disable-slash-commands'));assert.ok(!command.includes('Bash'));process.env.AI_HARNESS_INTENT='code_deploy';assert.ok(!providerPromptCommand('claude','test','/fixture').includes('--tools Read,Write'));}finally{if(old===undefined)delete process.env.AI_HARNESS_INTENT;else process.env.AI_HARNESS_INTENT=old;}});

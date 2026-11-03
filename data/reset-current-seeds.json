@@ -1,0 +1,82 @@
+[
+  {
+    "id": "codex-post-2117035794678546764",
+    "slug": "codex-banked-credit-2117035794678546764",
+    "date": "2026-11-01",
+    "agent": "codex",
+    "plans": [
+      "Eligible paid accounts \u2014 see source"
+    ],
+    "type": "banked_reset",
+    "title": "Codex announces the final banked reset credit of the 28-day series",
+    "summary": "A second banked usage-reset credit was announced at the close of the 28-day series. A redeemable credit is separate from an automatic reset of every account.",
+    "source": {
+      "label": "@thsottiaux",
+      "url": "https://x.com/thsottiaux/status/2117035794678546764"
+    },
+    "secondarySources": [
+      {
+        "label": "Codex Resets archive",
+        "url": "https://willcodexresets.com/history"
+      }
+    ],
+    "verification": "official-record"
+  },
+  {
+    "id": "claude-post-2116220869479428500",
+    "slug": "claude-ultra-five-hour-limit-removed-2026-10-30",
+    "date": "2026-10-30",
+    "agent": "claude-code",
+    "plans": [
+      "Verified Ultra accounts"
+    ],
+    "type": "limit_increase",
+    "title": "Verified Claude Ultra accounts begin losing the five-hour limit",
+    "summary": "Max 20x is renamed Ultra. The five-hour restriction is being removed for verified Ultra subscribers; newer accounts may keep a temporary restriction. Weekly limits are unchanged.",
+    "source": {
+      "label": "@claudeai",
+      "url": "https://x.com/claudeai/status/2116220869479428500"
+    },
+    "verification": "official-record"
+  },
+  {
+    "id": "claude-post-2102438800836489554",
+    "slug": "claude-opus-55-quota-credit-2026-09-22",
+    "date": "2026-09-22",
+    "agent": "claude-code",
+    "plans": [
+      "Pro",
+      "Max",
+      "Team"
+    ],
+    "type": "banked_reset",
+    "title": "Claude grants a redeemable reset and raises five-hour limits",
+    "summary": "The Opus 5.5 announcement includes a 20% increase in five-hour session allowances and a reset credit for eligible plans. The credit is not an automatic reset for all accounts.",
+    "source": {
+      "label": "@ClaudeDevs",
+      "url": "https://x.com/ClaudeDevs/status/2102438800836489554"
+    },
+    "verification": "official-record"
+  },
+  {
+    "id": "claude-post-2093742321473065266",
+    "slug": "claude-weekly-limits-increase-effective-2026-09-14",
+    "date": "2026-08-29",
+    "effectiveDate": "2026-09-14",
+    "agent": "claude-code",
+    "plans": [
+      "Pro",
+      "Max",
+      "Team",
+      "Seat-based Enterprise"
+    ],
+    "type": "limit_increase",
+    "title": "Claude announces a permanent 25% increase in weekly allowances",
+    "summary": "Announced August 29 and effective September 14, standard weekly Claude Code allowances rise by 25% for the listed plans. This replaces the temporary 50% promotion.",
+    "source": {
+      "label": "@ClaudeDevs",
+      "url": "https://x.com/ClaudeDevs/status/2093742321473065266"
+    },
+    "verification": "official-record"
+  }
+]

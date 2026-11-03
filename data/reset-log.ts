@@ -16,6 +16,7 @@ export const RESET_AGENT_SLUGS: ResetAgent[] = ["claude-code", "codex"];
 
 export type ResetEventType =
   | "policy_change" // a new quota / rate-limit policy was introduced or changed
+  | "banked_reset" // a redeemable credit, not an automatic global reset
   | "manual_reset" // a one-time vendor-granted reset of existing quotas
   | "limit_increase" // limits were raised
   | "limit_decrease" // limits were lowered
@@ -51,6 +52,7 @@ export interface ResetEvent {
   source: ResetSource;
   /** Additional corroborating links (staff posts, follow-ups, related help-center pages). */
   secondarySources?: ResetSource[];
+  verification?: "source-linked" | "official-record";
 }
 
 export const AGENT_LABELS: Record<ResetAgent, string> = {
@@ -66,6 +68,7 @@ export const AGENT_VENDORS: Record<ResetAgent, string> = {
 export const RESET_EVENT_TYPE_LABELS: Record<ResetEventType, string> = {
   policy_change: "Policy change",
   manual_reset: "Manual reset",
+  banked_reset: "Banked reset credit",
   limit_increase: "Limit increase",
   limit_decrease: "Limit decrease",
   schedule_change: "Schedule change",

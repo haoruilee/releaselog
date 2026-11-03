@@ -1,0 +1,10 @@
+import Link from "next/link";
+import sources from "@/data/reset-discovery-sources.json";
+import { getLocale } from "@/lib/i18n";
+export const metadata = { title: "Sources & verification · ReleaseLog", description: "How ReleaseLog discovers quota changes, attributes source announcements, and separates reports from confirmed account outcomes." };
+export default async function SourcesPage() {
+  const zh = (await getLocale()).startsWith("zh");
+  return <main className="mx-auto min-h-screen max-w-4xl px-5 py-14"><Link href="/reset-log" className="text-sm text-accent">← Reset Log</Link><h1 className="mt-10 font-serif text-4xl">{zh ? "信源与核验方式" : "Sources & verification"}</h1><p className="mt-6 text-secondary">{zh ? "我们每小时读取公开的第三方归档，并回溯官方账号原帖。多家转载同一原帖只计为一个事件；预测不作为已发生的重置。" : "We refresh public third-party archives hourly and trace records back to source announcements. Multiple copies of the same post count as one event; a prediction is not a completed reset."}</p>
+  <div className="mt-10 space-y-3">{sources.map(s => <a key={s.id} href={s.docs || s.url} target="_blank" rel="noopener noreferrer" className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/10 bg-panel/40 p-4"><span><span className="block font-medium">{new URL(s.url).hostname}</span><span className="mt-1 block text-xs text-secondary">{s.agents.join(" · ")} · {s.format}</span></span><span className="text-xs text-accent">{zh ? "查看信源" : "View source"} ↗</span></a>)}</div>
+  <section className="mt-10 space-y-4 text-sm leading-relaxed text-secondary"><p>{zh ? "“第三方归档 · 原帖可追溯”表示我们能追溯对应公告，不能据此保证某个账户的额度已恢复。可领取的重置额度、自动重置、限额变化和生效日期分别记录。" : "“Third-party archive · source linked” identifies a traceable announcement, not proof that a particular account has received a reset. Redeemable credits, automatic resets, limit changes, and effective dates are kept distinct."}</p><p>{zh ? "源站不可用时保留已核验的历史记录。官方原帖无法直接读取时，可能通过原帖镜像与归档交叉核对。" : "Verified history remains available during source outages. When an original post is inaccessible, an attributed mirror and archive may be used for cross-checking."}</p></section></main>;
+}

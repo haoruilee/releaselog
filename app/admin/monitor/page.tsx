@@ -130,6 +130,7 @@ export default async function AdminMonitorPage() {
             </p>
           </div>
           <nav className="flex flex-wrap gap-3 text-sm">
+            <Link href="/admin/advertising" className="text-accent underline-offset-4 hover:underline">Advertising</Link>
             <Link href="/admin/candidates" className="text-accent underline-offset-4 hover:underline">Candidates</Link>
             <Link href="/admin/releases" className="text-accent underline-offset-4 hover:underline">Releases</Link>
             <Link href="/admin/subscribers" className="text-accent underline-offset-4 hover:underline">Subscribers</Link>

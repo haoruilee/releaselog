@@ -1,5 +1,6 @@
 "use client";
 
+import { AdPlacement } from "./Advertising";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -172,6 +173,8 @@ export default function HomeClient({ initialEntityId }: Props) {
               </div>
             </div>
           )}
+
+          {!posterMode && <AdPlacement position="calendar-banner" />}
 
           <SummaryStats stats={stats} compact={selectedRange === 6} />
 

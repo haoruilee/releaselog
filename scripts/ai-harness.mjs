@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { autonomousReviewPolicy, normalizeAutonomousOutbox, reviewFingerprint, skipUnchangedBlocked, compactReviewCandidates } from "./ai-autonomy.mjs";
 import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { randomUUID } from "node:crypto";
@@ -21,6 +22,7 @@ const contextDir = join(harnessRoot, "context");
 const outboxDir = join(harnessRoot, "outbox");
 const stateDir = join(harnessRoot, "state");
 const activeRunPath = join(stateDir, "active-run.json");
+const reviewCheckpointPath = join(stateDir, "review-checkpoint.json");
 const limit = Number.parseInt(process.env.AI_HARNESS_BATCH_LIMIT || process.env.AI_REVIEW_BATCH_LIMIT || "8", 10);
 const dryRun = process.argv.includes("--dry-run") || process.env.AI_HARNESS_DRY_RUN === "1" || process.env.AI_REVIEW_DRY_RUN === "1";
 const rawIntentArg = process.argv.find((arg) => arg.startsWith("--intent="))?.slice("--intent=".length);
@@ -204,6 +206,8 @@ Dry run: ${dryRun}
 - For release_publish, decisions are structured and high-confidence approvals use confidence >= 0.85.
 - For code_deploy, you have made only necessary changes and expect the fixed harness gates to pass.
 
+${intent === "release_publish" ? autonomousReviewPolicy : ""}
+
 ## Outbox Schema
 
 Write this JSON file to ${outboxPath}:
@@ -227,12 +231,12 @@ Write this JSON file to ${outboxPath}:
 }
 \`\`\`
 
-Use ready=false when the correct result is blocked or no-op.
+For release_publish, editorial uncertainty must produce a terminal reject decision. Use ready=false only for technical/environment failure. Never wait for a human scope ruling.
 
 ## Candidates
 
 \`\`\`json
-${JSON.stringify(candidates, null, 2)}
+${JSON.stringify(intent === "release_publish" ? compactReviewCandidates(candidates) : candidates, null, 2)}
 \`\`\`
 
 ## Runtime Snapshot
@@ -493,6 +497,16 @@ async function main() {
     return;
   }
 
+  const fingerprint = intent === "release_publish" ? reviewFingerprint(candidates) : null;
+  let checkpoint = null;
+  try { if (existsSync(reviewCheckpointPath)) checkpoint = readJsonFile(reviewCheckpointPath); } catch { /* stale checkpoint cannot block review */ }
+  if (fingerprint && skipUnchangedBlocked(checkpoint, fingerprint)) {
+    await recordHarnessRun({ id: runId, provider: "harness", intent, status: "blocked", ready: false, error: "unchanged_batch_cooldown", metadata: { fingerprint, previousRun: checkpoint.runId, noModelRequest: true }, finished: true });
+    console.log(JSON.stringify({ ok: true, status: "unchanged_batch_cooldown", noModelRequest: true }));
+    return;
+  }
+  const rememberReview = (status) => { if (fingerprint && !dryRun) writeJsonFile(reviewCheckpointPath, { fingerprint, status, runId, at: Date.now() }); };
+
   const session = await chooseProvider();
   await recordHarnessRun({
     id: runId,
@@ -568,7 +582,7 @@ async function main() {
       message: "Waiting for agent ready outbox",
       metadata: { outboxPath, timeoutMs: waitTimeoutMs },
     });
-    outbox = await waitForOutbox(outboxPath, waitTimeoutMs);
+    outbox = normalizeAutonomousOutbox(await waitForOutbox(outboxPath, waitTimeoutMs), candidates);
     await recordHarnessEvent({
       runId,
       provider: goalSession.provider,
@@ -602,6 +616,7 @@ async function main() {
     });
 
     if (outbox.ready !== true) {
+      rememberReview("blocked");
       clearActiveRun();
       await recordHarnessRun({
         id: runId,
@@ -642,6 +657,8 @@ async function main() {
         metadata: { decisionCounts: decisionCounts(outbox), dryRun },
       });
       const apply = await publishReleaseDecisions({ provider: session.provider, outbox });
+      if (apply.needsReview > 0 || apply.skipped?.length > 0) throw new Error("automatic_review_not_terminal:" + JSON.stringify({ needsReview: apply.needsReview, skipped: apply.skipped }));
+      rememberReview("published");
       checks = [{ name: "ai_review_apply", ok: true, response: apply }];
       await recordHarnessEvent({
         runId,
@@ -707,6 +724,7 @@ async function main() {
     clearActiveRun();
     console.log(JSON.stringify({ ok: true, status: dryRun ? "dry_run" : "deployed", runId }));
   } catch (error) {
+    rememberReview("failed");
     clearActiveRun();
     checks = error?.checks ?? checks;
     await recordHarnessRun({

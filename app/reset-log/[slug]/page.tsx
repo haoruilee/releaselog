@@ -1,3 +1,5 @@
+import { getLiveResetEvents, getLiveResetEventBySlug } from "@/lib/reset-log-live";
+export const dynamic = "force-dynamic";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -9,8 +11,6 @@ import {
   RESET_AGENT_SLUGS,
   RESET_EVENTS,
   RESET_EVENT_TYPE_LABELS,
-  getRelatedResetEvents,
-  getResetEventBySlug,
   isResetAgent,
 } from "@/data/reset-log";
 import { getSiteUrl } from "@/lib/site-url";
@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const event = getResetEventBySlug(slug);
+  const event = await getLiveResetEventBySlug(slug);
   if (!event) return {};
 
   const agentLabel = AGENT_LABELS[event.agent];
@@ -93,7 +93,7 @@ export default async function ResetEventPage({ params }: PageProps) {
   const { slug } = await params;
   if (isResetAgent(slug)) return <ResetLogList filter={slug} />;
 
-  const event = getResetEventBySlug(slug);
+  const event = await getLiveResetEventBySlug(slug);
   if (!event) notFound();
 
   const { t } = await getServerTranslator();
@@ -102,7 +102,7 @@ export default async function ResetEventPage({ params }: PageProps) {
   const vendor = AGENT_VENDORS[event.agent];
   const accent = AGENT_ACCENT[event.agent];
   const typeLabel = RESET_EVENT_TYPE_LABELS[event.type];
-  const related = getRelatedResetEvents(event, 3);
+  const related = (await getLiveResetEvents()).filter(e => e.agent === event.agent && e.slug !== event.slug).slice(0, 3);
   const siteUrl = getSiteUrl();
   const canonicalUrl = `${siteUrl}/reset-log/${event.slug}`;
 

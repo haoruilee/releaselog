@@ -1,0 +1,85 @@
+[
+  {
+    "id": "willcodexresets",
+    "url": "https://willcodexresets.com/api/resets?limit=100",
+    "docs": "https://willcodexresets.com/api/docs",
+    "format": "json",
+    "role": "discovery",
+    "agents": [
+      "codex"
+    ],
+    "verified": "GET200; 5 records retrieved; upstream announcement URLs and UTC fields present"
+  },
+  {
+    "id": "codexlimits",
+    "url": "https://codexlimits.com/reset-history",
+    "format": "html",
+    "role": "cross_check",
+    "agents": [
+      "codex"
+    ],
+    "verified": "Public archive accessible; official staff links are separate from third-party observations"
+  },
+  {
+    "id": "limitdigest",
+    "url": "https://limitdigest.com/resets/claude/log/",
+    "feed": "https://limitdigest.com/rss.xml",
+    "format": "html+rss",
+    "role": "discovery",
+    "agents": [
+      "claude-code"
+    ],
+    "verified": "GET RSS200 and XML parse14items; historical page links to source post IDs; feed is sitewide and requires topic filtering"
+  },
+  {
+    "id": "whenreset",
+    "url": "https://whenreset.dev/claude",
+    "format": "html",
+    "role": "cross_check",
+    "agents": [
+      "claude-code"
+    ],
+    "verified": "Historical reset table, official original/follow-up URLs"
+  },
+  {
+    "id": "tibosay",
+    "url": "https://tibosay.com/tibo-28",
+    "format": "html",
+    "role": "discovery",
+    "agents": [
+      "codex"
+    ],
+    "verified": "28-day challenge tracker with source links; distinguish feature days from reset days"
+  },
+  {
+    "id": "codex-reset-app",
+    "url": "https://codex-reset.app/",
+    "format": "html",
+    "role": "cross_check",
+    "agents": [
+      "codex"
+    ],
+    "verified": "Current activity/history accessible; marks unconfirmed/withdrawn evidence and distinguishes prediction from past event"
+  },
+  {
+    "id": "toolsfordevs",
+    "url": "https://toolsfordevs.app/",
+    "format": "html",
+    "role": "cross_check",
+    "agents": [
+      "codex",
+      "claude-code"
+    ],
+    "verified": "Both-agent public tracker; latest full reset and banked reset are different metrics"
+  },
+  {
+    "id": "codex-daily-tracker",
+    "url": "https://codex.jdhyman.com/",
+    "format": "html",
+    "role": "supplement",
+    "agents": [
+      "codex"
+    ],
+    "verified": "28-day historical tracker; timezone New York rather than UTC"
+  }
+]

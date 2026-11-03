@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import type { Metadata } from "next";
 import { getServerTranslator } from "@/lib/i18n";
 import { ResetLogList } from "./ResetLogList";

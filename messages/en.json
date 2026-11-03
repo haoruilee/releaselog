@@ -52,7 +52,7 @@
     "kicker": "Reset Log",
     "heading_all": "Quota resets & rate-limit changes for Codex and Claude Code.",
     "heading_agent": "{agent} quota resets & rate-limit changes.",
-    "intro": "A dated record of every publicly-announced change to subscription quotas, rolling windows, and one-off resets for subscription-based code agents. Every entry links to the official record — vendor announcement, help-center article, changelog, or staff post.",
+    "intro": "A dated record of public quota and reset announcements for coding agents, with source links and third-party discovery archives. Reset credits and automatic resets are recorded separately.",
     "last_logged": "Last logged event: {date}.",
     "calendar_heading": "Calendar",
     "calendar_helper": "Usage resets and rate-limit changes plotted by announcement date.",
@@ -75,7 +75,10 @@
     "field_event_type": "Event type",
     "field_announced": "Announced",
     "field_effective": "Effective",
-    "field_plans": "Plans affected"
+    "field_plans": "Plans affected",
+    "source_linked": "Third-party archive · source linked",
+    "linked_record": "Source: {label}",
+    "sources": "Sources"
   },
   "weekdays": {
     "mon": "Mon",
@@ -94,5 +97,24 @@
     "reset_log_title": "Reset Log",
     "reset_log_og_title": "Reset Log — Codex & Claude Code quota events",
     "reset_log_description": "A dated log of every public rate-limit, quota, and usage-window change to the two subscription-based code agents — Anthropic's Claude Code and OpenAI's Codex — with a link to the official record for each event."
+  },
+  "ads": {
+    "label": "Advertisement",
+    "open": "Sponsorship opportunities",
+    "headline": "Meet the builders following what’s next.",
+    "description": "Put your product alongside AI releases, developer tools, and coding-agent updates.",
+    "learn_more": "Explore sponsorship",
+    "partner": "ReleaseLog sponsor",
+    "media_title": "Your next users are already following the next release.",
+    "media_description": "Reach a focused audience of AI developers and tool builders. Choose a clearly labeled banner or native sponsorship, with responsive placements across the calendar and Reset Log.",
+    "calendar_label": "Release calendars",
+    "calendar_description": "A responsive banner alongside model, platform, and developer-tool release calendars.",
+    "reset_label": "Reset Log",
+    "reset_description": "A dedicated banner for developers checking usage allowances and reset announcements.",
+    "footer_label": "Editorial footer",
+    "footer_description": "A native sponsorship after the content, across editorial pages.",
+    "contact_title": "Let’s find the right placement.",
+    "contact_description": "Send your product URL, artwork, preferred dates, and placement. We’ll discuss availability and campaign details.",
+    "editorial": "Advertising is clearly labeled. Sponsorship does not influence editorial decisions or the events we report."
   }
 }

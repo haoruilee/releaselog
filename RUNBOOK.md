@@ -1,5 +1,46 @@
 # ReleaseLog Runbook
 
+## Current production release (2026-11-03)
+
+This section supersedes the historical build/restart examples below. All
+compilation, frontend builds and Docker image builds run only on
+`li@www.xzhtai.cn:2077`, in an isolated allowlisted context. Never run
+`compose up --build` on this host. Use verified immutable images, not mutable
+tags, and keep traffic rollback independent of database restoration.
+
+- Public app: `releaselog-app-green-20261103`, `127.0.0.1:3001`,
+  network `releaselog_default`, unique alias `releaselog-app-green`.
+- Public tunnel: `cloudflared-releaselog-public.service`, dedicated config
+  `/root/.cloudflared/releaselog-public-independent.yml`. It routes only
+  `releaselog.site` to port 3001. Metrics/readiness: `127.0.0.1:20451/ready`.
+- The older `cloudflared-releaselog.service` serves many unrelated domains.
+  **Do not restart it or replace its shared configuration for this site.**
+- Old app `releaselog-app-1` on port 3000 and the four HTTP-only workers remain
+  the compatible background/control plane and immediate public rollback target.
+  Do not start a duplicate scheduler, sender or collector. An attempted idle
+  worker migration was aborted because its PID1 shell ignored SIGTERM; no
+  forced stop was performed and its restart policy was restored.
+- AI review: only `releaselog-ai-review.timer`, once per hour, explicit
+  `AI_HARNESS_INTENT=release_publish`. The fast timer is disabled. Native CLI
+  project settings are private/ignored under `.claude/settings.local.json`.
+- Source archives refresh lazily with a one-hour public-fetch cache. Published
+  historical seed records remain available if archives fail. No SQL migration
+  or paid LLM request is required for the Reset Log public feeds.
+- Runtime advertising settings use `ADSENSE_CLIENT_ID`,
+  `ADSENSE_SLOT_CALENDAR`, `ADSENSE_SLOT_RESET`, `ADSENSE_SLOT_FOOTER`,
+  `AD_CONTACT_EMAIL`, and optionally `SPONSOR_NAME`, `SPONSOR_URL`,
+  `SPONSOR_IMAGE_URL`. These require a green-container env refresh, not a
+  frontend rebuild. No advertiser is activated in this release.
+
+Release evidence and the guarded CNAME deploy/rollback tool are stored privately
+at `/root/ops-private/releaselog-site-refresh-20261103/`. Run
+`python3 .../switch-dns.py rollback` only after checking old app health; it
+changes only the captured root CNAME and preserves MX/TXT records. The green
+container mounts the merged old/new immutable static assets read-only to keep
+existing browser tabs working. Retain both images and the verified DB dump.
+
+See [release acceptance](docs/site-refresh-20261103.md) for tests and limitations.
+
 Operational notes for the production deploy at `https://releaselog.site`
 (Ubuntu 24.04 + Docker Compose + systemd timers + named Cloudflare tunnel).
 

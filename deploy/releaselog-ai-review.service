@@ -10,7 +10,7 @@ Environment=RELEASELOG_ROOT=/root/releaselog
 Environment=RELEASELOG_ENV_FILE=/root/releaselog/.env.docker
 Environment=AI_HARNESS_PRIMARY_CLI=claude
 Environment=AI_HARNESS_FALLBACK_CLI=codex
-Environment=AI_HARNESS_INTENT=auto
+Environment=AI_HARNESS_INTENT=release_publish
 Environment=AI_HARNESS_BATCH_LIMIT=8
 Environment=AI_HARNESS_WAIT_TIMEOUT_MS=2700000
 ExecStart=/usr/bin/env node /root/releaselog/scripts/ai-harness.mjs

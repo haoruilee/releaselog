@@ -24,3 +24,6 @@ yarn-debug.log*
 yarn-error.log*
 .DS_Store
 *.pem
+
+# Machine-local AI credentials and CLI state
+.claude

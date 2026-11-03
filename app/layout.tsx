@@ -1,3 +1,5 @@
+import { AdvertisingProvider, SiteSponsorFooter } from "@/components/Advertising";
+import { getAdvertisingConfig } from "@/lib/advertising";
 import type { Metadata } from "next";
 import { Instrument_Serif, DM_Sans } from "next/font/google";
 import Script from "next/script";
@@ -55,7 +57,6 @@ export const metadata: Metadata = {
 };
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID;
-const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_ID;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -79,17 +80,14 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {adsenseId && (
-          <Script
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseId}`}
-            strategy="afterInteractive"
-            crossOrigin="anonymous"
-          />
-        )}
+
       </head>
       <body className="min-h-screen font-sans antialiased">
         <I18nProvider locale={locale} messages={messages}>
-          {children}
+          <AdvertisingProvider config={getAdvertisingConfig()}>
+            {children}
+            <SiteSponsorFooter />
+          </AdvertisingProvider>
         </I18nProvider>
         {gaId && (
           <>

@@ -52,7 +52,7 @@
     "kicker": "重置日志",
     "heading_all": "Codex 与 Claude Code 的额度重置与速率变更。",
     "heading_agent": "{agent} 的额度重置与速率变更。",
-    "intro": "记录所有公开宣布的订阅额度、滚动窗口和一次性重置事件,仅针对订阅制代码 Agent。每条记录都附有官方来源——厂商公告、帮助中心文章、更新日志或员工发帖。",
+    "intro": "按日期记录编程助手的公开额度与重置公告，结合第三方归档并回溯原帖。可领取的重置额度与自动重置分别记录，不代表某个账户的额度已恢复。",
     "last_logged": "最近一次记录:{date}。",
     "calendar_heading": "日历",
     "calendar_helper": "按公告日期排布的额度重置与速率变更。",
@@ -75,7 +75,10 @@
     "field_event_type": "事件类型",
     "field_announced": "公告日期",
     "field_effective": "生效日期",
-    "field_plans": "涉及套餐"
+    "field_plans": "涉及套餐",
+    "source_linked": "第三方归档 · 原帖可追溯",
+    "linked_record": "原帖：{label}",
+    "sources": "信源"
   },
   "weekdays": {
     "mon": "一",
@@ -94,5 +97,24 @@
     "reset_log_title": "重置日志",
     "reset_log_og_title": "重置日志 —— Codex 与 Claude Code 的额度事件",
     "reset_log_description": "完整记录两款订阅制代码 Agent —— Anthropic 的 Claude Code 与 OpenAI 的 Codex —— 所有公开宣布的速率、额度与使用窗口变更,每条记录都附带官方来源链接。"
+  },
+  "ads": {
+    "label": "广告",
+    "open": "赞助合作",
+    "headline": "让关注下一次发布的开发者，发现你的产品。",
+    "description": "在 AI 模型、开发工具与编程助手的更新旁，向真正关心这些产品的人展示你的品牌。",
+    "learn_more": "了解赞助合作",
+    "partner": "ReleaseLog 赞助商",
+    "media_title": "你的下一批用户，正在这里关注下一次发布。",
+    "media_description": "面向 AI 开发者与工具构建者，提供清晰标注、适配手机与桌面的横幅广告及原生赞助位置。",
+    "calendar_label": "发布日历",
+    "calendar_description": "模型、平台与开发工具发布日历旁的自适应横幅位置。",
+    "reset_label": "额度动态",
+    "reset_description": "面向关注使用额度、限制变化与重置公告的开发者。",
+    "footer_label": "内容页尾",
+    "footer_description": "位于内容之后的原生赞助位置，覆盖站内公开内容页面。",
+    "contact_title": "一起选择合适的展示位置。",
+    "contact_description": "请提供产品链接、展示素材、预期时间与广告位置，我们会沟通档期与合作细节。",
+    "editorial": "所有广告均明确标注。赞助合作不会影响内容判断，也不会改变我们收录的事件。"
   }
 }

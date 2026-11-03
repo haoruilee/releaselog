@@ -80,6 +80,9 @@ export function providerPromptCommand(provider, prompt, cwd = root) {
   const quotedPrompt = shellQuote(prompt);
   if (normalized === "claude") {
     const allowedTools = process.env.AI_HARNESS_CLAUDE_ALLOWED_TOOLS || "Read,Glob,Grep,LS,Bash,Write,Edit,MultiEdit";
+    if (process.env.AI_HARNESS_INTENT === "release_publish") {
+      return `exec claude ${quotedPrompt} --effort low --disable-slash-commands --tools Read,Write --permission-mode dontAsk --allowedTools Read,Write --add-dir ${shellQuote(cwd)}`;
+    }
     return `exec claude ${quotedPrompt} --permission-mode dontAsk --allowedTools ${shellQuote(allowedTools)} --add-dir ${shellQuote(cwd)}`;
   }
   return `exec codex -C ${shellQuote(cwd)} --dangerously-bypass-approvals-and-sandbox --no-alt-screen ${quotedPrompt}`;

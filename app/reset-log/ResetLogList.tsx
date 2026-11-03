@@ -1,3 +1,5 @@
+import { AdPlacement } from "@/components/Advertising";
+import { getLiveResetEvents } from "@/lib/reset-log-live";
 import Link from "next/link";
 import { format, parseISO } from "date-fns";
 import { entityMetas } from "@/data";
@@ -8,7 +10,6 @@ import {
   RESET_AGENT_SLUGS,
   RESET_EVENT_TYPE_LABELS,
   filterResetEventsByAgent,
-  getResetEventsSorted,
   type ResetAgent,
   type ResetEvent,
 } from "@/data/reset-log";
@@ -44,7 +45,7 @@ export async function ResetLogList({
   filter?: AgentFilter;
 }) {
   const { t } = await getServerTranslator();
-  const allEvents = getResetEventsSorted();
+  const allEvents = await getLiveResetEvents();
   const events = filterResetEventsByAgent(allEvents, filter);
 
   const counts: Record<AgentFilter, number> = {
@@ -69,7 +70,7 @@ export async function ResetLogList({
       <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
         <div
           data-export-exclude
-          className="mb-10 flex items-center justify-between gap-3"
+          className="mb-10 flex flex-wrap items-center justify-between gap-3"
         >
           <Link
             href="/"
@@ -77,8 +78,9 @@ export async function ResetLogList({
           >
             {t("nav.back_home")}
           </Link>
-          <div className="flex items-center gap-3 text-xs">
+          <div className="flex flex-wrap items-center gap-3 text-xs">
             <LanguageSwitcher />
+            <Link href="/sources" className="text-secondary hover:text-primary">{t("reset_log.sources")}</Link>
             <ResetLogExportButton filenamePrefix={exportFilenamePrefix} />
             <Link
               href="/pricing"
@@ -94,6 +96,8 @@ export async function ResetLogList({
             </Link>
           </div>
         </div>
+
+        <AdPlacement position="reset-banner" className="mb-8" />
 
         <div data-export-root className="rounded-2xl bg-page">
           <header className="max-w-2xl">
@@ -269,6 +273,7 @@ function ResetEventCard({
         <span className="rounded-full bg-empty-cell/60 px-2 py-0.5 text-[11px] font-medium text-secondary ring-1 ring-white/5">
           {typeLabel}
         </span>
+        {event.verification === "source-linked" && <span className="rounded-full border border-white/10 px-2 py-0.5 text-[11px] text-secondary">{t("reset_log.source_linked")}</span>}
         {event.effectiveDate && event.effectiveDate !== event.date && (
           <span className="text-[11px] text-secondary/80">
             {t("reset_log.effective", { date: formatDate(event.effectiveDate) })}
@@ -320,7 +325,7 @@ function ResetEventCard({
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1 rounded-full bg-accent/10 px-3 py-1 font-medium text-accent ring-1 ring-accent/30 hover:bg-accent/20"
         >
-          {t("reset_log.official_record", { label: event.source.label })}
+          {t(event.verification === "source-linked" ? "reset_log.linked_record" : "reset_log.official_record", { label: event.source.label })}
           <span aria-hidden>↗</span>
         </a>
         <Link
