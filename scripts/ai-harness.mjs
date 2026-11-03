@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { autonomousReviewPolicy, normalizeAutonomousOutbox, reviewFingerprint, skipUnchangedBlocked, compactReviewCandidates } from "./ai-autonomy.mjs";
+import { autonomousReviewPolicy, normalizeAutonomousOutbox, reviewFingerprint, skipUnchangedBlocked, compactReviewCandidates, selectReviewCandidates, rememberCandidateReviews, releaseReviewContext } from "./ai-autonomy.mjs";
 import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { randomUUID } from "node:crypto";
@@ -22,6 +22,7 @@ const contextDir = join(harnessRoot, "context");
 const outboxDir = join(harnessRoot, "outbox");
 const stateDir = join(harnessRoot, "state");
 const activeRunPath = join(stateDir, "active-run.json");
+const candidateCheckpointPath = join(stateDir, "candidate-review-checkpoint.json");
 const reviewCheckpointPath = join(stateDir, "review-checkpoint.json");
 const limit = Number.parseInt(process.env.AI_HARNESS_BATCH_LIMIT || process.env.AI_REVIEW_BATCH_LIMIT || "8", 10);
 const dryRun = process.argv.includes("--dry-run") || process.env.AI_HARNESS_DRY_RUN === "1" || process.env.AI_REVIEW_DRY_RUN === "1";
@@ -123,7 +124,7 @@ async function recordHarnessEvent({ runId, provider, sessionName, intent, phase,
 }
 
 async function listCandidates() {
-  const response = await fetchJson(`${baseUrl}/api/cron/ai-review?limit=${Number.isFinite(limit) ? limit : 8}`);
+  const response = await fetchJson(`${baseUrl}/api/cron/ai-review?limit=50`);
   return response.candidates ?? [];
 }
 
@@ -163,6 +164,11 @@ function activeRunIsBusy(active) {
 async function collectContext({ runId, intent, candidates, outboxPath, provider }) {
   const localHealth = await fetchText(`${baseUrl}/`).catch((error) => ({ status: 0, ok: false, text: String(error) }));
   const remoteHealth = await fetchText(`${publicUrl}/`).catch((error) => ({ status: 0, ok: false, text: String(error) }));
+  if (intent === "release_publish") {
+    return releaseReviewContext({ runId, provider, outboxPath, candidates,
+      localHealth: { ok: localHealth.ok, status: localHealth.status },
+      remoteHealth: { ok: remoteHealth.ok, status: remoteHealth.status } });
+  }
   const commands = [
     capture("docker", ["compose", "--env-file", ".env.docker", "-f", "compose.yaml", "-f", "compose.prod.yaml", "-f", "compose.workers.yaml", "ps"]),
     capture("systemctl", ["is-active", "releaselog-ai-review.timer"]),
@@ -437,8 +443,13 @@ async function main() {
     throw new Error("tmux_not_found");
   }
 
-  const candidates = await listCandidates();
-  const intent = chooseIntent(candidates);
+  const pending = await listCandidates();
+  const intent = chooseIntent(pending);
+  let candidateCheckpoint = {};
+  try { if (existsSync(candidateCheckpointPath)) candidateCheckpoint = readJsonFile(candidateCheckpointPath); } catch { /* corrupt cache must not prevent review */ }
+  const candidates = intent === "release_publish"
+    ? selectReviewCandidates(pending, candidateCheckpoint, Number.isFinite(limit) ? limit : 8)
+    : pending.slice(0, Number.isFinite(limit) ? limit : 8);
   const runId = randomUUID();
   const contextPath = join(contextDir, `${runId}.md`);
   const outboxPath = join(outboxDir, `${runId}.json`);
@@ -505,7 +516,13 @@ async function main() {
     console.log(JSON.stringify({ ok: true, status: "unchanged_batch_cooldown", noModelRequest: true }));
     return;
   }
-  const rememberReview = (status) => { if (fingerprint && !dryRun) writeJsonFile(reviewCheckpointPath, { fingerprint, status, runId, at: Date.now() }); };
+  const rememberReview = (status) => {
+    if (fingerprint && !dryRun) {
+      writeJsonFile(reviewCheckpointPath, { fingerprint, status, runId, at: Date.now() });
+      candidateCheckpoint = rememberCandidateReviews(candidateCheckpoint, candidates, status, runId);
+      writeJsonFile(candidateCheckpointPath, candidateCheckpoint);
+    }
+  };
 
   const session = await chooseProvider();
   await recordHarnessRun({

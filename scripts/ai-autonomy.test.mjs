@@ -22,3 +22,33 @@ test('autonomous policy retains confidence, environment and effect boundaries', 
 import { providerPromptCommand } from './ai-session-send.mjs';
 test('review inputs drop obsolete human instructions and bound source bodies', () => { const original = [{ id:'a', rawBody:'x'.repeat(10000), metadata:{aiReview:{reason:'ask human'}} }];const compact=compactReviewCandidates(original);assert.equal(compact[0].rawBody.length,1600);assert.equal(compact[0].metadata,undefined);assert.equal(original[0].rawBody.length,10000); });
 test('review CLI exposes only evidence reading and outbox writing', () => {const old=process.env.AI_HARNESS_INTENT;try{process.env.AI_HARNESS_INTENT='release_publish';const command=providerPromptCommand('claude','review','/fixture');assert.ok(command.includes('--tools Read,Write'));assert.ok(command.includes('--disable-slash-commands'));assert.ok(!command.includes('Bash'));process.env.AI_HARNESS_INTENT='code_deploy';assert.ok(!providerPromptCommand('claude','test','/fixture').includes('--tools Read,Write'));}finally{if(old===undefined)delete process.env.AI_HARNESS_INTENT;else process.env.AI_HARNESS_INTENT=old;}});
+
+import { selectReviewCandidates as select, rememberCandidateReviews as remember, releaseReviewContext } from './ai-autonomy.mjs';
+test('candidate cooldown survives changed batches and allows new work', () => {
+  const cache=remember({},[candidates[0]],'failed','run1',1000);
+  assert.deepEqual(select([candidates[1],candidates[0]],cache,8,2000),[candidates[1]]);
+  assert.equal(select(candidates,cache,8,1000+86400000).length,2);
+});
+test('new evidence bypasses candidate cooldown immediately', () => {
+  const cache=remember({},[candidates[0]],'blocked','run1',1000);
+  const changed={...candidates[0],rawBody:'new verified evidence'};
+  assert.deepEqual(select([changed],cache,8,2000),[changed]);
+});
+test('successful unchanged candidate suppressed and next pending item selected', () => {
+  const cache=remember({},[candidates[0]],'published','run1',1000);
+  assert.deepEqual(select(candidates,cache,1,2000),[candidates[1]]);
+  assert.equal(select(candidates,cache,8,1000+7*86400000).length,2);
+});
+test('checkpoint expires, prunes history and never mutates input', () => {
+  const old=remember({},[candidates[0]],'failed','run1',1000);
+  const fresh=remember(old,[candidates[1]],'published','run2',1000+8*86400000);
+  assert.equal(fresh.candidates.a,undefined);
+  assert.equal(old.candidates.b,undefined);
+  assert.deepEqual(select(candidates,{candidates:{a:{fingerprint:fp([candidates[0]]),status:'failed',at:3000}}},8,2000),candidates);
+});
+test('self-contained editorial context contains real schema and no deployment checklist', () => {
+  const text=releaseReviewContext({runId:'fixture',provider:'claude',outboxPath:'/fixture/outbox.json',candidates,localHealth:{ok:true,status:200},remoteHealth:{ok:true,status:200}});
+  for(const token of ['candidateId','confidence','whatChanged','sourceUrl','end_user','checksExpected','ai_review_apply','Do not read repository files'])assert.ok(text.includes(token),token);
+  assert.ok(!text.includes('"checksExpected": ["build"'));
+  assert.ok(!text.includes('researcher'));
+});

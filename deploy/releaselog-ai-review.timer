@@ -1,8 +1,8 @@
 [Unit]
-Description=Run ReleaseLog autonomous AI review hourly
+Description=Run ReleaseLog autonomous AI review every eight hours
 
 [Timer]
-OnCalendar=hourly
+OnCalendar=*-*-* 00/8:00:00 UTC
 Persistent=true
 Unit=releaselog-ai-review.service
 

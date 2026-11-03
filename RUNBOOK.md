@@ -20,9 +20,14 @@ tags, and keep traffic rollback independent of database restoration.
   available for immediate traffic rollback. Old control app `releaselog-app-1`
   on port 3000 and its four HTTP-only workers retain the compatible background
   plane. Do not start duplicate schedulers, senders or collectors.
-- AI review: only `releaselog-ai-review.timer`, once per hour, explicit
+- AI review: only `releaselog-ai-review.timer`, every eight hours (00:00, 08:00, 16:00 UTC), explicit
   `AI_HARNESS_INTENT=release_publish`. The fast timer is disabled. Native CLI
   project settings are private/ignored under `.claude/settings.local.json`.
+- Review prompts include the complete decision contract and skip repository exploration.
+  Per-candidate evidence fingerprints suppress unchanged failed/blocked work for
+  24 hours and successful work for seven days, even when batch membership changes.
+  Changed evidence is eligible immediately; database terminal status remains authoritative.
+  A 50-item pending window is filtered before selecting the bounded eight-item batch.
 - Source archives refresh lazily with a one-hour public-fetch cache. Published
   historical seed records remain available if archives fail. No SQL migration
   or paid LLM request is required for the Reset Log public feeds.
@@ -874,7 +879,7 @@ systemctl is-active cloudflared-releaselog.service
 # Notification timers
 systemctl list-timers --all | grep releaselog
 
-# AI review timers: hourly deep review plus fast pending-candidate review
+# AI review: eight-hour review only; fast timer remains disabled
 systemctl list-timers --all 'releaselog-ai-review*' --no-pager
 systemctl is-active releaselog-ai-review.timer releaselog-ai-review-fast.timer
 
