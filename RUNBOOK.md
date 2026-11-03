@@ -1,6 +1,6 @@
 # ReleaseLog Runbook
 
-## Current production release (2026-11-03, light editorial redesign)
+## Current production release (2026-11-03, light editorial redesign + left sidebar)
 
 This section supersedes the historical build/restart examples below. All
 compilation, frontend builds and Docker image builds run only on
@@ -8,15 +8,15 @@ compilation, frontend builds and Docker image builds run only on
 `compose up --build` on this host. Use verified immutable images, not mutable
 tags, and keep traffic rollback independent of database restoration.
 
-- Public app: `releaselog-app-light-20261103`, `127.0.0.1:3002`,
-  network `releaselog_default`, unique alias `releaselog-app-light`.
-  Immutable image: `releaselog/app:mobbin-light-20261103-r3`.
+- Public app: `releaselog-app-sidebar-20261103`, `127.0.0.1:3003`,
+  network `releaselog_default`, unique alias `releaselog-app-sidebar`.
+  Immutable image: `releaselog/app:sidebar-20261103-r1`.
 - Public tunnel: `cloudflared-releaselog-public.service`, dedicated config
   `/root/.cloudflared/releaselog-public-independent.yml`. It routes only
-  `releaselog.site` to port 3002. Metrics/readiness: `127.0.0.1:20451/ready`.
+  `releaselog.site` to port 3003. Metrics/readiness: `127.0.0.1:20451/ready`.
 - The older `cloudflared-releaselog.service` serves many unrelated domains.
   **Do not restart it or replace its shared configuration for this site.**
-- Previous public app `releaselog-app-green-20261103` on port 3001 remains
+- Previous public app `releaselog-app-light-20261103` on port 3002 remains
   available for immediate traffic rollback. Old control app `releaselog-app-1`
   on port 3000 and its four HTTP-only workers retain the compatible background
   plane. Do not start duplicate schedulers, senders or collectors.
@@ -32,9 +32,9 @@ tags, and keep traffic rollback independent of database restoration.
   `SPONSOR_IMAGE_URL`. These require a green-container env refresh, not a
   frontend rebuild. No advertiser is activated in this release.
 
-Release evidence is private at `/root/ops-private/releaselog-mobbin-20261103/`.
-Traffic rollback, after checking port 3001 health:
-`python3 /root/ops-private/releaselog-mobbin-20261103/switch-public.py 3001`.
+Release evidence is private at `/root/ops-private/releaselog-sidebar-20261103/`.
+Traffic rollback, after checking port 3002 health:
+`python3 /root/ops-private/releaselog-sidebar-20261103/switch-public.py 3002`.
 It starts a healthy dedicated-tunnel replica before gracefully replacing the
 canonical connector, then stops the temporary replica. No DNS or database
 restoration is needed. The latest release retained all 122 sitemap URLs; the

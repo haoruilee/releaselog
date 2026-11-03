@@ -27,7 +27,10 @@ on white, while reading surfaces stay light.
 
 The shared header/footer owns navigation and language selection. Main content
 uses a 1344px maximum wrapper with 48px desktop / 24px mobile inner gutters.
-Compact month grids sit side by side on desktop. Mobile filters wrap cleanly,
+The calendar team/product selector uses a 208px vertical left column on desktop
+(1024px and wider), with all teams visible and the current selection highlighted.
+Smaller screens use the existing select control. The sidebar is excluded from
+PNG exports and hidden in poster mode. Compact month grids sit side by side on desktop. Mobile filters wrap cleanly,
 and the Reset Log calendar can be expanded without delaying the record list.
 Timeline rows use a date column, restrained agent/type labels, a summary and
 traceable source links. Real details remain on their stable URLs and sitemap.
