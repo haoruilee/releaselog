@@ -27,24 +27,35 @@ const sans = DM_Sans({
   display: "swap",
 });
 
+const TITLE = "ReleaseLog — Verified AI Release Intelligence for Agents";
 const DESCRIPTION =
-  "ReleaseLog tracks verified AI product releases and platform updates from Anthropic, Claude API, Claude Product, and OpenAI on an interactive shipping calendar.";
+  "Verified AI release intelligence for AI agents: structured changelogs with what changed, importance, entity, and kind from Anthropic, Claude, OpenAI, and other labs, plus a human shipping calendar.";
 
 export const metadata: Metadata = {
   metadataBase: metadataBaseUrl(),
-  title: { default: "ReleaseLog — AI Release Calendar & Changelog Tracker", template: "%s · ReleaseLog" },
+  title: { default: TITLE, template: "%s · ReleaseLog" },
   description: DESCRIPTION,
-  keywords: ["release log", "AI releases", "Anthropic", "Claude", "OpenAI", "changelog", "shipping calendar"],
+  keywords: [
+    "release log",
+    "AI releases",
+    "AI agents",
+    "structured changelog",
+    "Anthropic",
+    "Claude",
+    "OpenAI",
+    "changelog",
+    "shipping calendar",
+  ],
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   openGraph: {
     type: "website",
     siteName: "ReleaseLog",
-    title: "ReleaseLog — AI Release Calendar & Changelog Tracker",
+    title: TITLE,
     description: DESCRIPTION,
   },
   twitter: {
     card: "summary",
-    title: "ReleaseLog — AI Release Calendar & Changelog Tracker",
+    title: TITLE,
     description: DESCRIPTION,
   },
   alternates: {
@@ -63,6 +74,10 @@ const jsonLd = {
   name: "ReleaseLog",
   description: DESCRIPTION,
   url: getSiteUrl(),
+  audience: {
+    "@type": "Audience",
+    audienceType: "AI agents",
+  },
 };
 
 export default async function RootLayout({

@@ -15,6 +15,18 @@ const nextConfig = {
         async headers() {
           return [
             {
+              source: "/skill.md",
+              headers: [
+                { key: "Content-Type", value: "text/markdown; charset=utf-8" },
+              ],
+            },
+            {
+              source: "/llms.txt",
+              headers: [
+                { key: "Content-Type", value: "text/plain; charset=utf-8" },
+              ],
+            },
+            {
               source: "/(.*)",
               headers: [{ key: "X-Robots-Tag", value: "index, follow" }],
             },

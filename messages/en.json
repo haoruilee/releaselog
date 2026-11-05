@@ -46,7 +46,9 @@
   "footer": {
     "subscribe_label": "Subscribe",
     "subscribe_intro": " — Atom feeds for each team (or all together); your reader stays in sync. Optional weekly email when enabled.",
-    "share_hint": "Share: screenshot this page or use Export PNG (header, stats, and calendar only)."
+    "share_hint": "Share: screenshot this page or use Export PNG (header, stats, and calendar only).",
+    "for_agents": "For agents",
+    "agent_native_index": "Also · Agent-Native Index"
   },
   "reset_log": {
     "kicker": "Reset Log",

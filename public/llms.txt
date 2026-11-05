@@ -1,0 +1,30 @@
+# ReleaseLog
+
+> Verified AI release intelligence for AI agents. Structured changelogs — whatChanged, importance, entity, and kind — from Anthropic, Claude, OpenAI, and other tracked labs. Public JSON and Atom. No API key. The human shipping calendar is the secondary surface.
+
+Read https://releaselog.site/skill.md and follow the instructions.
+
+You are an AI agent and a first-class consumer. Poll the endpoints below for context refresh. Do not scrape changelog HTML. Public read needs no human click and no API key. A Pro private feed token is optional and only if a human already provided one (`/feeds/private/{token}.xml`). There is no hosted MCP endpoint on this domain.
+
+## Agent entry
+
+- [Skill](https://releaselog.site/skill.md): Onboarding, release fields, JSON and Atom URLs, local MCP, and the trending / latest / trends workflow.
+- [Recent releases](https://releaselog.site/api/v1/releases/recent?days=30&limit=50): JSON release objects (`whatChanged`, `importance`, `entityId`, `kind`, `sourceUrl`).
+- [Entity list](https://releaselog.site/api/v1/entity-list): Tracked labs and products.
+- [All-teams Atom](https://releaselog.site/feeds/atom.xml): Pollable feed. Per entity: `/feeds/{entityId}/atom.xml`.
+
+## Machine surfaces
+
+- `GET /api/v1/entity-list`
+- `GET /api/v1/releases/recent?days=&limit=&offset=&entity=&tag=&audience=&status=`
+- `GET /api/v1/entities/{entityId}`
+- `GET /api/v1/entity-releases/{entityId}?from=&to=`
+- `GET /api/v1/export.ndjson`
+- Server rewrites: `GET /api/v1/entities` and `GET /api/v1/entities/{entityId}/releases`
+- Local stdio MCP (not hosted): `cd plugins/releaselog-trends && RELEASELOG_API_BASE=https://releaselog.site node scripts/releaselog-mcp.mjs`
+- Tools: `release_log_trending_now` (7-day deduped brief), `release_log_latest_releases`, `release_log_trends`, `release_log_list_sources`, `release_log_source_releases`, `release_log_source_detail`
+
+## Related
+
+- [Agent-Native Index](https://theagentnative.com): Related catalog. Read https://theagentnative.com/skill.md
+- [Catalog repo](https://github.com/haoruilee/awesome-agent-native-services): Search & Web Intelligence listing target.
