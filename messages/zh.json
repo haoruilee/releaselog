@@ -46,7 +46,9 @@
   "footer": {
     "subscribe_label": "订阅",
     "subscribe_intro": " —— 每个团队都有独立的 Atom 订阅源(也可订阅全部);你的阅读器会自动保持同步。可选每周邮件摘要。",
-    "share_hint": "分享:对本页截图,或使用导出 PNG(仅包含标题、统计与日历)。"
+    "share_hint": "分享:对本页截图,或使用导出 PNG(仅包含标题、统计与日历)。",
+    "for_agents": "面向智能体",
+    "agent_native_index": "另见 · Agent-Native 索引"
   },
   "reset_log": {
     "kicker": "重置日志",

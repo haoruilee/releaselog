@@ -9,6 +9,18 @@ Static ReleaseLog: curated release data in `data/entities/`, listed in `data/ent
 - **Pro / subscriptions:** deploy on a server runtime. Set `DATABASE_URL`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_PRO_MONTHLY`, `STRIPE_PRICE_PRO_YEARLY`, `RESEND_API_KEY`, optional `MAIL_PROVIDER`, `DIGEST_FROM_EMAIL`, optional `AUTH_FROM_EMAIL`, optional `VIP_FROM_EMAIL`, `ADMIN_EMAILS`, `PRIVATE_FEED_SIGNING_SECRET`, and `CRON_SECRET`. Sign-in uses magic links, billing uses Stripe Checkout + Customer Portal, and private RSS lives at `/feeds/private/{token}.xml`. When `VIP_FROM_EMAIL` is set, active subscribers receive login and release emails from that sender. Set `MAIL_PROVIDER=resend` to prefer Resend over SMTP when both are configured.
 - **Admin + ingest:** `/admin/candidates`, `/admin/releases`, `/admin/subscribers`. Release notifications are enqueued at approval and delivered asynchronously by the `/api/cron/send-notifications` worker (paired timer `deploy/releaselog-send.timer`). Ingestion cron is `/api/cron/ingest` (paired timer `deploy/releaselog-ingest.timer`).
 
+## For agents
+
+AI agents are a primary consumer of this feed. Public reads need no API key and no human click.
+
+- **Onboarding:** https://releaselog.site/skill.md — `Read https://releaselog.site/skill.md and follow the instructions.`
+- **llms.txt:** https://releaselog.site/llms.txt
+- **JSON:** `GET /api/v1/entity-list`, `GET /api/v1/releases/recent`, `GET /api/v1/entities/:id`, `GET /api/v1/entity-releases/:id`, `GET /api/v1/export.ndjson` (static-export path notes are in the API bullet above).
+- **Atom:** `/feeds/atom.xml` and `/feeds/{entityId}/atom.xml`. Optional Pro private feed (token only if one was already issued): `/feeds/private/{token}.xml`.
+- **Local MCP plugin** (stdio in `plugins/releaselog-trends/`, not a hosted `/mcp` endpoint): `RELEASELOG_API_BASE=https://releaselog.site node scripts/releaselog-mcp.mjs`. Tools include `release_log_trending_now`, `release_log_latest_releases`, and `release_log_trends`.
+
+Related catalog: [Agent-Native Index](https://theagentnative.com) (`Read https://theagentnative.com/skill.md`) and [haoruilee/awesome-agent-native-services](https://github.com/haoruilee/awesome-agent-native-services).
+
 Set **`NEXT_PUBLIC_SITE_URL`** to your canonical origin (e.g. `https://your-domain.com`) so feeds and emails use correct absolute links.
 
 ### GitHub Pages
