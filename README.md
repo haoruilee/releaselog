@@ -11,6 +11,18 @@ Static ReleaseLog: curated release data in `data/entities/`, listed in `data/ent
 
 Set **`NEXT_PUBLIC_SITE_URL`** to your canonical origin (e.g. `https://your-domain.com`) so feeds and emails use correct absolute links.
 
+## For agents
+
+AI agents are a primary consumer of this feed. Public reads need no API key and no human click.
+
+- **Onboarding:** https://releaselog.site/skill.md — `Read https://releaselog.site/skill.md and follow the instructions.`
+- **llms.txt:** https://releaselog.site/llms.txt
+- **JSON:** `GET /api/v1/entity-list`, `GET /api/v1/releases/recent`, `GET /api/v1/entities/:id`, `GET /api/v1/entity-releases/:id`, `GET /api/v1/export.ndjson` (static-export path notes are in the API bullet above).
+- **Atom:** `/feeds/atom.xml` and `/feeds/{entityId}/atom.xml`. Optional Pro private feed (token only if one was already issued): `/feeds/private/{token}.xml`.
+- **Local MCP plugin** (stdio in `plugins/releaselog-trends/`, not a hosted `/mcp` endpoint): `RELEASELOG_API_BASE=https://releaselog.site node scripts/releaselog-mcp.mjs`. Tools include `release_log_trending_now`, `release_log_latest_releases`, and `release_log_trends`.
+
+Related catalog: [Agent-Native Index](https://theagentnative.com) (`Read https://theagentnative.com/skill.md`) and [haoruilee/awesome-agent-native-services](https://github.com/haoruilee/awesome-agent-native-services).
+
 ### GitHub Pages
 
 GitHub Pages export is now a legacy public-only path. The new Pro/auth/billing/admin features require a server deployment and are not available on static hosting.
