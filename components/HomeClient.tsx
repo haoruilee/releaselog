@@ -213,6 +213,23 @@ export default function HomeClient({ initialEntityId }: Props) {
                 <p className="text-secondary">
                   {t("footer.share_hint")}
                 </p>
+                <p className="text-secondary/80">
+                  <a
+                    href="/skill.md"
+                    className="text-accent underline-offset-4 hover:underline"
+                  >
+                    {t("footer.for_agents")}
+                  </a>
+                  <span>{" · "}</span>
+                  <a
+                    href="https://theagentnative.com"
+                    className="text-accent underline-offset-4 hover:underline"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {t("footer.agent_native_index")}
+                  </a>
+                </p>
               </div>
             )}
           </footer>
