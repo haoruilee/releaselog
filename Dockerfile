@@ -24,8 +24,8 @@ ENV NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID
 ENV NEXT_PUBLIC_ADSENSE_ID=$NEXT_PUBLIC_ADSENSE_ID
 COPY . .
 ENV RESET_SOURCES_ENABLED=0
-RUN ./node_modules/.bin/tsc lib/reset-feed-core.ts lib/advertising.ts --target ES2022 --module commonjs --moduleResolution node --esModuleInterop --skipLibCheck --outDir /tmp/releaselog-unit
-RUN COMPILED_TEST_LIBS=/tmp/releaselog-unit node --test scripts/site-refresh-tests.cjs
+RUN ./node_modules/.bin/tsc lib/reset-feed-core.ts lib/advertising.ts lib/adsense-gate.ts --target ES2022 --module commonjs --moduleResolution node --esModuleInterop --skipLibCheck --outDir /tmp/releaselog-unit
+RUN COMPILED_TEST_LIBS=/tmp/releaselog-unit node --test scripts/site-refresh-tests.cjs scripts/adsense-gate-tests.cjs
 RUN node --test scripts/ai-autonomy.test.mjs
 RUN npm run build
 

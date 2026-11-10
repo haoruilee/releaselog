@@ -10,7 +10,7 @@ export function SiteHeader() {
   useEffect(() => { setOpen(false); }, [pathname, locale]);
   useEffect(() => { const escape = (event: KeyboardEvent) => { if (event.key === "Escape" && open) { setOpen(false); menuRef.current?.focus(); } }; document.addEventListener("keydown", escape); return () => document.removeEventListener("keydown", escape); }, [open]);
   const links = [
-    { href: "/", label: t("site.calendar"), active: pathname === "/" || (!/^\/(reset-log|sources|pricing|advertise|login|subscribe|admin)(\/|$)/.test(pathname)) },
+    { href: "/", label: t("site.calendar"), active: pathname === "/" || (!/^\/(reset-log|sources|pricing|advertise|login|subscribe|privacy|admin)(\/|$)/.test(pathname)) },
     { href: "/reset-log", label: t("switcher.reset_log"), active: pathname.startsWith("/reset-log") },
     { href: "/sources", label: t("reset_log.sources"), active: pathname === "/sources" },
     { href: "/pricing", label: t("nav.pricing"), active: pathname === "/pricing" },
@@ -29,5 +29,5 @@ export function SiteHeader() {
 }
 export function SiteFooter() {
   const t = useT();
-  return <footer data-site-footer data-export-exclude className="border-t border-slate-200 bg-white"><div className="mx-auto flex max-w-[1344px] flex-wrap items-center justify-between gap-5 px-6 py-8 sm:px-10 lg:px-12"><Link href="/" className="font-serif text-2xl text-primary">ReleaseLog</Link><nav aria-label={t("site.footer")} className="flex flex-wrap gap-6 text-sm text-secondary"><Link href="/sources" className="hover:text-primary">{t("reset_log.sources")}</Link><Link href="/advertise" className="hover:text-primary">{t("site.advertise")}</Link><Link href="/feeds/atom.xml" className="hover:text-primary">Atom / RSS</Link><Link href="/pricing" className="hover:text-primary">{t("nav.pricing")}</Link></nav></div></footer>;
+  return <footer data-site-footer data-export-exclude className="border-t border-slate-200 bg-white"><div className="mx-auto flex max-w-[1344px] flex-wrap items-center justify-between gap-5 px-6 py-8 sm:px-10 lg:px-12"><Link href="/" className="font-serif text-2xl text-primary">ReleaseLog</Link><nav aria-label={t("site.footer")} className="flex flex-wrap gap-6 text-sm text-secondary"><Link href="/sources" className="hover:text-primary">{t("reset_log.sources")}</Link><Link href="/advertise" className="hover:text-primary">{t("site.advertise")}</Link><Link href="/privacy" className="hover:text-primary">{t("nav.privacy")}</Link><Link href="/feeds/atom.xml" className="hover:text-primary">Atom / RSS</Link><Link href="/pricing" className="hover:text-primary">{t("nav.pricing")}</Link></nav></div></footer>;
 }
