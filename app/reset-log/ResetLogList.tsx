@@ -14,6 +14,8 @@ import {
 } from "@/data/reset-log";
 import { getServerTranslator, type Translator } from "@/lib/i18n";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { ReservedAdSlot } from "@/components/ReservedAdSlot";
+import { AD_SLOT_KEYS } from "@/lib/adsense-gate";
 import { ResetLogCalendar } from "./ResetLogCalendar";
 import { ResetLogExportButton } from "./ResetLogExportButton";
 
@@ -85,6 +87,12 @@ export async function ResetLogList({
               className="font-medium text-secondary underline-offset-4 hover:text-primary hover:underline"
             >
               {t("nav.pricing")}
+            </Link>
+            <Link
+              href="/privacy"
+              className="font-medium text-secondary underline-offset-4 hover:text-primary hover:underline"
+            >
+              {t("nav.privacy")}
             </Link>
             <Link
               href="/subscribe"
@@ -212,6 +220,12 @@ export async function ResetLogList({
           data-export-exclude
           className="mt-16 space-y-3 border-t border-white/5 pt-6 text-xs text-secondary/80"
         >
+          <ReservedAdSlot slotKey={AD_SLOT_KEYS.contentFooter} />
+          <p>
+            <Link href="/privacy" className="text-accent underline-offset-4 hover:underline">
+              {t("nav.privacy")}
+            </Link>
+          </p>
           <p>
             {t("reset_log.footer_email_lead")}{" "}
             <a

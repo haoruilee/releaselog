@@ -5,6 +5,7 @@
   "nav": {
     "pricing": "Pricing",
     "subscribe": "Subscribe",
+    "privacy": "Privacy",
     "back_home": "← ReleaseLog"
   },
   "headline": {
@@ -49,6 +50,10 @@
     "share_hint": "Share: screenshot this page or use Export PNG (header, stats, and calendar only).",
     "for_agents": "For agents",
     "agent_native_index": "Also · Agent-Native Index"
+  },
+  "ads": {
+    "label": "Advertisements",
+    "reserved": "Advertising placement reserved"
   },
   "reset_log": {
     "kicker": "Reset Log",
