@@ -4,12 +4,12 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy policy",
   description:
-    "How ReleaseLog handles ordinary request data, optional account email, and advertising. Google AdSense is not enabled.",
+    "How ReleaseLog handles ordinary request data, optional account email, and advertising. Includes the Google AdSense connection script.",
   alternates: { canonical: "/privacy" },
   openGraph: {
     title: "Privacy policy · ReleaseLog",
     description:
-      "Request data, account email, and advertising status for releaselog.site. Advertising is not enabled.",
+      "Request data, account email, and advertising status for releaselog.site. Google AdSense connection and advertising settings.",
   },
 };
 
@@ -169,24 +169,27 @@ export default function PrivacyPage() {
           <section className="space-y-3">
             <h2 className="font-serif text-2xl text-primary">Advertising</h2>
             <p>
-              Google AdSense and other advertising are not enabled in this release. Reserved
-              spaces are layout placeholders, not live ads. They do not request an ad, load
-              googlesyndication, or set an advertising cookie.{" "}
+              This site loads Google&apos;s AdSense connection script for publisher account
+              ca-pub-7668037987581637. Loading the script connects your browser to Google;
+              Google can receive request information such as your IP address, browser details,
+              and the page being visited, and may use cookies or similar technologies under
+              its own policies. This is separate from Google Analytics.
+            </p>
+            <p>
               <Link href="/ads.txt" className="text-accent underline-offset-4 hover:underline">
                 /ads.txt
               </Link>{" "}
-              is a comment that says advertising is disabled. It does not list a publisher
-              account.
+              lists this publisher account. Our manually placed advertising spaces remain
+              labeled placeholders: no numeric slot ids or site consent integration are
+              configured, and the site does not send an advertising consent grant.
+              AdSense account approval and any Google-managed automatic ads are controlled
+              separately in the publisher&apos;s Google account.
             </p>
             <p>
-              If advertising is enabled later, third-party providers may use cookies or similar
-              signals, subject to a consent setup and their own policies. Turning ads on
-              requires the publisher configuration to be enabled, a valid AdSense publisher id,
-              numeric slot ids, and an explicit consent signal. A Google-certified consent
-              management platform is required before ads are served in regions where Google
-              requires that consent, including the European Economic Area and the United
-              Kingdom. This release does not include that consent popup. The consent
-              integration is not configured, and the page does not send a consent grant.
+              Activating the site&apos;s manual ad slots requires the publisher configuration
+              to be enabled, valid numeric slot ids, and an explicit consent signal from the
+              configured consent integration. Third-party advertising practices are described
+              in Google&apos;s linked policies below.
             </p>
             <p>
               Background on Google&apos;s requirements, not a control on this site:{" "}

@@ -1,8 +1,8 @@
 /**
- * Ad requests stay off unless every gate passes.
+ * Manual ad-slot requests stay off unless every gate passes.
  *
- * Default publisher-config.json fails all of them: ads are disabled, there is
- * no ca-pub client id, slot ids are null, and consentIntegration is
+ * The publisher connection script is separate. Manual slots are disabled,
+ * slot ids are null, and consentIntegration is
  * "not_configured". A future enablement also needs an explicit visitor grant
  * (`window.__RELEASELOG_AD_CONSENT__ === "granted"`) from a Google-certified
  * CMP. This module does not read or set that signal.

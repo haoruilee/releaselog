@@ -1,3 +1,4 @@
+import publisherConfig from "@/publisher-config.json";
 import { AdvertisingProvider, SiteSponsorFooter } from "@/components/Advertising";
 import { getAdvertisingConfig } from "@/lib/advertising";
 import { SiteHeader, SiteFooter } from "@/components/SiteChrome";
@@ -58,6 +59,7 @@ export const metadata: Metadata = {
 };
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID;
+const adsenseClient = publisherConfig.adsense.clientId;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -78,6 +80,13 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={`${serif.variable} ${sans.variable}`}>
       <head>
+        <meta name="google-adsense-account" content={adsenseClient} />
+        <script
+          id="releaselog-adsense-sdk"
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
+          crossOrigin="anonymous"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
