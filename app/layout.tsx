@@ -66,7 +66,6 @@ export const metadata: Metadata = {
 };
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID;
-const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_ID;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -94,13 +93,6 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {adsenseId && (
-          <Script
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseId}`}
-            strategy="afterInteractive"
-            crossOrigin="anonymous"
-          />
-        )}
       </head>
       <body className="min-h-screen font-sans antialiased">
         <I18nProvider locale={locale} messages={messages}>

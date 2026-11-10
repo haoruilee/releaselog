@@ -16,6 +16,8 @@ import { buildCalendarMonths, filterReleasesInRange } from "@/lib/calendar";
 import { computeSummaryStats, getRangeBounds } from "@/lib/stats";
 import { resolveTheme, themeToCssVars } from "@/lib/theme";
 import { useT } from "@/components/I18nProvider";
+import { ReservedAdSlot } from "@/components/ReservedAdSlot";
+import { AD_SLOT_KEYS } from "@/lib/adsense-gate";
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const USE_SERVER_DATA = process.env.NEXT_PUBLIC_USE_SERVER_DATA !== "0";
@@ -134,6 +136,8 @@ export default function HomeClient({ initialEntityId }: Props) {
             posterMode={posterMode}
           />
 
+          {!posterMode && <ReservedAdSlot slotKey={AD_SLOT_KEYS.homeBanner} />}
+
           {!posterMode && (
             <div
               data-export-exclude
@@ -186,6 +190,7 @@ export default function HomeClient({ initialEntityId }: Props) {
 
         <div className="mt-10 pb-24">
           <footer className="space-y-4 border-t border-white/5 pt-8 text-sm text-secondary/70">
+            {!posterMode && <ReservedAdSlot slotKey={AD_SLOT_KEYS.contentFooter} />}
             {entityMeta.footnote && <p>{entityMeta.footnote}</p>}
             <p>
               {entityMeta.brandLine ?? "ReleaseLog"}
@@ -216,6 +221,14 @@ export default function HomeClient({ initialEntityId }: Props) {
                 </p>
                 <p className="text-secondary/70">
                   {t("footer.share_hint")}
+                </p>
+                <p>
+                  <Link
+                    href="/privacy"
+                    className="text-accent underline-offset-4 hover:underline"
+                  >
+                    {t("nav.privacy")}
+                  </Link>
                 </p>
                 <p>
                   <a

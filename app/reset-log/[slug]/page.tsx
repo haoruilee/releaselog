@@ -15,6 +15,8 @@ import {
 } from "@/data/reset-log";
 import { getSiteUrl } from "@/lib/site-url";
 import { getServerTranslator } from "@/lib/i18n";
+import { ReservedAdSlot } from "@/components/ReservedAdSlot";
+import { AD_SLOT_KEYS } from "@/lib/adsense-gate";
 import { ResetLogList } from "../ResetLogList";
 
 interface PageProps {
@@ -302,6 +304,10 @@ export default async function ResetEventPage({ params }: PageProps) {
             </section>
           )}
 
+          <div className="mt-8">
+            <ReservedAdSlot slotKey={AD_SLOT_KEYS.articleInContent} />
+          </div>
+
           <section className="mt-8 rounded-2xl bg-accent/5 p-5 ring-1 ring-accent/30 sm:p-6">
             <h2 className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">
               {t("reset_log.official_record_section")}
@@ -371,21 +377,30 @@ export default async function ResetEventPage({ params }: PageProps) {
           )}
         </article>
 
-        <footer className="mt-16 flex flex-wrap items-center justify-between gap-3 border-t border-white/5 pt-6 text-xs text-secondary/80">
+        <div className="mt-16">
+          <ReservedAdSlot slotKey={AD_SLOT_KEYS.contentFooter} />
+        </div>
+
+        <footer className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/5 pt-6 text-xs text-secondary/80">
           <Link
             href="/reset-log"
             className="font-semibold uppercase tracking-[0.25em] hover:text-primary"
           >
             {t("reset_log.all_events_back")}
           </Link>
-          <p>
-            {t("reset_log.found_issue")}{" "}
-            <a
-              href="mailto:haoruileee@gmail.com"
-              className="text-accent underline-offset-4 hover:underline"
-            >
-              haoruileee@gmail.com
-            </a>
+          <p className="flex flex-wrap items-center gap-3">
+            <Link href="/privacy" className="text-accent underline-offset-4 hover:underline">
+              {t("nav.privacy")}
+            </Link>
+            <span>
+              {t("reset_log.found_issue")}{" "}
+              <a
+                href="mailto:haoruileee@gmail.com"
+                className="text-accent underline-offset-4 hover:underline"
+              >
+                haoruileee@gmail.com
+              </a>
+            </span>
           </p>
         </footer>
       </div>

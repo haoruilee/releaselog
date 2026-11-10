@@ -26,6 +26,10 @@ export default async function LoginPage({
           <Link href="/subscribe" className="text-accent underline-offset-4 hover:underline">
             ← Back to subscribe
           </Link>
+          {" · "}
+          <Link href="/privacy" className="text-accent underline-offset-4 hover:underline">
+            Privacy
+          </Link>
         </p>
       </div>
     </div>

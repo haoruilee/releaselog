@@ -48,7 +48,13 @@ export default async function SubscribePage() {
           checkoutEnabled={Boolean(process.env.STRIPE_SECRET_KEY)}
           portalEnabled={Boolean(process.env.STRIPE_SECRET_KEY)}
         />
-      </div>
+        </div>
+
+        <footer className="mt-16 border-t border-white/5 pt-6 text-xs text-secondary">
+          <Link href="/privacy" className="text-accent underline-offset-4 hover:underline">
+            Privacy
+          </Link>
+        </footer>
       </div>
     </div>
   );

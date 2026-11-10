@@ -4,6 +4,8 @@ import { getCurrentUser } from "@/lib/auth";
 import { isSubscriptionActive } from "@/lib/runtime-config";
 import { getPublicPricing } from "@/lib/billing";
 import { PricingCheckoutButtons } from "@/components/PricingCheckoutButtons";
+import { ReservedAdSlot } from "@/components/ReservedAdSlot";
+import { AD_SLOT_KEYS } from "@/lib/adsense-gate";
 
 export const dynamic = "force-dynamic";
 
@@ -291,7 +293,16 @@ export default async function PricingPage() {
           </div>
         </section>
 
-        <footer className="mt-16 border-t border-white/5 pt-6 text-xs text-secondary">
+        <div className="mt-16">
+          <ReservedAdSlot slotKey={AD_SLOT_KEYS.contentFooter} />
+        </div>
+
+        <footer className="mt-8 border-t border-white/5 pt-6 text-xs text-secondary">
+          <p className="mb-3">
+            <Link href="/privacy" className="text-accent underline-offset-4 hover:underline">
+              Privacy
+            </Link>
+          </p>
           <p>
             Prices shown in USD. Taxes (if applicable) are calculated at checkout. By subscribing
             you agree that ReleaseLog will charge the displayed amount to your payment method on
