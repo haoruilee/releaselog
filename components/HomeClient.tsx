@@ -1,4 +1,5 @@
 "use client";
+import featuredEditorial from "@/data/editorial-featured.json";
 
 import { AdPlacement } from "./Advertising";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -173,7 +174,7 @@ export default function HomeClient({ initialEntityId }: Props) {
             todayKey={todayKey}
             onSelectDate={setSelectedDate}
           />
-          {!posterMode && <aside data-export-exclude className="rounded-xl border border-slate-200 bg-panel p-5" data-guides-promo><h2 className="font-serif text-2xl">{t("site.guides_title")}</h2><p className="mt-2 text-sm leading-relaxed text-secondary">{t("site.guides_intro")}</p><Link href="/guides" className="mt-3 inline-block text-sm font-medium text-accent hover:underline">{t("site.guides_link")} →</Link></aside>}
+          {!posterMode && <aside data-export-exclude className="rounded-xl border border-slate-200 bg-panel p-5" data-guides-promo><h2 className="font-serif text-2xl">{t("site.guides_title")}</h2><p className="mt-2 text-sm leading-relaxed text-secondary">{t("site.guides_intro")}</p><ul className="mt-4 grid gap-2 text-sm sm:grid-cols-2">{featuredEditorial.map((item: { slug: string; title: string }) => <li key={item.slug}><Link href={`/guides/${item.slug}`} className="text-accent hover:underline">{item.title} →</Link></li>)}</ul><Link href="/guides" className="mt-3 inline-block text-sm font-medium text-accent hover:underline">{t("site.guides_link")} →</Link></aside>}
           {!posterMode && <AdPlacement position="calendar-banner" />}
           {!posterMode && <section data-export-exclude className="pb-4" aria-busy={loading}>
             <h2 className="font-serif text-3xl text-primary">{t("site.recent")}</h2>

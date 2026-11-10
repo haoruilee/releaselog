@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "collected-is-not-published",
+    "title": "Why we separate collected changes from published releases"
+  },
+  {
+    "slug": "event-dates-and-stable-identity",
+    "title": "Event dates and stable identity: lessons from our reset feed"
+  },
+  {
+    "slug": "count-rendered-cards-not-html-markers",
+    "title": "Why our page check counted six markers but only three cards"
+  },
+  {
+    "slug": "what-static-asset-rollback-proves",
+    "title": "What our static-asset rollback checks actually prove"
+  }
+]

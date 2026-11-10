@@ -35,9 +35,345 @@
       "title": "vLLM Automatic Prefix Caching design",
       "url": "https://docs.vllm.ai/en/latest/design/prefix_caching/",
       "checked": "2026-11-10"
+    },
+    {
+      "id": "project-review",
+      "kind": "project-record",
+      "title": "ReleaseLog review decision normalizer",
+      "url": "https://github.com/haoruilee/releaselog/blob/6d88621/scripts/ai-autonomy.mjs",
+      "checked": "2026-11-10"
+    },
+    {
+      "id": "project-publish",
+      "kind": "project-record",
+      "title": "ReleaseLog candidate-to-publication application path",
+      "url": "https://github.com/haoruilee/releaselog/blob/6d88621/lib/ai-review.ts",
+      "checked": "2026-11-10"
+    },
+    {
+      "id": "project-reset",
+      "kind": "project-record",
+      "title": "ReleaseLog reset identity and date parser",
+      "url": "https://github.com/haoruilee/releaselog/blob/6d88621/lib/reset-feed-core.ts",
+      "checked": "2026-11-10"
+    },
+    {
+      "id": "project-acceptance",
+      "kind": "project-record",
+      "title": "Our first editorial deployment: recorded acceptance and correction",
+      "url": "https://github.com/haoruilee/releaselog/blob/664aee1/docs/editorial-batch-20261110.md",
+      "checked": "2026-11-10"
+    },
+    {
+      "id": "project-records",
+      "kind": "experiment",
+      "title": "Recorded controlled checks for these field notes",
+      "url": "https://releaselog.site/research/editorial-field-checks-20261110.json",
+      "checked": "2026-11-10"
     }
   ],
   "articles": [
+    {
+      "slug": "collected-is-not-published",
+      "title": "Why we separate collected changes from published releases",
+      "description": "Field note on keeping ReleaseLog's candidate collection stage apart from the publication application step, and on what our controlled normalizer fixtures do and do not establish.",
+      "genre": "field-note",
+      "entityIds": [],
+      "sourceIds": [
+        "project-review",
+        "project-publish",
+        "project-records"
+      ],
+      "evidenceKeys": [
+        "reviewBoundary"
+      ],
+      "evidenceScope": "Evidence is five controlled normalizer fixture cases recorded 2026-11-10 plus project records of the collection and application code paths. It covers decision validation at the configured threshold only; it does not cover upstream factual accuracy, the application path's other checks, or any live publication.",
+      "sections": [
+        {
+          "heading": "The problem: a collected candidate is not a release",
+          "kind": "documented",
+          "sourceIds": [
+            "project-review",
+            "project-publish"
+          ],
+          "paragraphs": [
+            "In our release-feed pipeline, collection creates candidates. Review then proposes a decision with a supplied confidence score, and a separate application step handles publication. These are distinct states. Finding a changed page is useful evidence to inspect, but it does not by itself establish a release that belongs on the public timeline. The normalizer sits between the review output and the application path, checking whether the proposed decisions form an acceptable response for the supplied candidate set.",
+            "The application path has further checks beyond this decision validation. It looks up the pending candidate and enqueues release notifications when publication happens. That makes its side effects different from a function that normalizes JSON. Our controlled checks did not invoke publication or send notifications. These notes concern the release-feed path; the editorial guides are separately reviewed, versioned content and do not become articles through candidate approval."
+          ],
+          "items": []
+        },
+        {
+          "heading": "What the controlled fixtures recorded",
+          "kind": "observed",
+          "sourceIds": [
+            "project-records"
+          ],
+          "paragraphs": [
+            "On 2026-11-10 we ran controlled fixtures for the decision normalizer: five cases, executed without calling any model, database or external service. At the configured threshold the normalizer approved a 0.85 score and converted a 0.84 score to rejection. Missing, unknown and duplicate candidate decisions were rejected by validation as invalid decision sets. The recorded limit deserves repeating in spirit: this tests the normalizer only, and no release was published during the check."
+          ],
+          "items": []
+        },
+        {
+          "heading": "Why the boundary earns its keep",
+          "kind": "analysis",
+          "paragraphs": [
+            "The separation matters because the two stages fail in different ways. Collection can find overlapping material, and review output can omit a decision, name an unknown candidate, or repeat a candidate ID. Those are distinct problems: duplicate decision IDs concern the review response; duplicate announcements concern the content itself. Publication is where notifications go out and public state changes. Keeping a validation-only normalizer in front of a side-effecting application path provides an explicit point at which malformed decision sets can be rejected before application.",
+            "The 0.85 figure is a configuration threshold, not an accuracy probability. Nothing in the fixtures calibrates the score against outcomes, and the normalizer does not verify upstream facts. A candidate at 0.86 is approved for application in the mechanical sense, not 86 percent likely to be true. Respecting that distinction in release notes is part of the same discipline."
+          ],
+          "items": [],
+          "sourceIds": []
+        },
+        {
+          "heading": "What these checks do not tell us",
+          "kind": "analysis",
+          "paragraphs": [
+            "Five fixture cases establish that the normalizer's decision table behaved as configured on the run date. They do not establish that every future candidate will be well-formed, that the application path's other checks are correct, or that upstream collection is factually accurate. The normalizer tests verify no upstream facts and publish no releases; those remain separate concerns with separate evidence."
+          ],
+          "items": [],
+          "sourceIds": []
+        },
+        {
+          "heading": "Checklist: keeping the two stages apart",
+          "kind": "checklist",
+          "paragraphs": [],
+          "items": [
+            "Label collection output as candidates in every artifact, log line and draft document.",
+            "Reject incomplete decision sets, unknown candidate IDs and repeated candidate decisions; do not let a high score excuse invalid structure.",
+            "Record the confidence cutoff as a configured threshold in run notes; never describe it as accuracy or truth probability.",
+            "When testing publication, use isolated resources and stub notification delivery to check which actions enqueue it; the five normalizer cases here do not test that behaviour.",
+            "Keep normalizer checks free of real credentials and public side effects; test the application path separately with isolated fixtures."
+          ],
+          "sourceIds": []
+        }
+      ],
+      "publishedAt": "2026-11-10",
+      "reviewedAt": "2026-11-10"
+    },
+    {
+      "slug": "event-dates-and-stable-identity",
+      "title": "Event dates and stable identity: lessons from our reset feed",
+      "description": "Field note on how our reset feed parser canonicalizes post URLs, rejects future dates and forecast status, and merges duplicate records while preserving the published slug.",
+      "genre": "field-note",
+      "entityIds": [],
+      "sourceIds": [
+        "project-reset",
+        "project-records"
+      ],
+      "evidenceKeys": [
+        "datesAndIdentity"
+      ],
+      "evidenceScope": "Evidence is six synthetic parser fixture cases recorded 2026-11-10 plus the reset parser project record. It covers URL canonicalization, date and status rejection, and duplicate merge behavior on supplied fixtures only; it does not cover other release sources, false-positive rates, or whether real announcements occurred.",
+      "sections": [
+        {
+          "heading": "The problem: one announcement, many URLs, one identity",
+          "kind": "documented",
+          "sourceIds": [
+            "project-reset"
+          ],
+          "paragraphs": [
+            "A reset feed has two jobs that pull against each other. It must normalize the many shapes a post URL can take, and it must keep a stable identity for an announcement that has already been published once. The parser project record describes the intended behavior: supported post URLs are canonicalized, tracking-query variants are ignored, and future dates and forecast status are rejected in the supplied fixtures. Without canonicalization the same announcement can appear several times; without identity preservation, re-ingesting an already-published announcement can silently change its public slug.",
+            "The record also carries a caution we treat as part of the design: accepting a URL shape or an allowlisted handle is not proof that an actual announcement happened. The parser gates structure, not events."
+          ],
+          "items": []
+        },
+        {
+          "heading": "What the controlled fixtures recorded",
+          "kind": "observed",
+          "sourceIds": [
+            "project-records"
+          ],
+          "paragraphs": [
+            "The 2026-11-10 controlled run covered six parser cases on synthetic inputs, with no model, database or external service involved. Tracking-query variants collapsed to one canonical post ID. A future date was rejected, and forecast status was rejected. A fixture announcement dated November 1 was checked against a November 10 reference date and retained its November 1 event date rather than being re-dated. Two copies of the same record merged into one, and the merged record kept the existing published slug, recorded as 'already-published-fixture-slug'."
+          ],
+          "items": []
+        },
+        {
+          "heading": "Why event dates and identity need separate rules",
+          "kind": "analysis",
+          "paragraphs": [
+            "The November 1 fixture is the case most worth writing down. When an old announcement is checked against a much later reference date, the temptation is to treat the check date as the event date. The recorded behavior keeps the original event date, which is what a reader of a reset timeline needs: when something was announced, not when we happened to re-verify it.",
+            "Merging duplicates while preserving the published slug is the identity half of the same discipline. A slug is a public contract; if re-ingestion generated a new one, existing links would break for no editorial reason. Keeping the already-published slug preserved the reader-facing identity for the duplicate inputs in this fixture.",
+            "Merge order matters in this implementation. The helper processes the supplied lists in order and retains the first identity it sees, so supplying the existing published records before incoming records preserves the old slug in our fixture. That is a caller responsibility worth checking. A canonical post ID handles tracking variants; it does not decide which of two conflicting descriptions is more trustworthy."
+          ],
+          "items": [],
+          "sourceIds": []
+        },
+        {
+          "heading": "Limits of parser fixtures",
+          "kind": "analysis",
+          "paragraphs": [
+            "These are synthetic parser inputs. Six passing cases say the canonicalization, date and merge rules behaved as specified on the run date; they do not say every release source has clean dates, that deduplication is universal, or that false positives are impossible. And because the parser only accepts structure, none of this is independent evidence that a real announcement occurred. Structure checks and event verification remain separate gates."
+          ],
+          "items": [],
+          "sourceIds": []
+        },
+        {
+          "heading": "Checklist: dates and identity in a reset feed",
+          "kind": "checklist",
+          "paragraphs": [],
+          "items": [
+            "Canonicalize supported post URLs and ignore tracking-query variants before any deduplication step.",
+            "Reject future-dated entries and forecast-status entries at parse time. If rejection reasons are needed operationally, capture them outside a parser that returns null.",
+            "Preserve the original event date when re-checking old announcements against a later reference date.",
+            "On merge, retain the existing published slug rather than generating a new identity.",
+            "Record parser checks as structure validation; never present them as confirmation that an event happened."
+          ],
+          "sourceIds": []
+        }
+      ],
+      "publishedAt": "2026-11-10",
+      "reviewedAt": "2026-11-10"
+    },
+    {
+      "slug": "count-rendered-cards-not-html-markers",
+      "title": "Why our page check counted six markers but only three cards",
+      "description": "Field note on a raw-marker counting error in a prior release check, the handoff timing mistake recorded alongside it, its correction, and what our bounded same-day observations do and do not prove.",
+      "genre": "field-note",
+      "entityIds": [],
+      "sourceIds": [
+        "project-acceptance",
+        "project-records"
+      ],
+      "evidenceKeys": [
+        "domCounting"
+      ],
+      "evidenceScope": "A controlled fixture and a pre-batch public HTML snapshot each contain six raw markers and three parsed article nodes. The linked prior-release record separately describes 20 later candidate checks and five handoff probes. These are bounded observations, and DOMParser does not execute or hydrate scripts.",
+      "sections": [
+        {
+          "heading": "The problem: a counting assertion that measured the wrong thing",
+          "kind": "documented",
+          "sourceIds": [
+            "project-acceptance"
+          ],
+          "paragraphs": [
+            "Our prior public release carried a page-level acceptance check that counted raw occurrences of a data attribute marker in served HTML. The recorded acceptance note describes what went wrong: Next's serialized data duplicated a data attribute name, so the served page contained six raw marker occurrences for what parsed to three actual guide cards. The old assertion, keyed to the raw count, failed although three cards existed. A check that counts markers in serialized HTML is not counting rendered articles; it is counting string occurrences, and serialization can inflate them."
+          ],
+          "items": []
+        },
+        {
+          "heading": "The recorded handoff timing mistake and its correction",
+          "kind": "documented",
+          "sourceIds": [
+            "project-acceptance"
+          ],
+          "paragraphs": [
+            "The same record describes a second, more serious defect, and we state it plainly rather than smoothing it over: the outer switch shell lacked failure propagation and began handoff before the complete candidate HTTP gate had finished. The gate did not work before handoff in that release; a still-running gate was overtaken. Afterward the switch script was changed to require candidate, browser and image-provenance acceptance receipts, to make successful gate completion a prerequisite in that switch path."
+          ],
+          "items": []
+        },
+        {
+          "heading": "What the controlled checks and snapshots recorded",
+          "kind": "observed",
+          "sourceIds": [
+            "project-records",
+            "project-acceptance"
+          ],
+          "paragraphs": [
+            "The controlled fixture contains six raw marker occurrences and three parsed article nodes. A separate public snapshot of the guides page collected at 09:06 UTC on November 10, before this batch, shows the same counts. This is a historical three-card snapshot, not an assertion about the number of articles on the site today. The prior-release acceptance record separately states that all 20 candidate HTTP routes eventually passed, after handoff had already begun, and that five homepage probes observed during that handoff had no failures. The receipt requirement was added afterward. Those observations do not make the original sequencing correct or prove universal zero downtime."
+          ],
+          "items": []
+        },
+        {
+          "heading": "Why parsed nodes beat raw markers",
+          "kind": "analysis",
+          "paragraphs": [
+            "Counting parsed article nodes counts discrete card elements in the HTML document rather than repetitions inside serialized data. Counting raw marker occurrences measures serialization artifacts, which is why the numbers diverged. The useful change is to measure document elements. Visibility and interaction still need browser checks. We also keep in mind the recorded limit of the fixture method: DOMParser does not hydrate or execute scripts, so the parsed-node count verifies structure, not interactive behavior. Real browser interaction tests remain a separate gate, which is one reason the corrected switch script requires a browser acceptance receipt in addition to the HTTP gate.",
+            "There is a second measurement question after counting the cards: which candidate did the acceptance result describe? A browser receipt from an earlier image cannot establish that a later image passed. For this batch, the switch prerequisites are checked against the intended source revision and image. This keeps completion evidence attached to the artifact being considered rather than merely to a familiar filename."
+          ],
+          "items": [],
+          "sourceIds": []
+        },
+        {
+          "heading": "Checklist: acceptance checks that count what matters",
+          "kind": "checklist",
+          "paragraphs": [],
+          "items": [
+            "Count parsed article nodes, not raw attribute-marker occurrences, when asserting rendered card counts.",
+            "Expect serialized data to duplicate attribute names; never key pass/fail to raw string counts.",
+            "Propagate gate failures to the switch shell, and block handoff until every gate has completed rather than merely started.",
+            "Require candidate, browser and image-provenance acceptance receipts before any handoff begins.",
+            "Describe handoff probes as observations from that handoff; keep the later gate correction separate from what was actually checked before traffic moved."
+          ],
+          "sourceIds": []
+        }
+      ],
+      "publishedAt": "2026-11-10",
+      "reviewedAt": "2026-11-10"
+    },
+    {
+      "slug": "what-static-asset-rollback-proves",
+      "title": "What our static-asset rollback checks actually prove",
+      "description": "Field note on the immutable-path merge and byte-comparison checks behind our static asset rollback, the small controlled reproduction we recorded, and the compatibility, provenance and database limits it does not cover.",
+      "genre": "field-note",
+      "entityIds": [],
+      "sourceIds": [
+        "project-acceptance",
+        "project-records"
+      ],
+      "evidenceKeys": [
+        "staticAssets"
+      ],
+      "evidenceScope": "Evidence is a three-case controlled reproduction of the immutable-path merge check recorded 2026-11-10 plus the recorded acceptance note for the prior UI release. It covers path merge, old-hash preservation and byte-mismatch rejection only; it does not cover all browser sessions, Docker provenance or database rollback safety.",
+      "sections": [
+        {
+          "heading": "The problem: rolling forward content while old tabs keep loading",
+          "kind": "documented",
+          "sourceIds": [
+            "project-acceptance"
+          ],
+          "paragraphs": [
+            "A static-asset rollback strategy lives or dies on path immutability. The recorded behavior of the prior release is that the old public container was retained, old and new immutable static asset paths were merged, and same-name files were compared byte for byte before the merge was accepted. The retained container provides a runnable target for traffic rollback. Merging paths keeps the old asset URLs available when an already-open tab requests them, which addresses one compatibility requirement without proving that the whole session will work."
+          ],
+          "items": []
+        },
+        {
+          "heading": "What the controlled reproduction recorded",
+          "kind": "observed",
+          "sourceIds": [
+            "project-records"
+          ],
+          "paragraphs": [
+            "The 2026-11-10 controlled reproduction is deliberately small: three cases, with no model, database or external service called. It starts with two files, adds one new path, and ends with three merged files. The old content hash is preserved across the merge. When different bytes appear at the same path, the merge is rejected. The recorded limit is explicit: this is a small reproduction of the immutable-path check, not a test of all browser sessions, Docker provenance or database rollback."
+          ],
+          "items": []
+        },
+        {
+          "heading": "Traffic rollback is not database restoration",
+          "kind": "analysis",
+          "paragraphs": [
+            "The clearest lesson in the record is the boundary between two kinds of rollback. Traffic rollback points requests back to the retained old application and needs a healthy old application as well as available assets. Database restoration is a separate operation with separate evidence. For the UI release in question, the record states that no schema or financial or accounting write occurred, so this particular UI change did not require undoing a data migration. A release that writes data needs its own compatibility and recovery assessment; an asset check cannot answer those questions.",
+            "The reproduction also does not establish that every browser tab keeps working. It verifies that old paths survive a merge with their bytes intact; it does not exercise real browser sessions, and it says nothing about Docker image provenance. Those remain untested by this check."
+          ],
+          "items": [],
+          "sourceIds": []
+        },
+        {
+          "heading": "Why a matching path needs matching bytes",
+          "kind": "analysis",
+          "paragraphs": [
+            "Keeping both generations of filenames is only useful if each name continues to identify the same bytes. A same-path collision deserves rejection rather than an arbitrary choice of which file wins: either choice could change the response an old page receives at a URL it already knows. The reproduction makes this decision visible with one accepted shared path and one rejected conflicting path.",
+            "This is also why the merge and rollback checks need separate receipts. A successful merge answers a question about files; selecting the old application answers a question about traffic. Neither establishes the origin of the Docker image, the health of every route, or database compatibility. Before a real handoff, those questions still need their own acceptance evidence. Retaining the old target buys an option, not proof that invoking it will always succeed."
+          ],
+          "items": [],
+          "sourceIds": []
+        },
+        {
+          "heading": "Checklist: static asset rollback invariants",
+          "kind": "checklist",
+          "paragraphs": [],
+          "items": [
+            "Retain the previous public container until the new release is accepted, so traffic rollback stays available.",
+            "Merge old and new immutable asset paths, then check both generations of URLs; URL availability alone does not verify every old browser session.",
+            "Compare bytes for any same-name path before accepting the merge, and reject the merge on any difference.",
+            "Record schema and data changes separately. Assess backward compatibility and recovery before choosing a traffic rollback or any database restoration.",
+            "Verify the old application is healthy before directing traffic back; keep image provenance and route checks separate from the file-merge result."
+          ],
+          "sourceIds": []
+        }
+      ],
+      "publishedAt": "2026-11-10",
+      "reviewedAt": "2026-11-10"
+    },
     {
       "slug": "claude-prompt-cache-boundaries",
       "title": "Claude Prompt Caching: Diagnosing Misses and Designing Stable Prefixes",

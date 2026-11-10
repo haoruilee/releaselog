@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "runnerSHA256": "bdccb80e8a950b273827536710b34dd37e78c8799beeda73c21473b7dc281a0d",
+  "observedAt": "2026-11-10T09:13:13.819Z",
+  "method": "Controlled fixtures on the designated builder; no model, database or external service is called by the checks.",
+  "groups": {
+    "reviewBoundary": {
+      "passed": true,
+      "cases": 5,
+      "atThreshold": "approve",
+      "belowThreshold": "reject",
+      "missingUnknownAndDuplicateDecisions": "rejected by validation",
+      "limit": "This tests the normalizer only. Confidence is a supplied score, not a calibrated probability of truth; no release was published."
+    },
+    "datesAndIdentity": {
+      "passed": true,
+      "cases": 6,
+      "queryVariants": "one canonical post ID",
+      "futureDate": "rejected",
+      "forecast": "rejected",
+      "mergedRecords": 1,
+      "preservedSlug": "already-published-fixture-slug",
+      "retainedEventDate": "2026-11-01",
+      "limit": "Synthetic parser inputs only. A parser accepting a URL is not independent evidence that a real announcement happened."
+    },
+    "domCounting": {
+      "passed": true,
+      "fixture": {
+        "rawMarkerOccurrences": 6,
+        "renderedArticleNodes": 3
+      },
+      "limit": "DOMParser runs without executing scripts. This does not replace hydrated browser interaction tests.",
+      "publicSnapshot": {
+        "url": "https://releaselog.site/guides",
+        "collectedAt": "2026-11-10T09:06:35Z",
+        "rawMarkerOccurrences": 6,
+        "renderedArticleNodes": 3
+      }
+    },
+    "staticAssets": {
+      "passed": true,
+      "cases": 3,
+      "oldFiles": 2,
+      "mergedFiles": 3,
+      "oldContentHashPreserved": true,
+      "changedBytesAtSamePath": "rejected",
+      "limit": "Small reproduction of the immutable-path check, not a test of all browser sessions, Docker provenance or database rollback."
+    }
+  }
+}
