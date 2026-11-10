@@ -1,3 +1,31 @@
+# Current public deployment: privacy and AdSense connection (2026-11-10)
+
+This section supersedes previous public-container and advertising settings below.
+- Public container: `releaselog-app-privacy-20261110`, loopback port 3004,
+  immutable image `releaselog/app:privacy-20261110-994d731` built solely on
+  `li@www.xzhtai.cn:2077` from source revision `994d731` and 190 verified inputs.
+- Dedicated public tunnel points to port 3004. Shared tunnels, DNS, Postgres,
+  port-3000 control app and all four workers retain their prior identities.
+- `/privacy` is published. The owner-provided AdSense connection script and
+  account meta identify `ca-pub-7668037987581637`; `/ads.txt` lists its direct
+  seller record. Manual ad slots remain gated by disabled publisher slots and
+  missing consent integration. Google account approval and automatic ads are
+  separate publisher-account settings. Privacy text describes the connection.
+- Runtime environment/network were reproduced from the old public container.
+  Old/new immutable static assets are merged, with no path collisions.
+- Old public container `releaselog-app-sidebar-20261105` on port 3003 remains
+  running. Traffic rollback, after checking localhost port 3003 health:
+  `python3 /root/ops-private/releaselog-privacy-20261110/switch-public.py 3003`.
+  It performs a graceful dedicated-connector handoff; no DNS or DB restore.
+- Evidence: `/root/ops-private/releaselog-privacy-20261110/`. Builder synthetic
+  browser cases and public browser cases passed at 390/1536px in EN/ZH, including
+  footer navigation to privacy, correct publisher script/meta, no overflow or
+  JS errors, and ads.txt. Vendor requests were intercepted during browser tests.
+  Fifteen public HTTP entry checks passed, including feeds/API/sitemap and old
+  account flows. No paid generation or mail/account mutation was performed.
+- Review timer remains every eight hours. Host-side review fixes are independent
+  of this public image release and remain in `/root/releaselog`.
+
 # ReleaseLog Runbook
 
 ## Current production release (2026-11-03, light editorial redesign + left sidebar)
