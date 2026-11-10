@@ -6,6 +6,7 @@
     "pricing": "定价",
     "subscribe": "订阅",
     "privacy": "隐私政策",
+    "guides": "解读指南",
     "back_home": "← ReleaseLog"
   },
   "headline": {
@@ -125,6 +126,9 @@
     "editorial": "所有广告均明确标注。赞助合作不会影响内容判断，也不会改变我们收录的事件。"
   },
   "site": {
+    "guides_title": "从更新到实践",
+    "guides_intro": "官方资料支持的英文指南：适用场景、实施取舍与核验步骤。",
+    "guides_link": "阅读解读指南",
     "calendar": "发布日历",
     "navigation": "主导航",
     "menu": "打开导航",

@@ -6,6 +6,7 @@
     "pricing": "Pricing",
     "subscribe": "Subscribe",
     "privacy": "Privacy",
+    "guides": "Guides",
     "back_home": "← ReleaseLog"
   },
   "headline": {
@@ -125,6 +126,9 @@
     "editorial": "Advertising is clearly labeled. Sponsorship does not influence editorial decisions or the events we report."
   },
   "site": {
+    "guides_title": "Make sense of the changes",
+    "guides_intro": "Source-backed guides to workload fit, operational tradeoffs and verification.",
+    "guides_link": "Read the guides",
     "calendar": "Calendar",
     "navigation": "Main navigation",
     "menu": "Open navigation",

@@ -1,0 +1,292 @@
+{
+  "sources": [
+    {
+      "id": "claude-cache",
+      "title": "Claude prompt caching",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+      "checked": "2026-11-10"
+    },
+    {
+      "id": "claude-tools-cache",
+      "title": "Claude tool use with prompt caching",
+      "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-use-with-prompt-caching",
+      "checked": "2026-11-10"
+    },
+    {
+      "id": "hooks-guide",
+      "title": "Claude Code hooks guide",
+      "url": "https://code.claude.com/docs/en/hooks-guide",
+      "checked": "2026-11-10"
+    },
+    {
+      "id": "hooks-reference",
+      "title": "Claude Code hooks reference",
+      "url": "https://code.claude.com/docs/en/hooks",
+      "checked": "2026-11-10"
+    },
+    {
+      "id": "vllm-feature",
+      "title": "vLLM Automatic Prefix Caching feature guide",
+      "url": "https://docs.vllm.ai/en/latest/features/automatic_prefix_caching/",
+      "checked": "2026-11-10"
+    },
+    {
+      "id": "vllm-design",
+      "title": "vLLM Automatic Prefix Caching design",
+      "url": "https://docs.vllm.ai/en/latest/design/prefix_caching/",
+      "checked": "2026-11-10"
+    }
+  ],
+  "articles": [
+    {
+      "slug": "claude-prompt-cache-boundaries",
+      "title": "Claude Prompt Caching: Diagnosing Misses and Designing Stable Prefixes",
+      "description": "A source-backed guide to reading Claude prompt caching usage fields, diagnosing cache misses, and arranging tools, system prompts and messages into a stable ordered prefix.",
+      "entityIds": [
+        "api-team",
+        "claude-product"
+      ],
+      "sourceIds": [
+        "claude-cache",
+        "claude-tools-cache"
+      ],
+      "sections": [
+        {
+          "heading": "What prompt caching reuses",
+          "kind": "documented",
+          "paragraphs": [
+            "Claude prompt caching reuses an identical input prefix; it is not an answer cache. The documented hierarchy is tools, then system instructions, then messages. Cache lifetime options are five minutes and one hour, subject to the selected model and platform. Exact-prefix matching and model-specific minimum lengths matter.",
+            "The usage fields distinguish cache reads, new cache writes and uncached input. Their sum is total input; generated output is separate. A small input_tokens value alone therefore does not describe the complete input ledger.",
+            "Tool-definition changes invalidate their prefix and later content. Changing tool_choice affects message caching, not the earlier tool and system caches. An already cache-enabled server-tool loop can receive automatic breakpoints on tool results."
+          ],
+          "items": [],
+          "sourceIds": [
+            "claude-cache",
+            "claude-tools-cache"
+          ]
+        },
+        {
+          "heading": "A useful first hypothesis: unstable inputs",
+          "kind": "analysis",
+          "paragraphs": [
+            "Treat a low hit rate as a diagnosis problem, not a verdict on the feature. Begin with a small repeatable workflow and ask what is allowed to change between requests. A request timestamp in shared instructions and a dynamically assembled tool catalog deserve different fixes; changing everything together makes the cause harder to identify.",
+            "In a hypothetical support assistant, a randomized greeting is inserted before otherwise shared policy text. The owner wants current answers, but the greeting adds no policy value. Our recommendation is to remove that decorative variation from shared instructions, while retaining the actual policy revision. Do not freeze a changing policy merely to obtain more hits."
+          ],
+          "items": [],
+          "sourceIds": [
+            "claude-cache",
+            "claude-tools-cache"
+          ]
+        },
+        {
+          "heading": "A bounded diagnostic walkthrough",
+          "kind": "example",
+          "paragraphs": [
+            "This walkthrough is hypothetical, not a measured deployment. First choose a small fixed set of repeat requests and record all three input counters. Confirm that the model supports the intended cache controls and that the shared prefix meets its minimum length. This avoids debugging prompt order when the request is not eligible in the first place.",
+            "Next, compare two complete request objects. Keep a separate list of request-level settings such as tool_choice; they cannot simply be moved into a later text paragraph. For content differences, locate the first changed segment and decide whether it is essential. Make one change, replay the same sample, and inspect the counters again.",
+            "Stop reordering once the remaining variation is required by the task and eligible repeats behave consistently. Investigate lifetime, workload frequency or platform behavior separately. This stopping rule prevents an open-ended exercise in optimizing a counter while silently changing what the assistant is asked to do."
+          ],
+          "items": [],
+          "sourceIds": [
+            "claude-cache"
+          ]
+        },
+        {
+          "heading": "Checklist: keeping a prefix cacheable",
+          "kind": "checklist",
+          "paragraphs": [],
+          "items": [
+            "Map shared content in the documented tools → system → messages hierarchy.",
+            "Record the model, platform, cache controls and minimum cacheable length for the test.",
+            "Keep request-level settings comparable while diagnosing a specific content change.",
+            "Move volatile text after the last reusable breakpoint only when the intended instructions remain equivalent.",
+            "Update changed policies and retrieved evidence even when that produces an expected miss.",
+            "Compare cache reads, writes and uncached input together; use the interactive ledger below.",
+            "Stop when remaining changes are necessary, and record which hypothesis you will investigate next."
+          ],
+          "sourceIds": [
+            "claude-cache",
+            "claude-tools-cache"
+          ]
+        },
+        {
+          "heading": "Tradeoffs to accept knowingly",
+          "kind": "analysis",
+          "paragraphs": [
+            "Freshness and reuse are separate design decisions. A cache lifetime is not permission to keep an obsolete document in your prompt. If the upstream document changes, update the supplied content; exact matching then determines reuse. Any application that continues sending an old document has an application freshness problem, not a cache that independently chose stale instructions.",
+            "A successful counter also does not settle the business case. Compare complete usage and the current platform bill against a suitable baseline before declaring savings. For mostly unique requests, repeated prompt rearrangement may add maintenance without producing useful reuse. Preserve a short test record so the next engineer can see why the layout exists."
+          ],
+          "items": [],
+          "sourceIds": []
+        }
+      ],
+      "publishedAt": "2026-11-10",
+      "reviewedAt": "2026-11-10"
+    },
+    {
+      "slug": "claude-code-hooks-before-and-after",
+      "title": "Claude Code Hooks: What Blocks Before Versus What Runs After",
+      "description": "A practical guide to placing Claude Code command-hook checks before actions and automation after them, with explicit limits for async work and security boundaries.",
+      "entityIds": [
+        "claude-product"
+      ],
+      "sourceIds": [
+        "hooks-guide",
+        "hooks-reference"
+      ],
+      "sections": [
+        {
+          "heading": "Two phases, different powers",
+          "kind": "documented",
+          "paragraphs": [
+            "This guide focuses on command hooks: external programs attached to Claude Code lifecycle events. The documentation also supports prompt- and agent-based hook types, so the word hook alone does not imply deterministic execution.",
+            "For a synchronous PreToolUse command hook, exit code 2 can prevent the proposed tool call. PostToolUse occurs after the call, so it cannot prevent the original action. Event-specific output rules matter. Async command hooks do not hold up the action and cannot retroactively block it.",
+            "These mechanisms support checks, formatting and notifications. Hook files themselves are executable configuration, and the official guide shows why they need deliberate placement and review."
+          ],
+          "items": [],
+          "sourceIds": [
+            "hooks-guide",
+            "hooks-reference"
+          ]
+        },
+        {
+          "heading": "The failure scenario: gating in the wrong phase",
+          "kind": "analysis",
+          "paragraphs": [
+            "Imagine a team that wants edits to generated files rejected. A check that runs only after a write can report the violation, and might attempt a repair, but the original mutation has already happened. Reversal and prevention are different requirements. Decide which one the workflow actually needs before selecting an event.",
+            "The opposite mistake is to put every slow task in the pre-action path. A formatting pass does not need veto power just because it belongs in the workflow. Our design rule is to separate fast admission decisions from work that observes or transforms the accepted result, then give each one an explicit completion condition."
+          ],
+          "items": [],
+          "sourceIds": [
+            "hooks-guide"
+          ]
+        },
+        {
+          "heading": "A hypothetical CI workflow",
+          "kind": "example",
+          "paragraphs": [
+            "Consider a hypothetical repository with an authored source directory and a generated output directory. No deployment or benchmark is implied by this example.",
+            "A short synchronous pre-action check rejects direct file-editing tool calls to the generated directory. The team separately uses a post-edit formatter for the files it owns. That formatter finishes before those same files are edited again; putting a mutating formatter in the background would create a race with later edits.",
+            "Read-only reporting or a notification can run asynchronously where appropriate. A required CI check still gates a merge or release: an agent finishing its task does not establish that background tests passed. Script and configuration changes receive review because they change how the workflow behaves.",
+            "This hook arrangement covers the named tool events only. It does not confine shell processes or replace repository permissions, isolated execution and protected release controls. Keep those boundaries outside the model and outside a small command-matching rule."
+          ],
+          "items": [],
+          "sourceIds": [
+            "hooks-reference",
+            "hooks-guide"
+          ]
+        },
+        {
+          "heading": "Checklist: assigning work to the right phase",
+          "kind": "checklist",
+          "paragraphs": [],
+          "items": [
+            "Write the requirement as prevention, repair, verification or notification.",
+            "Use a synchronous pre-action decision when a proposed action must not happen.",
+            "Check the specific event schema and exit-code behavior for the installed version.",
+            "Serialize formatters or other work that mutates files still being edited.",
+            "Use background execution only when the task can safely outlive the tool action.",
+            "Make required CI results an explicit release condition rather than assuming a background launch succeeded.",
+            "Review the hook code and record which event paths it covers; test a permitted case and a blocked case."
+          ],
+          "sourceIds": [
+            "hooks-reference",
+            "hooks-guide"
+          ]
+        },
+        {
+          "heading": "Tradeoffs and the sandbox line",
+          "kind": "analysis",
+          "paragraphs": [
+            "The stopping point is a small, explainable workflow. Every hook should have one owner, one purpose and a visible outcome. If an operation fails, the operator should know whether the original action was blocked, completed with a failed follow-up, or is still waiting on another gate. A generic success message hides these distinctions.",
+            "Command hooks are a good fit for conditions that can be evaluated mechanically. When judgment is needed, the documented model-based hook types or another review process may help, but that choice does not turn their decision into an operating-system security boundary. Keep a short rationale for the mechanism you choose instead of expanding a blocklist indefinitely."
+          ],
+          "items": [],
+          "sourceIds": []
+        }
+      ],
+      "publishedAt": "2026-11-10",
+      "reviewedAt": "2026-11-10"
+    },
+    {
+      "slug": "vllm-prefix-cache-workload-fit",
+      "title": "vLLM Prefix Caching: Deciding Whether a Workload Fits Reuse",
+      "description": "A source-backed guide to judging whether a vLLM workload's prefix shape justifies automatic prefix caching, with a hypothetical measurement plan and tenant salt tradeoffs.",
+      "entityIds": [
+        "vllm-team"
+      ],
+      "sourceIds": [
+        "vllm-feature",
+        "vllm-design"
+      ],
+      "sections": [
+        {
+          "heading": "What the feature does — and does not promise",
+          "kind": "documented",
+          "paragraphs": [
+            "vLLM automatic prefix caching reuses matching input computation, including in shared-document and multi-turn workloads. Its feature guide distinguishes this prefill work from generating new output tokens; a long generated answer can still dominate end-to-end time. Check the installed release and architecture rather than assuming a default configuration.",
+            "The design uses hashed cache blocks and describes eviction when blocks are reused. An optional per-request cache_salt partitions prefix reuse. This is not a fixed five-minute or one-hour API cache contract, and cache matching is not application authorization."
+          ],
+          "items": [],
+          "sourceIds": [
+            "vllm-feature",
+            "vllm-design"
+          ]
+        },
+        {
+          "heading": "Workload fit is a shape question",
+          "kind": "analysis",
+          "paragraphs": [
+            "Our first question is whether requests have a reusable leading sequence, not whether the feature sounds inexpensive. A document shared across many questions is a different cohort from personalized prompts that diverge near the beginning. Test these cohorts separately so that a large group of unique requests does not hide useful reuse elsewhere.",
+            "In a hypothetical service, every tenant has a different long preamble and only occasional requests. Turning on caching alone does not create repetition. Before changing prompt structure, ask whether the text represents a real access or behavior requirement. Combining private contexts merely to increase reuse would solve the wrong problem.",
+            "Also distinguish a prompt-processing opportunity from the user-visible objective. A cohort can have substantial repeated input while its long answers still take most of the response time. Decide in advance whether you care about time to first token, total latency or throughput, rather than treating those measurements as interchangeable."
+          ],
+          "items": [],
+          "sourceIds": [
+            "vllm-feature"
+          ]
+        },
+        {
+          "heading": "A hypothetical measurement plan",
+          "kind": "example",
+          "paragraphs": [
+            "The following plan is hypothetical; it is not a report of measured gains. Classify a representative sample into shared-document, conversational and unique-preamble traffic. Keep only authorized requests in each experiment, and record the configuration and output limits.",
+            "For a promising cohort, compare cache-enabled and cache-disabled runs under otherwise comparable conditions. Include cold and warm periods and enough cache pressure to resemble the intended workload. Look at the latency distribution and error rate as well as throughput; one attractive average is not sufficient evidence for adoption.",
+            "Choose the target metric and acceptable regression bounds before running the comparison. Stop when repeat runs support a clear decision under those bounds. If the result changes with traffic composition, document separate cohort decisions or postpone adoption. Do not turn an inconclusive experiment into a universal speedup claim."
+          ],
+          "items": [],
+          "sourceIds": []
+        },
+        {
+          "heading": "Checklist: a bounded fit assessment",
+          "kind": "checklist",
+          "paragraphs": [],
+          "items": [
+            "Record the exact serving version, model architecture and cache setting used in the test.",
+            "Separate request cohorts by actual leading-token similarity and authorization scope.",
+            "Include cache pressure and eviction in the plan instead of assuming a fixed TTL.",
+            "Keep concurrency, sampling and output limits comparable across the on/off runs.",
+            "Report the selected latency or throughput metric alongside errors and regression bounds.",
+            "Write down the decision and the traffic change that would justify repeating the experiment."
+          ],
+          "sourceIds": []
+        },
+        {
+          "heading": "Tenant partitioning: the salt tradeoff",
+          "kind": "analysis",
+          "paragraphs": [
+            "The salt mechanism gives an application a way to partition reuse. Our recommendation is to assign the intended cache scope at a trusted application boundary after authenticating the request, instead of accepting arbitrary tenant-supplied scope labels as evidence of entitlement.",
+            "That choice has a practical tradeoff: separate tenant scopes can forfeit reuse of otherwise identical material. Treat the loss as part of the isolation design rather than as a cache bug. Do not relax the boundary simply to improve a hit counter.",
+            "A cache salt is not a substitute for authorization, a dedicated security boundary or a complete privacy review. Enforce access policy before reaching the model server and treat cache reuse as an additional behavior to verify. The source documents establish the mechanism; this placement advice is our operational analysis."
+          ],
+          "items": [],
+          "sourceIds": [
+            "vllm-design"
+          ]
+        }
+      ],
+      "publishedAt": "2026-11-10",
+      "reviewedAt": "2026-11-10"
+    }
+  ]
+}

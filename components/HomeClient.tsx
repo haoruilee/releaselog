@@ -173,6 +173,7 @@ export default function HomeClient({ initialEntityId }: Props) {
             todayKey={todayKey}
             onSelectDate={setSelectedDate}
           />
+          {!posterMode && <aside data-export-exclude className="rounded-xl border border-slate-200 bg-panel p-5" data-guides-promo><h2 className="font-serif text-2xl">{t("site.guides_title")}</h2><p className="mt-2 text-sm leading-relaxed text-secondary">{t("site.guides_intro")}</p><Link href="/guides" className="mt-3 inline-block text-sm font-medium text-accent hover:underline">{t("site.guides_link")} →</Link></aside>}
           {!posterMode && <AdPlacement position="calendar-banner" />}
           {!posterMode && <section data-export-exclude className="pb-4" aria-busy={loading}>
             <h2 className="font-serif text-3xl text-primary">{t("site.recent")}</h2>
