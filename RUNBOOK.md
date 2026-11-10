@@ -1,3 +1,22 @@
+# Current public deployment: editorial guides (2026-11-10)
+
+This section supersedes previous public-container details below.
+- Container `releaselog-app-editorial-20261110`, 127.0.0.1:3005, immutable image
+  `releaselog/app:editorial-20261110-6d88621`; source/build acceptance is described
+  in `docs/editorial-batch-20261110.md`.
+- `/guides` and three source-reviewed English explainers are live, with navigation,
+  source dates, disclosed AI drafting/review and a browser-only token ledger.
+- Source data: `data/editorial-guides.json`; build gate: `scripts/validate-editorial.mjs`.
+  The first-batch checks pin three reviewed guides; extend the validator and QA cases
+  deliberately for later batches. Never bypass review by copying a raw model outbox.
+- Existing calendar, Reset Log, account routes, API, feeds and advertising connection
+  remain compatible. The old control app and four workers keep their identities.
+- Old public app on port 3004 is retained. Verify its localhost health, then roll back:
+  `python3 /root/ops-private/releaselog-editorial-20261110/switch-public.py 3004`.
+  No DB restore, DNS mutation or shared tunnel restart is required.
+- Private acceptance/provenance receipts and the explicitly recorded gate-sequencing
+  correction: `/root/ops-private/releaselog-editorial-20261110/`.
+
 # Current public deployment: privacy and AdSense connection (2026-11-10)
 
 This section supersedes previous public-container and advertising settings below.
