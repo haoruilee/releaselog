@@ -1,3 +1,22 @@
+# Current public deployment: original project field notes (2026-11-10)
+
+This section supersedes previous public-container details below.
+- Public app: `releaselog-app-field-notes-20261110`, `127.0.0.1:3006`.
+  Immutable image `releaselog/app:field-notes-20261110-579c90a`; build source `579c90a`.
+- Seven reviewed articles are live at `/guides`: four original project field notes
+  and the prior three developer guides. Each field note links evidence and states
+  its scope. The homepage features the four new notes. No automatic editorial
+  publication timer was introduced.
+- Build/validation and AI-assisted drafting disclosures are documented in
+  `docs/editorial-field-notes-20261110.md`. The build gate deliberately pins
+  seven articles and four field notes; extend schema/QA together for later batches.
+- The dedicated public tunnel alone moved to 3006. Shared tunnels, DNS, control
+  app, DB, workers and advertising/CMP settings were not changed.
+- Old public app on 3005 is retained and healthy. Verify localhost health, then:
+  `python3 /root/ops-private/releaselog-field-notes-20261110/switch-public.py 3005`.
+  Traffic rollback does not restore the database.
+- Private acceptance/provenance receipts: `/root/ops-private/releaselog-field-notes-20261110/`.
+
 # Current public deployment: editorial guides (2026-11-10)
 
 This section supersedes previous public-container details below.
