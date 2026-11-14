@@ -32,7 +32,10 @@ publication deletion, database restore, container replacement or shared tunnel r
 Dedicated article URLs may match a prior publication after stripping known tracking
 parameters. Meaningful query parameters are preserved. Aggregate changelog/release-note
 URLs alone are insufficient to identify a duplicate: event date and normalized title
-must also match. Unknown-date recent candidates remain eligible for model review, but
+must also match. When an article has no date field, only an explicit Published date header near its
+start may establish age; related links and update notices do not count. Generic news
+index page changes and explicit IPO-financing notices are rejected as non-releases.
+Other unknown-date recent candidates remain eligible for model review, but
 publication requires a verified date. Future parsed dates require corrected source data
 unless the candidate belongs to the scheduled-event calendar. Within a duplicate pending
 snapshot group the newest candidate is kept. These rules do not claim semantic detection
@@ -61,7 +64,7 @@ rollback does not reopen expired candidates and does not alter published records
 
 ## Validation
 
-Forty pure JavaScript tests passed on the designated builder `li@www.xzhtai.cn:2077` from
+Forty-five pure JavaScript tests passed on the designated builder `li@www.xzhtai.cn:2077` from
 eight hash-verified, allowlisted inputs with synthetic fixtures only. They cover freshness
 boundaries, missing and invalid dates, scheduled events, meaningful URL parameters,
 aggregate-page safety, published and pending duplicates, fifty-item rejection batches,

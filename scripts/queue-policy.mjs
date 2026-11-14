@@ -1,5 +1,5 @@
 const DAY = 86400000;
-export const QUEUE_POLICY = Object.freeze({ version: 1, maxAgeDays: 7, futureToleranceDays: 1 });
+export const QUEUE_POLICY = Object.freeze({ version: 2, maxAgeDays: 7, futureToleranceDays: 1 });
 export function canonicalUrl(value) {
   try {
     const u = new URL(value); if (!['https:', 'http:'].includes(u.protocol)) return null;
@@ -14,6 +14,15 @@ export function aggregateUrl(value) {
 const title = value => String(value || '').normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
 const date = value => { const n = value ? Date.parse(value) : NaN; return Number.isFinite(n) ? n : null; };
 const day = value => date(value) === null ? null : new Date(date(value)).toISOString().slice(0, 10);
+// Only explicit publication headers near the start of an article count; dates in
+// related links, prose, deadlines and update notices do not establish publication.
+export function headerPublicationDate(body) {
+  const m = String(body || '').slice(0, 900).match(/\bPublished\s+(January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\.?\s+(\d{1,2}),\s+(\d{4})\b/i);
+  if (!m) return null;
+  const month = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'].indexOf(m[1].slice(0,3).toLowerCase())+1;
+  const iso = `${m[3]}-${String(month).padStart(2,'0')}-${m[2].padStart(2,'0')}`;
+  return day(iso) === iso ? iso : null;
+}
 export function planQueue(candidates, published, now = Date.now()) {
   if (!Number.isFinite(now)) throw new Error('invalid_clock');
   const cutoff = now - QUEUE_POLICY.maxAgeDays * DAY;
@@ -25,11 +34,13 @@ export function planQueue(candidates, published, now = Date.now()) {
   }
   const rejected = [], kept = [], seen = new Map();
   for (const c of [...candidates].sort((a,b) => (date(b.created_at) ?? 0) - (date(a.created_at) ?? 0) || a.id.localeCompare(b.id))) {
-    const created = date(c.created_at), announced = date(c.raw_published_at), url = canonicalUrl(c.source_url), t = title(c.raw_title), d = day(c.raw_published_at);
+    const created = date(c.created_at), announced = date(c.raw_published_at ?? headerPublicationDate(c.raw_body)), url = canonicalUrl(c.source_url), t = title(c.raw_title), d = day(c.raw_published_at);
     let reason, duplicateOf;
     if (created !== null && created < cutoff) reason = 'queue_age_expired';
     else if (announced !== null && announced < cutoff) reason = 'announcement_outside_freshness_window';
     else if (announced !== null && announced > now + QUEUE_POLICY.futureToleranceDays * DAY && c.entity_id !== 'ai-events') reason = 'unverified_future_announcement_date';
+    else if (c.metadata?.eventType === 'page_change' && url && aggregateUrl(url) && /^(news|blog|announcements|publications)$/i.test(String(c.raw_title).trim())) reason = 'aggregate_index_not_announcement';
+    else if (/\b(?:files? s[ -]1|roadshow)\b.*\b(?:sec|initial public offering)\b/i.test(String(c.raw_title))) reason = 'corporate_financing_not_product_release';
     else {
       duplicateOf = (url && publishedUrls.get(`${c.entity_id}|${url}`)) || (d && t.length >= 15 && publishedTitles.get(`${c.entity_id}|${d}|${t}`));
       if (duplicateOf) reason = 'already_published';
@@ -49,7 +60,7 @@ export async function applyRejections(decisions, send, record = () => {}) {
   const receipts = [];
   for (let offset = 0; offset < decisions.length; offset += 50) {
     const batch = decisions.slice(offset, offset + 50).map(({ candidateId, action, reason }) => ({ candidateId, action, reason }));
-    const result = await send({ provider: 'queue-maintenance', command: 'deterministic-queue-policy-v1', dryRun: false, decisions: batch });
+    const result = await send({ provider: 'queue-maintenance', command: `deterministic-queue-policy-v${QUEUE_POLICY.version}`, dryRun: false, decisions: batch });
     if (result.ok !== true || result.approved !== 0 || result.needsReview !== 0 || result.skipped?.length || result.rejected !== batch.length) throw new Error('rejection_apply_mismatch');
     receipts.push({ offset, count: batch.length, runId: result.runId, rejected: result.rejected }); await record(receipts);
   }
