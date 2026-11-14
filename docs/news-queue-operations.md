@@ -73,3 +73,35 @@ aggregate-page safety, published and pending duplicates, fifty-item rejection ba
 partial failure without POST retries, reject-only authority, and existing harness gates.
 The actual installed systemd sandbox completed the first sweep successfully. Source and
 unit hashes, snapshots and HTTP acceptance are retained in the private release evidence.
+
+
+## Final acceptance: 2026-11-14 10:04 UTC
+
+All 2,251 original pending candidates reached terminal states: 2,237 were rejected by
+retention/deduplication/scope rules, and fourteen received real GLM review in two bounded
+runs. Those runs published five recent calendar records and rejected nine candidates.
+The pending queue was zero at acceptance. The original 783 publication records remained
+unchanged and the database contained 788 publications afterward. All five added IDs,
+titles and event dates were verified through the public per-entity APIs.
+
+Real review run IDs:
+- `c1719595-3c90-4873-a519-65c8bb3366ad`: eight candidates; three approvals, five rejections.
+- `12632a0f-09c1-4f5c-ac94-cb31e8642fec`: six candidates; two approvals, four rejections.
+
+The 10:00 automatic trigger did not start a second overlapping review. Maintenance
+reported `review_busy` and made no mutations while the existing review continued.
+An empty-queue invocation at 10:03 returned `no_pending_candidates`, did not restart the
+model session or call the rejection API, and created no new snapshot/plan/result files.
+Both timers remained enabled; subsequent triggers were 10:15 for maintenance and 11:00
+for review. The older fast timer remained disabled. All 28 enabled sources had successful
+latest fetches. Container identities and all shared/dedicated tunnel PIDs/start times
+matched the pre-change record.
+
+A public-network interruption was observed around 10:01: two HTTP GETs returned 502
+while the local app and control API returned 200. Cloudflared logged concurrent QUIC
+timeouts and then re-established four connections. No tunnel restart or configuration
+change was performed. Sixteen later public checks across home, Atom, guides and the
+recent-release API all returned 200. This is recovery evidence, not a zero-downtime claim.
+Private evidence includes `final-acceptance.json`, both review receipts, the empty-queue
+receipt, public recovery probes, and a validation note distinguishing a corrected local
+probe-logging error from the actual network interruption.

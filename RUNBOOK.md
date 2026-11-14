@@ -3,7 +3,8 @@
 This section supersedes older eight-hour review and unbounded-backfill instructions.
 - News candidates expire after seven rolling days; historical backfill is separate.
 - Deterministic cleanup runs every fifteen minutes and before review, retaining
-  snapshots and rejection reasons. Initial sweep: 2,251 pending -> 17; 2,234 rejected.
+  snapshots and rejection reasons. Final acceptance: 2,251 pending -> 0;
+  2,237 policy rejections, five new publications and nine review rejections.
 - AI review runs hourly, eight candidates per batch, using the existing AIPing GLM
   route. Empty queues make no model call. Recent database publications are included
   for duplicate detection; a publication freshness gate rejects old/missing dates.
