@@ -1,3 +1,17 @@
+# Current news pipeline: rolling queue (2026-11-14)
+
+This section supersedes older eight-hour review and unbounded-backfill instructions.
+- News candidates expire after seven rolling days; historical backfill is separate.
+- Deterministic cleanup runs every fifteen minutes and before review, retaining
+  snapshots and rejection reasons. Initial sweep: 2,251 pending -> 17; 2,234 rejected.
+- AI review runs hourly, eight candidates per batch, using the existing AIPing GLM
+  route. Empty queues make no model call. Recent database publications are included
+  for duplicate detection; a publication freshness gate rejects old/missing dates.
+- Timers: `releaselog-queue-maintenance.timer`, `releaselog-ai-review.timer`.
+  Fast review timer remains disabled. Public app, workers and shared tunnels retain
+  their existing identities.
+- See `docs/news-queue-operations.md` for exact rules, limits, receipts and recovery.
+
 # ReleaseLog Runbook
 
 ## Current production release (2026-11-03, light editorial redesign + left sidebar)
