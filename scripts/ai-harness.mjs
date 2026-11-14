@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { applyFreshnessPolicy } from "./queue-policy.mjs";
 import { autonomousReviewPolicy, normalizeAutonomousOutbox, reviewFingerprint, skipUnchangedBlocked, compactReviewCandidates, selectReviewCandidates, rememberCandidateReviews, releaseReviewContext } from "./ai-autonomy.mjs";
 import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -165,7 +166,14 @@ async function collectContext({ runId, intent, candidates, outboxPath, provider 
   const localHealth = await fetchText(`${baseUrl}/`).catch((error) => ({ status: 0, ok: false, text: String(error) }));
   const remoteHealth = await fetchText(`${publicUrl}/`).catch((error) => ({ status: 0, ok: false, text: String(error) }));
   if (intent === "release_publish") {
-    return releaseReviewContext({ runId, provider, outboxPath, candidates,
+    let recentPublished = [];
+    const sweepPath = join(root, "var/queue-maintenance/last-sweep.json");
+    if (existsSync(sweepPath)) {
+      const sweep = readJsonFile(sweepPath);
+      if (sweep.status === "completed" && Date.now() - Date.parse(sweep.finishedAt) < 3600000)
+        recentPublished = (sweep.recentPublished || []).filter(p => candidates.some(c => c.entityId === p.entityId) && p.date >= new Date(Date.now()-14*86400000).toISOString().slice(0,10)).sort((a,b) => b.date.localeCompare(a.date)).slice(0,80);
+    }
+    return releaseReviewContext({ runId, provider, outboxPath, candidates, recentPublished,
       localHealth: { ok: localHealth.ok, status: localHealth.status },
       remoteHealth: { ok: remoteHealth.ok, status: remoteHealth.status } });
   }
@@ -600,6 +608,7 @@ async function main() {
       metadata: { outboxPath, timeoutMs: waitTimeoutMs },
     });
     outbox = normalizeAutonomousOutbox(await waitForOutbox(outboxPath, waitTimeoutMs), candidates);
+    outbox = applyFreshnessPolicy(outbox, candidates);
     await recordHarnessEvent({
       runId,
       provider: goalSession.provider,

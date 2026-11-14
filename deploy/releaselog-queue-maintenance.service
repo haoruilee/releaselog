@@ -1,0 +1,28 @@
+[Unit]
+Description=ReleaseLog deterministic pending-news retention and deduplication
+After=docker.service
+Wants=docker.service
+Before=releaselog-ai-review.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/root/releaselog
+Environment=RELEASELOG_ROOT=/root/releaselog
+Environment=RELEASELOG_ENV_FILE=/root/releaselog/.env.docker
+RuntimeDirectory=releaselog-queue-maintenance
+UMask=0077
+ExecStart=/usr/bin/flock -n -E 0 /run/releaselog-queue-maintenance/lock /usr/bin/node /root/releaselog/scripts/queue-maintenance.mjs --apply
+TimeoutStartSec=5min
+TimeoutStopSec=35s
+KillSignal=SIGTERM
+SendSIGKILL=no
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/root/releaselog/var/queue-maintenance
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+MemoryMax=512M

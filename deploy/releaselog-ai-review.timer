@@ -1,10 +1,8 @@
 [Unit]
-Description=Run ReleaseLog autonomous AI review every eight hours
-
+Description=Review fresh ReleaseLog candidates hourly; no model call for empty queues
 [Timer]
-OnCalendar=*-*-* 00/8:00:00 UTC
+OnCalendar=*-*-* *:00:00 UTC
 Persistent=true
 Unit=releaselog-ai-review.service
-
 [Install]
 WantedBy=timers.target

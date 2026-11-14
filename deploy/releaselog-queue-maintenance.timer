@@ -1,0 +1,8 @@
+[Unit]
+Description=Expire and deduplicate ReleaseLog pending candidates every fifteen minutes
+[Timer]
+OnCalendar=*-*-* *:00/15:00 UTC
+Persistent=true
+Unit=releaselog-queue-maintenance.service
+[Install]
+WantedBy=timers.target
