@@ -51,7 +51,9 @@ state afresh. Unexpected approvals, skips or count mismatches fail acceptance.
 
 Private snapshots, per-candidate plans, API run IDs and completion receipts are stored in
 `/root/releaselog/var/queue-maintenance/`. Snapshots are mode 0600 in a mode-0700 directory.
-`last-sweep.json` supplies the recent-publication context. Initial acceptance and original
+Sweeps with no rejections only refresh `last-sweep.json` and journal status; they do
+not create repeated snapshot/plan/result files. `last-sweep.json` supplies the
+recent-publication context. Initial acceptance and original
 runtime files are also retained under `/root/ops-private/releaselog-backlog-20261114/`.
 Restore a mistaken rejection only by its exact candidate ID after reviewing its snapshot;
 never restore the whole database or erase later review decisions to undo queue cleanup.

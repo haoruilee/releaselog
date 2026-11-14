@@ -32,7 +32,8 @@ const plan=planQueue(snapshot.pending,[...seeds,...snapshot.published]);
 const counts=Object.fromEntries([...new Set(plan.rejected.map(d=>d.rule))].map(rule=>[rule,plan.rejected.filter(d=>d.rule===rule).length]));
 const summary={ok:true,status:apply?'applying':'dry_run',policy:plan.policy,before:snapshot.pending.length,reject:plan.rejected.length,keep:plan.kept.length,counts};
 if (!apply) { console.log(JSON.stringify({...summary,kept:plan.kept.map(c=>({id:c.id,title:c.raw_title,date:c.raw_published_at,entity:c.entity_id}))})); process.exit(0); }
-mkdirSync(dir,{recursive:true,mode:0o700});const runId=randomUUID(), backup=join(dir,runId+'-before.json');atomic(backup,snapshot);atomic(join(dir,runId+'-plan.json'),plan);
+mkdirSync(dir,{recursive:true,mode:0o700});const runId=randomUUID(), backup=plan.rejected.length ? join(dir,runId+'-before.json') : null;
+if (backup) { atomic(backup,snapshot); atomic(join(dir,runId+'-plan.json'),plan); }
 loadEnvFile(process.env.RELEASELOG_ENV_FILE || join(root,'.env.docker'));
 if (!process.env.CRON_SECRET) throw new Error('cron_secret_missing');
 const base=new URL(process.env.AI_REVIEW_BASE_URL || 'http://127.0.0.1:3000');
@@ -45,6 +46,7 @@ const after=sqlSnapshot(), byId=new Map(after.published.map(p=>[p.id,p]));
 if(!snapshot.published.every(p=>JSON.stringify(byId.get(p.id))===JSON.stringify(p))) throw new Error('published_records_changed_during_sweep');
 const afterPending=new Set(after.pending.map(c=>c.id));if(plan.rejected.some(d=>afterPending.has(d.candidateId)))throw new Error('rejected_candidates_still_pending');
 const recentPublished=after.published.filter(p=>Date.parse(p.published_at)>=Date.now()-30*86400000).map(p=>({id:p.id,entityId:p.entity_id,title:p.title,date:p.date,sourceUrl:p.source_url}));
-const result={...summary,status:'completed',runId,finishedAt:new Date().toISOString(),remaining:after.pending.length,publishedUnchanged:true,backup,backupSHA256:createHash('sha256').update(readFileSync(backup)).digest('hex'),receipts,recentPublished};
-atomic(join(dir,runId+'-result.json'),result);atomic(join(dir,'last-sweep.json'),result);
+const result={...summary,status:'completed',runId,finishedAt:new Date().toISOString(),remaining:after.pending.length,publishedUnchanged:true,backup,backupSHA256:backup ? createHash('sha256').update(readFileSync(backup)).digest('hex') : null,receipts,recentPublished};
+if (backup) atomic(join(dir,runId+'-result.json'),result);
+atomic(join(dir,'last-sweep.json'),result);
 console.log(JSON.stringify({...summary,status:'completed',runId,remaining:after.pending.length,publishedUnchanged:true}));
